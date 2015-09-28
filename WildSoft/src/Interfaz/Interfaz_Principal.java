@@ -32,6 +32,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
 import java.awt.SystemColor;
 
 
@@ -57,19 +58,12 @@ public class Interfaz_Principal {
 			public void run() {
 				try {
 					
-
 					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 	
 					Interfaz_Principal window = new Interfaz_Principal();
 					window.frmWildsoft.setVisible(true);
 				    SwingUtilities.updateComponentTreeUI(window.frmWildsoft);
-					
-					
 
-					
-	
-					
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -107,6 +101,11 @@ public class Interfaz_Principal {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
 		);
+		
+		
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//     Panel de Nuevo Pedido    //
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Nuevo pedido", null, panel, null);
@@ -184,13 +183,13 @@ public class Interfaz_Principal {
 		lblCantidad.setBounds(18, 130, 110, 25);
 		panel_4.add(lblCantidad);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
 		comboBox.setBounds(127, 94, 199, 25);
 		panel_4.add(comboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Pizzas", "Empanadas"}));
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
 		comboBox_1.setBounds(127, 57, 199, 25);
 		panel_4.add(comboBox_1);
 		
@@ -287,8 +286,19 @@ public class Interfaz_Principal {
 		textField_3.setBounds(123, 156, 199, 25);
 		panel_3.add(textField_3);
 		
+		
+		
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//  Panel de listado de pedidos //
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Listado de pedidos", null, panel_1, null);
+		
+		
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//      Panel de combos         //
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Combos", null, panel_2, null);
