@@ -33,14 +33,14 @@ import javax.swing.table.DefaultTableModel;
 public class Interfaz_Principal {
 
 	private JFrame frmWildsoft;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField textCliente;
+	private JTextField textDomicilio;
+	private JTextField textTelefono;
+	private JTextField textDetalle;
 	private JTable tabla_Pedido_Completo;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_4;
+	private JTextField textValor;
+	private JTextField textObservaciones;
+	private JTextField textValorTotal;
 
 
 	
@@ -96,10 +96,9 @@ public class Interfaz_Principal {
 				.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
 		);
 		
-		
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
-		//     Panel de Nuevo Pedido    //
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Panel de Nuevo Pedido
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Nuevo pedido", null, panel, null);
@@ -112,9 +111,9 @@ public class Interfaz_Principal {
 		panelProductos.setBounds(0, 6, 940, 326);
 		panel.add(panelProductos);
 		
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
-		// Tabla que muestra el pedido  //
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Tabla que muestra el pedido
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(336, 93, 566, 176);
@@ -183,10 +182,10 @@ public class Interfaz_Principal {
 		lblCantidad.setBounds(18, 130, 110, 25);
 		panelProductos.add(lblCantidad);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(3), null, null, new Integer(1)));
-		spinner.setBounds(125, 130, 39, 25);
-		panelProductos.add(spinner);
+		JSpinner spinnerCantidad = new JSpinner();
+		spinnerCantidad.setModel(new SpinnerNumberModel(new Integer(3), null, null, new Integer(1)));
+		spinnerCantidad.setBounds(125, 130, 39, 25);
+		panelProductos.add(spinnerCantidad);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -195,12 +194,12 @@ public class Interfaz_Principal {
 		lblValor.setBounds(18, 167, 110, 25);
 		panelProductos.add(lblValor);
 		
-		textField_6 = new JTextField();
-		textField_6.setText("$50,00");
-		textField_6.setEditable(false);
-		textField_6.setColumns(10);
-		textField_6.setBounds(125, 167, 199, 25);
-		panelProductos.add(textField_6);
+		textValor = new JTextField();
+		textValor.setText("$50,00");
+		textValor.setEditable(false);
+		textValor.setColumns(10);
+		textValor.setBounds(125, 167, 199, 25);
+		panelProductos.add(textValor);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -209,12 +208,12 @@ public class Interfaz_Principal {
 		lblValorTotal.setBounds(18, 204, 110, 25);
 		panelProductos.add(lblValorTotal);
 		
-		textField_4 = new JTextField();
-		textField_4.setText("$150,00");
-		textField_4.setEditable(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(125, 204, 199, 25);
-		panelProductos.add(textField_4);
+		textValorTotal = new JTextField();
+		textValorTotal.setText("$150,00");
+		textValorTotal.setEditable(false);
+		textValorTotal.setColumns(10);
+		textValorTotal.setBounds(125, 204, 199, 25);
+		panelProductos.add(textValorTotal);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -223,10 +222,10 @@ public class Interfaz_Principal {
 		lblObservacion.setBounds(18, 244, 110, 25);
 		panelProductos.add(lblObservacion);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(125, 244, 199, 25);
-		panelProductos.add(textField_7);
+		textObservaciones = new JTextField();
+		textObservaciones.setColumns(10);
+		textObservaciones.setBounds(125, 244, 199, 25);
+		panelProductos.add(textObservaciones);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -247,73 +246,89 @@ public class Interfaz_Principal {
 		panel_5.setBounds(354, 344, 578, 204);
 		panel.add(panel_5);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(6, 344, 336, 204);
-		panel.add(panel_3);
-		panel_3.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setLayout(null);
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Panel de Delibery
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		JLabel lblCliente = new JLabel("Cliente");
-		lblCliente.setBounds(16, 46, 97, 25);
-		panel_3.add(lblCliente);
-		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		
-		JLabel lblDomicilio = new JLabel("Domicilio");
-		lblDomicilio.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDomicilio.setBounds(16, 82, 97, 25);
-		panel_3.add(lblDomicilio);
-		
-		JLabel lblTelefono = new JLabel("Telefono");
-		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTelefono.setBounds(16, 118, 97, 25);
-		panel_3.add(lblTelefono);
-		
-		textField = new JTextField();
-		textField.setBounds(123, 46, 199, 25);
-		panel_3.add(textField);
-		textField.setColumns(10);
+		JPanel panelDelibery = new JPanel();
+		panelDelibery.setBackground(Color.WHITE);
+		panelDelibery.setBounds(6, 344, 336, 204);
+		panel.add(panelDelibery);
+		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelDelibery.setLayout(null);
 		
 		JCheckBox chckbxDelivery = new JCheckBox("Delivery");
 		chckbxDelivery.setSelected(true);
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxDelivery.setBounds(16, 14, 97, 25);
-		panel_3.add(chckbxDelivery);
+		panelDelibery.add(chckbxDelivery);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(123, 82, 199, 25);
-		panel_3.add(textField_1);
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(123, 118, 199, 25);
-		panel_3.add(textField_2);
+		JLabel lblCliente = new JLabel("Cliente");
+		lblCliente.setBounds(16, 46, 97, 25);
+		panelDelibery.add(lblCliente);
+		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		textCliente = new JTextField();
+		textCliente.setBounds(123, 46, 199, 25);
+		panelDelibery.add(textCliente);
+		textCliente.setColumns(10);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblDomicilio = new JLabel("Domicilio");
+		lblDomicilio.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDomicilio.setBounds(16, 82, 97, 25);
+		panelDelibery.add(lblDomicilio);
+		
+		textDomicilio = new JTextField();
+		textDomicilio.setColumns(10);
+		textDomicilio.setBounds(123, 82, 199, 25);
+		panelDelibery.add(textDomicilio);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblTelefono = new JLabel("Telefono");
+		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblTelefono.setBounds(16, 118, 97, 25);
+		panelDelibery.add(lblTelefono);
+
+		textTelefono = new JTextField();
+		textTelefono.setColumns(10);
+		textTelefono.setBounds(123, 118, 199, 25);
+		panelDelibery.add(textTelefono);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDetalle.setBounds(16, 156, 97, 25);
-		panel_3.add(lblDetalle);
+		panelDelibery.add(lblDetalle);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(123, 156, 199, 25);
-		panel_3.add(textField_3);
+		textDetalle = new JTextField();
+		textDetalle.setColumns(10);
+		textDetalle.setBounds(123, 156, 199, 25);
+		panelDelibery.add(textDetalle);
 		
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
-		//  Panel de listado de pedidos //
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Panel de listado de pedidos
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Listado de pedidos", null, panel_1, null);
 		
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
-		//      Panel de combos         //
-		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Panel de combos 
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Combos", null, panel_2, null);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Menu
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>		
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
