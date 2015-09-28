@@ -111,16 +111,20 @@ public class Interfaz_Principal {
 		tabbedPane.addTab("Nuevo pedido", null, panel, null);
 		panel.setLayout(null);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(240,240,240));
-		panel_4.setLayout(null);
-		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(0, 6, 940, 326);
-		panel.add(panel_4);
+		JPanel panelProductos = new JPanel();
+		panelProductos.setBackground(new Color(240,240,240));
+		panelProductos.setLayout(null);
+		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelProductos.setBounds(0, 6, 940, 326);
+		panel.add(panelProductos);
+		
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
+		// Tabla que muestra el pedido  //
+		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(336, 93, 566, 176);
-		panel_4.add(scrollPane);
+		panelProductos.add(scrollPane);
 		
 		tabla_Pedido_Completo = new JTable();
 		tabla_Pedido_Completo.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -142,90 +146,106 @@ public class Interfaz_Principal {
 		tabla_Pedido_Completo.getColumnModel().getColumn(5).setPreferredWidth(101);
 		scrollPane.setViewportView(tabla_Pedido_Completo);
 		
+		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar.setBounds(336, 281, 69, 28);
+		panelProductos.add(btnQuitar);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblIngreseLosProductos = new JLabel("Ingrese los productos que componen su pedido");
+		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
+		panelProductos.add(lblIngreseLosProductos);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		JLabel lblProducto = new JLabel("Producto");
 		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblProducto.setBounds(18, 57, 110, 25);
-		panel_4.add(lblProducto);
+		panelProductos.add(lblProducto);
+		
+		JComboBox<String> comboProducto = new JComboBox<String>();
+		comboProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
+		comboProducto.setBounds(127, 57, 199, 25);
+		panelProductos.add(comboProducto);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblVariedadgusto = new JLabel("Variedad/Gusto");
 		lblVariedadgusto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblVariedadgusto.setBounds(18, 93, 110, 25);
-		panel_4.add(lblVariedadgusto);
+		panelProductos.add(lblVariedadgusto);
+
+		JComboBox<String> comboVariedadGusto = new JComboBox<String>();
+		comboVariedadGusto.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
+		comboVariedadGusto.setBounds(127, 94, 199, 25);
+		panelProductos.add(comboVariedadGusto);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCantidad.setBounds(18, 130, 110, 25);
+		panelProductos.add(lblCantidad);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(3), null, null, new Integer(1)));
+		spinner.setBounds(125, 130, 39, 25);
+		panelProductos.add(spinner);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblValor = new JLabel("Valor c/u");
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblValor.setBounds(18, 167, 110, 25);
-		panel_4.add(lblValor);
+		panelProductos.add(lblValor);
 		
 		textField_6 = new JTextField();
 		textField_6.setText("$50,00");
 		textField_6.setEditable(false);
 		textField_6.setColumns(10);
 		textField_6.setBounds(125, 167, 199, 25);
-		panel_4.add(textField_6);
+		panelProductos.add(textField_6);
 		
-		JLabel lblObservacion = new JLabel("Observaciones");
-		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblObservacion.setBounds(18, 244, 110, 25);
-		panel_4.add(lblObservacion);
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(125, 244, 199, 25);
-		panel_4.add(textField_7);
-		
-		JButton btnQuitar = new JButton("quitar");
-		btnQuitar.setBounds(336, 281, 69, 28);
-		panel_4.add(btnQuitar);
-		
-		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCantidad.setBounds(18, 130, 110, 25);
-		panel_4.add(lblCantidad);
-		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
-		comboBox.setBounds(127, 94, 199, 25);
-		panel_4.add(comboBox);
-		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
-		comboBox_1.setBounds(127, 57, 199, 25);
-		panel_4.add(comboBox_1);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(3), null, null, new Integer(1)));
-		spinner.setBounds(125, 130, 39, 25);
-		panel_4.add(spinner);
+		JLabel lblValorTotal = new JLabel("Valor total");
+		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblValorTotal.setBounds(18, 204, 110, 25);
+		panelProductos.add(lblValorTotal);
 		
 		textField_4 = new JTextField();
 		textField_4.setText("$150,00");
 		textField_4.setEditable(false);
 		textField_4.setColumns(10);
 		textField_4.setBounds(125, 204, 199, 25);
-		panel_4.add(textField_4);
+		panelProductos.add(textField_4);
 		
-		JLabel lblValorTotal = new JLabel("Valor total");
-		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblValorTotal.setBounds(18, 204, 110, 25);
-		panel_4.add(lblValorTotal);
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
+		JLabel lblObservacion = new JLabel("Observaciones");
+		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblObservacion.setBounds(18, 244, 110, 25);
+		panelProductos.add(lblObservacion);
+		
+		textField_7 = new JTextField();
+		textField_7.setColumns(10);
+		textField_7.setBounds(125, 244, 199, 25);
+		panelProductos.add(textField_7);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(125, 281, 104, 28);
+		panelProductos.add(btnAgregar);
+
 		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
 		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblResumenDelPedido.setBounds(336, 62, 566, 25);
-		panel_4.add(lblResumenDelPedido);
-		
-		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(125, 281, 104, 28);
-		panel_4.add(btnAgregar);
-		
-		JLabel lblIngreseLosProductos = new JLabel("Ingrese los productos que componen su pedido");
-		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
-		panel_4.add(lblIngreseLosProductos);
-		
+		panelProductos.add(lblResumenDelPedido);
+
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
 		panel_5.setLayout(null);
@@ -286,15 +306,12 @@ public class Interfaz_Principal {
 		textField_3.setBounds(123, 156, 199, 25);
 		panel_3.add(textField_3);
 		
-		
-		
 		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		//  Panel de listado de pedidos //
 		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Listado de pedidos", null, panel_1, null);
-		
 		
 		//<<<<<<<<<<<<<><><>>>>>>>>>>>>>//
 		//      Panel de combos         //
@@ -359,6 +376,5 @@ public class Interfaz_Principal {
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
 		mnAyuda.add(mntmAcercaDeWildsoft);
 		frmWildsoft.setVisible(true);
-		
 	}
 }
