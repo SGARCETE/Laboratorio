@@ -239,7 +239,7 @@ public class Interfaz_Principal {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Agregar_Al_Pedido();
 			}
 		});
 		btnAgregar.setBounds(125, 281, 104, 28);
@@ -418,6 +418,13 @@ public class Interfaz_Principal {
 		frmWildsoft.setVisible(true);
 		
 		iniciarParametros();
+		
+	}
+
+
+
+	private void Agregar_Al_Pedido() {
+		// TODO Auto-generated method stub
 		
 	}
 
