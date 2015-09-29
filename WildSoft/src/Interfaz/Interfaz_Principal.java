@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -29,8 +30,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
