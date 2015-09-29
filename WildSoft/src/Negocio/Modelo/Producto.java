@@ -13,6 +13,7 @@ public class Producto {
 			System.out.println("Probando conectar a DataBase");
 			Class.forName("com.mysql.jdbc.Driver");
 			
+			@SuppressWarnings("unused")
 			Connection conexion= DriverManager.getConnection("jdbc:mysql://localhost:pizzeria","root","");
 		}
 		catch(Exception e){
