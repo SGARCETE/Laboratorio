@@ -7,9 +7,11 @@ import Persistencia.DAOjdbcImpl.ClienteDAOjdbcImpl;
 public class Servicio_Clientes {
 	private ClienteDAO clienteDAO = new ClienteDAOjdbcImpl();
 	
+
 	private boolean Nuevo_Cliente(Cliente c){
-		return clienteDAO.Nuevo_Cliente(c);
-		
+		if(c!=null)
+			return clienteDAO.Nuevo_Cliente(c);
+		return false;
 	}
 	
 	

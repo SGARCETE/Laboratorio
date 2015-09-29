@@ -16,12 +16,9 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	
 	@Override
 	public boolean Nuevo_Cliente(Cliente c) {
-
-		// aca hay que hacer la query en sql para que se inserte un nuevo cliente.
-		// Si existe una restriccion para agregar un cliente, 
-		// se verifica ademas en la parte de Servicio_Cliente
-
-		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Direccion,CL_telefono) VALUES ("+
+		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono) VALUES ("+
+			"'"+	c.getNombre()			+"',"+
+			"'"+	c.getApellido()			+"',"+
 			"'"+	c.getDomicilio() 		+"',"+
 			"'"+	c.getTelefono_Fijo()	+"')";
 		return conex.Insertar(SentenciaSQL);
@@ -35,10 +32,10 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Clientes");
+			st.executeQuery("SELECT * FROM Cliente");
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){	
-				Arreglo.add(Fila.getString("CL_Nombre"));
+				Arreglo.add(Fila.getString("CL_Telefono"));
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {

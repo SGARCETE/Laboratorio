@@ -20,12 +20,6 @@ public class Cliente {
 	public void setNombre(String nombre) {
 		Nombre = nombre;
 	}
-	public String getApellido() {
-		return Apellido;
-	}
-	public void setApellido(String apellido) {
-		Apellido = apellido;
-	}
 	public String getDomicilio() {
 		return Domicilio;
 	}
@@ -37,6 +31,12 @@ public class Cliente {
 	}
 	public void setTelefono_Fijo(Integer telefono_Fijo) {
 		Telefono_Fijo = telefono_Fijo;
+	}
+	public String getApellido() {
+		return Apellido;
+	}
+	public void setApellido(String apellido) {
+		Apellido = apellido;
 	}
 
 

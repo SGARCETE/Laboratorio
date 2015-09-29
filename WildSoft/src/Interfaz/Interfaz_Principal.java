@@ -33,12 +33,12 @@ import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
-
+//import com.mxrck.autocompleter.AutoCompleterCallback;
+//import com.mxrck.autocompleter.TextAutoCompleter;
 
 public class Interfaz_Principal {
 
 	private JFrame frmWildsoft;
-	private JTextField textCliente;
 	private JTextField textDomicilio;
 	private JTextField textTelefono;
 	private JTextField textDetalle;
@@ -48,7 +48,16 @@ public class Interfaz_Principal {
 	private JTextField textValorTotal;
 	private JTable Tabla_Lista_pedidos;
 	private JScrollPane scrollPane_Lista_Pedidos;
-
+	
+//	private TextAutoCompleter AutoCompleterNombre_Cliente = new TextAutoCompleter(textDesde);
+//	private TextAutoCompleter AutoCompleterDestino = new TextAutoCompleter(textHasta);
+//	private TextAutoCompleter AutoCompleterCeCo = new TextAutoCompleter(textCeCo);
+//	private TextAutoCompleter AutoCompleterNombres = new TextAutoCompleter(textPasajero, new AutoCompleterCallback() {
+//	    @Override
+//	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
+//	    	cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
+//	    }
+//	});
 
 	
 	/**
@@ -250,13 +259,6 @@ public class Interfaz_Principal {
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblResumenDelPedido.setBounds(336, 62, 566, 25);
 		panelProductos.add(lblResumenDelPedido);
-
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(Color.WHITE);
-		panel_5.setLayout(null);
-		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Importes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(354, 344, 578, 204);
-		panel.add(panel_5);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de Delibery
@@ -264,7 +266,7 @@ public class Interfaz_Principal {
 		
 		JPanel panelDelibery = new JPanel();
 		panelDelibery.setBackground(Color.WHITE);
-		panelDelibery.setBounds(6, 344, 336, 204);
+		panelDelibery.setBounds(6, 344, 336, 166);
 		panel.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
@@ -274,18 +276,6 @@ public class Interfaz_Principal {
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxDelivery.setBounds(16, 14, 97, 25);
 		panelDelibery.add(chckbxDelivery);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblCliente = new JLabel("Cliente");
-		lblCliente.setBounds(16, 46, 97, 25);
-		panelDelibery.add(lblCliente);
-		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		
-		textCliente = new JTextField();
-		textCliente.setBounds(123, 46, 199, 25);
-		panelDelibery.add(textCliente);
-		textCliente.setColumns(10);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -303,24 +293,24 @@ public class Interfaz_Principal {
 		
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTelefono.setBounds(16, 118, 97, 25);
+		lblTelefono.setBounds(16, 46, 97, 25);
 		panelDelibery.add(lblTelefono);
 
 		textTelefono = new JTextField();
 		textTelefono.setColumns(10);
-		textTelefono.setBounds(123, 118, 199, 25);
+		textTelefono.setBounds(123, 46, 199, 25);
 		panelDelibery.add(textTelefono);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDetalle.setBounds(16, 156, 97, 25);
+		lblDetalle.setBounds(16, 118, 97, 25);
 		panelDelibery.add(lblDetalle);
 		
 		textDetalle = new JTextField();
 		textDetalle.setColumns(10);
-		textDetalle.setBounds(123, 156, 199, 25);
+		textDetalle.setBounds(123, 118, 199, 25);
 		panelDelibery.add(textDetalle);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
