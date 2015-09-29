@@ -1,3 +1,5 @@
-/Negocio/
 /Interfaz/
-/Recursos/
+/DAOjdbcImpl/
+/DAO/
+/Negocio/
+/Persistencia/
