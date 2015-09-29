@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -31,6 +32,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
+import Interfaz.Swing_Extends.Model_Listado_Pedidos;
+
 
 public class Interfaz_Principal {
 
@@ -43,6 +47,8 @@ public class Interfaz_Principal {
 	private JTextField textValor;
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
+	private JTable Tabla_Lista_pedidos;
+	private JScrollPane scrollPane_Lista_Pedidos;
 
 
 	
@@ -325,6 +331,25 @@ public class Interfaz_Principal {
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Listado de pedidos", null, panel_1, null);
 		
+		scrollPane_Lista_Pedidos = new JScrollPane();
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(94)
+					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		panel_1.setLayout(gl_panel_1);
+		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de combos 
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -392,5 +417,17 @@ public class Interfaz_Principal {
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
 		mnAyuda.add(mntmAcercaDeWildsoft);
 		frmWildsoft.setVisible(true);
+		
+		iniciarParametros();
+		
 	}
-}
+
+
+
+	private void iniciarParametros() {
+		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
+		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
+		
+	}
+	
+}//---> FIN CLASE
