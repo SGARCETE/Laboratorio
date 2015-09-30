@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -33,32 +35,54 @@ import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
+import Negocio.Modelo.Pedido;
+import Negocio.Modelo.Producto;
+
+import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
 //import com.mxrck.autocompleter.AutoCompleterCallback;
 //import com.mxrck.autocompleter.TextAutoCompleter;
 
 public class Interfaz_Principal {
 
 	private JFrame frmWildsoft;
+	private JScrollPane scrollPane_Lista_Pedidos;
+	private JTable tabla_Pedido_Completo;
+	private JTable Tabla_Lista_pedidos;
+	private JComboBox<String> comboBoxProducto;
+	private JComboBox<String> comboBoxVariedadGusto;
+	private JCheckBox chckbxDelivery;
+	private JSpinner spinnerCantidad;
 	private JTextField textDomicilio;
 	private JTextField textTelefono;
 	private JTextField textDetalle;
-	private JTable tabla_Pedido_Completo;
 	private JTextField textValor;
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
-	private JTable Tabla_Lista_pedidos;
-	private JScrollPane scrollPane_Lista_Pedidos;
+	private JTextField textCliente;
+	private JTextField textProducto = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
+	private JTextField textVariedad = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
+	private TextAutoCompleter AutoCompleter_Producto = new TextAutoCompleter(textProducto, new AutoCompleterCallback() {
+	    @Override
+	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
+//	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
+	    }
+	});
+	private TextAutoCompleter AutoCompleter_Variedad = new TextAutoCompleter(textVariedad, new AutoCompleterCallback() {
+	    @Override
+	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
+//	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
+	    }
+	});
+	//	private TextAutoCompleter AutoCompleter_Nombre = new TextAutoCompleter(textNombre_Cliente);
 	
-//	private TextAutoCompleter AutoCompleterNombre_Cliente = new TextAutoCompleter(textDesde);
-//	private TextAutoCompleter AutoCompleterDestino = new TextAutoCompleter(textHasta);
-//	private TextAutoCompleter AutoCompleterCeCo = new TextAutoCompleter(textCeCo);
-//	private TextAutoCompleter AutoCompleterNombres = new TextAutoCompleter(textPasajero, new AutoCompleterCallback() {
-//	    @Override
-//	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
-//	    	cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
-//	    }
-//	});
-
+	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();	// Muestra un Double en formato Dinero. Ej: 50.5  => $50,50
+	
+	private Pedido PEDIDO_ACTUAL = new Pedido();				// Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea
+	private Producto PRODUCTO_ACTUAL = new Producto();			// Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro
 	
 	/**
 	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA
@@ -132,7 +156,7 @@ public class Interfaz_Principal {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(336, 93, 566, 176);
+		scrollPane.setBounds(364, 87, 566, 176);
 		panelProductos.add(scrollPane);
 		
 		tabla_Pedido_Completo = new JTable();
@@ -156,7 +180,13 @@ public class Interfaz_Principal {
 		scrollPane.setViewportView(tabla_Pedido_Completo);
 		
 		JButton btnQuitar = new JButton("Quitar");
-		btnQuitar.setBounds(336, 281, 69, 28);
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Quitar_al_Pedido();
+			}
+		});
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		btnQuitar.setBounds(364, 275, 100, 30);
 		panelProductos.add(btnQuitar);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -166,99 +196,115 @@ public class Interfaz_Principal {
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
 		panelProductos.add(lblIngreseLosProductos);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblProducto = new JLabel("Producto");
-		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblProducto.setBounds(18, 57, 110, 25);
-		panelProductos.add(lblProducto);
-		
-		JComboBox<String> comboProducto = new JComboBox<String>();
-		comboProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
-		comboProducto.setBounds(127, 57, 199, 25);
-		panelProductos.add(comboProducto);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblVariedadgusto = new JLabel("Variedad/Gusto");
-		lblVariedadgusto.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblVariedadgusto.setBounds(18, 93, 110, 25);
-		panelProductos.add(lblVariedadgusto);
-
-		JComboBox<String> comboVariedadGusto = new JComboBox<String>();
-		comboVariedadGusto.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
-		comboVariedadGusto.setBounds(127, 94, 199, 25);
-		panelProductos.add(comboVariedadGusto);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCantidad.setBounds(18, 130, 110, 25);
-		panelProductos.add(lblCantidad);
-		
-		JSpinner spinnerCantidad = new JSpinner();
-		spinnerCantidad.setModel(new SpinnerNumberModel(new Integer(3), null, null, new Integer(1)));
-		spinnerCantidad.setBounds(125, 130, 39, 25);
-		panelProductos.add(spinnerCantidad);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblValor = new JLabel("Valor c/u");
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblValor.setBounds(18, 167, 110, 25);
-		panelProductos.add(lblValor);
-		
-		textValor = new JTextField();
-		textValor.setText("$50,00");
-		textValor.setEditable(false);
-		textValor.setColumns(10);
-		textValor.setBounds(125, 167, 199, 25);
-		panelProductos.add(textValor);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblValorTotal = new JLabel("Valor total");
-		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblValorTotal.setBounds(18, 204, 110, 25);
-		panelProductos.add(lblValorTotal);
-		
-		textValorTotal = new JTextField();
-		textValorTotal.setText("$150,00");
-		textValorTotal.setEditable(false);
-		textValorTotal.setColumns(10);
-		textValorTotal.setBounds(125, 204, 199, 25);
-		panelProductos.add(textValorTotal);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JLabel lblObservacion = new JLabel("Observaciones");
-		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblObservacion.setBounds(18, 244, 110, 25);
-		panelProductos.add(lblObservacion);
-		
-		textObservaciones = new JTextField();
-		textObservaciones.setColumns(10);
-		textObservaciones.setBounds(125, 244, 199, 25);
-		panelProductos.add(textObservaciones);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Agregar_Al_Pedido();
-			}
-		});
-		btnAgregar.setBounds(125, 281, 104, 28);
-		panelProductos.add(btnAgregar);
 
 		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
 		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblResumenDelPedido.setBounds(336, 62, 566, 25);
+		lblResumenDelPedido.setBounds(364, 56, 566, 25);
 		panelProductos.add(lblResumenDelPedido);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_3.setBounds(5, 49, 344, 273);
+		panelProductos.add(panel_3);
+		panel_3.setLayout(null);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblProducto = new JLabel("Producto");
+		lblProducto.setBounds(10, 12, 110, 25);
+		panel_3.add(lblProducto);
+		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+
+		textProducto.setBounds(119, 12, 98, 25);
+		panel_3.add(textProducto);
+		textProducto.setColumns(10);
+		
+		comboBoxProducto = new JComboBox<String>();
+		comboBoxProducto.setBounds(218, 12, 100, 25);
+		panel_3.add(comboBoxProducto);
+		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
+		
+		comboBoxVariedadGusto = new JComboBox<String>();
+		comboBoxVariedadGusto.setBounds(218, 49, 100, 25);
+		panel_3.add(comboBoxVariedadGusto);
+		comboBoxVariedadGusto.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblVariedad = new JLabel("Variedad");
+		lblVariedad.setBounds(10, 49, 110, 25);
+		panel_3.add(lblVariedad);
+		lblVariedad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setBounds(10, 85, 110, 25);
+		panel_3.add(lblCantidad);
+		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		spinnerCantidad = new JSpinner();
+		spinnerCantidad.setBounds(117, 85, 59, 25);
+		panel_3.add(spinnerCantidad);
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblValor = new JLabel("Valor c/u     $");
+		lblValor.setBounds(10, 122, 110, 25);
+		panel_3.add(lblValor);
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		textValor = new JTextField();
+		textValor.setBounds(117, 122, 199, 25);
+		panel_3.add(textValor);
+		textValor.setText("50.00");
+		textValor.setEditable(false);
+		textValor.setColumns(10);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblValorTotal = new JLabel("Valor total   $");
+		lblValorTotal.setBounds(10, 159, 110, 25);
+		panel_3.add(lblValorTotal);
+		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JLabel lblObservacion = new JLabel("Observaciones");
+		lblObservacion.setBounds(10, 199, 110, 25);
+		panel_3.add(lblObservacion);
+		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		textObservaciones = new JTextField();
+		textObservaciones.setBounds(117, 199, 199, 25);
+		panel_3.add(textObservaciones);
+		textObservaciones.setColumns(10);
+		
+		textValorTotal = new JTextField();
+		textValorTotal.setBounds(117, 159, 199, 25);
+		panel_3.add(textValorTotal);
+		textValorTotal.setText("150.00");
+		textValorTotal.setEditable(false);
+		textValorTotal.setColumns(10);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(117, 236, 100, 30);
+		panel_3.add(btnAgregar);
+		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon24.png")));
+		
+		textVariedad.setColumns(10);
+		textVariedad.setBounds(119, 49, 98, 25);
+		panel_3.add(textVariedad);
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Agregar_al_Pedido();
+			}
+		});
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de Delibery
@@ -266,12 +312,18 @@ public class Interfaz_Principal {
 		
 		JPanel panelDelibery = new JPanel();
 		panelDelibery.setBackground(Color.WHITE);
-		panelDelibery.setBounds(6, 344, 336, 166);
+		panelDelibery.setBounds(6, 344, 336, 217);
 		panel.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 		
-		JCheckBox chckbxDelivery = new JCheckBox("Delivery");
+		chckbxDelivery = new JCheckBox("Delivery");
+		chckbxDelivery.setBackground(Color.WHITE);
+		chckbxDelivery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Servicio_Delivery();
+			}
+		});
 		chckbxDelivery.setSelected(true);
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxDelivery.setBounds(16, 14, 97, 25);
@@ -281,37 +333,47 @@ public class Interfaz_Principal {
 		
 		JLabel lblDomicilio = new JLabel("Domicilio");
 		lblDomicilio.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDomicilio.setBounds(16, 82, 97, 25);
+		lblDomicilio.setBounds(16, 118, 97, 25);
 		panelDelibery.add(lblDomicilio);
 		
 		textDomicilio = new JTextField();
 		textDomicilio.setColumns(10);
-		textDomicilio.setBounds(123, 82, 199, 25);
+		textDomicilio.setBounds(123, 118, 199, 25);
 		panelDelibery.add(textDomicilio);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		JLabel lblTelefono = new JLabel("Telefono");
+		JLabel lblTelefono = new JLabel("Tel\u00E9fono");
 		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTelefono.setBounds(16, 46, 97, 25);
+		lblTelefono.setBounds(16, 82, 97, 25);
 		panelDelibery.add(lblTelefono);
 
 		textTelefono = new JTextField();
 		textTelefono.setColumns(10);
-		textTelefono.setBounds(123, 46, 199, 25);
+		textTelefono.setBounds(123, 82, 199, 25);
 		panelDelibery.add(textTelefono);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDetalle.setBounds(16, 118, 97, 25);
+		lblDetalle.setBounds(16, 154, 97, 25);
 		panelDelibery.add(lblDetalle);
 		
 		textDetalle = new JTextField();
 		textDetalle.setColumns(10);
-		textDetalle.setBounds(123, 118, 199, 25);
+		textDetalle.setBounds(123, 154, 199, 25);
 		panelDelibery.add(textDetalle);
+		
+		JLabel lblCliente = new JLabel("Cliente");
+		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCliente.setBounds(16, 46, 97, 25);
+		panelDelibery.add(lblCliente);
+		
+		textCliente = new JTextField();
+		textCliente.setColumns(10);
+		textCliente.setBounds(123, 46, 199, 25);
+		panelDelibery.add(textCliente);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de listado de pedidos
@@ -409,21 +471,116 @@ public class Interfaz_Principal {
 		
 		iniciarParametros();
 		
-	}
-
-
-
-	private void Agregar_Al_Pedido() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	}//--> FIN INTERFAZ
 
 	private void iniciarParametros() {
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 		
+		//******		PRUEBA HARDCODEADO		*********//
+		
+		ArrayList<Object> L_Producto = new ArrayList<Object>();
+		L_Producto.add("Pizza");
+		L_Producto.add("Empanada");
+		L_Producto.add("Bebida");
+		agregar_elem_Autocompleter_Productos(L_Producto);
+		
+		// Variedad de pizza, cada producto tiene su variedad
+		ArrayList<Object> L_Variedad = new ArrayList<Object>();
+		L_Variedad.add("Napolitana");
+		L_Variedad.add("Napolitana especial"); 
+		L_Variedad.add("Muzzarella");
+		L_Variedad.add("Jamon y palmito");
+		L_Variedad.add("Queso y peperoni");
+		L_Variedad.add("Hawaiana");
+		L_Variedad.add("Jamon y Panceta");
+		L_Variedad.add("Cuatro quesos");
+		L_Variedad.add("Salmon Ahumado"); 
+		L_Variedad.add("Cuatro estaciones");
+		L_Variedad.add("Pizza Funghi");
+		L_Variedad.add("Vegetariana");
+		agregar_elem_Autocompleter_Variedad(L_Variedad);
+		
+		//******		FIN PRUEBA HARDCODE		*********//
+		
 	}
+	/** Se limpia el formulario de pedido producto cuando ya se agrego al pedido 	 */
+	private void Limpiar_Formulario_pedido(){
+		PRODUCTO_ACTUAL = new Producto();	
+		textProducto.setText("");
+		comboBoxProducto.setSelectedIndex(0);	
+		textVariedad.setText("");
+		comboBoxVariedadGusto.setSelectedIndex(0);
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		textValor.setText("");
+		textValorTotal.setText("");
+		textObservaciones.setText("");
+	}
+	
+	
+	private void Agregar_al_Pedido() {
+		// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
+		
+	//	if( DATOS OBLIGATORIOS ESTAN COMPLETOS (!=null y a vacio), PUEDO GUARDARLO EN LA LISTA DEL PEDIDO){
+		
+			String producto = textProducto.getText();	// autocompleter  o search
+	//		o
+			String productoCB = comboBoxProducto.getSelectedItem().toString();			// o combo box
+	
+			String Variedad = textVariedad.getText();	// autocompleter o search
+	//		o
+			String VariedadCB = comboBoxVariedadGusto.getSelectedItem().toString();	// o combo box
+	
+			Integer cant = Integer.parseInt(spinnerCantidad.getValue().toString());
+			Double ValorU = Double.parseDouble(textValor.getText());
+			Double ValorT = Double.parseDouble(textValorTotal.getText());
+			String Observacion = textObservaciones.getText();
+			
+			/** Esto va para la parte visual	**/
+			DefaultTableModel modelo = (DefaultTableModel) tabla_Pedido_Completo.getModel();	
+			modelo.addRow(new Object[] { modelo.getRowCount()+1, producto , cant, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
+			
+			
+			/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/
+			PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+			
+			/** Despues que se resetee el formulario de ingreso de pedido**/
+			Limpiar_Formulario_pedido();
+		//}
+	}
+
+	private void Quitar_al_Pedido() {
+		if(tabla_Pedido_Completo.getSelectedRow()!=-1){		// -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
+			int indice_Seleccionado = tabla_Pedido_Completo.getSelectedRow();		// indice de la tabla, (No funciona si se ordenan los datos desde la tabla, ojo)
+			DefaultTableModel modelo = (DefaultTableModel) tabla_Pedido_Completo.getModel();	
+			modelo.removeRow(indice_Seleccionado);
+		}
+		
+	}
+
+
+	private void Servicio_Delivery() {
+		textCliente.setEnabled(chckbxDelivery.isSelected());
+		textDomicilio.setEnabled(chckbxDelivery.isSelected());
+		textTelefono.setEnabled(chckbxDelivery.isSelected());
+		textDetalle.setEnabled(chckbxDelivery.isSelected());
+	}
+	
+	public void agregar_elem_Autocompleter_Productos(ArrayList<Object> L_producto){
+		AutoCompleter_Producto.removeAllItems();
+		AutoCompleter_Producto.setCaseSensitive(false);
+		AutoCompleter_Producto.setMode(0);
+		AutoCompleter_Producto.addItems(L_producto);
+	}
+	
+	public void agregar_elem_Autocompleter_Variedad(ArrayList<Object> L_variedad){
+		AutoCompleter_Variedad.removeAllItems();
+		AutoCompleter_Variedad.setCaseSensitive(false);
+		AutoCompleter_Variedad.setMode(0);
+		AutoCompleter_Variedad.addItems(L_variedad);
+		
+	}
+	
 	
 }//---> FIN CLASE

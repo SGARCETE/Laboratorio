@@ -53,6 +53,16 @@ public class Pedido {
 		Hora_Entrega = hora_Entrega;
 	}
 	
+	public void agregar_un_producto(Producto PRODUCTO) {
+		if(PRODUCTO!=null)
+			Lista_Productos.add(PRODUCTO);
+	}
+	
+	public void quitar_un_producto(Producto PRODUCTO) {
+//		if(PRODUCTO!=null)
+//			Lista_Productos.remove();
+		System.out.println("Producto.quitar_un_producto NO ESTA IMPLEMENTADO" );
+	}
 	
 	
 
