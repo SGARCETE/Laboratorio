@@ -14,7 +14,6 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	
 	
-	@Override
 	public boolean Nuevo_Cliente(Cliente c) {
 		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono) VALUES ("+
 			"'"+	c.getNombre()			+"',"+
@@ -23,6 +22,13 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 			"'"+	c.getTelefono_Fijo()	+"')";
 		return conex.Insertar(SentenciaSQL);
 	}
+	
+	public boolean Eliminar_Cliente(Cliente c) {
+		String SentenciaSQL = "DELETE from Cliente C where C.CL_id =" + c.getID_Cliente();
+		return conex.Insertar(SentenciaSQL);
+	}
+	
+	
 	
 	
 	/*------------------------------------------------------------------------------*/	
