@@ -203,63 +203,63 @@ public class Interfaz_Principal {
 		lblResumenDelPedido.setBounds(364, 56, 566, 25);
 		panelProductos.add(lblResumenDelPedido);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_3.setBounds(5, 49, 344, 273);
-		panelProductos.add(panel_3);
-		panel_3.setLayout(null);
+		JPanel panelAltaPedido = new JPanel();
+		panelAltaPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelAltaPedido.setBounds(5, 49, 344, 273);
+		panelProductos.add(panelAltaPedido);
+		panelAltaPedido.setLayout(null);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblProducto = new JLabel("Producto");
 		lblProducto.setBounds(10, 12, 110, 25);
-		panel_3.add(lblProducto);
+		panelAltaPedido.add(lblProducto);
 		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 
 		textProducto.setBounds(119, 12, 98, 25);
-		panel_3.add(textProducto);
+		panelAltaPedido.add(textProducto);
 		textProducto.setColumns(10);
 		
 		comboBoxProducto = new JComboBox<String>();
 		comboBoxProducto.setBounds(218, 12, 100, 25);
-		panel_3.add(comboBoxProducto);
+		panelAltaPedido.add(comboBoxProducto);
 		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
 		
 		comboBoxVariedadGusto = new JComboBox<String>();
 		comboBoxVariedadGusto.setBounds(218, 49, 100, 25);
-		panel_3.add(comboBoxVariedadGusto);
+		panelAltaPedido.add(comboBoxVariedadGusto);
 		comboBoxVariedadGusto.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblVariedad = new JLabel("Variedad");
 		lblVariedad.setBounds(10, 49, 110, 25);
-		panel_3.add(lblVariedad);
+		panelAltaPedido.add(lblVariedad);
 		lblVariedad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setBounds(10, 85, 110, 25);
-		panel_3.add(lblCantidad);
+		panelAltaPedido.add(lblCantidad);
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setBounds(117, 85, 59, 25);
-		panel_3.add(spinnerCantidad);
+		panelAltaPedido.add(spinnerCantidad);
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblValor = new JLabel("Valor c/u     $");
 		lblValor.setBounds(10, 122, 110, 25);
-		panel_3.add(lblValor);
+		panelAltaPedido.add(lblValor);
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		textValor = new JTextField();
 		textValor.setBounds(117, 122, 199, 25);
-		panel_3.add(textValor);
+		panelAltaPedido.add(textValor);
 		textValor.setText("50.00");
 		textValor.setEditable(false);
 		textValor.setColumns(10);
@@ -268,24 +268,24 @@ public class Interfaz_Principal {
 		
 		JLabel lblValorTotal = new JLabel("Valor total   $");
 		lblValorTotal.setBounds(10, 159, 110, 25);
-		panel_3.add(lblValorTotal);
+		panelAltaPedido.add(lblValorTotal);
 		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblObservacion = new JLabel("Observaciones");
 		lblObservacion.setBounds(10, 199, 110, 25);
-		panel_3.add(lblObservacion);
+		panelAltaPedido.add(lblObservacion);
 		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		textObservaciones = new JTextField();
 		textObservaciones.setBounds(117, 199, 199, 25);
-		panel_3.add(textObservaciones);
+		panelAltaPedido.add(textObservaciones);
 		textObservaciones.setColumns(10);
 		
 		textValorTotal = new JTextField();
 		textValorTotal.setBounds(117, 159, 199, 25);
-		panel_3.add(textValorTotal);
+		panelAltaPedido.add(textValorTotal);
 		textValorTotal.setText("150.00");
 		textValorTotal.setEditable(false);
 		textValorTotal.setColumns(10);
@@ -294,12 +294,12 @@ public class Interfaz_Principal {
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(117, 236, 100, 30);
-		panel_3.add(btnAgregar);
+		panelAltaPedido.add(btnAgregar);
 		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 		
 		textVariedad.setColumns(10);
 		textVariedad.setBounds(119, 49, 98, 25);
-		panel_3.add(textVariedad);
+		panelAltaPedido.add(textVariedad);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
