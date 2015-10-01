@@ -527,7 +527,11 @@ public class Interfaz_Principal {
 
 
 	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
-		
+		ArrayList<Producto> Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
+		comboBoxVariedad.removeAllItems();
+		for (int i = 0; i < Lista_Variedades.size(); i++) {
+//			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_Nombre());
+		}
 	}
 
 
@@ -535,7 +539,6 @@ public class Interfaz_Principal {
 	private void iniciarParametros() {
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
-		
 		
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane.setViewportView(Tabla_Pedido_Completo);
