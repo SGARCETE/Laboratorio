@@ -95,7 +95,6 @@ public class Interfaz_Principal {
 	
 	private Pedido PEDIDO_ACTUAL = new Pedido();				// Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea
 	private Producto PRODUCTO_ACTUAL = new Producto();			// Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro
-	private JTextField textField;
 	private JTextField textTotal_Pedido;
 	private JScrollPane scrollPane;
 	
@@ -260,7 +259,7 @@ public class Interfaz_Principal {
 		
 		textValor = new JTextField();
 		textValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		textValor.setText("50.5");
+		textValor.setText("$0,00");
 		textValor.setBounds(117, 122, 199, 25);
 		panelAltaPedido.add(textValor);
 		textValor.setEditable(false);
@@ -287,7 +286,7 @@ public class Interfaz_Principal {
 		
 		textValorTotal = new JTextField();
 		textValorTotal.setHorizontalAlignment(SwingConstants.RIGHT);
-		textValorTotal.setText("30.5");
+		textValorTotal.setText("$0,00");
 		textValorTotal.setToolTipText("");
 		textValorTotal.setBounds(117, 159, 199, 25);
 		panelAltaPedido.add(textValorTotal);
@@ -436,22 +435,14 @@ public class Interfaz_Principal {
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setText("$180,50");
-		textField.setBounds(44, 68, 177, 34);
-		panel_3.add(textField);
-		textField.setColumns(10);
 		textTotal_Pedido = new JTextField();
 		textTotal_Pedido.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textTotal_Pedido.setHorizontalAlignment(SwingConstants.RIGHT);
-		textTotal_Pedido.setText("$180,50");
+		textTotal_Pedido.setText("$0,00");
 		textTotal_Pedido.setBounds(17, 62, 145, 35);
 		panel_3.add(textTotal_Pedido);
 		textTotal_Pedido.setColumns(10);
 		
-		JLabel lblImporteTotal = new JLabel("Importe total:");
 		JLabel lblImporteTotal = new JLabel("Importe total");
 		lblImporteTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImporteTotal.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -562,10 +553,6 @@ public class Interfaz_Principal {
 		
 	}//--> FIN INTERFAZ
 
-	private void Seleccion_De_Variedad() {
-		textVariedad.setText(comboBoxVariedad.getSelectedItem().toString());
-	}
-
 
 
 	private void Seleccion_De_Producto() {
@@ -576,39 +563,10 @@ public class Interfaz_Principal {
 	}
 
 
-
-	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
-		
-	}
-
-
-
 	
 	/**
 	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
 	 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private void iniciarParametros() {
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
@@ -782,8 +740,6 @@ public class Interfaz_Principal {
 	
 			//			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
 			Integer cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-			Double ValorU = Double.parseDouble(textValor.getText());
-			Double ValorT = Double.parseDouble(textValorTotal.getText());
 		if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && cantidad>0){
 			Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 			Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
