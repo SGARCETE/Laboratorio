@@ -39,6 +39,10 @@ import Interfaz.Swing_Extends.Model_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
+import Negocio.Servicios.Servicio_Clientes;
+import Negocio.Servicios.Servicio_Pedidos;
+import Negocio.Servicios.Servicio_Productos;
+import Negocio.Servicios.Servicio_Repartidores;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
@@ -90,16 +94,22 @@ public class Interfaz_Principal {
 	private JTextField textField;
 	private JScrollPane scrollPane;
 	
+	// inicializador de servicios
+	private Servicio_Productos sv_productos = new Servicio_Productos();
+	private Servicio_Clientes sv_clientes = new Servicio_Clientes();
+	private Servicio_Pedidos sv_pedidos = new Servicio_Pedidos();
+	
 	/**
-	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA
+	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA, debe ir en Negocio.Servicios Ejecutar_WILDSOFT.java
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+
 					
+					// Look and feel por defecto: Nimbus
 					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-	
 					Interfaz_Principal window = new Interfaz_Principal();
 					window.frmWildsoft.setVisible(true);
 				    SwingUtilities.updateComponentTreeUI(window.frmWildsoft);
@@ -194,7 +204,7 @@ public class Interfaz_Principal {
 		});
 		comboBoxProducto.setBounds(218, 12, 100, 25);
 		panelAltaPedido.add(comboBoxProducto);
-		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
+		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas", "Bebidas"}));
 		
 		comboBoxVariedad = new JComboBox<String>();
 		comboBoxVariedad.addActionListener(new ActionListener() {
@@ -495,7 +505,7 @@ public class Interfaz_Principal {
 		
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
 		mnAyuda.add(mntmAcercaDeWildsoft);
-		frmWildsoft.setVisible(true);
+//		frmWildsoft.setVisible(true);
 		
 		iniciarParametros();
 		
@@ -508,7 +518,15 @@ public class Interfaz_Principal {
 
 
 	private void Seleccion_De_Producto() {
-		textProducto.setText(comboBoxProducto.getSelectedItem().toString());
+		if(!comboBoxProducto.getSelectedItem().toString().isEmpty()){
+			textProducto.setText(comboBoxProducto.getSelectedItem().toString());
+			Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
+		}
+	}
+
+
+
+	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
 		
 	}
 
@@ -587,7 +605,7 @@ public class Interfaz_Principal {
 			
 			/** Esto va para la parte visual	**/
 			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
-			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, producto, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
 			Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
 			
 			

@@ -23,13 +23,11 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	/*------------------------------------------------------------------------------*/	
 	public boolean Eliminar_Cliente(Cliente c) {
 		String SentenciaSQL = "DELETE from Cliente C where C.CL_id =" + c.getID_Cliente();
 		return conex.Insertar(SentenciaSQL);
 	}
-	
-	
-	
 	
 	/*------------------------------------------------------------------------------*/	
 	/** Carga los datos pedidos para el autocompletar. */										
