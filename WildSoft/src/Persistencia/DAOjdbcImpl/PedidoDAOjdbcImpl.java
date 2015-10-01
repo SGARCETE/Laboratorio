@@ -2,7 +2,6 @@ package Persistencia.DAOjdbcImpl;
 
 import java.util.ArrayList;
 
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Persistencia.DAO.PedidoDAO;
 
