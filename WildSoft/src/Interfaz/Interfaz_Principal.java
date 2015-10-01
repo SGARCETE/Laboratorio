@@ -165,9 +165,6 @@ public class Interfaz_Principal {
 			new Object[][] {
 				{"1", "2", "Pizza Napolitana", "$50,00", "$100,00", "Sin aceitunas"},
 				{"2", "12", "Empanadas de carne", "$7,00", "$84,00", null},
-				{null, "", null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
@@ -517,7 +514,9 @@ public class Interfaz_Principal {
 		textObservaciones.setText("");
 	}
 	
-	
+	/**
+	 * Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general
+	 */
 	private void Agregar_al_Pedido() {
 		// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
 		
@@ -531,14 +530,14 @@ public class Interfaz_Principal {
 	//		o
 			String VariedadCB = comboBoxVariedadGusto.getSelectedItem().toString();	// o combo box
 	
-			Integer cant = Integer.parseInt(spinnerCantidad.getValue().toString());
+			Integer cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			Double ValorU = Double.parseDouble(textValor.getText());
 			Double ValorT = Double.parseDouble(textValorTotal.getText());
 			String Observacion = textObservaciones.getText();
 			
 			/** Esto va para la parte visual	**/
 			DefaultTableModel modelo = (DefaultTableModel) tabla_Pedido_Completo.getModel();	
-			modelo.addRow(new Object[] { modelo.getRowCount()+1, producto , cant, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, producto, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
 			tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
 			
 			
