@@ -57,7 +57,7 @@ public class Interfaz_Principal {
 	private JTable Tabla_Pedido_Completo;
 	private JTable Tabla_Lista_pedidos;
 	private JComboBox<String> comboBoxProducto;
-	private JComboBox<String> comboBoxVariedadGusto;
+	private JComboBox<String> comboBoxVariedad;
 	private JCheckBox chckbxDelivery;
 	private JSpinner spinnerCantidad;
 	private JTextField textDomicilio;
@@ -187,14 +187,24 @@ public class Interfaz_Principal {
 		textProducto.setColumns(10);
 		
 		comboBoxProducto = new JComboBox<String>();
+		comboBoxProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Seleccion_De_Producto();
+			}
+		});
 		comboBoxProducto.setBounds(218, 12, 100, 25);
 		panelAltaPedido.add(comboBoxProducto);
 		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas"}));
 		
-		comboBoxVariedadGusto = new JComboBox<String>();
-		comboBoxVariedadGusto.setBounds(218, 49, 100, 25);
-		panelAltaPedido.add(comboBoxVariedadGusto);
-		comboBoxVariedadGusto.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
+		comboBoxVariedad = new JComboBox<String>();
+		comboBoxVariedad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Seleccion_De_Variedad();
+			}
+		});
+		comboBoxVariedad.setBounds(218, 49, 100, 25);
+		panelAltaPedido.add(comboBoxVariedad);
+		comboBoxVariedad.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -223,6 +233,7 @@ public class Interfaz_Principal {
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		textValor = new JTextField();
+		textValor.setHorizontalAlignment(SwingConstants.RIGHT);
 		textValor.setText("50.5");
 		textValor.setBounds(117, 122, 199, 25);
 		panelAltaPedido.add(textValor);
@@ -249,6 +260,7 @@ public class Interfaz_Principal {
 		textObservaciones.setColumns(10);
 		
 		textValorTotal = new JTextField();
+		textValorTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		textValorTotal.setText("30.5");
 		textValorTotal.setToolTipText("");
 		textValorTotal.setBounds(117, 159, 199, 25);
@@ -489,6 +501,19 @@ public class Interfaz_Principal {
 		
 	}//--> FIN INTERFAZ
 
+	private void Seleccion_De_Variedad() {
+		textVariedad.setText(comboBoxVariedad.getSelectedItem().toString());
+	}
+
+
+
+	private void Seleccion_De_Producto() {
+		textProducto.setText(comboBoxProducto.getSelectedItem().toString());
+		
+	}
+
+
+
 	private void iniciarParametros() {
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
@@ -532,7 +557,7 @@ public class Interfaz_Principal {
 		textProducto.setText("");
 		comboBoxProducto.setSelectedIndex(0);	
 		textVariedad.setText("");
-		comboBoxVariedadGusto.setSelectedIndex(0);
+		comboBoxVariedad.setSelectedIndex(0);
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		textValor.setText("");
 		textValorTotal.setText("");
@@ -553,7 +578,7 @@ public class Interfaz_Principal {
 	
 			String Variedad = textVariedad.getText();	// autocompleter o search
 	//		o
-			String VariedadCB = comboBoxVariedadGusto.getSelectedItem().toString();	// o combo box
+			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
 	
 			Integer cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			Double ValorU = Double.parseDouble(textValor.getText());
