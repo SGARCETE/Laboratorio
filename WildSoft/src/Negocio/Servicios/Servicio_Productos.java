@@ -8,15 +8,44 @@ import Persistencia.DAOjdbcImpl.ProductoDAOjdbcImpl;
 
 public class Servicio_Productos {
 	private ProductoDAO productoDAO = new ProductoDAOjdbcImpl();
-	@SuppressWarnings("unused")
-	private ArrayList<Producto> Lista_Variedades;
+	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	private ArrayList<String> Lista_Productos = new ArrayList<String>();
+
+	
+	
+	public Servicio_Productos() {
+		//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
+		String[] Productos =  new String[] {"Pizzas", "Empanadas", "Bebidas"};
+		Lista_Productos.add(Productos[0]);
+		Lista_Productos.add(Productos[1]);
+		Lista_Productos.add(Productos[2]);
+		
+		String[] Variedades = new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"};
+		for (int i = 0; i < Variedades.length; i++) {
+			Producto p = new Producto();
+			p.setPR_nombre(Variedades[i]);
+			p.setPR_precio(50.0);
+			p.setPR_tipo_producto(1);
+			Lista_Variedades.add(p);
+		}
+		
+	}
+	
+
 	
 	public boolean guardar_nuevo_producto(Producto p){
 		return productoDAO.AGREGAR_PRODUCTO(p);
 	}
 	
+
+	public ArrayList<String> getLista_Productos(){
+		return Lista_Productos;
+	}
+	
 	public ArrayList<Producto> getVariedad_del_Producto(String Tipo_Producto){
-		return productoDAO.getVARIEDAD_DEL_PRODUCTO(Tipo_Producto);
+	
+		return Lista_Variedades;					//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
+//		return productoDAO.getVARIEDAD_DEL_PRODUCTO(Tipo_Producto);
 	}
 	
 	public boolean eliminar_un_producto(Producto p){

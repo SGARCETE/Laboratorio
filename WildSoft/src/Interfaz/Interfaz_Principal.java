@@ -51,6 +51,10 @@ import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 
 import java.awt.SystemColor;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 //import com.mxrck.autocompleter.AutoCompleterCallback;
 //import com.mxrck.autocompleter.TextAutoCompleter;
 
@@ -92,12 +96,14 @@ public class Interfaz_Principal {
 	private Pedido PEDIDO_ACTUAL = new Pedido();				// Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea
 	private Producto PRODUCTO_ACTUAL = new Producto();			// Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro
 	private JTextField textField;
+	private JTextField textTotal_Pedido;
 	private JScrollPane scrollPane;
 	
 	// inicializador de servicios
 	private Servicio_Productos sv_productos = new Servicio_Productos();
 	private Servicio_Clientes sv_clientes = new Servicio_Clientes();
 	private Servicio_Pedidos sv_pedidos = new Servicio_Pedidos();
+	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	
 	/**
 	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA, debe ir en Negocio.Servicios Ejecutar_WILDSOFT.java
@@ -175,11 +181,13 @@ public class Interfaz_Principal {
 		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
+		lblIngreseLosProductos.setBounds(18, 20, 404, 25);
 		panelProductos.add(lblIngreseLosProductos);
 		
 		JPanel panelAltaPedido = new JPanel();
 		panelAltaPedido.setBackground(SystemColor.menu);
 		panelAltaPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelAltaPedido.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelAltaPedido.setBounds(18, 49, 331, 266);
 		panelProductos.add(panelAltaPedido);
 		panelAltaPedido.setLayout(null);
@@ -200,11 +208,13 @@ public class Interfaz_Principal {
 		comboBoxProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Seleccion_De_Producto();
+				Seleccion_De_Tipo_Producto();
 			}
 		});
 		comboBoxProducto.setBounds(218, 12, 100, 25);
 		panelAltaPedido.add(comboBoxProducto);
 		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas", "Bebidas"}));
+//		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas", "Bebidas"}));
 		
 		comboBoxVariedad = new JComboBox<String>();
 		comboBoxVariedad.addActionListener(new ActionListener() {
@@ -215,6 +225,7 @@ public class Interfaz_Principal {
 		comboBoxVariedad.setBounds(218, 49, 100, 25);
 		panelAltaPedido.add(comboBoxVariedad);
 		comboBoxVariedad.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
+//		comboBoxVariedad.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -231,6 +242,11 @@ public class Interfaz_Principal {
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		spinnerCantidad = new JSpinner();
+		spinnerCantidad.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				Calcula_totales();
+			}
+		});
 		spinnerCantidad.setBounds(117, 85, 59, 25);
 		panelAltaPedido.add(spinnerCantidad);
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
@@ -292,6 +308,7 @@ public class Interfaz_Principal {
 		JPanel panel_Resumen_Pedido = new JPanel();
 		panel_Resumen_Pedido.setBackground(SystemColor.menu);
 		panel_Resumen_Pedido.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_Resumen_Pedido.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_Resumen_Pedido.setBounds(354, 49, 576, 266);
 		panelProductos.add(panel_Resumen_Pedido);
 		panel_Resumen_Pedido.setLayout(null);
@@ -321,6 +338,7 @@ public class Interfaz_Principal {
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
 		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/edit-icon24.png")));
 		btnModificar.setBounds(132, 232, 121, 30);
 		panel_Resumen_Pedido.add(btnModificar);
@@ -337,11 +355,13 @@ public class Interfaz_Principal {
 		JPanel panelDelibery = new JPanel();
 		panelDelibery.setBackground(SystemColor.menu);
 		panelDelibery.setBounds(6, 334, 654, 116);
+		panelDelibery.setBounds(6, 334, 609, 116);
 		panel.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 		
 		chckbxDelivery = new JCheckBox("Delivery");
+		chckbxDelivery = new JCheckBox("Con delivery");
 		chckbxDelivery.setBackground(SystemColor.menu);
 		chckbxDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -351,6 +371,7 @@ public class Interfaz_Principal {
 		chckbxDelivery.setSelected(true);
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxDelivery.setBounds(16, 14, 97, 25);
+		chckbxDelivery.setBounds(16, 14, 110, 25);
 		panelDelibery.add(chckbxDelivery);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -358,11 +379,13 @@ public class Interfaz_Principal {
 		JLabel lblDomicilio = new JLabel("Domicilio");
 		lblDomicilio.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDomicilio.setBounds(332, 46, 97, 25);
+		lblDomicilio.setBounds(299, 46, 70, 25);
 		panelDelibery.add(lblDomicilio);
 		
 		textDomicilio = new JTextField();
 		textDomicilio.setColumns(10);
 		textDomicilio.setBounds(439, 46, 199, 25);
+		textDomicilio.setBounds(381, 46, 199, 25);
 		panelDelibery.add(textDomicilio);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -370,11 +393,13 @@ public class Interfaz_Principal {
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono");
 		lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblTelefono.setBounds(16, 82, 97, 25);
+		lblTelefono.setBounds(16, 82, 70, 25);
 		panelDelibery.add(lblTelefono);
 
 		textTelefono = new JTextField();
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(123, 82, 199, 25);
+		textTelefono.setBounds(90, 82, 199, 25);
 		panelDelibery.add(textTelefono);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -382,27 +407,32 @@ public class Interfaz_Principal {
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDetalle.setBounds(332, 82, 97, 25);
+		lblDetalle.setBounds(299, 82, 70, 25);
 		panelDelibery.add(lblDetalle);
 		
 		textDetalle = new JTextField();
 		textDetalle.setColumns(10);
 		textDetalle.setBounds(439, 82, 199, 25);
+		textDetalle.setBounds(381, 82, 199, 25);
 		panelDelibery.add(textDetalle);
 		
 		JLabel lblCliente = new JLabel("Cliente");
 		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblCliente.setBounds(16, 46, 97, 25);
+		lblCliente.setBounds(16, 46, 70, 25);
 		panelDelibery.add(lblCliente);
 		
 		textCliente = new JTextField();
 		textCliente.setColumns(10);
 		textCliente.setBounds(123, 46, 199, 25);
+		textCliente.setBounds(90, 46, 199, 25);
 		panelDelibery.add(textCliente);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.menu);
 		panel_3.setBorder(new TitledBorder(null, "Importes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_3.setBounds(670, 334, 261, 116);
+		panel_3.setBounds(616, 334, 324, 116);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -413,12 +443,33 @@ public class Interfaz_Principal {
 		textField.setBounds(44, 68, 177, 34);
 		panel_3.add(textField);
 		textField.setColumns(10);
+		textTotal_Pedido = new JTextField();
+		textTotal_Pedido.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		textTotal_Pedido.setHorizontalAlignment(SwingConstants.RIGHT);
+		textTotal_Pedido.setText("$180,50");
+		textTotal_Pedido.setBounds(17, 62, 145, 35);
+		panel_3.add(textTotal_Pedido);
+		textTotal_Pedido.setColumns(10);
 		
 		JLabel lblImporteTotal = new JLabel("Importe total:");
+		JLabel lblImporteTotal = new JLabel("Importe total");
 		lblImporteTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImporteTotal.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblImporteTotal.setBounds(44, 23, 177, 34);
+		lblImporteTotal.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblImporteTotal.setBounds(17, 30, 145, 30);
 		panel_3.add(lblImporteTotal);
+		
+		JButton btnNewButton = new JButton("Guardar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Guardar_pedido();
+			}
+		});
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Save-icon48.png")));
+		btnNewButton.setBounds(174, 30, 129, 67);
+		panel_3.add(btnNewButton);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de listado de pedidos
@@ -527,12 +578,34 @@ public class Interfaz_Principal {
 
 
 	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
-		ArrayList<Producto> Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
-		comboBoxVariedad.removeAllItems();
-		for (int i = 0; i < Lista_Variedades.size(); i++) {
-//			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_Nombre());
-		}
+		
 	}
+
+
+
+	
+	/**
+	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
+	 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -540,10 +613,19 @@ public class Interfaz_Principal {
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 		
+		
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane.setViewportView(Tabla_Pedido_Completo);
 		
+		ArrayList<String> ListaProductos = sv_productos.getLista_Productos(); 
+		for (int i = 0; i < ListaProductos.size(); i++) {
+			comboBoxProducto.addItem(ListaProductos.get(i));
+		}
 		
+		ArrayList<Producto> ListaVarie = sv_productos.getVariedad_del_Producto("PIZZA");
+		for (int i = 0; i < ListaVarie.size(); i++) {
+			comboBoxVariedad.addItem(ListaVarie.get(i).getPR_nombre());
+		}
 		
 		//******		PRUEBA HARDCODEADO		*********//
 		
@@ -573,8 +655,89 @@ public class Interfaz_Principal {
 		
 	}
 	/** Se limpia el formulario de pedido producto cuando ya se agrego al pedido 	 */
+	
+	
+	/**
+	 *  CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL TOTAL DEL PEDIDO
+	 */
+	private void Calcula_totales() {
+		if(PRODUCTO_ACTUAL!=null && PEDIDO_ACTUAL.getLista_Productos()!=null){
+			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO PRODUCTO
+			textValorTotal.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString())));
+			// CALCULA EL TOTAL DEL PEDIDO
+			Double TOTAL_PEDIDO = 0.0;
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+			}
+			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
+		}
+	}
+
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	/**
+	 * CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL COMBOBOX, ESTE DATO
+	 * SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE CARGAN LAS VARIEDADES DEL TIPO DE
+	 * PRODUCTO SELECCIONADO:
+	 * EJEMPLO: SI SE SELECCIONO BEBIDA, SE DEBE OBTENER LAS VARIEDADES DE BEBIDAS: COCACOLA, SPRITE, VINO Y SETEAR 
+	 * EN EL COMBOBOX Y AUTOCOMPLETER DE VARIEDADES
+	 */
+	private void Seleccion_De_Tipo_Producto() {
+		if(!comboBoxProducto.getSelectedItem().toString().isEmpty()){
+			textProducto.setText(comboBoxProducto.getSelectedItem().toString());
+			Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
+		}
+	}
+
+	/**
+	 * 
+	 * @param TIPO_PRODUCTO
+	 */
+	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
+		Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
+		comboBoxVariedad.removeAllItems();
+		for (int i = 0; i < Lista_Variedades.size(); i++) {
+			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
+		}
+	}
+
+	/**
+	 * CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX, ESTE DATO
+	 * SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE CARGA EL PRECIO DE LA VARIEDAD
+	 * SELECCIONADA.
+	 * EJEMPLO: SE SELECCIONA LA VARIEDAD COCACOLA [DE BEBIDAS], SE OBTIENE EL PRECIO DE DICHO PRODUCTO
+	 * Y SE SETEA EN EL TEXTFIELD DEL PRECIO Y EN "PRODUCTO_ACTUAL"
+	 */
+	private void Seleccion_De_Variedad() {
+		if(comboBoxVariedad.getSelectedItem()!=null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()){
+			textVariedad.setText(comboBoxVariedad.getSelectedItem().toString());
+			Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
+			Calcula_totales();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param VARIEDAD
+	 */
+	private void Cargar_precio_del_producto(String VARIEDAD) {
+		for (int i = 0; i < Lista_Variedades.size(); i++) {
+			if(Lista_Variedades.get(i).getPR_nombre().equals(VARIEDAD))
+				PRODUCTO_ACTUAL = Lista_Variedades.get(i);
+		}	
+		textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
+	}
+	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			LIMPIADOR DE CAMPOS
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	/** SE LIMPIAN LOS DATOS DEL FORMULARIO DE ALTA DE PRODUCTO PARA PODER INGRESAR UNO NUEVO	 */
 	private void Limpiar_Formulario_pedido(){
 		PRODUCTO_ACTUAL = new Producto();	
+		comboBoxProducto.setSelectedIndex(0);
+		comboBoxVariedad.removeAllItems();
+		textVariedad.setText("");
 		textProducto.setText("");
 		comboBoxProducto.setSelectedIndex(0);	
 		textVariedad.setText("");
@@ -583,8 +746,21 @@ public class Interfaz_Principal {
 		textValor.setText("");
 		textValorTotal.setText("");
 		textObservaciones.setText("");
+		
+	}
+	/**
+	 * 
+	 */
+	private void Limpiar_Todo() {
+		Limpiar_Formulario_pedido();
+		PEDIDO_ACTUAL = new Pedido();
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
+		scrollPane.setViewportView(Tabla_Pedido_Completo);		
 	}
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			AGREGAR
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	/**
 	 * Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general
 	 */
@@ -597,30 +773,71 @@ public class Interfaz_Principal {
 	//		o
 			String productoCB = comboBoxProducto.getSelectedItem().toString();			// o combo box
 	
+//		if( DATOS OBLIGATORIOS ESTAN COMPLETOS (!=null y a vacio), PUEDO GUARDARLO EN LA LISTA DEL PEDIDO){
+			String Tipo_producto = textProducto.getText();	// autocompleter  o search
+			//			String productoCB = comboBoxProducto.getSelectedItem().toString();			// o combo box
 			String Variedad = textVariedad.getText();	// autocompleter o search
 	//		o
 			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
 	
+			//			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
 			Integer cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			Double ValorU = Double.parseDouble(textValor.getText());
 			Double ValorT = Double.parseDouble(textValorTotal.getText());
+		if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && cantidad>0){
+			Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
+			Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
+
+			PRODUCTO_ACTUAL.setPR_nombre(Variedad);
 			String Observacion = textObservaciones.getText();
 			
 			/** Esto va para la parte visual	**/
 			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
 			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
 			Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
 			
 			
 			/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/
 			PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 			
+			for (int i = 0; i < cantidad; i++) 
+				PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+						
 			/** Despues que se resetee el formulario de ingreso de pedido**/
 			Limpiar_Formulario_pedido();
 		//}
+		}
 	}
+	/**
+	 * 
+	 */
+	private void Guardar_pedido() {
+		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+			//sv_pedidos.agregar_pedido(PEDIDO_ACTUAL);
+			Limpiar_Todo();
+			//TODO- actualizar Tabla_Lista_pedidos
+		}
+	}
+	
 
+
+
+
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			QUITAR/ ELIMINAR
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	/**
+	 * SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO, SE ELIMINARA ESE ELEMENTO DE LA LISTA 
+	 */
 	private void Quitar_al_Pedido() {
+		// LO QUITA DE LA LISTA DE PEDIDO
+//		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+//			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+//				PEDIDO_ACTUAL.getLista_Productos().get(i).
+//			}
+//		}
+		// LO QUITA DE LA LISTA VISUAL
 		if(Tabla_Pedido_Completo.getSelectedRow()!=-1){		// -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
 			int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow();		// indice de la tabla, (No funciona si se ordenan los datos desde la tabla, ojo)
 			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
@@ -630,6 +847,12 @@ public class Interfaz_Principal {
 	}
 
 
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	/**
+	 * ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA OPCION "DELIVERY" EN LA INTERFAZ
+	 */
 	private void Servicio_Delivery() {
 		textCliente.setEnabled(chckbxDelivery.isSelected());
 		textDomicilio.setEnabled(chckbxDelivery.isSelected());
@@ -637,6 +860,13 @@ public class Interfaz_Principal {
 		textDetalle.setEnabled(chckbxDelivery.isSelected());
 	}
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//			
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	/**
+	 * AGREGA ELEMENTOS (NOMBRES DE "TIPO DE PRODUCTOS") AL AUTOCOMPLETER DE "TIPO DE PRODUCTOS"
+	 * @param L_producto	RECIBE UNA LISTA DE "TIPO DE PRODUCTOS" [EJEMPLO: EMAPANDAS, PIZZAS, BEBIDAS]
+	 */
 	public void agregar_elem_Autocompleter_Productos(ArrayList<Object> L_producto){
 		AutoCompleter_Producto.removeAllItems();
 		AutoCompleter_Producto.setCaseSensitive(false);
@@ -644,6 +874,11 @@ public class Interfaz_Principal {
 		AutoCompleter_Producto.addItems(L_producto);
 	}
 	
+	/**
+	 * AGREGA ELEMENTOS (NOMBRES DE "PRODUCTOS") AL AUTOCOMPLETER DE "PRODUCTOS"
+	 * @param L_variedad	RECIBE UNA LISTA DE NOMBRE DE PRODUCTOS DE UN "TIPO DE PRODUCTO", [EJEMPLO: SI EL "TIPO DE PRODUCTO" ES BEBIDA, 
+	 * ESTA LISTA DEBE CONTENER LOS NOMBRES DE LAS VARIEDADES DE LA "BEBIDA", EJEMPLO, COCACOLA, SPRITE, CERVEZA, MANAOS, ETC]
+	 */
 	public void agregar_elem_Autocompleter_Variedad(ArrayList<Object> L_variedad){
 		AutoCompleter_Variedad.removeAllItems();
 		AutoCompleter_Variedad.setCaseSensitive(false);
