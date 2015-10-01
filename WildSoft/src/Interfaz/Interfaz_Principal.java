@@ -43,6 +43,7 @@ import javax.swing.border.LineBorder;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import java.awt.SystemColor;
 //import com.mxrck.autocompleter.AutoCompleterCallback;
 //import com.mxrck.autocompleter.TextAutoCompleter;
 
@@ -83,6 +84,7 @@ public class Interfaz_Principal {
 	
 	private Pedido PEDIDO_ACTUAL = new Pedido();				// Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea
 	private Producto PRODUCTO_ACTUAL = new Producto();			// Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro
+	private JTextField textField;
 	
 	/**
 	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA
@@ -121,7 +123,7 @@ public class Interfaz_Principal {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-		frmWildsoft.setBounds(100, 100, 962, 663);
+		frmWildsoft.setBounds(100, 100, 962, 570);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -147,44 +149,9 @@ public class Interfaz_Principal {
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(new Color(240,240,240));
 		panelProductos.setLayout(null);
-		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pedido", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelProductos.setBounds(0, 6, 940, 326);
 		panel.add(panelProductos);
-		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		//			Tabla que muestra el pedido
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(364, 87, 566, 176);
-		panelProductos.add(scrollPane);
-		
-		tabla_Pedido_Completo = new JTable();
-		tabla_Pedido_Completo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		tabla_Pedido_Completo.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"1", "2", "Pizza Napolitana", "$50,00", "$100,00", "Sin aceitunas"},
-				{"2", "12", "Empanadas de carne", "$7,00", "$84,00", null},
-			},
-			new String[] {
-				"Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
-			}
-		));
-		tabla_Pedido_Completo.getColumnModel().getColumn(0).setPreferredWidth(34);
-		tabla_Pedido_Completo.getColumnModel().getColumn(1).setPreferredWidth(67);
-		tabla_Pedido_Completo.getColumnModel().getColumn(2).setPreferredWidth(134);
-		tabla_Pedido_Completo.getColumnModel().getColumn(5).setPreferredWidth(101);
-		scrollPane.setViewportView(tabla_Pedido_Completo);
-		
-		JButton btnQuitar = new JButton("Quitar");
-		btnQuitar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Quitar_al_Pedido();
-			}
-		});
-		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
-		btnQuitar.setBounds(364, 275, 100, 30);
-		panelProductos.add(btnQuitar);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -193,12 +160,6 @@ public class Interfaz_Principal {
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
 		panelProductos.add(lblIngreseLosProductos);
-
-		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
-		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblResumenDelPedido.setBounds(364, 56, 566, 25);
-		panelProductos.add(lblResumenDelPedido);
 		
 		JPanel panelAltaPedido = new JPanel();
 		panelAltaPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -257,7 +218,6 @@ public class Interfaz_Principal {
 		textValor = new JTextField();
 		textValor.setBounds(117, 122, 199, 25);
 		panelAltaPedido.add(textValor);
-		textValor.setText("50.00");
 		textValor.setEditable(false);
 		textValor.setColumns(10);
 		
@@ -283,7 +243,6 @@ public class Interfaz_Principal {
 		textValorTotal = new JTextField();
 		textValorTotal.setBounds(117, 159, 199, 25);
 		panelAltaPedido.add(textValorTotal);
-		textValorTotal.setText("150.00");
 		textValorTotal.setEditable(false);
 		textValorTotal.setColumns(10);
 		
@@ -297,6 +256,53 @@ public class Interfaz_Principal {
 		textVariedad.setColumns(10);
 		textVariedad.setBounds(119, 49, 98, 25);
 		panelAltaPedido.add(textVariedad);
+		
+		JPanel panel_Resumen_Pedido = new JPanel();
+		panel_Resumen_Pedido.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_Resumen_Pedido.setBounds(354, 49, 576, 273);
+		panelProductos.add(panel_Resumen_Pedido);
+		panel_Resumen_Pedido.setLayout(null);
+		
+		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar.setBounds(10, 232, 100, 30);
+		panel_Resumen_Pedido.add(btnQuitar);
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Quitar_al_Pedido();
+			}
+		});
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//			Tabla que muestra el pedido
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 42, 556, 176);
+		panel_Resumen_Pedido.add(scrollPane);
+		
+		tabla_Pedido_Completo = new JTable();
+		tabla_Pedido_Completo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		tabla_Pedido_Completo.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"1", "2", "Pizza Napolitana", "$50,00", "$100,00", "Sin aceitunas"},
+				{"2", "12", "Empanadas de carne", "$7,00", "$84,00", null},
+			},
+			new String[] {
+				"Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			}
+		));
+		tabla_Pedido_Completo.getColumnModel().getColumn(0).setPreferredWidth(34);
+		tabla_Pedido_Completo.getColumnModel().getColumn(1).setPreferredWidth(67);
+		tabla_Pedido_Completo.getColumnModel().getColumn(2).setPreferredWidth(134);
+		tabla_Pedido_Completo.getColumnModel().getColumn(5).setPreferredWidth(101);
+		scrollPane.setViewportView(tabla_Pedido_Completo);
+		
+				JLabel lblResumenDelPedido = new JLabel("Pedido completo");
+				lblResumenDelPedido.setBounds(10, 11, 556, 25);
+				panel_Resumen_Pedido.add(lblResumenDelPedido);
+				lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
+				lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
@@ -308,14 +314,14 @@ public class Interfaz_Principal {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JPanel panelDelibery = new JPanel();
-		panelDelibery.setBackground(Color.WHITE);
-		panelDelibery.setBounds(6, 344, 336, 217);
+		panelDelibery.setBackground(SystemColor.menu);
+		panelDelibery.setBounds(6, 334, 654, 134);
 		panel.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 		
 		chckbxDelivery = new JCheckBox("Delivery");
-		chckbxDelivery.setBackground(Color.WHITE);
+		chckbxDelivery.setBackground(SystemColor.menu);
 		chckbxDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servicio_Delivery();
@@ -330,12 +336,12 @@ public class Interfaz_Principal {
 		
 		JLabel lblDomicilio = new JLabel("Domicilio");
 		lblDomicilio.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDomicilio.setBounds(16, 118, 97, 25);
+		lblDomicilio.setBounds(332, 46, 97, 25);
 		panelDelibery.add(lblDomicilio);
 		
 		textDomicilio = new JTextField();
 		textDomicilio.setColumns(10);
-		textDomicilio.setBounds(123, 118, 199, 25);
+		textDomicilio.setBounds(439, 46, 199, 25);
 		panelDelibery.add(textDomicilio);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -354,12 +360,12 @@ public class Interfaz_Principal {
 		
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDetalle.setBounds(16, 154, 97, 25);
+		lblDetalle.setBounds(332, 82, 97, 25);
 		panelDelibery.add(lblDetalle);
 		
 		textDetalle = new JTextField();
 		textDetalle.setColumns(10);
-		textDetalle.setBounds(123, 154, 199, 25);
+		textDetalle.setBounds(439, 82, 199, 25);
 		panelDelibery.add(textDetalle);
 		
 		JLabel lblCliente = new JLabel("Cliente");
@@ -371,6 +377,25 @@ public class Interfaz_Principal {
 		textCliente.setColumns(10);
 		textCliente.setBounds(123, 46, 199, 25);
 		panelDelibery.add(textCliente);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "Importes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(670, 334, 261, 137);
+		panel.add(panel_3);
+		panel_3.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField.setText("$180,50");
+		textField.setBounds(135, 82, 86, 25);
+		panel_3.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblImporteTotal = new JLabel("Importe total:");
+		lblImporteTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblImporteTotal.setBounds(10, 82, 114, 25);
+		panel_3.add(lblImporteTotal);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de listado de pedidos
@@ -580,6 +605,4 @@ public class Interfaz_Principal {
 		AutoCompleter_Variedad.addItems(L_variedad);
 		
 	}
-	
-	
 }//---> FIN CLASE
