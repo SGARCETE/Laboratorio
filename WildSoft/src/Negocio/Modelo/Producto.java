@@ -1,24 +1,42 @@
 package Negocio.Modelo;
-import java.sql.*;
 
 
 public class Producto {
+	
+	private Integer	PR_id;
+	private String	PR_nombre;
+	private Double	PR_precio;
+	private Integer	PR_tipo_producto;
+	
+	public Integer getPR_id() {
+		return PR_id;
+	}
 
-	
-	
-	
-	public static void main(String[] args){
-	
-		try{
-			System.out.println("Probando conectar a DataBase");
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			@SuppressWarnings("unused")
-			Connection conexion= DriverManager.getConnection("jdbc:mysql://localhost:pizzeria","root","");
-		}
-		catch(Exception e){
-			
-		}
-		
+	public void setPR_id(Integer pR_id) {
+		PR_id = pR_id;
+	}
+
+	public String getPR_nombre() {
+		return PR_nombre;
+	}
+
+	public void setPR_nombre(String pR_nombre) {
+		PR_nombre = pR_nombre;
+	}
+
+	public Double getPR_precio() {
+		return PR_precio;
+	}
+
+	public void setPR_precio(Double pR_precio) {
+		PR_precio = pR_precio;
+	}
+
+	public Integer getPR_tipo_producto() {
+		return PR_tipo_producto;
+	}
+
+	public void setPR_tipo_producto(Integer pR_tipo_producto) {
+		PR_tipo_producto = pR_tipo_producto;
 	}
 }
