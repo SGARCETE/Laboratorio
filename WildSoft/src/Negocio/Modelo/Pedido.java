@@ -3,8 +3,9 @@ package Negocio.Modelo;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Como hacemos con el enum?
 public class Pedido {
-	
+	//Agregar Observacion
 	private Integer Numero_Pedido; 		// ID o Numero de pedido
 	private Date 	Fecha_Hora_Pedido;		// Fecha y hora en la que se ingresa el pedido al sistema
 	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();				// Lista de productos en el pedido
@@ -25,6 +26,9 @@ public class Pedido {
 	public Date getFecha_Hora_Pedido() {
 		return Fecha_Hora_Pedido;
 	}
+	
+	
+	
 	public void setFecha_Hora_Pedido(Date fecha_Hora_Pedido) {
 		Fecha_Hora_Pedido = fecha_Hora_Pedido;
 	}

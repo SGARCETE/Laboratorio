@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Producto;
 import Persistencia.DAO.ProductoDAO;
 
@@ -15,11 +16,15 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 	
 
 	public boolean AGREGAR_PRODUCTO(Producto p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		    String SentenciaSQL = " INSERT INTO Producto (PR_Nombre, PR_precio, PR_tipo_producto )VALUES ("+
+				"'"+	p.getPR_nombre()			+"',"
+				   +	p.getPR_precio()			+"',"
+				   +    p.getPR_tipo_producto()			+"')";
+		    
+		   
+			return conex.Insertar(SentenciaSQL);
+		}
 
-	@Override
 	public ArrayList<Producto> getVARIEDAD_DEL_PRODUCTO(String Tipo_Producto) {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 		try {
@@ -42,7 +47,6 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		return Arreglo;
 	}
 	
-	@Override
 	public boolean ELIMINAR_PRODUCTO(Producto p) {
 		String SentenciaSQL = "DELETE * FROM Producto WHERE PR_id="
 				+ p.getPR_id();

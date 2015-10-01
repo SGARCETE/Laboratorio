@@ -78,13 +78,11 @@ public class Interfaz_Principal {
 	private JTextField textProducto = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
 	private JTextField textVariedad = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
 	private TextAutoCompleter AutoCompleter_Producto = new TextAutoCompleter(textProducto, new AutoCompleterCallback() {
-	    @Override
 	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
 //	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
 	    }
 	});
 	private TextAutoCompleter AutoCompleter_Variedad = new TextAutoCompleter(textVariedad, new AutoCompleterCallback() {
-	    @Override
 	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
 //	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
 	    }
