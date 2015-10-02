@@ -55,6 +55,8 @@ import Negocio.Servicios.Servicio_Productos;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 public class Interfaz_Principal {
 
@@ -96,6 +98,7 @@ public class Interfaz_Principal {
 	private Servicio_Clientes sv_clientes = new Servicio_Clientes();
 	private Servicio_Pedidos sv_pedidos = new Servicio_Pedidos();
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	private JTabbedPane tabbedPane;
 	
 	/**
 	 * Launch the application.		ESTO ACA ES TEMPORAL, ESTA MAL ACA, debe ir en Negocio.Servicios Ejecutar_WILDSOFT.java
@@ -135,10 +138,10 @@ public class Interfaz_Principal {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-		frmWildsoft.setBounds(100, 100, 962, 550);
+		frmWildsoft.setBounds(100, 100, 999, 550);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.menu);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(frmWildsoft.getContentPane());
@@ -158,30 +161,21 @@ public class Interfaz_Principal {
 		JPanel panel_Nuevo_pedido = new JPanel();
 		panel_Nuevo_pedido.setBackground(SystemColor.menu);
 		tabbedPane.addTab("Nuevo pedido", null, panel_Nuevo_pedido, null);
-		panel_Nuevo_pedido.setLayout(null);
 		
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(new Color(240,240,240));
-		panelProductos.setLayout(null);
 		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pedido", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelProductos.setBounds(0, 6, 940, 326);
-		panel_Nuevo_pedido.add(panelProductos);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblIngreseLosProductos = new JLabel("Ingrese los productos que componen su pedido");
 		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIngreseLosProductos.setBounds(18, 20, 420, 25);
-		lblIngreseLosProductos.setBounds(18, 20, 404, 25);
-		panelProductos.add(lblIngreseLosProductos);
 		
 		JPanel panelAltaPedido = new JPanel();
 		panelAltaPedido.setBackground(SystemColor.menu);
 		panelAltaPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelAltaPedido.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelAltaPedido.setBounds(18, 49, 331, 266);
-		panelProductos.add(panelAltaPedido);
 		panelAltaPedido.setLayout(null);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -286,13 +280,8 @@ public class Interfaz_Principal {
 		panel_Resumen_Pedido.setBackground(SystemColor.menu);
 		panel_Resumen_Pedido.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_Resumen_Pedido.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel_Resumen_Pedido.setBounds(354, 49, 576, 266);
-		panelProductos.add(panel_Resumen_Pedido);
-		panel_Resumen_Pedido.setLayout(null);
 		
 		JButton btnQuitar = new JButton("Quitar");
-		btnQuitar.setBounds(10, 232, 100, 30);
-		panel_Resumen_Pedido.add(btnQuitar);
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Quitar_al_Pedido();
@@ -305,20 +294,67 @@ public class Interfaz_Principal {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 42, 556, 176);
-		panel_Resumen_Pedido.add(scrollPane);
 		
 		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
-		lblResumenDelPedido.setBounds(10, 11, 556, 25);
-		panel_Resumen_Pedido.add(lblResumenDelPedido);
 		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.setEnabled(false);
 		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/edit-icon24.png")));
-		btnModificar.setBounds(132, 232, 121, 30);
-		panel_Resumen_Pedido.add(btnModificar);
+		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(panel_Resumen_Pedido);
+		gl_panel_Resumen_Pedido.setHorizontalGroup(
+			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+						.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
+							.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addGap(22)
+							.addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)))
+					.addGap(8))
+		);
+		gl_panel_Resumen_Pedido.setVerticalGroup(
+			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
+					.addGap(9)
+					.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+					.addGap(14)
+					.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(1))
+		);
+		panel_Resumen_Pedido.setLayout(gl_panel_Resumen_Pedido);
+		GroupLayout gl_panelProductos = new GroupLayout(panelProductos);
+		gl_panelProductos.setHorizontalGroup(
+			gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup()
+					.addGap(12)
+					.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelProductos.createSequentialGroup()
+							.addComponent(panelAltaPedido, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGap(4))
+		);
+		gl_panelProductos.setVerticalGroup(
+			gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup()
+					.addGap(4)
+					.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelAltaPedido, GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+						.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(4))
+		);
+		panelProductos.setLayout(gl_panelProductos);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
@@ -331,9 +367,6 @@ public class Interfaz_Principal {
 		
 		JPanel panelDelibery = new JPanel();
 		panelDelibery.setBackground(SystemColor.menu);
-		panelDelibery.setBounds(6, 334, 654, 116);
-		panelDelibery.setBounds(6, 334, 609, 116);
-		panel_Nuevo_pedido.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 		
@@ -411,9 +444,6 @@ public class Interfaz_Principal {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.menu);
 		panel_3.setBorder(new TitledBorder(null, "Importes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(670, 334, 261, 116);
-		panel_3.setBounds(616, 334, 324, 116);
-		panel_Nuevo_pedido.add(panel_3);
 		panel_3.setLayout(null);
 		
 		textTotal_Pedido = new JTextField();
@@ -442,42 +472,116 @@ public class Interfaz_Principal {
 		btnNewButton.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Save-icon48.png")));
 		btnNewButton.setBounds(174, 30, 129, 67);
 		panel_3.add(btnNewButton);
+		GroupLayout gl_panel_Nuevo_pedido = new GroupLayout(panel_Nuevo_pedido);
+		gl_panel_Nuevo_pedido.setHorizontalGroup(
+			gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
+					.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
+					.addGap(1))
+				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
+					.addGap(6)
+					.addComponent(panelDelibery, GroupLayout.PREFERRED_SIZE, 609, GroupLayout.PREFERRED_SIZE)
+					.addGap(1)
+					.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+					.addGap(1))
+		);
+		gl_panel_Nuevo_pedido.setVerticalGroup(
+			gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
+					.addGap(6)
+					.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+					.addGap(2)
+					.addGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelDelibery, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+					.addGap(9))
+		);
+		panel_Nuevo_pedido.setLayout(gl_panel_Nuevo_pedido);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		//			Panel de listado de pedidos
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JPanel panel_Lista_de_pedidos = new JPanel();
+		panel_Lista_de_pedidos.setBackground(SystemColor.menu);
 		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos, null);
 		
 		scrollPane_Lista_Pedidos = new JScrollPane();
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Eliminar_Pedido();
-			}
-		});
-		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		JLabel lblListadoDePedidos = new JLabel("Listado de pedidos");
+		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListadoDePedidos.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBackground(SystemColor.menu);
 		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
 		gl_panel_Lista_de_pedidos.setHorizontalGroup(
 			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_Lista_de_pedidos.createSequentialGroup()
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE))
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_panel_Lista_de_pedidos.setVerticalGroup(
 			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(53)
-					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-					.addContainerGap())
+					.addContainerGap()
+					.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane_Lista_Pedidos, 0, 0, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+					.addGap(26))
 		);
+		
+		JButton btnVer = new JButton("Ver");
+		btnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		JButton btnNuevo = new JButton("Nuevo");
+		btnNuevo.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon64.png")));
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedIndex(0);
+			}
+		});
+		btnNuevo.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNuevo.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNuevo.setBackground(Color.WHITE);
+		panel.add(btnNuevo);
+		btnVer.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/search-icon64.png")));
+		btnVer.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnVer.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnVer);
+		btnVer.setBackground(Color.WHITE);
+		
+		JButton btnModificar_1 = new JButton("Modificar");
+		btnModificar_1.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/edit-icon64.png")));
+		btnModificar_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnModificar_1.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnModificar_1);
+		btnModificar_1.setBackground(Color.WHITE);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnCancelar);
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cancelar_Pedido();
+			}
+		});
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon64.png")));
 		
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
@@ -545,14 +649,6 @@ public class Interfaz_Principal {
 		iniciarParametros();
 		
 	}//--> FIN INTERFAZ
-
-	
-	private void Eliminar_Pedido() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	/**
 	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
@@ -713,7 +809,7 @@ public class Interfaz_Principal {
 
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//			QUITAR/ ELIMINAR
+	//			QUITAR/ ELIMINAR/ CANCELAR
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	/**
 	 * SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO, SE ELIMINARA ESE ELEMENTO DE LA LISTA 
@@ -734,7 +830,14 @@ public class Interfaz_Principal {
 		
 	}
 
-
+	private void Cancelar_Pedido() {
+		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
+			int indice = (int) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			Pedido P_cancelar = new Pedido();
+			P_cancelar.setNumero_Pedido(indice);
+			sv_pedidos.eliminar_pedido(P_cancelar);
+		}
+	}
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//			
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
