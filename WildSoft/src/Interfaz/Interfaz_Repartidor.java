@@ -77,7 +77,7 @@ public class Interfaz_Repartidor extends JDialog {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!(textNombre.equals("") || textVehiculo.equals(""))){
+				if(!(textNombre.equals("") && textVehiculo.equals(""))){
 					repartidorDao.Nuevo_Repartidor(new Repartidor(textNombre.getText(),textVehiculo.getText())); 
 				}
 			}

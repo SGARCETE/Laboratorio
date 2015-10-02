@@ -787,6 +787,29 @@ public class Interfaz_Principal {
 
 		JMenuItem mntmListaDePedidos = new JMenuItem("ADM pedidos");
 		mnPedidos.add(mntmListaDePedidos);
+		
+		// Repartidores	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		JMenu mnRepartidor = new JMenu("Repartidores");
+		menuBar.add(mnRepartidor);
+
+		JMenuItem mntmAltaRepartidor = new JMenuItem("Nuevo Repartidor");
+		mntmAltaRepartidor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Interfaz_Repartidor frame = new Interfaz_Repartidor();
+				frame.setVisible(true);
+				frame.setModal(true);
+			}
+		});
+		mnRepartidor.add(mntmAltaRepartidor);
+
+		JMenuItem mntmModificacionRepartidor = new JMenuItem("Modificar Repartidor");
+		mnRepartidor.add(mntmModificacionRepartidor);
+		
+		JMenuItem mntmBajaRepartidor = new JMenuItem("Baja Repartidor");
+		mnRepartidor.add(mntmBajaRepartidor);
+		
+		// Repartidores	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
