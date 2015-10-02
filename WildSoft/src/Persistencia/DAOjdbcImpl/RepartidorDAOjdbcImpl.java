@@ -1,5 +1,6 @@
 package Persistencia.DAOjdbcImpl;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,13 +33,13 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Repartidores");
+			st.executeQuery("SELECT * FROM Repartidor");
 			ResultSet Fila = st.getResultSet();
+			Repartidor R = new Repartidor();
 			while (Fila.next()) {
-				Repartidor R = new Repartidor();				
-				R.setID_Repartidor(Integer.getInteger("RE_id")); 
-				R.setNombre("RE_nombre");
-				R.setVehiculo("RE_vehiculo");
+				R.setID_Repartidor(Fila.getInt("RE_id"));
+				R.setNombre(Fila.getString("RE_nombre"));
+				R.setVehiculo(Fila.getString("RE_vehiculo"));
 				Arreglo.add(R);
 			}
 			conex.cerrarConexion();
