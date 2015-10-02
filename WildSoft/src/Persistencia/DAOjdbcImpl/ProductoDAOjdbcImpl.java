@@ -52,7 +52,6 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
 	}
 
-	@Override
 	public ArrayList<String> getTipos_Producto() {
 		ArrayList<String> Arreglo = new ArrayList<String>();
 		try {
