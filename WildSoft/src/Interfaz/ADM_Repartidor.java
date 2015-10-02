@@ -1,25 +1,24 @@
 package Interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.security.auth.callback.TextOutputCallback;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Repartidor;
 import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class ADM_Repartidor extends JDialog {
@@ -63,14 +62,13 @@ public class ADM_Repartidor extends JDialog {
 		contentPanel.add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {"Id", "Nombre", "Vehiculo" }));
-
+		
+		inicializarTabla();
+		
 		// SE CREA COMPLETA LA TABAL CON LOS DATOS
 		llenarTabla();
 
-		table.getColumnModel().getColumn(0).setPreferredWidth(0);
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		
 		scrollPane.setViewportView(table);
 
 		JPanel panelNuevoRepartidor = new JPanel();
@@ -99,6 +97,13 @@ public class ADM_Repartidor extends JDialog {
 		textVehiculo.setBounds(67, 60, 137, 20);
 		panelNuevoRepartidor.add(textVehiculo);
 		textVehiculo.setColumns(10);
+		
+		JLabel lblAvisoError = new JLabel("Debe completar todos los campos para continuar");
+		lblAvisoError.setForeground(Color.RED);
+		lblAvisoError.setFont(new Font("SansSerif", Font.BOLD, 15));
+		lblAvisoError.setBounds(10, 293, 368, 39);
+		contentPanel.add(lblAvisoError);
+		lblAvisoError.setVisible(false);
 
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(54, 118, 109, 23);
@@ -106,10 +111,16 @@ public class ADM_Repartidor extends JDialog {
 
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!textNombre.equals("")) {
-					if (!textVehiculo.equals("")) {
+				if (!textNombre.getText().equals("")) {
+					if (!textVehiculo.getText().equals("")) {
 						repartidorDao.Nuevo_Repartidor(new Repartidor(textNombre.getText(), textVehiculo.getText()));
+						inicializarTabla();
+						llenarTabla();
+					}else{
+						lblAvisoError.setVisible(true);
 					}
+				}else{
+					lblAvisoError.setVisible(true);
 				}
 			}
 		});
@@ -130,18 +141,28 @@ public class ADM_Repartidor extends JDialog {
 
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Salir");
+				cancelButton.setBounds(762, 5, 53, 28);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 					}
 				});
+				buttonPane.setLayout(null);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	private void inicializarTabla() {
+
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {"Id", "Nombre", "Vehiculo" }));
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
 	}
 
 	private void llenarTabla() {
