@@ -15,7 +15,7 @@ public class Servicio_Repartidores {
 
 
 	public boolean guardar_nuevo_pedido(Repartidor R){
-		return repartidorDAO.Nuevo_repartidor(R);
+		return repartidorDAO.Nuevo_Repartidor(R);
 	}
 	
 	public ArrayList<Repartidor> get_Repartidores(){

@@ -46,15 +46,6 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
-	}
-
-	public boolean Nuevo_repartidor(Repartidor R) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-	
-	
+	}	
 	
 }

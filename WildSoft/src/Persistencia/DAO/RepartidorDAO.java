@@ -6,7 +6,7 @@ import Negocio.Modelo.Repartidor;
 
 public interface RepartidorDAO {
 
-	boolean Nuevo_repartidor(Repartidor R);
+	boolean Nuevo_Repartidor(Repartidor R);
 	boolean Eliminar_Repartidor(Repartidor R);
 	ArrayList<Repartidor> getRepartidores();
 	
