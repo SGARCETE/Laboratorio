@@ -18,7 +18,7 @@ public class Model_Listado_Pedidos extends DefaultTableModel {
 	
 	public Class<Object> getColumnClass(int columnIndex) {
 		@SuppressWarnings("unchecked")
-		Class<Object>[] columnTypes = new Class[] {Integer.class, String.class, Date.class, Date.class, Boolean.class, String.class, Double.class};
+		Class<Object>[] columnTypes = new Class[] {Integer.class, String.class, Date.class, Date.class, Boolean.class, String.class, String.class};
 		return columnTypes[columnIndex];
 	};
 	

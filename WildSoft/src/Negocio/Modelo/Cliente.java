@@ -1,7 +1,7 @@
 package Negocio.Modelo;
 
 public class Cliente {
-	private Integer ID_Cliente;
+	private Integer ID_Cliente = 0;
 	private String  Nombre;
 	private String  Apellido;
 	private String  Domicilio;

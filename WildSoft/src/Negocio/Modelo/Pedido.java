@@ -13,6 +13,7 @@ public class Pedido {
 	// En caso que sea delivery:
 	private Boolean Es_Delivery = false;
 	private Cliente cliente;
+	private Double  Total = 0.0;
 	private Date 	Hora_Entrega;			// Hora en la que se debe entregar el pedido
 	
 	/** GETTERS AND SETTERS **/
@@ -66,6 +67,12 @@ public class Pedido {
 //		if(PRODUCTO!=null)
 //			Lista_Productos.remove();
 		System.out.println("Producto.quitar_un_producto NO ESTA IMPLEMENTADO" );
+	}
+	public Double getTotal() {
+		return Total;
+	}
+	public void setTotal(Double total) {
+		Total = total;
 	}
 	
 	

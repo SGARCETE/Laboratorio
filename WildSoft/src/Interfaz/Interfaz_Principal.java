@@ -8,7 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -52,16 +54,19 @@ import Negocio.Servicios.Servicio_Productos;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Interfaz_Principal {
 
 	private JFrame frmWildsoft;
+	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private JScrollPane scrollPane_Lista_Pedidos;
 	private JTable Tabla_Pedido_Completo;
 	private JTable Tabla_Lista_pedidos;
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private JCheckBox chckbxDelivery;
+	private JCheckBox chckbxDelivery_1;
 	private JSpinner spinnerCantidad;
 	private JTextField textDomicilio;
 	private JTextField textTelefono;
@@ -150,17 +155,17 @@ public class Interfaz_Principal {
 		//			Panel de Nuevo Pedido
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.menu);
-		tabbedPane.addTab("Nuevo pedido", null, panel, null);
-		panel.setLayout(null);
+		JPanel panel_Nuevo_pedido = new JPanel();
+		panel_Nuevo_pedido.setBackground(SystemColor.menu);
+		tabbedPane.addTab("Nuevo pedido", null, panel_Nuevo_pedido, null);
+		panel_Nuevo_pedido.setLayout(null);
 		
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(new Color(240,240,240));
 		panelProductos.setLayout(null);
 		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pedido", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelProductos.setBounds(0, 6, 940, 326);
-		panel.add(panelProductos);
+		panel_Nuevo_pedido.add(panelProductos);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -328,23 +333,22 @@ public class Interfaz_Principal {
 		panelDelibery.setBackground(SystemColor.menu);
 		panelDelibery.setBounds(6, 334, 654, 116);
 		panelDelibery.setBounds(6, 334, 609, 116);
-		panel.add(panelDelibery);
+		panel_Nuevo_pedido.add(panelDelibery);
 		panelDelibery.setBorder(new TitledBorder(null, "Servicio delivery", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 		
 		chckbxDelivery = new JCheckBox("Delivery");
-		chckbxDelivery = new JCheckBox("Con delivery");
-		chckbxDelivery.setBackground(SystemColor.menu);
-		chckbxDelivery.addActionListener(new ActionListener() {
+		chckbxDelivery_1 = new JCheckBox("Con delivery");
+		chckbxDelivery_1.setBackground(SystemColor.menu);
+		chckbxDelivery_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servicio_Delivery();
 			}
 		});
-		chckbxDelivery.setSelected(true);
-		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		chckbxDelivery.setBounds(16, 14, 97, 25);
-		chckbxDelivery.setBounds(16, 14, 110, 25);
-		panelDelibery.add(chckbxDelivery);
+		chckbxDelivery_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chckbxDelivery_1.setBounds(16, 14, 97, 25);
+		chckbxDelivery_1.setBounds(16, 14, 110, 25);
+		panelDelibery.add(chckbxDelivery_1);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -355,6 +359,7 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblDomicilio);
 		
 		textDomicilio = new JTextField();
+		textDomicilio.setEnabled(false);
 		textDomicilio.setColumns(10);
 		textDomicilio.setBounds(439, 46, 199, 25);
 		textDomicilio.setBounds(381, 46, 199, 25);
@@ -369,6 +374,7 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblTelefono);
 
 		textTelefono = new JTextField();
+		textTelefono.setEnabled(false);
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(123, 82, 199, 25);
 		textTelefono.setBounds(90, 82, 199, 25);
@@ -383,6 +389,7 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblDetalle);
 		
 		textDetalle = new JTextField();
+		textDetalle.setEnabled(false);
 		textDetalle.setColumns(10);
 		textDetalle.setBounds(439, 82, 199, 25);
 		textDetalle.setBounds(381, 82, 199, 25);
@@ -395,6 +402,7 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblCliente);
 		
 		textCliente = new JTextField();
+		textCliente.setEnabled(false);
 		textCliente.setColumns(10);
 		textCliente.setBounds(123, 46, 199, 25);
 		textCliente.setBounds(90, 46, 199, 25);
@@ -405,7 +413,7 @@ public class Interfaz_Principal {
 		panel_3.setBorder(new TitledBorder(null, "Importes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_3.setBounds(670, 334, 261, 116);
 		panel_3.setBounds(616, 334, 324, 116);
-		panel.add(panel_3);
+		panel_Nuevo_pedido.add(panel_3);
 		panel_3.setLayout(null);
 		
 		textTotal_Pedido = new JTextField();
@@ -439,27 +447,39 @@ public class Interfaz_Principal {
 		//			Panel de listado de pedidos
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Listado de pedidos", null, panel_1, null);
+		JPanel panel_Lista_de_pedidos = new JPanel();
+		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos, null);
 		
 		scrollPane_Lista_Pedidos = new JScrollPane();
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Eliminar_Pedido();
+			}
+		});
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
+		gl_panel_Lista_de_pedidos.setHorizontalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_Lista_de_pedidos.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 921, Short.MAX_VALUE))
 					.addContainerGap())
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(94)
-					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+		gl_panel_Lista_de_pedidos.setVerticalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(53)
+					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
-		panel_1.setLayout(gl_panel_1);
+		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -527,6 +547,13 @@ public class Interfaz_Principal {
 	}//--> FIN INTERFAZ
 
 	
+	private void Eliminar_Pedido() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 	/**
 	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
 	 */
@@ -560,6 +587,7 @@ public class Interfaz_Principal {
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
 				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
 			}
+			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
 	}
@@ -584,14 +612,6 @@ public class Interfaz_Principal {
 	}
 
 
-//	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
-//		Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
-//		comboBoxVariedad.removeAllItems();
-//		for (int i = 0; i < Lista_Variedades.size(); i++) {
-//			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
-//		}
-//	}
-
 	/**CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX, ESTE DATO
 	 * SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE CARGA EL PRECIO DE LA VARIEDAD
 	 * SELECCIONADA.
@@ -608,16 +628,7 @@ public class Interfaz_Principal {
 			Calcula_totales();
 		}
 	}
-	
 
-//	private void Cargar_precio_del_producto(String VARIEDAD) {
-//		for (int i = 0; i < Lista_Variedades.size(); i++) {
-//			if(Lista_Variedades.get(i).getPR_nombre().equals(VARIEDAD))
-//				PRODUCTO_ACTUAL = Lista_Variedades.get(i);
-//		}	
-//		textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
-//	}
-	
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//			LIMPIADOR DE CAMPOS
@@ -632,9 +643,8 @@ public class Interfaz_Principal {
 		textValorTotal.setText("");
 		textObservaciones.setText("");
 	}
-	/**
-	 * 
-	 */
+	
+	/**	 */
 	private void Limpiar_Todo() {
 		Limpiar_Formulario_pedido();
 		PEDIDO_ACTUAL = new Pedido();
@@ -647,43 +657,58 @@ public class Interfaz_Principal {
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	/** Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general	 */
 	private void Agregar_al_Pedido() {
-		// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
-		Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-		String Tipo_producto = comboBoxProducto.getSelectedItem().toString();			// o combo box
-		String Variedad = comboBoxVariedad.getSelectedItem().toString();	// o combo box
-
-		if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad>0){
-			Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
-			Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
-			String Observacion = textObservaciones.getText();
-
-			/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/			
-			for (int i = 0; i < Cantidad; i++) 
-				PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-			
-			/** Esto va para la parte visual	**/
-			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
-			modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
-			Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
-			
-			
-			/** Despues que se resetee el formulario de ingreso de pedido**/
-			Limpiar_Formulario_pedido();
+		if(comboBoxVariedad.getItemCount()!=0 && comboBoxProducto.getItemCount()!=0){
+			// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
+			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();			// o combo box
+			String Variedad = comboBoxVariedad.getSelectedItem().toString();	// o combo box
+	
+			if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad>0){
+				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
+				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
+				String Observacion = textObservaciones.getText();
+	
+				/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/			
+				for (int i = 0; i < Cantidad; i++) 
+					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+				
+				/** Esto va para la parte visual	**/
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+				Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
+				
+				/** Despues que se resetee el formulario de ingreso de pedido**/
+				Limpiar_Formulario_pedido();
+			}
 		}
 	}
-	/**
-	 * 
-	 */
+	
+	/**	 */
 	private void Guardar_pedido() {
 		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
-			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
-			Limpiar_Todo();
-			
+			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime());	// inserta fecha y hora actual
+			if(chckbxDelivery_1.isSelected()){
+				// agregar datos del pedido
+				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery_1.isSelected());
+			}
+//			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			//TODO- actualizar Tabla_Lista_pedidos
+			Agregar_a_lista_pedidos(PEDIDO_ACTUAL);
+			Limpiar_Todo();
 		}
 	}
 	
 
+
+
+
+	private void Agregar_a_lista_pedidos(Pedido PEDIDO) {
+		/** Esto va para la parte visual	**/
+		DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
+		modelo.addRow(new Object[] { 123, "Cliente", formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido()), "16/12/2015", PEDIDO_ACTUAL.getEs_Delivery(), "PENDIENTE", formatoImporte.format(PEDIDO_ACTUAL.getTotal())});
+		Tabla_Lista_pedidos.setModel(modelo);	// Lo seteo en la tabla para que se vea
+		
+	}
 
 
 
@@ -717,10 +742,9 @@ public class Interfaz_Principal {
 	 * ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA OPCION "DELIVERY" EN LA INTERFAZ
 	 */
 	private void Servicio_Delivery() {
-		textCliente.setEnabled(chckbxDelivery.isSelected());
-		textDomicilio.setEnabled(chckbxDelivery.isSelected());
-		textTelefono.setEnabled(chckbxDelivery.isSelected());
-		textDetalle.setEnabled(chckbxDelivery.isSelected());
+		textCliente.setEnabled(chckbxDelivery_1.isSelected());
+		textDomicilio.setEnabled(chckbxDelivery_1.isSelected());
+		textTelefono.setEnabled(chckbxDelivery_1.isSelected());
+		textDetalle.setEnabled(chckbxDelivery_1.isSelected());
 	}
-	
 }//---> FIN CLASE
