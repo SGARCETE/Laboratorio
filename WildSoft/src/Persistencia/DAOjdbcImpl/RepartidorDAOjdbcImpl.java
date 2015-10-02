@@ -47,6 +47,11 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		}
 		return Arreglo;
 	}
+
+	public boolean Nuevo_repartidor(Repartidor R) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	
