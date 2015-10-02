@@ -2,14 +2,21 @@ package Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Label;
 import java.awt.Font;
+
 import javax.swing.JTextField;
+
+import Negocio.Modelo.Repartidor;
+import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -17,8 +24,9 @@ import java.awt.event.ActionEvent;
 public class Interfaz_Repartidor extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textNombre;
+	private JTextField textVehiculo;
+	private RepartidorDAOjdbcImpl repartidorDao = new RepartidorDAOjdbcImpl();
 
 	/**
 	 * Launch the application.
@@ -60,17 +68,24 @@ public class Interfaz_Repartidor extends JDialog {
 		label_3.setBounds(32, 50, 98, 22);
 		contentPanel.add(label_3);
 		
-		textField = new JTextField();
-		textField.setBounds(70, 74, 88, 22);
-		contentPanel.add(textField);
-		textField.setColumns(10);
+		textNombre = new JTextField();
+		textNombre.setBounds(70, 74, 88, 22);
+		contentPanel.add(textNombre);
+		textNombre.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(70, 102, 88, 22);
-		contentPanel.add(textField_1);
+		textVehiculo = new JTextField();
+		textVehiculo.setColumns(10);
+		textVehiculo.setBounds(70, 102, 88, 22);
+		contentPanel.add(textVehiculo);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!(textNombre.equals("") || textVehiculo.equals(""))){
+					repartidorDao.Nuevo_Repartidor(new Repartidor(textNombre.getText(),textVehiculo.getText())); 
+				}
+			}
+		});
 		btnAgregar.setBounds(43, 133, 89, 23);
 		contentPanel.add(btnAgregar);
 		{
