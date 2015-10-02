@@ -1079,10 +1079,8 @@ public class Interfaz_Principal {
 	}
 
 	private void Cancelar_Pedido() {
-		if (Tabla_Lista_pedidos != null
-				&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			int indice = (int) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 0);
+		if (Tabla_Lista_pedidos != null	&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
+			Integer indice = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(indice);
 			sv_pedidos.eliminar_pedido(P_cancelar);

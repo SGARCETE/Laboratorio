@@ -30,9 +30,12 @@ public class ADM_Repartidor extends JDialog {
 	private RepartidorDAOjdbcImpl repartidorDao = new RepartidorDAOjdbcImpl();
 	private JTable table;
 	private String[] datoTabla;
-	JButton btnCancelar;
-	JButton btnModificar;
-	JButton btnEliminar;
+	private JButton btnCancelar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JLabel lblAvisoError;
+	private JButton btnAgregar;
+	private JButton btnAceptar;
 
 	/**
 	 * Launch the application.
@@ -103,7 +106,7 @@ public class ADM_Repartidor extends JDialog {
 		panelNuevoRepartidor.add(textVehiculo);
 		textVehiculo.setColumns(10);
 
-		JLabel lblAvisoError = new JLabel(
+		lblAvisoError = new JLabel(
 				"Debe completar todos los campos para continuar");
 		lblAvisoError.setForeground(Color.RED);
 		lblAvisoError.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -111,7 +114,7 @@ public class ADM_Repartidor extends JDialog {
 		contentPanel.add(lblAvisoError);
 		lblAvisoError.setVisible(false);
 
-		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(54, 118, 109, 23);
 		panelNuevoRepartidor.add(btnAgregar);
 
@@ -133,7 +136,7 @@ public class ADM_Repartidor extends JDialog {
 			}
 		});
 
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textNombre.getText().equals("")) {
