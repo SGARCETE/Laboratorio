@@ -42,7 +42,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import Interfaz.Repartidor.Interfaz_Repartidor;
+import Interfaz.Repartidor.Alta_Repartidor;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -798,7 +798,7 @@ public class Interfaz_Principal {
 		JMenuItem mntmAltaRepartidor = new JMenuItem("Nuevo Repartidor");
 		mntmAltaRepartidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Interfaz_Repartidor frame = new Interfaz_Repartidor();
+				Alta_Repartidor frame = new Alta_Repartidor();
 				frame.setVisible(true);
 				frame.setModal(true);
 			}
