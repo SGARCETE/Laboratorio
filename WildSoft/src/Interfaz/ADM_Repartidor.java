@@ -15,6 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 import Negocio.Modelo.Repartidor;
 import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class ADM_Repartidor extends JDialog {
@@ -23,6 +26,7 @@ public class ADM_Repartidor extends JDialog {
 	private JTextField textNombre;
 	private JTextField textVehiculo;
 	private RepartidorDAOjdbcImpl repartidorDao = new RepartidorDAOjdbcImpl();
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -41,7 +45,7 @@ public class ADM_Repartidor extends JDialog {
 	 * Create the dialog.
 	 */
 	public ADM_Repartidor() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 836, 378);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -52,29 +56,57 @@ public class ADM_Repartidor extends JDialog {
 		label.setBounds(147, 10, 138, 22);
 		contentPanel.add(label);
 		
-		Label label_1 = new Label("Nombre");
-		label_1.setBounds(10, 74, 44, 22);
-		contentPanel.add(label_1);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(239, 50, 544, 231);
+		contentPanel.add(scrollPane);
 		
-		Label label_2 = new Label("Veh\u00EDculo");
-		label_2.setBounds(10, 102, 57, 22);
-		contentPanel.add(label_2);
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id", "Nombre", "Vehiculo"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		scrollPane.setViewportView(table);
+		
+		JPanel panelNuevoRepartidor = new JPanel();
+		panelNuevoRepartidor.setBounds(10, 50, 214, 152);
+		contentPanel.add(panelNuevoRepartidor);
+		panelNuevoRepartidor.setLayout(null);
 		
 		Label label_3 = new Label("Nuevo Repartidor");
-		label_3.setBounds(32, 50, 98, 22);
-		contentPanel.add(label_3);
+		label_3.setBounds(10, 5, 98, 22);
+		panelNuevoRepartidor.add(label_3);
+		
+		Label label_1 = new Label("Nombre");
+		label_1.setBounds(10, 32, 51, 22);
+		panelNuevoRepartidor.add(label_1);
+		
+		Label label_2 = new Label("Veh\u00EDculo");
+		label_2.setBounds(10, 58, 56, 22);
+		panelNuevoRepartidor.add(label_2);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(70, 74, 88, 22);
-		contentPanel.add(textNombre);
+		textNombre.setBounds(67, 33, 137, 20);
+		panelNuevoRepartidor.add(textNombre);
 		textNombre.setColumns(10);
 		
 		textVehiculo = new JTextField();
+		textVehiculo.setBounds(67, 60, 137, 20);
+		panelNuevoRepartidor.add(textVehiculo);
 		textVehiculo.setColumns(10);
-		textVehiculo.setBounds(70, 102, 88, 22);
-		contentPanel.add(textVehiculo);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(54, 118, 109, 23);
+		panelNuevoRepartidor.add(btnAgregar);
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setBounds(74, 258, 89, 23);
+		contentPanel.add(btnModificar);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!(textNombre.equals("") && textVehiculo.equals(""))){
@@ -82,8 +114,6 @@ public class ADM_Repartidor extends JDialog {
 				}
 			}
 		});
-		btnAgregar.setBounds(43, 133, 89, 23);
-		contentPanel.add(btnAgregar);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
