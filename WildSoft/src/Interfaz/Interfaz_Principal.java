@@ -645,9 +645,7 @@ public class Interfaz_Principal {
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//			AGREGAR
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	/**
-	 * Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general
-	 */
+	/** Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general	 */
 	private void Agregar_al_Pedido() {
 		// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
 		Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
@@ -663,13 +661,9 @@ public class Interfaz_Principal {
 			for (int i = 0; i < Cantidad; i++) 
 				PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 			
-			
 			/** Esto va para la parte visual	**/
-			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
-//			modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
-			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
-			}
+			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+			modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
 			Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
 			
 			
@@ -682,8 +676,9 @@ public class Interfaz_Principal {
 	 */
 	private void Guardar_pedido() {
 		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
-			//sv_pedidos.agregar_pedido(PEDIDO_ACTUAL);
+			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			Limpiar_Todo();
+			
 			//TODO- actualizar Tabla_Lista_pedidos
 		}
 	}
