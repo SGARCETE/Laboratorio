@@ -15,6 +15,12 @@ public class Repartidor {
 
 	}
 
+	public Repartidor(int id, String nombre, String vehiculo) {
+		ID_Repartidor = id;
+		Nombre = nombre;
+		Vehiculo = vehiculo;
+	}
+
 	/** GETTERS AND SETTERS **/
 	public Integer getID_Repartidor() {
 		return ID_Repartidor;

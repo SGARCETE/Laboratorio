@@ -21,7 +21,7 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 	}
 	
 	public boolean Eliminar_Repartidor(Repartidor R) {
-		String SentenciaSQL = "DELETE from Repartidor R where R.RE_id =" + R.getID_Repartidor();
+		String SentenciaSQL = "DELETE FROM Repartidor WHERE RE_id =" + R.getID_Repartidor();
 		return conex.Insertar(SentenciaSQL);
 	}
 	
@@ -44,6 +44,21 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
-	}	
+	}
+
+	public void Modificar_Repartidor(Repartidor R) {
+//		conex.connectToMySQL();// Conectar base
+//		Statement st;
+//		try {
+//			st = conex.conexion.createStatement();
+//			st.executeQuery("UPDATE Repartidor SET RE_nombre = '" + R.getNombre() + "', RE_vehiculo = '" + R.getVehiculo() + "' WHERE RE_id=" + R.getID_Repartidor());
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		conex.cerrarConexion();
+//		
+		String SentenciaSQL = "UPDATE Repartidor SET RE_nombre = '" + R.getNombre() + "', RE_vehiculo = '" + R.getVehiculo() + "' WHERE RE_id=" + R.getID_Repartidor();
+		conex.Insertar(SentenciaSQL);
+	}
 	
 }

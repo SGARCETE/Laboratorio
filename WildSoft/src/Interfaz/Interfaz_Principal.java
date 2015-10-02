@@ -787,21 +787,15 @@ public class Interfaz_Principal {
 		JMenu mnRepartidor = new JMenu("Repartidores");
 		menuBar.add(mnRepartidor);
 
-		JMenuItem mntmAltaRepartidor = new JMenuItem("Nuevo Repartidor");
-		mntmAltaRepartidor.addActionListener(new ActionListener() {
+		JMenuItem mntmADMRepartidores = new JMenuItem("Administracion de Repartidores");
+		mntmADMRepartidores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ADM_Repartidor frame = new ADM_Repartidor();
 				frame.setVisible(true);
 				frame.setModal(true);
 			}
 		});
-		mnRepartidor.add(mntmAltaRepartidor);
-
-		JMenuItem mntmModificacionRepartidor = new JMenuItem("Modificar Repartidor");
-		mnRepartidor.add(mntmModificacionRepartidor);
-		
-		JMenuItem mntmBajaRepartidor = new JMenuItem("Baja Repartidor");
-		mnRepartidor.add(mntmBajaRepartidor);
+		mnRepartidor.add(mntmADMRepartidores);
 		
 		// Repartidores	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

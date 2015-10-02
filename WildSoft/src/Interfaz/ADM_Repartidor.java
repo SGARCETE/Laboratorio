@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Interfaz.Auxiliar.eliminar;
 import Negocio.Modelo.Repartidor;
 import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
 
@@ -28,6 +29,10 @@ public class ADM_Repartidor extends JDialog {
 	private JTextField textVehiculo;
 	private RepartidorDAOjdbcImpl repartidorDao = new RepartidorDAOjdbcImpl();
 	private JTable table;
+	private String[] datoTabla;
+	JButton btnCancelar;
+	JButton btnModificar;
+	JButton btnEliminar;
 
 	/**
 	 * Launch the application.
@@ -46,29 +51,29 @@ public class ADM_Repartidor extends JDialog {
 	 * Create the dialog.
 	 */
 	public ADM_Repartidor() {
+		setResizable(false);
 		setBounds(100, 100, 836, 378);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		Label label = new Label("Repartidor");
-		label.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 22));
-		label.setBounds(147, 10, 138, 22);
-		contentPanel.add(label);
+		Label lblTitulo = new Label("Repartidor");
+		lblTitulo.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 22));
+		lblTitulo.setBounds(147, 10, 138, 22);
+		contentPanel.add(lblTitulo);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(239, 50, 544, 231);
 		contentPanel.add(scrollPane);
 
 		table = new JTable();
-		
+
 		inicializarTabla();
-		
+
 		// SE CREA COMPLETA LA TABAL CON LOS DATOS
 		llenarTabla();
 
-		
 		scrollPane.setViewportView(table);
 
 		JPanel panelNuevoRepartidor = new JPanel();
@@ -76,17 +81,17 @@ public class ADM_Repartidor extends JDialog {
 		contentPanel.add(panelNuevoRepartidor);
 		panelNuevoRepartidor.setLayout(null);
 
-		Label label_3 = new Label("Nuevo Repartidor");
-		label_3.setBounds(10, 5, 98, 22);
-		panelNuevoRepartidor.add(label_3);
+		Label lblNuevoRepartidor = new Label("Nuevo Repartidor");
+		lblNuevoRepartidor.setBounds(10, 5, 98, 22);
+		panelNuevoRepartidor.add(lblNuevoRepartidor);
 
-		Label label_1 = new Label("Nombre");
-		label_1.setBounds(10, 32, 51, 22);
-		panelNuevoRepartidor.add(label_1);
+		Label lblNombre = new Label("Nombre");
+		lblNombre.setBounds(10, 32, 51, 22);
+		panelNuevoRepartidor.add(lblNombre);
 
-		Label label_2 = new Label("Veh\u00EDculo");
-		label_2.setBounds(10, 58, 56, 22);
-		panelNuevoRepartidor.add(label_2);
+		Label lblVehiculo = new Label("Veh\u00EDculo");
+		lblVehiculo.setBounds(10, 58, 56, 22);
+		panelNuevoRepartidor.add(lblVehiculo);
 
 		textNombre = new JTextField();
 		textNombre.setBounds(67, 33, 137, 20);
@@ -97,8 +102,9 @@ public class ADM_Repartidor extends JDialog {
 		textVehiculo.setBounds(67, 60, 137, 20);
 		panelNuevoRepartidor.add(textVehiculo);
 		textVehiculo.setColumns(10);
-		
-		JLabel lblAvisoError = new JLabel("Debe completar todos los campos para continuar");
+
+		JLabel lblAvisoError = new JLabel(
+				"Debe completar todos los campos para continuar");
 		lblAvisoError.setForeground(Color.RED);
 		lblAvisoError.setFont(new Font("SansSerif", Font.BOLD, 15));
 		lblAvisoError.setBounds(10, 293, 368, 39);
@@ -116,50 +122,112 @@ public class ADM_Repartidor extends JDialog {
 						repartidorDao.Nuevo_Repartidor(new Repartidor(textNombre.getText(), textVehiculo.getText()));
 						inicializarTabla();
 						llenarTabla();
-					}else{
+						lblAvisoError.setVisible(false);
+						btnAgregar.setVisible(true);
+					} else {
 						lblAvisoError.setVisible(true);
 					}
-				}else{
+				} else {
 					lblAvisoError.setVisible(true);
 				}
 			}
 		});
 
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!textNombre.getText().equals("")) {
+					if (!textVehiculo.getText().equals("")) {
+						guardarCambios(textNombre.getText(),textVehiculo.getText());
+						inicializarTabla();
+						llenarTabla();
+						lblAvisoError.setVisible(false);
+						btnAceptar.setVisible(false);
+						btnAgregar.setVisible(true);
+						btnCancelar.setVisible(false);
+						btnModificar.setEnabled(true);
+						btnEliminar.setEnabled(true);
+					} else {
+						lblAvisoError.setVisible(true);
+					}
+				} else {
+					lblAvisoError.setVisible(true); 
+				}
+			}
+		});
 		btnAceptar.setBounds(10, 118, 89, 23);
 		panelNuevoRepartidor.add(btnAceptar);
 		btnAceptar.setVisible(false);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textNombre.setText("");
+				textVehiculo.setText("");
+				btnAceptar.setVisible(false);
+				btnAgregar.setVisible(true);
+				btnCancelar.setVisible(false);
+				lblAvisoError.setVisible(false);
+				btnModificar.setEnabled(true);
+				btnEliminar.setEnabled(true);
+			}
+		});
 		btnCancelar.setBounds(115, 118, 89, 23);
 		panelNuevoRepartidor.add(btnCancelar);
 		btnCancelar.setVisible(false);
 
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(74, 258, 89, 23);
-		contentPanel.add(btnModificar);
-
-		{
-			JPanel buttonPane = new JPanel();
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton cancelButton = new JButton("Salir");
-				cancelButton.setBounds(762, 5, 53, 28);
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-					}
-				});
-				buttonPane.setLayout(null);
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblAvisoError.setVisible(false);
+				datoTabla = obtenerSeleccion();
+				textNombre.setText(datoTabla[2]);
+				textVehiculo.setText(datoTabla[3]);
+				btnAgregar.setVisible(false);
+				btnAceptar.setVisible(true);
+				btnCancelar.setVisible(true);
+				btnModificar.setEnabled(false); 
+				btnEliminar.setEnabled(false);
 			}
-		}
+		});
+		btnModificar.setBounds(490, 304, 89, 28);
+		contentPanel.add(btnModificar);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnSalir.setBounds(693, 304, 90, 28);
+		contentPanel.add(btnSalir);
+		
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				datoTabla = obtenerSeleccion();
+				eliminar frame = new eliminar();
+				frame.setDato(datoTabla);
+				frame.setVisible(true);
+				frame.setModal(true);
+				frame.setAlwaysOnTop(true);
+				inicializarTabla();
+				llenarTabla();
+			}
+		});
+		btnEliminar.setBounds(591, 304, 90, 28);
+		contentPanel.add(btnEliminar);
+	}
+
+	protected void guardarCambios(String nombre, String vehiculo) {
+		
+		repartidorDao.Modificar_Repartidor(new Repartidor(Integer.parseInt(datoTabla[1]),nombre,vehiculo));
 	}
 
 	private void inicializarTabla() {
 
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {"Id", "Nombre", "Vehiculo" }));
-		
+
 		table.getColumnModel().getColumn(0).setPreferredWidth(0);
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -175,5 +243,14 @@ public class ADM_Repartidor extends JDialog {
 
 			((DefaultTableModel) this.table.getModel()).addRow(fila);
 		}
+	}
+
+	private String[] obtenerSeleccion() {
+		int indice = table.getSelectedRow();
+		String id = (String) table.getModel().getValueAt(indice, 0);
+		String nombre = (String) table.getModel().getValueAt(indice, 1);
+		String vehiculo = (String) table.getModel().getValueAt(indice, 2);
+		String[] dato = { String.valueOf(indice), id, nombre, vehiculo };
+		return dato;
 	}
 }
