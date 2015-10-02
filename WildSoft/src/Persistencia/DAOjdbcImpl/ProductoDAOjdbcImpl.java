@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Producto;
 import Persistencia.DAO.ProductoDAO;
 
@@ -51,6 +50,24 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		String SentenciaSQL = "DELETE * FROM Producto WHERE PR_id="
 				+ p.getPR_id();
 		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
+	}
+
+	@Override
+	public ArrayList<String> getTipos_Producto() {
+		ArrayList<String> Arreglo = new ArrayList<String>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("SELECT * FROM Tipo_producto");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Arreglo.add(Fila.getString("TP_nombre"));
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
 	}
 
 }// --> FIN

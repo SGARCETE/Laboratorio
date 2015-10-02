@@ -3,6 +3,7 @@ package Interfaz;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -30,7 +32,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+//import com.mxrck.autocompleter.AutoCompleterCallback;
+//import com.mxrck.autocompleter.TextAutoCompleter;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
@@ -42,21 +49,9 @@ import Negocio.Modelo.Producto;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
-import Negocio.Servicios.Servicio_Repartidores;
-
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
-
-import java.awt.SystemColor;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-//import com.mxrck.autocompleter.AutoCompleterCallback;
-//import com.mxrck.autocompleter.TextAutoCompleter;
 
 public class Interfaz_Principal {
 
@@ -75,18 +70,13 @@ public class Interfaz_Principal {
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
 	private JTextField textCliente;
-	private JTextField textProducto = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
-	private JTextField textVariedad = new JTextField();		// se inicializa antes del AutoCompleter, sino tira excepcion
-	private TextAutoCompleter AutoCompleter_Producto = new TextAutoCompleter(textProducto, new AutoCompleterCallback() {
-	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
-//	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
-	    }
-	});
-	private TextAutoCompleter AutoCompleter_Variedad = new TextAutoCompleter(textVariedad, new AutoCompleterCallback() {
-	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
-//	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
-	    }
-	});
+
+//	private TextAutoCompleter AutoCompleter_Variedad = new TextAutoCompleter(textVariedad, new AutoCompleterCallback() {
+//	    @Override
+//	    public void callback(Object selectedItem) { // Para saber que selecciono el usuario
+////	    	<HACE ALGO SI TE ELIJO>			ejemplo: cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
+//	    }
+//	});
 	//	private TextAutoCompleter AutoCompleter_Nombre = new TextAutoCompleter(textNombre_Cliente);
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();	// Muestra un Double en formato Dinero. Ej: 50.5  => $50,50
@@ -196,22 +186,14 @@ public class Interfaz_Principal {
 		panelAltaPedido.add(lblProducto);
 		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-
-		textProducto.setBounds(119, 12, 98, 25);
-		panelAltaPedido.add(textProducto);
-		textProducto.setColumns(10);
-		
 		comboBoxProducto = new JComboBox<String>();
 		comboBoxProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Seleccion_De_Producto();
 				Seleccion_De_Tipo_Producto();
 			}
 		});
-		comboBoxProducto.setBounds(218, 12, 100, 25);
+		comboBoxProducto.setBounds(117, 12, 201, 25);
 		panelAltaPedido.add(comboBoxProducto);
-		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas", "Bebidas"}));
-//		comboBoxProducto.setModel(new DefaultComboBoxModel<String>(new String[] {"Pizzas", "Empanadas", "Bebidas"}));
 		
 		comboBoxVariedad = new JComboBox<String>();
 		comboBoxVariedad.addActionListener(new ActionListener() {
@@ -219,11 +201,8 @@ public class Interfaz_Principal {
 				Seleccion_De_Variedad();
 			}
 		});
-		comboBoxVariedad.setBounds(218, 49, 100, 25);
+		comboBoxVariedad.setBounds(117, 49, 201, 25);
 		panelAltaPedido.add(comboBoxVariedad);
-		comboBoxVariedad.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
-//		comboBoxVariedad.setModel(new DefaultComboBoxModel<String>(new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"}));
-		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		JLabel lblVariedad = new JLabel("Variedad");
@@ -297,10 +276,6 @@ public class Interfaz_Principal {
 		btnAgregar.setBounds(117, 232, 100, 30);
 		panelAltaPedido.add(btnAgregar);
 		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon24.png")));
-		
-		textVariedad.setColumns(10);
-		textVariedad.setBounds(119, 49, 98, 25);
-		panelAltaPedido.add(textVariedad);
 		
 		JPanel panel_Resumen_Pedido = new JPanel();
 		panel_Resumen_Pedido.setBackground(SystemColor.menu);
@@ -551,76 +526,36 @@ public class Interfaz_Principal {
 		
 	}//--> FIN INTERFAZ
 
-
-
-	private void Seleccion_De_Producto() {
-		if(!comboBoxProducto.getSelectedItem().toString().isEmpty()){
-			textProducto.setText(comboBoxProducto.getSelectedItem().toString());
-			Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
-		}
-	}
-
-
 	
 	/**
 	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
 	 */
 	private void iniciarParametros() {
+		// Creacion de la tabla vacia de lista de pedidos
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 		
-		
+		// Creacion de la tabla vacia con el contenido de un pedido
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane.setViewportView(Tabla_Pedido_Completo);
 		
+		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = sv_productos.getLista_Productos(); 
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
-		}
-		
-		ArrayList<Producto> ListaVarie = sv_productos.getVariedad_del_Producto("PIZZA");
-		for (int i = 0; i < ListaVarie.size(); i++) {
-			comboBoxVariedad.addItem(ListaVarie.get(i).getPR_nombre());
-		}
-		
-		//******		PRUEBA HARDCODEADO		*********//
-		
-		ArrayList<Object> L_Producto = new ArrayList<Object>();
-		L_Producto.add("Pizza");
-		L_Producto.add("Empanada");
-		L_Producto.add("Bebida");
-		agregar_elem_Autocompleter_Productos(L_Producto);
-		
-		// Variedad de pizza, cada producto tiene su variedad
-		ArrayList<Object> L_Variedad = new ArrayList<Object>();
-		L_Variedad.add("Napolitana");
-		L_Variedad.add("Napolitana especial"); 
-		L_Variedad.add("Muzzarella");
-		L_Variedad.add("Jamon y palmito");
-		L_Variedad.add("Queso y peperoni");
-		L_Variedad.add("Hawaiana");
-		L_Variedad.add("Jamon y Panceta");
-		L_Variedad.add("Cuatro quesos");
-		L_Variedad.add("Salmon Ahumado"); 
-		L_Variedad.add("Cuatro estaciones");
-		L_Variedad.add("Pizza Funghi");
-		L_Variedad.add("Vegetariana");
-		agregar_elem_Autocompleter_Variedad(L_Variedad);
-		
-		//******		FIN PRUEBA HARDCODE		*********//
-		
+		}	
 	}
-	/** Se limpia el formulario de pedido producto cuando ya se agrego al pedido 	 */
+
 	
-	
-	/**
-	 *  CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL TOTAL DEL PEDIDO
-	 */
+	/***  CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL TOTAL DEL PEDIDO */
 	private void Calcula_totales() {
 		if(PRODUCTO_ACTUAL!=null && PEDIDO_ACTUAL.getLista_Productos()!=null){
+			
 			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO PRODUCTO
-			textValorTotal.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString())));
-			// CALCULA EL TOTAL DEL PEDIDO
+			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio() * (Integer.parseInt(spinnerCantidad.getValue().toString()));
+			textValorTotal.setText(formatoImporte.format(Total_Mismo_Producto));
+			
+			// CALCULA EL TOTAL DEL PEDIDO, recorre todos los productos del pedido tomando su precio y lo acumula
 			Double TOTAL_PEDIDO = 0.0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
 				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
@@ -632,58 +567,57 @@ public class Interfaz_Principal {
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//			
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	/**
-	 * CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL COMBOBOX, ESTE DATO
+	/**CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL COMBOBOX, ESTE DATO
 	 * SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE CARGAN LAS VARIEDADES DEL TIPO DE
 	 * PRODUCTO SELECCIONADO:
 	 * EJEMPLO: SI SE SELECCIONO BEBIDA, SE DEBE OBTENER LAS VARIEDADES DE BEBIDAS: COCACOLA, SPRITE, VINO Y SETEAR 
-	 * EN EL COMBOBOX Y AUTOCOMPLETER DE VARIEDADES
-	 */
+	 * EN EL COMBOBOX Y AUTOCOMPLETER DE VARIEDADES	 */
 	private void Seleccion_De_Tipo_Producto() {
 		if(!comboBoxProducto.getSelectedItem().toString().isEmpty()){
-			textProducto.setText(comboBoxProducto.getSelectedItem().toString());
-			Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
+//			Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
+			Lista_Variedades = sv_productos.getVariedad_del_Producto(comboBoxProducto.getSelectedItem().toString());
+			comboBoxVariedad.removeAllItems();
+			for (int i = 0; i < Lista_Variedades.size(); i++) {
+				comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
+			}
 		}
 	}
 
-	/**
-	 * 
-	 * @param TIPO_PRODUCTO
-	 */
-	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
-		Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
-		comboBoxVariedad.removeAllItems();
-		for (int i = 0; i < Lista_Variedades.size(); i++) {
-			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
-		}
-	}
 
-	/**
-	 * CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX, ESTE DATO
+//	private void Cargar_Variedades_del_producto(String TIPO_PRODUCTO) {
+//		Lista_Variedades = sv_productos.getVariedad_del_Producto(TIPO_PRODUCTO);
+//		comboBoxVariedad.removeAllItems();
+//		for (int i = 0; i < Lista_Variedades.size(); i++) {
+//			comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
+//		}
+//	}
+
+	/**CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX, ESTE DATO
 	 * SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE CARGA EL PRECIO DE LA VARIEDAD
 	 * SELECCIONADA.
 	 * EJEMPLO: SE SELECCIONA LA VARIEDAD COCACOLA [DE BEBIDAS], SE OBTIENE EL PRECIO DE DICHO PRODUCTO
-	 * Y SE SETEA EN EL TEXTFIELD DEL PRECIO Y EN "PRODUCTO_ACTUAL"
-	 */
+	 * Y SE SETEA EN EL TEXTFIELD DEL PRECIO Y EN "PRODUCTO_ACTUAL"	 */
 	private void Seleccion_De_Variedad() {
 		if(comboBoxVariedad.getSelectedItem()!=null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()){
-			textVariedad.setText(comboBoxVariedad.getSelectedItem().toString());
-			Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
+//			Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
+			for (int i = 0; i < Lista_Variedades.size(); i++) {
+				if(Lista_Variedades.get(i).getPR_nombre().equals(comboBoxVariedad.getSelectedItem().toString()))
+					PRODUCTO_ACTUAL = Lista_Variedades.get(i);		// SETEO EL PRODUCTO SELECCIONADO
+			}	
+			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
 			Calcula_totales();
 		}
 	}
 	
-	/**
-	 * 
-	 * @param VARIEDAD
-	 */
-	private void Cargar_precio_del_producto(String VARIEDAD) {
-		for (int i = 0; i < Lista_Variedades.size(); i++) {
-			if(Lista_Variedades.get(i).getPR_nombre().equals(VARIEDAD))
-				PRODUCTO_ACTUAL = Lista_Variedades.get(i);
-		}	
-		textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
-	}
+
+//	private void Cargar_precio_del_producto(String VARIEDAD) {
+//		for (int i = 0; i < Lista_Variedades.size(); i++) {
+//			if(Lista_Variedades.get(i).getPR_nombre().equals(VARIEDAD))
+//				PRODUCTO_ACTUAL = Lista_Variedades.get(i);
+//		}	
+//		textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
+//	}
+	
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//			LIMPIADOR DE CAMPOS
@@ -693,16 +627,10 @@ public class Interfaz_Principal {
 		PRODUCTO_ACTUAL = new Producto();	
 		comboBoxProducto.setSelectedIndex(0);
 		comboBoxVariedad.removeAllItems();
-		textVariedad.setText("");
-		textProducto.setText("");
-		comboBoxProducto.setSelectedIndex(0);	
-		textVariedad.setText("");
-		comboBoxVariedad.setSelectedIndex(0);
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		textValor.setText("");
 		textValorTotal.setText("");
 		textObservaciones.setText("");
-		
 	}
 	/**
 	 * 
@@ -722,45 +650,31 @@ public class Interfaz_Principal {
 	 */
 	private void Agregar_al_Pedido() {
 		// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos LISTO
-		
-	//	if( DATOS OBLIGATORIOS ESTAN COMPLETOS (!=null y a vacio), PUEDO GUARDARLO EN LA LISTA DEL PEDIDO){
-		
-			String producto = textProducto.getText();	// autocompleter  o search
-	//		o
-			String productoCB = comboBoxProducto.getSelectedItem().toString();			// o combo box
-	
-//		if( DATOS OBLIGATORIOS ESTAN COMPLETOS (!=null y a vacio), PUEDO GUARDARLO EN LA LISTA DEL PEDIDO){
-			String Tipo_producto = textProducto.getText();	// autocompleter  o search
-			//			String productoCB = comboBoxProducto.getSelectedItem().toString();			// o combo box
-			String Variedad = textVariedad.getText();	// autocompleter o search
-	//		o
-			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
-	
-			//			String VariedadCB = comboBoxVariedad.getSelectedItem().toString();	// o combo box
-			Integer cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-		if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && cantidad>0){
+		Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+		String Tipo_producto = comboBoxProducto.getSelectedItem().toString();			// o combo box
+		String Variedad = comboBoxVariedad.getSelectedItem().toString();	// o combo box
+
+		if(!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad>0){
 			Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 			Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
-
-			PRODUCTO_ACTUAL.setPR_nombre(Variedad);
 			String Observacion = textObservaciones.getText();
+
+			/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/			
+			for (int i = 0; i < Cantidad; i++) 
+				PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+			
 			
 			/** Esto va para la parte visual	**/
 			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
-			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
-			modelo.addRow(new Object[] { modelo.getRowCount()+1, cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+//			modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				modelo.addRow(new Object[] { modelo.getRowCount()+1, Cantidad, Tipo_producto, Variedad, formatoImporte.format(ValorU), formatoImporte.format(ValorT), Observacion});	// "Nro", "Unidades", "Producto", "Importe c/u", "Importe", "Observacion"
+			}
 			Tabla_Pedido_Completo.setModel(modelo);	// Lo seteo en la tabla para que se vea
 			
 			
-			/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos	**/
-			PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-			
-			for (int i = 0; i < cantidad; i++) 
-				PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-						
 			/** Despues que se resetee el formulario de ingreso de pedido**/
 			Limpiar_Formulario_pedido();
-		//}
 		}
 	}
 	/**
@@ -814,30 +728,4 @@ public class Interfaz_Principal {
 		textDetalle.setEnabled(chckbxDelivery.isSelected());
 	}
 	
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//			
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	/**
-	 * AGREGA ELEMENTOS (NOMBRES DE "TIPO DE PRODUCTOS") AL AUTOCOMPLETER DE "TIPO DE PRODUCTOS"
-	 * @param L_producto	RECIBE UNA LISTA DE "TIPO DE PRODUCTOS" [EJEMPLO: EMAPANDAS, PIZZAS, BEBIDAS]
-	 */
-	public void agregar_elem_Autocompleter_Productos(ArrayList<Object> L_producto){
-		AutoCompleter_Producto.removeAllItems();
-		AutoCompleter_Producto.setCaseSensitive(false);
-		AutoCompleter_Producto.setMode(0);
-		AutoCompleter_Producto.addItems(L_producto);
-	}
-	
-	/**
-	 * AGREGA ELEMENTOS (NOMBRES DE "PRODUCTOS") AL AUTOCOMPLETER DE "PRODUCTOS"
-	 * @param L_variedad	RECIBE UNA LISTA DE NOMBRE DE PRODUCTOS DE UN "TIPO DE PRODUCTO", [EJEMPLO: SI EL "TIPO DE PRODUCTO" ES BEBIDA, 
-	 * ESTA LISTA DEBE CONTENER LOS NOMBRES DE LAS VARIEDADES DE LA "BEBIDA", EJEMPLO, COCACOLA, SPRITE, CERVEZA, MANAOS, ETC]
-	 */
-	public void agregar_elem_Autocompleter_Variedad(ArrayList<Object> L_variedad){
-		AutoCompleter_Variedad.removeAllItems();
-		AutoCompleter_Variedad.setCaseSensitive(false);
-		AutoCompleter_Variedad.setMode(0);
-		AutoCompleter_Variedad.addItems(L_variedad);
-		
-	}
 }//---> FIN CLASE

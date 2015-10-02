@@ -14,7 +14,7 @@ public class ConectorMySQL {
 	public 	Connection conexion;
 	
 	private String DATABASE_NAME = "WILDSOFT";	// Poner el nombre de la base de datos
-	private String USUARIO = "admin";			// Usuario que administra la DB
+	private String USUARIO = "root";			// Usuario que administra la DB
 	private String PASSWORD = "root";			// Password del usuario
 	private String Driver = "jdbc:mysql://localhost/"+  DATABASE_NAME  +"?user="+   USUARIO   +"&password="+  PASSWORD;
 	
