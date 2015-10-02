@@ -1083,7 +1083,11 @@ public class Interfaz_Principal {
 			Integer indice = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(indice);
-			sv_pedidos.eliminar_pedido(P_cancelar);
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_id()==indice);
+					PEDIDO_ACTUAL.getLista_Productos().remove(i);
+			}
+//			sv_pedidos.eliminar_pedido(P_cancelar);
 		}
 	}
 
