@@ -1042,52 +1042,45 @@ public class Interfaz_Principal {
 	 * SE ELIMINARA ESE ELEMENTO DE LA LISTA
 	 */
 	private void Quitar_al_Pedido() {
-		// LO QUITA DE LA LISTA DE PEDIDO
-		// if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
-		// for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-		// PEDIDO_ACTUAL.getLista_Productos().get(i).
-		// }
-		// }
-		// LO QUITA DE LA LISTA VISUAL
-		if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no
-															// se selecciono
-															// nada en la tabla,
-															// si es distinto,
-															// entonces es xq
-															// selecciono algo y
-															// se puede quitar
-			int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); // indice
-																				// de
-																				// la
-																				// tabla,
-																				// (No
-																				// funciona
-																				// si
-																				// se
-																				// ordenan
-																				// los
-																				// datos
-																				// desde
-																				// la
-																				// tabla,
-																				// ojo)
-			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo
-					.getModel();
-			modelo.removeRow(indice_Seleccionado);
-		}
-
+//		 LO QUITA DE LA LISTA DE PEDIDO
+		 if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+			 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
+			 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
+			 Integer removidos = 0;
+//			 System.out.println("Antes "+PEDIDO_ACTUAL.getLista_Productos().size());
+			 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad)
+//				 	System.out.println(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre());
+					PEDIDO_ACTUAL.getLista_Productos().remove(i);
+				 	removidos++;
+				 } 
+			 }
+//		 	 System.out.println(PEDIDO_ACTUAL.getLista_Productos().size());
+			// LO QUITA DE LA LISTA VISUAL
+			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
+				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); // indice	 la tabla, (No funciona si se ordenan los datos
+																					// desde la tabla, ojo)
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				modelo.removeRow(indice_Seleccionado);
+				Calcula_totales();
+			}
 	}
 
 	private void Cancelar_Pedido() {
 		if (Tabla_Lista_pedidos != null	&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Integer indice = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
-			P_cancelar.setNumero_Pedido(indice);
-			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_id()==indice);
-					PEDIDO_ACTUAL.getLista_Productos().remove(i);
+			P_cancelar.setNumero_Pedido(Numero_pedido);
+			// LO ELIMINA DE LA BASE DE DATOS
+			//			sv_pedidos.eliminar_pedido(P_cancelar);
+			
+			// LO QUITA DE LA LISTA VISUAL
+			if (Tabla_Lista_pedidos.getSelectedRow() != -1) { 
+				int indice_Seleccionado = Tabla_Lista_pedidos.getSelectedRow(); 
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
+				modelo.removeRow(indice_Seleccionado);
 			}
-//			sv_pedidos.eliminar_pedido(P_cancelar);
+
 		}
 	}
 
