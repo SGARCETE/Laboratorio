@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -30,6 +29,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -42,7 +42,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import Interfaz.Repartidor.Alta_Repartidor;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -52,13 +51,6 @@ import Negocio.Modelo.Producto;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
-
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
-
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 
 public class Interfaz_Principal {
 
@@ -798,7 +790,7 @@ public class Interfaz_Principal {
 		JMenuItem mntmAltaRepartidor = new JMenuItem("Nuevo Repartidor");
 		mntmAltaRepartidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Alta_Repartidor frame = new Alta_Repartidor();
+				ADM_Repartidor frame = new ADM_Repartidor();
 				frame.setVisible(true);
 				frame.setModal(true);
 			}

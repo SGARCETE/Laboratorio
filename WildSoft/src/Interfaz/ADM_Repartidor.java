@@ -1,4 +1,4 @@
-package Interfaz.Repartidor;
+package Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -17,7 +17,7 @@ import Negocio.Modelo.Repartidor;
 import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
 
 @SuppressWarnings("serial")
-public class Alta_Repartidor extends JDialog {
+public class ADM_Repartidor extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textNombre;
@@ -29,7 +29,7 @@ public class Alta_Repartidor extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Alta_Repartidor dialog = new Alta_Repartidor();
+			ADM_Repartidor dialog = new ADM_Repartidor();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class Alta_Repartidor extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Alta_Repartidor() {
+	public ADM_Repartidor() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
