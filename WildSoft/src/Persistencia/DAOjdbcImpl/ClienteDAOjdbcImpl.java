@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Cliente;
+import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ClienteDAO;
 
 public class ClienteDAOjdbcImpl implements ClienteDAO{

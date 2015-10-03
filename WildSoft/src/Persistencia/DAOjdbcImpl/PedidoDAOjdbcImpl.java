@@ -3,6 +3,7 @@ package Persistencia.DAOjdbcImpl;
 import java.util.ArrayList;
 
 import Negocio.Modelo.Pedido;
+import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
 
 public class PedidoDAOjdbcImpl implements PedidoDAO{

@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Repartidor;
+import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.RepartidorDAO;
 
 public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean Nuevo_Repartidor(Repartidor R) {
 		String SentenciaSQL = "INSERT INTO Repartidor(RE_nombre, RE_vehiculo) VALUES ("+
 			"'"+	R.getNombre()			+"',"+
@@ -20,11 +22,13 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean Eliminar_Repartidor(Repartidor R) {
 		String SentenciaSQL = "DELETE FROM Repartidor WHERE RE_id =" + R.getID_Repartidor();
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Repartidor> getRepartidores() {
 		ArrayList<Repartidor> Arreglo = new ArrayList<Repartidor>();
 		try {
@@ -46,19 +50,12 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		return Arreglo;
 	}
 
-	public void Modificar_Repartidor(Repartidor R) {
-//		conex.connectToMySQL();// Conectar base
-//		Statement st;
-//		try {
-//			st = conex.conexion.createStatement();
-//			st.executeQuery("UPDATE Repartidor SET RE_nombre = '" + R.getNombre() + "', RE_vehiculo = '" + R.getVehiculo() + "' WHERE RE_id=" + R.getID_Repartidor());
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		conex.cerrarConexion();
-//		
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public boolean Modificar_Repartidor(Repartidor R) {
 		String SentenciaSQL = "UPDATE Repartidor SET RE_nombre = '" + R.getNombre() + "', RE_vehiculo = '" + R.getVehiculo() + "' WHERE RE_id=" + R.getID_Repartidor();
-		conex.Insertar(SentenciaSQL);
+		return conex.Insertar(SentenciaSQL);
 	}
 	
-}
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+}//--> FIN

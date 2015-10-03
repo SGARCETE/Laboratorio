@@ -1,7 +1,6 @@
 package Interfaz;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -32,7 +31,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -48,22 +46,23 @@ import Interfaz.Swing_Extends.Model_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
+import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 
 public class Interfaz_Principal {
 
-	private JFrame frmWildsoft;
-	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	public JFrame frmWildsoft;
+	// <COMPONENTES>
+	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane_Lista_Pedidos;
+	private JScrollPane scrollPane_Pedido_Completo;
 	private JTable Tabla_Pedido_Completo;
 	private JTable Tabla_Lista_pedidos;
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private JCheckBox chckbxDelivery;
-	private JCheckBox chckbxDelivery_1;
 	private JSpinner spinnerCantidad;
 	private JTextField textDomicilio;
 	private JTextField textTelefono;
@@ -72,80 +71,45 @@ public class Interfaz_Principal {
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
 	private JTextField textCliente;
-
-	// private TextAutoCompleter AutoCompleter_Variedad = new
-	// TextAutoCompleter(textVariedad, new AutoCompleterCallback() {
-	// @Override
-	// public void callback(Object selectedItem) { // Para saber que selecciono
-	// el usuario
-	// // <HACE ALGO SI TE ELIJO> ejemplo:
-	// cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
-	// }
-	// });
-	// private TextAutoCompleter AutoCompleter_Nombre = new
-	// TextAutoCompleter(textNombre_Cliente);
-
-	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); // Muestra
-																				// un
-																				// Double
-																				// en
-																				// formato
-																				// Dinero.
-																				// Ej:
-																				// 50.5
-																				// =>
-																				// $50,50
-
-	private Pedido PEDIDO_ACTUAL = new Pedido(); // Cuando creo un nuevo pedido
-													// lo voy llenando aca,
-													// cuando lo termino se
-													// resetea
-	private Producto PRODUCTO_ACTUAL = new Producto(); // Cuando selecciono el
-														// producto, este va a
-														// saber la variedad,
-														// observacion,
-														// cantidad, total,
-														// cuando lo agrego a la
-														// tabla se resetea para
-														// ingresar otro
 	private JTextField textTotal_Pedido;
-	private JScrollPane scrollPane;
 
-	// inicializador de servicios
-	private Servicio_Productos sv_productos = new Servicio_Productos();
-	private Servicio_Clientes sv_clientes = new Servicio_Clientes();
-	private Servicio_Pedidos sv_pedidos = new Servicio_Pedidos();
+//	private TextAutoCompleter AutoCompleter_Variedad = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
+//	@Override
+//	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
+//			//EJEMPLO cargarClienteParaCargar(CN.getGestorClientes().getInfoCliente((String)selectedItem));
+//		}
+//	});
+
+	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
+	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
+	
+
+	// <SERVICIOS> [solo los que voy a usar en esta clase, la instancia se le pide a Principal_Negocio_principal]
+	private Servicio_Productos sv_productos;
+	private Servicio_Clientes sv_clientes;
+	private Servicio_Pedidos sv_pedidos;
+	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
-	private JTabbedPane tabbedPane;
+	private Pedido PEDIDO_ACTUAL = new Pedido(); 	   /* Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea */
+	private Producto PRODUCTO_ACTUAL = new Producto(); /* Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro*/
 
-	/**
-	 * Launch the application. ESTO ACA ES TEMPORAL, ESTA MAL ACA, debe ir en
-	 * Negocio.Servicios Ejecutar_WILDSOFT.java
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-
-					// Look and feel por defecto: Nimbus
-					UIManager
-							.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-					Interfaz_Principal window = new Interfaz_Principal();
-					window.frmWildsoft.setVisible(true);
-					SwingUtilities.updateComponentTreeUI(window.frmWildsoft);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//<INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
+	@SuppressWarnings("unused")
+	private Interfaz_Principal Instancia_de_Interfaz_Principal;
+	private Principal_Negocio_Interfaz Principal_neg_int; 
 
 	/**
 	 * Create the application.
+	 * @param principal_Negocio_Interfaz 
 	 */
-	public Interfaz_Principal() {
-		initialize();
+	public Interfaz_Principal(Principal_Negocio_Interfaz iNSTANCIA_principal_Negocio_Interfaz) {
+		Instancia_de_Interfaz_Principal = this; 					/* Esta instancia de Interfaz_principal sirve para poder pasarsela a otras ventanas externas y asi poder comunicarse*/
+		Principal_neg_int = iNSTANCIA_principal_Negocio_Interfaz; 	/* ESTA CLASE ES NECESARIA PARA QUE TODA INTERFAZ PUEDA COMUNICARSE CON LA PARTE DE NEGOCIO*/
+		sv_productos = Principal_neg_int.getSvProductos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
+		sv_clientes  = Principal_neg_int.getSvClientes();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
+		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
+		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
+		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
 	}
 
 	/**
@@ -153,13 +117,12 @@ public class Interfaz_Principal {
 	 */
 	private void initialize() {
 		frmWildsoft = new JFrame();
-		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Interfaz_Principal.class
-						.getResource("/Recursos/Pizza-icon16.png")));
+		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
 		frmWildsoft.setBounds(100, 100, 999, 550);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.menu);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -202,7 +165,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(10, 12, 110, 25);
+		lblProducto.setBounds(10, 12, 109, 25);
 		panelAltaPedido.add(lblProducto);
 		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -226,14 +189,14 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblVariedad = new JLabel("Variedad");
-		lblVariedad.setBounds(10, 49, 110, 25);
+		lblVariedad.setBounds(10, 49, 109, 25);
 		panelAltaPedido.add(lblVariedad);
 		lblVariedad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setBounds(10, 85, 110, 25);
+		lblCantidad.setBounds(10, 85, 109, 25);
 		panelAltaPedido.add(lblCantidad);
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -250,7 +213,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblValor = new JLabel("Valor c/u     $");
-		lblValor.setBounds(10, 122, 110, 25);
+		lblValor.setBounds(10, 122, 109, 25);
 		panelAltaPedido.add(lblValor);
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -265,19 +228,19 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblValorTotal = new JLabel("Valor total   $");
-		lblValorTotal.setBounds(10, 159, 110, 25);
+		lblValorTotal.setBounds(10, 159, 109, 25);
 		panelAltaPedido.add(lblValorTotal);
 		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblObservacion = new JLabel("Observaciones");
-		lblObservacion.setBounds(10, 199, 110, 25);
+		lblObservacion.setBounds(10, 195, 109, 25);
 		panelAltaPedido.add(lblObservacion);
 		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		textObservaciones = new JTextField();
-		textObservaciones.setBounds(117, 199, 199, 25);
+		textObservaciones.setBounds(117, 195, 199, 25);
 		panelAltaPedido.add(textObservaciones);
 		textObservaciones.setColumns(10);
 
@@ -293,7 +256,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(117, 232, 100, 30);
+		btnAgregar.setBounds(117, 225, 100, 30);
 		panelAltaPedido.add(btnAgregar);
 		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class
 				.getResource("/Recursos/IMG/add-1-icon24.png")));
@@ -317,7 +280,7 @@ public class Interfaz_Principal {
 		// Tabla que muestra el pedido
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-		scrollPane = new JScrollPane();
+		scrollPane_Pedido_Completo = new JScrollPane();
 
 		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
 		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
@@ -346,7 +309,7 @@ public class Interfaz_Principal {
 																556,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																scrollPane,
+																scrollPane_Pedido_Completo,
 																GroupLayout.DEFAULT_SIZE,
 																556,
 																Short.MAX_VALUE)
@@ -376,7 +339,7 @@ public class Interfaz_Principal {
 												GroupLayout.PREFERRED_SIZE, 25,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(6)
-										.addComponent(scrollPane,
+										.addComponent(scrollPane_Pedido_Completo,
 												GroupLayout.DEFAULT_SIZE, 176,
 												Short.MAX_VALUE)
 										.addGap(14)
@@ -471,18 +434,16 @@ public class Interfaz_Principal {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelDelibery.setLayout(null);
 
-		chckbxDelivery = new JCheckBox("Delivery");
-		chckbxDelivery_1 = new JCheckBox("Con delivery");
-		chckbxDelivery_1.setBackground(SystemColor.menu);
-		chckbxDelivery_1.addActionListener(new ActionListener() {
+		chckbxDelivery = new JCheckBox("Con delivery");
+		chckbxDelivery.setBackground(SystemColor.menu);
+		chckbxDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servicio_Delivery();
 			}
 		});
-		chckbxDelivery_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		chckbxDelivery_1.setBounds(16, 14, 97, 25);
-		chckbxDelivery_1.setBounds(16, 14, 110, 25);
-		panelDelibery.add(chckbxDelivery_1);
+		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chckbxDelivery.setBounds(16, 14, 110, 25);
+		panelDelibery.add(chckbxDelivery);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -790,9 +751,7 @@ public class Interfaz_Principal {
 		JMenuItem mntmADMRepartidores = new JMenuItem("Administracion de Repartidores");
 		mntmADMRepartidores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ADM_Repartidor frame = new ADM_Repartidor();
-				frame.setVisible(true);
-				frame.setModal(true);
+				Abrir_Interfaz_ABM_Repartidor();
 			}
 		});
 		mnRepartidor.add(mntmADMRepartidores);
@@ -828,9 +787,6 @@ public class Interfaz_Principal {
 
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
 		mnAyuda.add(mntmAcercaDeWildsoft);
-		// frmWildsoft.setVisible(true);
-
-		iniciarParametros();
 
 	}// --> FIN INTERFAZ
 
@@ -846,7 +802,7 @@ public class Interfaz_Principal {
 		// Creacion de la tabla vacia con el contenido de un pedido
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
 				new Model_Pedido_Completo());
-		scrollPane.setViewportView(Tabla_Pedido_Completo);
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = sv_productos.getLista_Productos();
@@ -953,7 +909,7 @@ public class Interfaz_Principal {
 		PEDIDO_ACTUAL = new Pedido();
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
 				new Model_Pedido_Completo());
-		scrollPane.setViewportView(Tabla_Pedido_Completo);
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1015,9 +971,9 @@ public class Interfaz_Principal {
 	private void Guardar_pedido() {
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
 			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
-			if (chckbxDelivery_1.isSelected()) {
+			if (chckbxDelivery.isSelected()) {
 				// agregar datos del pedido
-				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery_1.isSelected());
+				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
 			}
 			// sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// TODO- actualizar Tabla_Lista_pedidos
@@ -1092,9 +1048,16 @@ public class Interfaz_Principal {
 	 * OPCION "DELIVERY" EN LA INTERFAZ
 	 */
 	private void Servicio_Delivery() {
-		textCliente.setEnabled(chckbxDelivery_1.isSelected());
-		textDomicilio.setEnabled(chckbxDelivery_1.isSelected());
-		textTelefono.setEnabled(chckbxDelivery_1.isSelected());
-		textDetalle.setEnabled(chckbxDelivery_1.isSelected());
+		textCliente.setEnabled(chckbxDelivery.isSelected());
+		textDomicilio.setEnabled(chckbxDelivery.isSelected());
+		textTelefono.setEnabled(chckbxDelivery.isSelected());
+		textDetalle.setEnabled(chckbxDelivery.isSelected());
+	}
+
+
+	private void Abrir_Interfaz_ABM_Repartidor() {
+		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 }// ---> FIN CLASE

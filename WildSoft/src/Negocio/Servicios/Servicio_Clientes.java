@@ -8,6 +8,7 @@ public class Servicio_Clientes {
 	private ClienteDAO clienteDAO = new ClienteDAOjdbcImpl();
 	
 
+	@SuppressWarnings("unused")
 	private boolean Nuevo_Cliente(Cliente c){
 		if(c!=null)
 			return clienteDAO.Nuevo_Cliente(c);

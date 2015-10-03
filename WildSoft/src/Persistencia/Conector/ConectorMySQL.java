@@ -1,4 +1,4 @@
-package Persistencia.DAOjdbcImpl;
+package Persistencia.Conector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

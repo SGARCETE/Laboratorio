@@ -2,7 +2,6 @@ package Negocio.Servicios;
 
 import java.util.ArrayList;
 
-import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Repartidor;
 import Persistencia.DAO.RepartidorDAO;
 import Persistencia.DAOjdbcImpl.RepartidorDAOjdbcImpl;
@@ -25,9 +24,10 @@ public class Servicio_Repartidores {
 	public boolean eliminar_Repartidor(Repartidor R){
 		return repartidorDAO.Eliminar_Repartidor(R);
 	}
-
-
-
+	
+	public boolean Modificar_Repartidor(Repartidor R){
+		return repartidorDAO.Modificar_Repartidor(R);
+	}
 
 
 
