@@ -118,6 +118,8 @@ public class ADM_Repartidor extends JDialog {
 
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				textNombre.setText("");
+				textVehiculo.setText("");
 				Agregar_repartidor();
 			}
 		});
@@ -149,7 +151,9 @@ public class ADM_Repartidor extends JDialog {
 		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Modificar_Repartidor();
+				if(table.getSelectedRow()!=-1){ 
+					Modificar_Repartidor();
+				}
 			}
 		});
 		btnModificar.setBounds(492, 292, 80, 60);
@@ -173,7 +177,9 @@ public class ADM_Repartidor extends JDialog {
 		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Eliminar_Repartidor();
+				if(table.getSelectedRow()!=-1){ 
+					Eliminar_Repartidor();
+				}
 			}
 		});
 		btnEliminar.setBounds(582, 292, 80, 60);
