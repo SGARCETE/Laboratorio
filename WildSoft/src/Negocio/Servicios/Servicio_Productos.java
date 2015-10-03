@@ -48,8 +48,8 @@ public class Servicio_Productos {
 	}
 	
 	public ArrayList<Producto> getVariedad_del_Producto(String Tipo_Producto){
-		return Lista_Variedades;					//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
-//		return productoDAO.getVARIEDAD_DEL_PRODUCTO(Tipo_Producto);
+//		return Lista_Variedades;					//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
+		return productoDAO.getVARIEDAD_DEL_PRODUCTO(Tipo_Producto);
 	}
 	
 	public boolean eliminar_un_producto(Producto p){

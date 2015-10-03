@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -40,6 +41,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import Interfaz.JDialogs.Interfaz_ABMPedido;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -273,8 +275,7 @@ public class Interfaz_Principal {
 				Quitar_al_Pedido();
 			}
 		});
-		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		// Tabla que muestra el pedido
@@ -285,79 +286,29 @@ public class Interfaz_Principal {
 		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
 		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setEnabled(false);
-		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/edit-icon24.png")));
 		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(
 				panel_Resumen_Pedido);
-		gl_panel_Resumen_Pedido
-				.setHorizontalGroup(gl_panel_Resumen_Pedido
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Resumen_Pedido
-										.createSequentialGroup()
-										.addGap(8)
-										.addGroup(
-												gl_panel_Resumen_Pedido
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lblResumenDelPedido,
-																GroupLayout.PREFERRED_SIZE,
-																556,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																scrollPane_Pedido_Completo,
-																GroupLayout.DEFAULT_SIZE,
-																556,
-																Short.MAX_VALUE)
-														.addGroup(
-																gl_panel_Resumen_Pedido
-																		.createSequentialGroup()
-																		.addComponent(
-																				btnQuitar,
-																				GroupLayout.PREFERRED_SIZE,
-																				100,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(22)
-																		.addComponent(
-																				btnModificar,
-																				GroupLayout.PREFERRED_SIZE,
-																				121,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addGap(8)));
-		gl_panel_Resumen_Pedido
-				.setVerticalGroup(gl_panel_Resumen_Pedido
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Resumen_Pedido
-										.createSequentialGroup()
-										.addGap(9)
-										.addComponent(lblResumenDelPedido,
-												GroupLayout.PREFERRED_SIZE, 25,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(6)
-										.addComponent(scrollPane_Pedido_Completo,
-												GroupLayout.DEFAULT_SIZE, 176,
-												Short.MAX_VALUE)
-										.addGap(14)
-										.addGroup(
-												gl_panel_Resumen_Pedido
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																btnQuitar,
-																GroupLayout.PREFERRED_SIZE,
-																30,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnModificar,
-																GroupLayout.PREFERRED_SIZE,
-																30,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(1)));
+		gl_panel_Resumen_Pedido.setHorizontalGroup(
+			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+					.addGap(8))
+		);
+		gl_panel_Resumen_Pedido.setVerticalGroup(
+			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
+					.addGap(9)
+					.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+					.addGap(14)
+					.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(1))
+		);
 		panel_Resumen_Pedido.setLayout(gl_panel_Resumen_Pedido);
 		GroupLayout gl_panelProductos = new GroupLayout(panelProductos);
 		gl_panelProductos
@@ -691,6 +642,11 @@ public class Interfaz_Principal {
 		btnVer.setBackground(Color.WHITE);
 
 		JButton btnModificar_1 = new JButton("Modificar");
+		btnModificar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Modificar_Pedido_Seleccionado();
+			}
+		});
 		btnModificar_1.setIcon(new ImageIcon(Interfaz_Principal.class
 				.getResource("/Recursos/IMG/edit-icon64.png")));
 		btnModificar_1.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -708,8 +664,7 @@ public class Interfaz_Principal {
 				Cancelar_Pedido();
 			}
 		});
-		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/delete-1-icon64.png")));
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
@@ -851,13 +806,10 @@ public class Interfaz_Principal {
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
 			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
-			Lista_Variedades = sv_productos
-					.getVariedad_del_Producto(comboBoxProducto
-							.getSelectedItem().toString());
+			Lista_Variedades = sv_productos.getVariedad_del_Producto(comboBoxProducto.getSelectedItem().toString());
 			comboBoxVariedad.removeAllItems();
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
-				comboBoxVariedad
-						.addItem(Lista_Variedades.get(i).getPR_nombre());
+				comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
 			}
 		}
 	}
@@ -1053,11 +1005,16 @@ public class Interfaz_Principal {
 		textTelefono.setEnabled(chckbxDelivery.isSelected());
 		textDetalle.setEnabled(chckbxDelivery.isSelected());
 	}
-
-
+	
 	private void Abrir_Interfaz_ABM_Repartidor() {
 		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
 	}
+	protected void Modificar_Pedido_Seleccionado() {
+		Interfaz_ABMPedido frame = new Interfaz_ABMPedido(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+	}
+	
 }// ---> FIN CLASE
