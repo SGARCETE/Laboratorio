@@ -6,14 +6,14 @@ import Negocio.Modelo.Pedido;
 
 public interface PedidoDAO {
 
-	boolean AGREGAR_PEDIDO(Pedido p);
+	public boolean AGREGAR_PEDIDO(Pedido p);
 
-	ArrayList<Pedido> getPEDIDOS();
+	public ArrayList<Pedido> getPEDIDOS();
 
-	boolean ELIMINAR_PEDIDO(Pedido p);
+	public boolean ELIMINAR_PEDIDO(Pedido p);
 
-	Pedido MODIFICAR_PEDIDO(Pedido p);
+	public Pedido MODIFICAR_PEDIDO(Pedido p);
 
-	Pedido OBTENER_PEDIDO(Pedido p);
+	public Pedido OBTENER_PEDIDO(Pedido p);
 
 }

@@ -9,7 +9,9 @@ public class Pedido {
 	private Integer Numero_Pedido; 		// ID o Numero de pedido
 	private Date 	Fecha_Hora_Pedido;		// Fecha y hora en la que se ingresa el pedido al sistema
 	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();				// Lista de productos en el pedido
+	private String ESTADO = "PENDIENTE";
 	private enum Estado_Pedido { Pendiente, Enviado, Cancelado, Preparado, Cobrado};
+	
 	// En caso que sea delivery:
 	private Boolean Es_Delivery = false;
 	private Cliente cliente;
@@ -26,10 +28,7 @@ public class Pedido {
 	}
 	public Date getFecha_Hora_Pedido() {
 		return Fecha_Hora_Pedido;
-	}
-	
-	
-	
+	}	
 	public void setFecha_Hora_Pedido(Date fecha_Hora_Pedido) {
 		Fecha_Hora_Pedido = fecha_Hora_Pedido;
 	}
@@ -57,12 +56,10 @@ public class Pedido {
 	public void setHora_Entrega(Date hora_Entrega) {
 		Hora_Entrega = hora_Entrega;
 	}
-	
 	public void agregar_un_producto(Producto PRODUCTO) {
 		if(PRODUCTO!=null)
 			Lista_Productos.add(PRODUCTO);
 	}
-	
 	public void quitar_un_producto(Producto PRODUCTO) {
 //		if(PRODUCTO!=null)
 //			Lista_Productos.remove();
@@ -73,6 +70,12 @@ public class Pedido {
 	}
 	public void setTotal(Double total) {
 		Total = total;
+	}
+	public String getESTADO() {
+		return ESTADO;
+	}
+	public void setESTADO(String eSTADO) {
+		ESTADO = eSTADO;
 	}
 	
 	

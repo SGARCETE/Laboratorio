@@ -2,10 +2,11 @@ package Negocio.Modelo;
 
 public class Cliente {
 	private Integer ID_Cliente = 0;
-	private String  Nombre;
-	private String  Apellido;
-	private String  Domicilio;
-	private Integer Telefono_Fijo;
+	private String  Nombre = "";
+	private String  Apellido = "";
+	private String  Domicilio = "";
+	private String  Detalle = "";
+	private String  Telefono_Fijo = "";
 	
 	/** GETTERS AND SETTERS **/
 	public Integer getID_Cliente() {
@@ -26,10 +27,10 @@ public class Cliente {
 	public void setDomicilio(String domicilio) {
 		Domicilio = domicilio;
 	}
-	public Integer getTelefono_Fijo() {
+	public String getTelefono_Fijo() {
 		return Telefono_Fijo;
 	}
-	public void setTelefono_Fijo(Integer telefono_Fijo) {
+	public void setTelefono_Fijo(String telefono_Fijo) {
 		Telefono_Fijo = telefono_Fijo;
 	}
 	public String getApellido() {
@@ -38,6 +39,13 @@ public class Cliente {
 	public void setApellido(String apellido) {
 		Apellido = apellido;
 	}
+	public String getDetalle() {
+		return Detalle;
+	}
+	public void setDetalle(String detalle) {
+		Detalle = detalle;
+	}
+
 
 
 	

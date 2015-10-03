@@ -38,29 +38,9 @@ public class JTable_Listado_Pedidos extends JTable{
 	    
 	    this.setFont(new Font(FuenteTablas, Font.PLAIN, FuenteSize));
 	    
-//		//  
-//		this.getColumnModel().getColumn(0).setMaxWidth(35);
-//		this.getColumnModel().getColumn(0).setMinWidth(35);
-//		// 
-//		this.getColumnModel().getColumn(1).setMaxWidth(95);
-//		this.getColumnModel().getColumn(1).setMinWidth(95);
-//		// 
-//		this.getColumnModel().getColumn(2).setMaxWidth(95);
-//		this.getColumnModel().getColumn(2).setMinWidth(95);
-//		// 
-//		this.getColumnModel().getColumn(3).setMaxWidth(95);
-//		this.getColumnModel().getColumn(3).setMinWidth(95);
-//		// 
-//		this.getColumnModel().getColumn(4).setMaxWidth(95);
-//		this.getColumnModel().getColumn(4).setMinWidth(95);
-//		// 
-//		this.getColumnModel().getColumn(5).setPreferredWidth(70);
-//		this.getColumnModel().getColumn(5).setMaxWidth(70);
-//		this.getColumnModel().getColumn(5).setMinWidth(70);
-//		// 
-//		this.getColumnModel().getColumn(6).setPreferredWidth(70);
-//		this.getColumnModel().getColumn(6).setMaxWidth(70);
-//		this.getColumnModel().getColumn(6).setMinWidth(70);
+//		this.getColumnModel().getColumn(0).setPreferredWidth(70);
+//		this.getColumnModel().getColumn(0).setMaxWidth(70);
+//		this.getColumnModel().getColumn(0).setMinWidth(70);
 		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -68,19 +48,19 @@ public class JTable_Listado_Pedidos extends JTable{
 	}
 	
 		
-	public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
-		Component c = super.prepareRenderer(renderer, row, column);
-		if (!isRowSelected(row)){
-			c.setBackground(getBackground());
-			/**	esta parte se puede modificar para poder cambiar los colores de la tabla dependiendo del dato que halla en la tabla**/
-//			int modelRow = convertRowIndexToModel(row);
-//			boolean Aviso = (Boolean)getModel().getValueAt(modelRow, 11);//10
-//			boolean Cancelado = (Boolean)getModel().getValueAt(modelRow, 12);//11
-//			if (Aviso && getModel().getValueAt(modelRow,1)!=null ) c.setBackground(new Color(153,255,153));//Color.GREEN );//240, 128, 128
-//			if (Cancelado) c.setBackground(new Color(255,153,153));//Color.RED);
-		}
-		return c;
-	}
+//	public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
+//		Component c = super.prepareRenderer(renderer, row, column);
+//		if (!isRowSelected(row)){
+//			c.setBackground(getBackground());
+//			/**	esta parte se puede modificar para poder cambiar los colores de la tabla dependiendo del dato que halla en la tabla**/
+////			int modelRow = convertRowIndexToModel(row);
+////			boolean Aviso = (Boolean)getModel().getValueAt(modelRow, 11);//10
+////			boolean Cancelado = (Boolean)getModel().getValueAt(modelRow, 12);//11
+////			if (Aviso && getModel().getValueAt(modelRow,1)!=null ) c.setBackground(new Color(153,255,153));//Color.GREEN );//240, 128, 128
+////			if (Cancelado) c.setBackground(new Color(255,153,153));//Color.RED);
+//		}
+//		return c;
+//	}
 
 
 	

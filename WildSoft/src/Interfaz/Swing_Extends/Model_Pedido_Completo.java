@@ -7,7 +7,7 @@ public class Model_Pedido_Completo extends DefaultTableModel{
 
 	public Model_Pedido_Completo(){
 		// Poner las columnas en el modelo de la tabla
-		setColumnIdentifiers(new String[] { "Nro", "Cant", "Producto","Variedad", "Importe c/u", "Importe", "Observacion"});
+		setColumnIdentifiers(new String[] { "", "Cantidad", "Producto", "Variedad", "Valor c/u", "Subtotal", "Observacion"});
 	}
 
 	public boolean isCellEditable(int row, int column) {
@@ -19,5 +19,6 @@ public class Model_Pedido_Completo extends DefaultTableModel{
 		Class<Object>[] columnTypes = new Class[] {Integer.class, Integer.class, String.class, String.class, String.class, String.class, String.class};
 		return columnTypes[columnIndex];
 	};
+
 	
 }//----> Fin
