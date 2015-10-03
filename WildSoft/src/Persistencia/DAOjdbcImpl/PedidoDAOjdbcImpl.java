@@ -15,17 +15,37 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 
 	public boolean AGREGAR_PEDIDO(Pedido p) {
-		
 		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PE_fecha_pedido, PE_estado, PE_cliente, PE_entrega) VALUES ("+
 				"'"+	p.getFecha_Hora_Pedido()			+"',"+
 				"'"+	p.getESTADO()	+"',"+
-				"'"+	null		+"',"+
+				"'"+	p.getCliente().getID_Cliente()		+"',"+
 				"'"+	p.getCliente()	+"',"+
-				"'"+    null        + "')"  ;
+				"'"+    0        + "')";
 			conex.Insertar(SentenciaSQL_PEDIDO);
 			
 			Integer ID_PEDIDO = ObtenerUltimoPedido();
 			
+			for (int i = 0; i < p.getLista_Productos().size(); i++) {
+				
+				String SentenciaSQL_producto_pedidos = "INSERT INTO producto_pedidos (PE_fecha_pedido, PE_estado, PE_cliente, PE_entrega) VALUES ("+
+						"'"+	p.getFecha_Hora_Pedido()			+"',"+
+						"'"+	p.getESTADO()	+"',"+
+						"'"+	p.getCliente().getID_Cliente()		+"',"+
+						"'"+	p.getCliente()	+"',"+
+						"'"+    0        + "')";
+					conex.Insertar(SentenciaSQL_PEDIDO);
+					/**
+					  `PP_pedidoid` int(11) DEFAULT NULL,
+					  `PP_productoid` int(11) DEFAULT NULL,
+					  `PP_producto_cantidad` int(11) DEFAULT NULL,
+					  `PP_Observacion` varchar(300) DEFAULT NULL,
+					  `PP_precio` double DEFAULT NULL,
+					  KEY `PP_pedidoid` (`PP_pedidoid`),
+					  KEY `PP_productoid` (`PP_productoid`),
+					  CONSTRAINT `producto_pedidos_ibfk_1` FOREIGN KEY (`PP_pedidoid`) REFERENCES `pedido` (`PD_id`),
+					  CONSTRAINT `producto_pedidos_ibfk_2` FOREIGN KEY (`PP_productoid`) REFERENCES `pedido` (`PD_id`)
+					  */
+			}
 			
 		/**
 		 `PD_id` int(11) NOT NULL AUTO_INCREMENT,

@@ -22,12 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
@@ -36,10 +34,11 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
 
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;

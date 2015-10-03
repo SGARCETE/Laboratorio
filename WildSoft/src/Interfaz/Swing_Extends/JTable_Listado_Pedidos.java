@@ -1,6 +1,5 @@
 package Interfaz.Swing_Extends;
 
-import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JTable;
@@ -8,7 +7,6 @@ import javax.swing.RowSorter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
