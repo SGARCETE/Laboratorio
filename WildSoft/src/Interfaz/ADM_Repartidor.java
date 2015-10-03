@@ -118,8 +118,6 @@ public class ADM_Repartidor extends JDialog {
 
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textNombre.setText("");
-				textVehiculo.setText("");
 				Agregar_repartidor();
 			}
 		});
@@ -190,6 +188,8 @@ public class ADM_Repartidor extends JDialog {
 		if (!textNombre.getText().equals("")) {
 			if (!textVehiculo.getText().equals("")) {
 				guardarCambios(textNombre.getText(),textVehiculo.getText());
+				textNombre.setText("");
+				textVehiculo.setText("");
 				inicializarTabla();
 				llenarTabla();
 				lblAvisoError.setVisible(false);
@@ -220,6 +220,8 @@ public class ADM_Repartidor extends JDialog {
 	protected void Agregar_repartidor() {
 		if (!textNombre.getText().equals("")) {
 			if (!textVehiculo.getText().equals("")) {
+				textNombre.setText("");
+				textVehiculo.setText("");
 				SvRepartidor.guardar_nuevo_pedido(new Repartidor(textNombre.getText(), textVehiculo.getText()));
 				inicializarTabla();
 				llenarTabla();
