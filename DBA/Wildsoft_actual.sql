@@ -62,13 +62,13 @@ create table ENT_estado (
 /*INSERT INTO ENT_estado VALUES (1,'Pendiente');
 INSERT INTO ENT_estado VALUES (2,'En curso');
 INSERT INTO ENT_estado VALUES (3,'Finalizada'); */								
-
+drop table Producto;
 CREATE  TABLE Producto ( 
 						 PR_id int AUTO_INCREMENT ,  
 						 PR_nombre varchar(30) , 
 						 PR_precio int, 
 						 PR_tipo_producto int,
-						 FOREIGN KEY (PR_tipo_producto) REFERENCES Tipo_producto(TP_ID) , 
+						 FOREIGN KEY (PR_tipo_producto) REFERENCES Tipo_producto(TP_id) , 
 						 unique (PR_nombre),
 						 primary key (PR_id) 
 );
