@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Pedido;
+import Negocio.Modelo.Producto;
 import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
@@ -98,7 +99,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) as Precio" +
 			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id " +
-			"group by P.Pd_id");
+			"group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido P = new Pedido();
@@ -117,6 +118,29 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return Arreglo;
 	}
 		
+	
+	public ArrayList<Producto> getLista_Productos(Pedido P) {
+		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("select P.PD_id, PR.Pr_nombre, PP.PP_precio from Producto PR join Producto_pedidos PP join Pedido P " +
+			"on PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + P.getNumero_Pedido());
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Producto Prod = new Producto();
+				Prod.setPR_id(Fila.getInt("Pd_id"));
+				Prod.setPR_nombre(Fila.getString("PR_nombre"));
+				Prod.setPR_precio(Fila.getDouble("PP_precio"));
+				Arreglo.add(Prod);
+
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
+	}
 	
 	
 	
