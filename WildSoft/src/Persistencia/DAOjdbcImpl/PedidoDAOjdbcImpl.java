@@ -96,7 +96,9 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente from Pedido P join pe_estado EST on P.PD_estado= EST.PEST_id; ");
+			st.executeQuery("select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) as Precio" +
+			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id " +
+			"group by P.Pd_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido P = new Pedido();
@@ -104,7 +106,9 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setCliente(null);
+				P.setTotal(Fila.getDouble("Precio"));
 				Arreglo.add(P);
+
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -133,6 +137,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
 		Pedido p = new Pedido();
+		String SentenciaSQL = "SELECT * FROM Pedido WHERE PD_id="
+				+ Numero_Pedido;
 		
 		return p;
 	}
