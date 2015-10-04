@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Pedido;
+import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
 
@@ -89,10 +90,29 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	
 	
+	
 	public ArrayList<Pedido> getPEDIDOS() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("select P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente from Pedido P join pe_estado EST on P.PD_estado= EST.PEST_id; ");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Pedido P = new Pedido();
+				P.setNumero_Pedido(Fila.getInt("PD_id"));
+				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
+				P.setESTADO(Fila.getString("PEST_nombre"));
+				P.setCliente(null);
+				Arreglo.add(P);
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
 	}
+		
 
 	public boolean ELIMINAR_PEDIDO(Pedido p) {
 		String SentenciaSQL = "DELETE * FROM Pedido WHERE PD_id="
