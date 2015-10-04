@@ -81,7 +81,6 @@ public class Interfaz_Principal {
 			String Nombre_Cliente_seleccionado = ((String)selectedItem);
 			Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
 			Cargar_datos_Cliente(C);
-			System.out.println("Traeme los datos del cliente que elegi y setealo");
 		}
 	});
 
@@ -812,15 +811,12 @@ public class Interfaz_Principal {
 	 * SE SETEA EN EL TEXTFIELD DEL PRECIO Y EN "PRODUCTO_ACTUAL"
 	 */
 	private void Seleccion_De_Variedad() {
-		if (comboBoxVariedad.getSelectedItem() != null
-				&& !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
+		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
 			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
 				if (Lista_Variedades.get(i).getPR_nombre()
 						.equals(comboBoxVariedad.getSelectedItem().toString()))
-					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL
-																// PRODUCTO
-																// SELECCIONADO
+					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL PRODUCTO SELECCIONADO
 			}
 			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL
 					.getPR_precio()));
@@ -971,7 +967,7 @@ public class Interfaz_Principal {
 				// agregar datos del pedido
 				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
 			}
-			 sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
+			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// TODO- actualizar Tabla_Lista_pedidos
 			Agregar_a_lista_pedidos(PEDIDO_ACTUAL);
 			Limpiar_Todo();

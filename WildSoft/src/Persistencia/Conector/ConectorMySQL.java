@@ -60,6 +60,7 @@ public class ConectorMySQL {
         }
         catch (SQLException SQLE) {
             JOptionPane.showMessageDialog(null,"Error ! \n ERROR : " + SQLE.getMessage());
+            System.out.println(SQLE.getMessage());
             SQLE.printStackTrace();
         }
         cerrarConexion();

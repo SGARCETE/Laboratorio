@@ -3,10 +3,11 @@ package Negocio.Modelo;
 
 public class Producto {
 	
-	private Integer	PR_id;
-	private String	PR_nombre;
-	private Double	PR_precio;
-	private Integer	PR_tipo_producto;
+	private Integer	PR_id = 0;
+	private Integer	PR_tipo_producto= 0;
+	private Double	PR_precio = 0.0;
+	private String	PR_nombre= "";
+	private String 	PR_Observacion = "";
 	
 	public Integer getPR_id() {
 		return PR_id;
@@ -38,5 +39,13 @@ public class Producto {
 
 	public void setPR_tipo_producto(Integer pR_tipo_producto) {
 		PR_tipo_producto = pR_tipo_producto;
+	}
+
+	public String getPR_Observacion() {
+		return PR_Observacion;
+	}
+
+	public void setPR_Observacion(String pR_Observacion) {
+		PR_Observacion = pR_Observacion;
 	}
 }
