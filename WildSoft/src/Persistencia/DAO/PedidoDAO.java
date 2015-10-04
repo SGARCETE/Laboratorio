@@ -14,6 +14,6 @@ public interface PedidoDAO {
 
 	public Pedido MODIFICAR_PEDIDO(Pedido p);
 
-	public Pedido OBTENER_PEDIDO(Pedido p);
+	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido);
 
 }

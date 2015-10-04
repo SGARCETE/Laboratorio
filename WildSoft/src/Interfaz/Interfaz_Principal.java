@@ -978,7 +978,7 @@ public class Interfaz_Principal {
 	 */
 	private void Modificar_Pedido_Seleccionado() {
 		Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-		frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
+		
 		frame.setModal(true);
 		frame.setVisible(true);
 	}

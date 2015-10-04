@@ -105,9 +105,13 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return null;
 	}
 
-	public Pedido OBTENER_PEDIDO(Pedido p) {
-		// TODO Auto-generated method stub
-		return null;
+
+
+	@Override
+	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
+		Pedido p = new Pedido();
+		
+		return p;
 	}
 	
 

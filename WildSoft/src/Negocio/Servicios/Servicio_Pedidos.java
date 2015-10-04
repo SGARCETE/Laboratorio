@@ -26,8 +26,8 @@ public class Servicio_Pedidos {
 		return pedidoDAO.MODIFICAR_PEDIDO(p);
 	}
 	
-	public Pedido get_pedido(Pedido p){
-		return pedidoDAO.OBTENER_PEDIDO(p);
+	public Pedido get_pedido(Integer Numero_pedido){
+		return pedidoDAO.OBTENER_PEDIDO(Numero_pedido);
 	}
 
 }
