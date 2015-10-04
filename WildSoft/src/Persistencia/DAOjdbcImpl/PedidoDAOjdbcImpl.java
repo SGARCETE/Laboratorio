@@ -113,6 +113,9 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return Arreglo;
 	}
 		
+	
+	
+	
 
 	public boolean ELIMINAR_PEDIDO(Pedido p) {
 		String SentenciaSQL = "DELETE * FROM Pedido WHERE PD_id="
