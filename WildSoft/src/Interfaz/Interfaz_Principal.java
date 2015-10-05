@@ -751,6 +751,7 @@ public class Interfaz_Principal {
 		
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = sv_productos.getLista_Productos();
+		comboBoxProducto.addItem("Seleccione el tipo de producto");
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
@@ -862,7 +863,7 @@ public class Interfaz_Principal {
 	 * pedido general
 	 */
 	private void Agregar_al_Pedido() {
-		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0) {
+		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
 			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
