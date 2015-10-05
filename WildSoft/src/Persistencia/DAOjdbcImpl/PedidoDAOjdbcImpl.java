@@ -143,13 +143,12 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	
 	
-	
-
-	public boolean ELIMINAR_PEDIDO(Pedido p) {
-		String SentenciaSQL = "DELETE * FROM Pedido WHERE PD_id="
-				+ p.getNumero_Pedido();
-		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
+	public boolean ELIMINAR_PEDIDO(Pedido P) {
+		String SentenciaSQL = "UPDATE Pedido SET PD_estado = 5 where PD_id= " +P.getNumero_Pedido() ;
+		return conex.Insertar(SentenciaSQL);
 	}
+
+	
 
 	public Pedido MODIFICAR_PEDIDO(Pedido p) {
 		// TODO Auto-generated method stub
