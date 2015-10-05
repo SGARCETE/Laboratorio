@@ -8,6 +8,7 @@ public class Producto {
 	private Double	PR_precio = 0.0;
 	private String	PR_nombre= "";
 	private String 	PR_Observacion = "";
+	private String 	PR_TIPO_PRODUCTO_STRING ="";
 	
 	public Integer getPR_id() {
 		return PR_id;
@@ -48,4 +49,14 @@ public class Producto {
 	public void setPR_Observacion(String pR_Observacion) {
 		PR_Observacion = pR_Observacion;
 	}
+
+	public String getPR_TIPO_PRODUCTO_STRING() {
+		return PR_TIPO_PRODUCTO_STRING;
+	}
+
+	public void setPR_TIPO_PRODUCTO_STRING(String pR_TIPO_PRODUCTO_STRING) {
+		PR_TIPO_PRODUCTO_STRING = pR_TIPO_PRODUCTO_STRING;
+	}
+
+
 }

@@ -19,6 +19,7 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		String SentenciaSQL = "INSERT INTO Repartidor(RE_nombre, RE_vehiculo) VALUES ("+
 			"'"+	R.getNombre()			+"',"+
 			"'"+	R.getVehiculo()		    +"')";
+		System.out.println(SentenciaSQL);
 		return conex.Insertar(SentenciaSQL);
 	}
 	

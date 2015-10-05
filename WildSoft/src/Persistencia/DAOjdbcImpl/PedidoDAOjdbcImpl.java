@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Modelo.Repartidor;
@@ -119,20 +120,28 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 		
 	
-	public ArrayList<Producto> getLista_Productos(Pedido P) {
+	private ArrayList<Producto> getLista_Productos(Pedido P) {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select P.PD_id, PR.Pr_nombre, PP.PP_precio,T.TP_nombre  from Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T"+
-			"on PR.PR_tipo_producto= T.TP_id and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + P.getNumero_Pedido());
+			
+			String Query = "SELECT * FROM PEDIDO, PRODUCTO, TIPO_PRODUCTO, PRODUCTO_PEDIDOS WHERE "
+					+ "PEDIDO.PD_id = " + P.getNumero_Pedido() + " AND "
+					+ "(PRODUCTO_PEDIDOS.PP_pedidoid = PRODUCTO.Pr_id AND "
+					+ "PRODUCTO.PR_tipo_producto = TIPO_PRODUCTO.TP_id AND "			
+					+ "PRODUCTO_PEDIDOS.PP_pedidoid = PEDIDO.PD_id)";
+
+			System.out.println("getLista_Productos:\n"+Query);
+			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Producto Prod = new Producto();
 				Prod.setPR_id(Fila.getInt("Pd_id"));
 				Prod.setPR_nombre(Fila.getString("PR_nombre"));
 				Prod.setPR_precio(Fila.getDouble("PP_precio"));
-				Prod.setPR_tipo_producto(Fila.getString("TP_nombre"));
+				Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
+				Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
 				Arreglo.add(Prod);
 
 			}
@@ -160,28 +169,72 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
-		Pedido p = null;
+		Pedido P = null;
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			String SentenciaSQL = "select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) "
-					+ "as Precio from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid "
-					+ "and P.PD_estado= EST.Pest_id and P.PD_id="+ Numero_Pedido + " group by P.Pd_id";
+			String SentenciaSQL = "select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) as Precio" +
+			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id AND " +
+			"P.PD_ID = "+ Numero_Pedido;
+			Integer ID_Cliente = null;
+			System.out.println(SentenciaSQL);
 			st.executeQuery(SentenciaSQL);
 			ResultSet Fila = st.getResultSet();
+			while(Fila.next()){
+				P = new Pedido();
+				P.setNumero_Pedido(Fila.getInt("PD_id"));
+				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
+				P.setESTADO(Fila.getString("PEST_nombre"));
+				// P.setEs_Delivery(Fila.getBoolean(" PD_Delivery")); // TODO- 	Falta agregar la columna 'Delivery' en la tabla "PEDIDO"
+				P.setTotal(Fila.getDouble("Precio"));
+			}
+
+
+			
+			conex.cerrarConexion();
+			// Obtiene la lista de productos asociado a ese pedido
+			P.setLista_Productos(getLista_Productos(P));
+			
+			// Obtiene datos del cliente si este no es NULL
+		//			if(ID_Cliente!=null)
+		//				P.setCliente(getCliente(ID_Cliente));
+		//			else
+		//				P.setCliente(null);
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return P;
+		
+	}
+
+	// TEMPORAL
+	private Cliente getCliente(Integer ID_Cliente) {
+		Cliente cliente = new Cliente();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+//			String SentenciaSQL_CLIENTE = "SELECT * FROM "
+//			+"CLIENTE," 
+//			+"PEDIDO "
+//			+"WHERE "
+//			+"PEDIDO JOIN CLIENTE PEDIDO.PD_CLIENTE = CLIENTE.CL_id AND" 
+//			+"PEDIDO.PD_ID ="+ID_Cliente;
+//			st.executeQuery(SentenciaSQL_CLIENTE);
+			st.executeQuery("SELECT * FROM Cliente WHERE CL_id = "+ID_Cliente);
+			ResultSet Fila = st.getResultSet();
 			Fila.first();
-			Pedido P = new Pedido();
-			P.setNumero_Pedido(Fila.getInt("PD_id"));
-			P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
-			P.setESTADO(Fila.getString("PEST_nombre"));
-			P.setCliente(null);
-			P.setTotal(Fila.getDouble("Precio"));
+			cliente.setID_Cliente(Fila.getInt("CL_id"));
+			cliente.setNombre(Fila.getString("CL_nombre"));
+			cliente.setDomicilio(Fila.getString("CL_direccion"));
+			cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
 			conex.cerrarConexion();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
-		return p;
-		
+		return cliente;
 	}
+	
+	
 	
 }

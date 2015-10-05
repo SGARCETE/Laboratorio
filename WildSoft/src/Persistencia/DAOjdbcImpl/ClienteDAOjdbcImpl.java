@@ -35,6 +35,26 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return cliente;
 	}
 	
+	@Override
+	public Cliente getCliente(Integer ID_Cliente) {
+		Cliente cliente = new Cliente();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("SELECT * FROM Cliente WHERE CL_id = "+ID_Cliente);
+			ResultSet Fila = st.getResultSet();
+			Fila.first();
+			cliente.setID_Cliente(Fila.getInt("CL_id"));
+			cliente.setNombre(Fila.getString("CL_nombre"));
+			cliente.setDomicilio(Fila.getString("CL_direccion"));
+			cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return cliente;
+	}
+	
 	public boolean Nuevo_Cliente(Cliente c) {
 		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono) VALUES ("+
 			"'"+	c.getNombre()			+"',"+

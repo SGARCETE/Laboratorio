@@ -2,6 +2,7 @@ package Interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Repartidores;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
 
 public class ADM_Repartidor extends JDialog {
 	private static final long serialVersionUID = 5207847723773149517L;
@@ -38,9 +41,11 @@ public class ADM_Repartidor extends JDialog {
 	private JButton btnCancelar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
-	private JLabel lblAvisoError;
+	private JLabel lblAviso;
 	private JButton btnAgregar;
 	private JButton btnAceptar;
+	private JPanel panel_1;
+	private JPanel panel_2;
 
 
 	/**
@@ -53,123 +58,113 @@ public class ADM_Repartidor extends JDialog {
 		SvRepartidor = Principal.getSvRepartidores();
 		
 		setResizable(false);
-		setBounds(100, 100, 813, 391);
+		setBounds(100, 100, 574, 358);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-
-		Label lblTitulo = new Label("Repartidor");
-		lblTitulo.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 22));
-		lblTitulo.setBounds(147, 10, 138, 22);
-		contentPanel.add(lblTitulo);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(239, 50, 544, 231);
-		contentPanel.add(scrollPane);
-
 		table = new JTable();
-
 		inicializarTabla();
 
 		// SE CREA COMPLETA LA TABAL CON LOS DATOS
 		llenarTabla();
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(7, 198, 552, 53);
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Descripcion", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		contentPanel.add(panel);
+		panel.setLayout(null);
 
-		scrollPane.setViewportView(table);
-
-		JPanel panelNuevoRepartidor = new JPanel();
-		panelNuevoRepartidor.setBounds(10, 50, 214, 152);
-		contentPanel.add(panelNuevoRepartidor);
-		panelNuevoRepartidor.setLayout(null);
-
-		Label lblNuevoRepartidor = new Label("Nuevo Repartidor");
-		lblNuevoRepartidor.setBounds(10, 5, 98, 22);
-		panelNuevoRepartidor.add(lblNuevoRepartidor);
-
+		lblAviso = new JLabel("");
+		lblAviso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAviso.setBounds(16, 19, 506, 20);
+		panel.add(lblAviso);
+		lblAviso.setForeground(Color.RED);
+		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(7, 6, 235, 180);
+		contentPanel.add(panel_1);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Nuevo Repartidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_1.setLayout(null);
+		
 		Label lblNombre = new Label("Nombre");
-		lblNombre.setBounds(10, 32, 51, 25);
-		panelNuevoRepartidor.add(lblNombre);
-
-		Label lblVehiculo = new Label("Veh\u00EDculo");
-		lblVehiculo.setBounds(10, 58, 56, 25);
-		panelNuevoRepartidor.add(lblVehiculo);
-
+		lblNombre.setBounds(21, 39, 51, 25);
+		panel_1.add(lblNombre);
+				
 		textNombre = new JTextField();
-		textNombre.setBounds(67, 33, 137, 25);
-		panelNuevoRepartidor.add(textNombre);
+		textNombre.setBounds(78, 40, 137, 25);
+		panel_1.add(textNombre);
 		textNombre.setColumns(10);
-
+		
+		Label lblVehiculo = new Label("Veh\u00EDculo");
+		lblVehiculo.setBounds(21, 82, 56, 25);
+		panel_1.add(lblVehiculo);
+								
 		textVehiculo = new JTextField();
-		textVehiculo.setBounds(67, 60, 137, 25);
-		panelNuevoRepartidor.add(textVehiculo);
+		textVehiculo.setBounds(78, 84, 137, 25);
+		panel_1.add(textVehiculo);
 		textVehiculo.setColumns(10);
-
-		lblAvisoError = new JLabel("Debe completar todos los campos para continuar");
-		lblAvisoError.setForeground(Color.RED);
-		lblAvisoError.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblAvisoError.setBounds(10, 293, 368, 39);
-		contentPanel.add(lblAvisoError);
-		lblAvisoError.setVisible(false);
-
+		
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBounds(21, 133, 89, 30);
+		panel_1.add(btnAceptar);
+		btnAceptar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
+		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(65, 133, 109, 30);
+		panel_1.add(btnAgregar);
 		btnAgregar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/add-1-icon16.png")));
-		btnAgregar.setBounds(54, 118, 109, 23);
-		panelNuevoRepartidor.add(btnAgregar);
+				
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(126, 133, 89, 30);
+		panel_1.add(btnCancelar);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Repartidores existentes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_2.setBackground(Color.WHITE);
+		panel_2.setBounds(254, 6, 305, 180);
+		contentPanel.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(6, 20, 287, 154);
+		panel_2.add(scrollPane);
+		
+
+						
+		scrollPane.setViewportView(table);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cancelar_modificar_repartidor();
+			}
+		});
+		btnCancelar.setVisible(false);
 
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_repartidor();
 			}
 		});
-
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Aceptar_modificar_Repartidor();
 			}
 		});
-		btnAceptar.setBounds(10, 118, 89, 23);
-		panelNuevoRepartidor.add(btnAceptar);
 		btnAceptar.setVisible(false);
-
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Cancelar_modificar_repartidor();
-			}
-		});
-		btnCancelar.setBounds(115, 118, 89, 23);
-		panelNuevoRepartidor.add(btnCancelar);
-		btnCancelar.setVisible(false);
-
-		btnModificar = new JButton("Modificar");
-		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(table.getSelectedRow()!=-1){ 
-					Modificar_Repartidor();
-				}
-			}
-		});
-		btnModificar.setBounds(492, 292, 80, 60);
-		contentPanel.add(btnModificar);
+		lblAviso.setVisible(false);
 		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
-		btnSalir.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnSalir.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnSalir.setBounds(672, 292, 80, 60);
-		contentPanel.add(btnSalir);
-		
-		btnEliminar = new JButton("Eliminar");
+		JPanel buttonPane = new JPanel();
+		buttonPane.setBackground(new Color(60, 179, 113));
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+				
+		btnEliminar = new JButton(" Eliminar ");
+		btnEliminar.setBackground(Color.WHITE);
+		buttonPane.add(btnEliminar);
 		btnEliminar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnEliminar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
@@ -180,8 +175,32 @@ public class ADM_Repartidor extends JDialog {
 				}
 			}
 		});
-		btnEliminar.setBounds(582, 292, 80, 60);
-		contentPanel.add(btnEliminar);
+
+		btnModificar = new JButton("Modificar");
+		btnModificar.setBackground(Color.WHITE);
+		buttonPane.add(btnModificar);
+		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
+		
+		JButton btnSalir = new JButton("    Salir     ");
+		btnSalir.setBackground(Color.WHITE);
+		buttonPane.add(btnSalir);
+		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
+		btnSalir.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSalir.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(table.getSelectedRow()!=-1){ 
+					Modificar_Repartidor();
+				}
+			}
+		});
 	}
 
 	protected void Aceptar_modificar_Repartidor() {
@@ -192,17 +211,18 @@ public class ADM_Repartidor extends JDialog {
 				textVehiculo.setText("");
 				inicializarTabla();
 				llenarTabla();
-				lblAvisoError.setVisible(false);
+				lblAviso.setVisible(false);
 				btnAceptar.setVisible(false);
 				btnAgregar.setVisible(true);
 				btnCancelar.setVisible(false);
 				btnModificar.setEnabled(true);
 				btnEliminar.setEnabled(true);
+				panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Nuevo Repartidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 			} else {
-				lblAvisoError.setVisible(true);
+				lblAviso.setVisible(true);
 			}
 		} else {
-			lblAvisoError.setVisible(true); 
+			lblAviso.setVisible(true); 
 		}
 	}
 
@@ -212,31 +232,34 @@ public class ADM_Repartidor extends JDialog {
 		btnAceptar.setVisible(false);
 		btnAgregar.setVisible(true);
 		btnCancelar.setVisible(false);
-		lblAvisoError.setVisible(false);
+		lblAviso.setVisible(false);
 		btnModificar.setEnabled(true);
 		btnEliminar.setEnabled(true);
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Nuevo Repartidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 	}
 
 	protected void Agregar_repartidor() {
 		if (!textNombre.getText().equals("")) {
 			if (!textVehiculo.getText().equals("")) {
+				SvRepartidor.guardar_nuevo_pedido(new Repartidor(textNombre.getText(), textVehiculo.getText()));
 				textNombre.setText("");
 				textVehiculo.setText("");
-				SvRepartidor.guardar_nuevo_pedido(new Repartidor(textNombre.getText(), textVehiculo.getText()));
 				inicializarTabla();
 				llenarTabla();
-				lblAvisoError.setVisible(false);
+				lblAviso.setVisible(false);
 				btnAgregar.setVisible(true);
 			} else {
-				lblAvisoError.setVisible(true);
+				lblAviso.setText("Debe completar el campo 'Vehiculo' para continuar");
+				lblAviso.setVisible(true);
 			}
 		} else {
-			lblAvisoError.setVisible(true);
+			lblAviso.setText("Debe completar el campo 'Nombre' para continuar");
+			lblAviso.setVisible(true);
 		}
 	}
 
 	protected void Modificar_Repartidor() {
-		lblAvisoError.setVisible(false);
+		lblAviso.setVisible(false);
 		datoTabla = obtenerSeleccion();
 		textNombre.setText(datoTabla[2]);
 		textVehiculo.setText(datoTabla[3]);
@@ -245,6 +268,7 @@ public class ADM_Repartidor extends JDialog {
 		btnCancelar.setVisible(true);
 		btnModificar.setEnabled(false); 
 		btnEliminar.setEnabled(false);
+		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Modificar Repartidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 	}
 
 	protected void Eliminar_Repartidor() {

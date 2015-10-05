@@ -14,4 +14,6 @@ public interface ClienteDAO {
 
 	public Cliente getCliente(String nombre_Cliente);
 
+	public Cliente getCliente(Integer ID_Cliente);
+
 } //--> FIN CLASE

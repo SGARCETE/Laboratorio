@@ -25,6 +25,8 @@ public class Servicio_Clientes {
 		return clienteDAO.getCliente(Nombre_Cliente);
 	}
 	
-	
+	public Cliente getCliente(Integer ID_CLIENTE){
+		return clienteDAO.getCliente(ID_CLIENTE);
+	}
 	
 }//--> FIN CLASE
