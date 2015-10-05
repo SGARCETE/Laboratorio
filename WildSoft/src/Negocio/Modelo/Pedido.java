@@ -14,7 +14,7 @@ public class Pedido {
 	
 	// En caso que sea delivery:
 	private Boolean Es_Delivery = false;
-	private Cliente cliente;
+	private Cliente cliente = null;
 	private Double  Total = 0.0;
 	private Date 	Hora_Entrega;			// Hora en la que se debe entregar el pedido
 	

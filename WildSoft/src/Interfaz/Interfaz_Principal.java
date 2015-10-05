@@ -100,7 +100,8 @@ public class Interfaz_Principal {
 	//<INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
 	@SuppressWarnings("unused")
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
-	private Principal_Negocio_Interfaz Principal_neg_int; 
+	private Principal_Negocio_Interfaz Principal_neg_int;
+	private Cliente CLIENTE_ACTUAL = null; 
 
 	/**
 	 * Create the application.
@@ -760,8 +761,7 @@ public class Interfaz_Principal {
 	 * TOTAL DEL PEDIDO
 	 */
 	private void Calcula_totales() {
-		if (PRODUCTO_ACTUAL != null
-				&& PEDIDO_ACTUAL.getLista_Productos() != null) {
+		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
 
 			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO
 			// PRODUCTO
@@ -773,8 +773,7 @@ public class Interfaz_Principal {
 			// pedido tomando su precio y lo acumula
 			Double TOTAL_PEDIDO = 0.0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i)
-						.getPR_precio();
+				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
 			}
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
@@ -844,6 +843,11 @@ public class Interfaz_Principal {
 	/**	 */
 	private void Limpiar_Todo() {
 		Limpiar_Formulario_pedido();
+		textCliente.setText("");
+		textDetalle.setText("");
+		textDomicilio.setText("");
+		textTelefono.setText("");
+		CLIENTE_ACTUAL = null;
 		PEDIDO_ACTUAL = new Pedido();
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
 				new Model_Pedido_Completo());
@@ -967,29 +971,50 @@ public class Interfaz_Principal {
 				// agregar datos del pedido
 				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
 			}
+			if(CLIENTE_ACTUAL!=null)
+				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// TODO- actualizar Tabla_Lista_pedidos
-			Agregar_a_lista_pedidos(PEDIDO_ACTUAL);
+//			Agregar_a_lista_pedidos(PEDIDO_ACTUAL);
+			Actualizar_Lista_pedidos();
 			Limpiar_Todo();
 		}
+	}
+	private void Actualizar_Lista_pedidos() {
+		ArrayList<Pedido> Lista_Pedidos =  sv_pedidos.get_Pedidos();
+		Model_Listado_Pedidos model = new Model_Listado_Pedidos();
+		for (int i = 0; i < Lista_Pedidos.size(); i++) {
+			Pedido PE = Lista_Pedidos.get(i);
+			String Nombre_Cliente = "";
+			if(PE.getCliente()!=null)
+				Nombre_Cliente = PE.getCliente().getNombre();
+			model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
+		}
+		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
+		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
+		
 	}
 	/**
 	 * MODIFICACION DE PEDIDO
 	 */
 	private void Modificar_Pedido_Seleccionado() {
-		Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-		
-		frame.setModal(true);
-		frame.setVisible(true);
+		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
+			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
+			frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
+			frame.setModal(true);
+			frame.setVisible(true);
+		}
 	}
 	/**
 	 * VISUALIZACION DE PEDIDO
 	 */
 	private void Ver_Pedido_Seleccionado() {
-		Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-		frame.setPedido_a_visualizar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
-		frame.setModal(true);
-		frame.setVisible(true);
+		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
+			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
+			frame.setPedido_a_visualizar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
+			frame.setModal(true);
+			frame.setVisible(true);
+		}
 	}
 	/**
 	 * BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA)
@@ -1014,7 +1039,7 @@ public class Interfaz_Principal {
 	
 	
 	private void Cargar_datos_Cliente(Cliente c) {
-		PEDIDO_ACTUAL.setCliente(c);
+		CLIENTE_ACTUAL = c;
 		textDomicilio.setText(c.getDomicilio());
 		textTelefono.setText(c.getTelefono_Fijo());
 		textDetalle.setText(c.getDetalle());

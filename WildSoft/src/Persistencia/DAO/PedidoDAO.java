@@ -8,7 +8,7 @@ public interface PedidoDAO {
 
 	public boolean AGREGAR_PEDIDO(Pedido p);
 
-	public ArrayList<Pedido> getPEDIDOS();
+	public ArrayList<Pedido> getLISTA_PEDIDOS();
 
 	public boolean ELIMINAR_PEDIDO(Pedido p);
 

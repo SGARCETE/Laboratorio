@@ -21,7 +21,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		String CLIENTE = "NULL";
 		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
-			p.getCliente().getID_Cliente();
+			CLIENTE = p.getCliente().getID_Cliente().toString();
 		String PEDIDO = "NULL";
 		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(p.getFecha_Hora_Pedido())	+"',"+
@@ -92,7 +92,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	
 	
 	
-	public ArrayList<Pedido> getPEDIDOS() {
+	public ArrayList<Pedido> getLISTA_PEDIDOS() {
 		ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
 		try {
 			conex.connectToMySQL();// Conectar base
@@ -159,21 +159,28 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
-		Pedido p = new Pedido();
-		String SentenciaSQL = "SELECT * FROM Pedido WHERE PD_id="
-				+ Numero_Pedido;
-		
+		Pedido p = null;
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			String SentenciaSQL = "select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) "
+					+ "as Precio from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid "
+					+ "and P.PD_estado= EST.Pest_id and P.PD_id="+ Numero_Pedido + " group by P.Pd_id";
+			st.executeQuery(SentenciaSQL);
+			ResultSet Fila = st.getResultSet();
+			Fila.first();
+			Pedido P = new Pedido();
+			P.setNumero_Pedido(Fila.getInt("PD_id"));
+			P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
+			P.setESTADO(Fila.getString("PEST_nombre"));
+			P.setCliente(null);
+			P.setTotal(Fila.getDouble("Precio"));
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
 		return p;
+		
 	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

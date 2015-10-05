@@ -15,7 +15,7 @@ public class Servicio_Pedidos {
 	}
 	
 	public ArrayList<Pedido> get_Pedidos(){
-		return pedidoDAO.getPEDIDOS();
+		return pedidoDAO.getLISTA_PEDIDOS();
 	}
 	
 	public boolean eliminar_pedido(Pedido p){
