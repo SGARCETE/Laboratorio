@@ -889,18 +889,19 @@ public class Interfaz_Principal {
 
 				/** Despues que se resetee el formulario de ingreso de pedido **/
 				Limpiar_Formulario_pedido();
+				Calcula_totales();
 			}
 		}
 	}
 
 	
 
-	private void Agregar_a_lista_pedidos(Pedido PEDIDO) {
-		/** Esto va para la parte visual **/
-		DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
-		modelo.addRow(new Object[] { 123, "Cliente", formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido()),"16/12/2015", (boolean) PEDIDO_ACTUAL.getEs_Delivery(), "PENDIENTE", formatoImporte.format(PEDIDO_ACTUAL.getTotal()) });
-		Tabla_Lista_pedidos.setModel(modelo); // Lo seteo en la tabla para que se vea
-	}
+//	private void Agregar_a_lista_pedidos(Pedido PEDIDO) {
+//		/** Esto va para la parte visual **/
+//		DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
+//		modelo.addRow(new Object[] { 123, "Cliente", formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido()),"16/12/2015", (boolean) PEDIDO_ACTUAL.getEs_Delivery(), "PENDIENTE", formatoImporte.format(PEDIDO_ACTUAL.getTotal()) });
+//		Tabla_Lista_pedidos.setModel(modelo); // Lo seteo en la tabla para que se vea
+//	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// QUITAR/ ELIMINAR/ CANCELAR
