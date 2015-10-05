@@ -124,14 +124,15 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select P.PD_id, PR.Pr_nombre, PP.PP_precio from Producto PR join Producto_pedidos PP join Pedido P " +
-			"on PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + P.getNumero_Pedido());
+			st.executeQuery("select P.PD_id, PR.Pr_nombre, PP.PP_precio,T.TP_nombre  from Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T"+
+			"on PR.PR_tipo_producto= T.TP_id and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + P.getNumero_Pedido());
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Producto Prod = new Producto();
 				Prod.setPR_id(Fila.getInt("Pd_id"));
 				Prod.setPR_nombre(Fila.getString("PR_nombre"));
 				Prod.setPR_precio(Fila.getDouble("PP_precio"));
+				Prod.setPR_tipo_producto(Fila.getString("TP_nombre"));
 				Arreglo.add(Prod);
 
 			}
