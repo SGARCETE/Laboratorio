@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
-import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
 
@@ -24,13 +23,14 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
 			CLIENTE = p.getCliente().getID_Cliente().toString();
 		else
-			CLIENTE="5";
+			CLIENTE="1";
 		String PEDIDO = "NULL";
-		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega) VALUES ("+
+		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega, PD_Delivery) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(p.getFecha_Hora_Pedido())	+"',"+
 				""+		1													+","+
 				""+		CLIENTE												+","+
-				""+		PEDIDO												+")";
+				""+		PEDIDO												+","+									
+				""+ p.getEs_Delivery()										+")";
 		System.out.println(SentenciaSQL_PEDIDO);
 		boolean Exito_al_Ingresar_pedido = conex.Insertar(SentenciaSQL_PEDIDO);
 		
@@ -163,7 +163,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
-		String SentenciaSQL = "UPDATE Pedido SET PD_Fecha_Hora = '" + p.getFecha_Hora_Pedido() + "', PD_estado = '" + p.getESTADO() + ", PD_cliente =" + p.getCliente() + "' WHERE PD_id=" + p.getNumero_Pedido();
+		String SentenciaSQL = "UPDATE Pedido SET "
+				+ "PD_Fecha_Hora = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
+				+ "PD_estado = '" + p.getESTADO() + ", "
+				+ "PD_cliente =" + p.getCliente() + "' "
+				+ "WHERE PD_id=" + p.getNumero_Pedido();
 		return conex.Insertar(SentenciaSQL);
 	}
 
@@ -175,11 +179,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			String SentenciaSQL = "select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, PD_cliente,SUM(PP.PP_precio) as Precio" +
+			String SentenciaSQL = "select  *,SUM(PP.PP_precio) as Precio" +
 			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id AND " +
 			"P.PD_ID = "+ Numero_Pedido;
 			Integer ID_Cliente = null;
-			System.out.println(SentenciaSQL);
+			System.out.println("OBTENER_PEDIDO\n"+SentenciaSQL);
 			st.executeQuery(SentenciaSQL);
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){
@@ -187,7 +191,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setNumero_Pedido(Fila.getInt("PD_id"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
-				// P.setEs_Delivery(Fila.getBoolean(" PD_Delivery")); // TODO- 	Falta agregar la columna 'Delivery' en la tabla "PEDIDO"
+				P.setEs_Delivery(Fila.getBoolean("PD_Delivery")); 
 				P.setTotal(Fila.getDouble("Precio"));
 			}
 
