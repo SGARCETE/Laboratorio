@@ -997,13 +997,13 @@ public class Interfaz_Principal {
 			P_cancelar.setNumero_Pedido(Numero_pedido);
 			// LO ELIMINA DE LA BASE DE DATOS
 			sv_pedidos.eliminar_pedido(P_cancelar);
-			
-			// LO QUITA DE LA LISTA VISUAL
-			if (Tabla_Lista_pedidos.getSelectedRow() != -1) { 
-				int indice_Seleccionado = Tabla_Lista_pedidos.getSelectedRow(); 
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
-				modelo.removeRow(indice_Seleccionado);
-			}
+			Actualizar_Lista_pedidos();
+//			// LO QUITA DE LA LISTA VISUAL
+//			if (Tabla_Lista_pedidos.getSelectedRow() != -1) { 
+//				int indice_Seleccionado = Tabla_Lista_pedidos.getSelectedRow(); 
+//				DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
+//				modelo.removeRow(indice_Seleccionado);
+//			}
 
 		}
 	}

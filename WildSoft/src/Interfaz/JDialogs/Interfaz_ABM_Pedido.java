@@ -203,6 +203,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		panelPedido.add(label_3);
 		
 		spinnerCantidad = new JSpinner();
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		spinnerCantidad.setBackground(new Color(240, 255, 255));
 		spinnerCantidad.setBounds(117, 85, 59, 25);
 		panelPedido.add(spinnerCantidad);
@@ -400,6 +401,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				textCliente.setText(p.getCliente().getNombre());
 				textDetalle.setText(p.getCliente().getDetalle());
 				textTelefono.setText(p.getCliente().getTelefono_Fijo());
+				textDire.setText(p.getCliente().getDomicilio());
 				p.getCliente().getID_Cliente();
 			}
 				

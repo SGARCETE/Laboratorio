@@ -164,6 +164,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
 		int estado = obtenerEstado(p.getESTADO());
+		estado = 1;
+//		System.out.println("ESTADO"+ estado);
 		int cliente = p.getCliente().getID_Cliente();
 		
 		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
