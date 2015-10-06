@@ -993,7 +993,7 @@ public class Interfaz_Principal {
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(Numero_pedido);
 			// LO ELIMINA DE LA BASE DE DATOS
-			//			sv_pedidos.eliminar_pedido(P_cancelar);
+			sv_pedidos.eliminar_pedido(P_cancelar);
 			
 			// LO QUITA DE LA LISTA VISUAL
 			if (Tabla_Lista_pedidos.getSelectedRow() != -1) { 

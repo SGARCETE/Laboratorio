@@ -90,7 +90,4 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return Arreglo;
 	}
 
-
-
-
 }//---> FIN CLASE
