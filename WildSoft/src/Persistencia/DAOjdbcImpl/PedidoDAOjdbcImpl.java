@@ -239,16 +239,19 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	
 	
-	private Integer obtenerEstado(String estado){
-		Integer resultado = 1;
+	private int obtenerEstado(String estado){
+		int resultado = 0;
 		conex.connectToMySQL();// Conectar base
 		Statement st;
 		try {
 			st = conex.conexion.createStatement();
-			String SentenciaSQL = "select * from ent_estado where ENTE_nombre = '" + estado + "'";
-			st.executeQuery(SentenciaSQL);
-			ResultSet Fila = st.getResultSet();
-			resultado = Fila.getInt("ENTE_id");
+			String SentenciaSQL = "select * from ent_estado";
+			ResultSet Fila = st.executeQuery(SentenciaSQL);
+			while (Fila.next()){
+				if(Fila.getString(2).equals(estado)){
+					resultado = Fila.getInt(1);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
