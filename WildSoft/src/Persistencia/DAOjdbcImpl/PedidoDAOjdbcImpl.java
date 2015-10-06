@@ -193,19 +193,18 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setEs_Delivery(Fila.getBoolean("PD_Delivery")); 
 				P.setTotal(Fila.getDouble("Precio"));
+				ID_Cliente = Fila.getInt("PD_CLIENTE");
 			}
 
-
-			
 			conex.cerrarConexion();
 			// Obtiene la lista de productos asociado a ese pedido
 			P.setLista_Productos(getLista_Productos(P));
 			
 			// Obtiene datos del cliente si este no es NULL
-		//			if(ID_Cliente!=null)
-		//				P.setCliente(getCliente(ID_Cliente));
-		//			else
-		//				P.setCliente(null);
+			if(ID_Cliente!=null)
+				P.setCliente(getCliente(ID_Cliente));
+			else
+				P.setCliente(null);
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());

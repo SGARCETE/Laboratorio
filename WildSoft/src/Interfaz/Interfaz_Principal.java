@@ -6,6 +6,8 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -857,14 +859,6 @@ public class Interfaz_Principal {
 		}
 	}
 
-	
-
-//	private void Agregar_a_lista_pedidos(Pedido PEDIDO) {
-//		/** Esto va para la parte visual **/
-//		DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
-//		modelo.addRow(new Object[] { 123, "Cliente", formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido()),"16/12/2015", (boolean) PEDIDO_ACTUAL.getEs_Delivery(), "PENDIENTE", formatoImporte.format(PEDIDO_ACTUAL.getTotal()) });
-//		Tabla_Lista_pedidos.setModel(modelo); // Lo seteo en la tabla para que se vea
-//	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// QUITAR/ ELIMINAR/ CANCELAR
@@ -938,10 +932,11 @@ public class Interfaz_Principal {
 			}
 			if(CLIENTE_ACTUAL!=null)
 				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+			// GUARDA EL PEDIDO
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
-			// TODO- actualizar Tabla_Lista_pedidos
-//			Agregar_a_lista_pedidos(PEDIDO_ACTUAL);
+			// ACTUALIZA EL LISTADO DE PEDIDOS
 			Actualizar_Lista_pedidos();
+			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
 	}
@@ -954,8 +949,19 @@ public class Interfaz_Principal {
 			if(PE.getCliente()!=null)
 				Nombre_Cliente = PE.getCliente().getNombre();
 			model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
+		
 		}
-		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
+		Tabla_Lista_pedidos.setModel(model);
+		Tabla_Lista_pedidos.repaint();
+//		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
+		// Accion al darle doble click sobre un pedido
+		Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				if (e.getClickCount() == 2){
+					Ver_Pedido_Seleccionado();
+				}
+			}
+		});
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 		
 	}
