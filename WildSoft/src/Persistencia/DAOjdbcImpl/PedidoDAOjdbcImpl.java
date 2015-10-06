@@ -23,6 +23,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		String CLIENTE = "NULL";
 		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
 			CLIENTE = p.getCliente().getID_Cliente().toString();
+		else
+			CLIENTE= "5";
 		String PEDIDO = "NULL";
 		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(p.getFecha_Hora_Pedido())	+"',"+
@@ -165,7 +167,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 
 
-
+	
+	
 	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
 		Pedido P = null;
