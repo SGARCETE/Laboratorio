@@ -9,7 +9,7 @@ public class Pedido {
 	private Integer Numero_Pedido; 		// ID o Numero de pedido
 	private Date 	Fecha_Hora_Pedido;		// Fecha y hora en la que se ingresa el pedido al sistema
 	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();				// Lista de productos en el pedido
-	private String ESTADO = "PENDIENTE";
+	private String ESTADO = "Pendiente";
 	private enum Estado_Pedido { Pendiente, Enviado, Cancelado, Preparado, Cobrado};
 	
 	// En caso que sea delivery:

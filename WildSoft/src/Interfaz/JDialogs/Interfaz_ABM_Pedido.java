@@ -298,6 +298,12 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		JButton okButton = new JButton("Guardar");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
+				dispose();
+			}
+		});
 		okButton.setBackground(Color.WHITE);
 		okButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
 		okButton.setActionCommand("OK");
@@ -334,42 +340,42 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	
 	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
 		// traigo el pedido con el id Numero_pedido_modificar
-		Pedido p = SvPedidos.get_pedido(Numero_pedido_modificar);
+		PEDIDO_ACTUAL = SvPedidos.get_pedido(Numero_pedido_modificar);
 		
 		// si el pedido no es nulo cargos los campos del pedido
-		if(p!=null){
-			label_NroPedido.setText(p.getNumero_Pedido().toString());
-			label_ESTADO.setText(p.getESTADO());
-			textTotal_Pedido.setText(formatoImporte.format(p.getTotal()));
-			label_Fecha.setText(formato_ddMMyyyy.format(p.getFecha_Hora_Pedido().getTime()));
+		if(PEDIDO_ACTUAL!=null){
+			label_NroPedido.setText(PEDIDO_ACTUAL.getNumero_Pedido().toString());
+			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
+			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
+			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
 		}
 		
 		// si el cliente no es nulo cargo los campos del cliente
-		if(p.getCliente()!=null){
-			textCliente.setText(p.getCliente().getNombre());
-			textDetalle.setText(p.getCliente().getDetalle());
-			textTelefono.setText(p.getCliente().getTelefono_Fijo());
-			p.getCliente().getID_Cliente();
+		if(PEDIDO_ACTUAL.getCliente()!=null){
+			textCliente.setText(PEDIDO_ACTUAL.getCliente().getNombre());
+			textDetalle.setText(PEDIDO_ACTUAL.getCliente().getDetalle());
+			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
+			PEDIDO_ACTUAL.getCliente().getID_Cliente();
 		}
 		
 		Model_Pedido_Completo model = new Model_Pedido_Completo();
-		System.out.println("SIZE LISTA PROD\n"+p.getLista_Productos().size());
+		System.out.println("SIZE LISTA PROD\n"+PEDIDO_ACTUAL.getLista_Productos().size());
 		
 		// Traigo todos los productos del pedido y lo pongo en la tabla
-		for (int i = 0; i < p.getLista_Productos().size(); i++) {
-			p.getLista_Productos().get(i).getPR_id();
-			p.getLista_Productos().get(i).getPR_nombre();
-			p.getLista_Productos().get(i).getPR_Observacion();
-			p.getLista_Productos().get(i).getPR_precio();
-			p.getLista_Productos().get(i).getPR_tipo_producto();
+		for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_id();
+			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
+			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
+			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_tipo_producto();
 			model.addRow(new Object[] { 
 					model.getRowCount() + 1, 
 					1, 
-					p.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(), 
-					p.getLista_Productos().get(i).getPR_nombre(),
-					p.getLista_Productos().get(i).getPR_precio(),
-					p.getLista_Productos().get(i).getPR_precio(), 
-					p.getLista_Productos().get(i).getPR_Observacion()
+					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(), 
+					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre(),
+					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(),
+					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(), 
+					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion()
 					}); 
 		}
 		

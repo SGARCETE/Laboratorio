@@ -163,15 +163,13 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
-		String SentenciaSQL = "UPDATE Pedido SET "
-				+ "PD_Fecha_Hora = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
-				+ "PD_estado = '" + p.getESTADO() + ", "
-				+ "PD_cliente =" + p.getCliente() + "' "
-				+ "WHERE PD_id=" + p.getNumero_Pedido();
+		int estado = obtenerEstado(p.getESTADO());
+		int cliente = p.getCliente().getID_Cliente();
+		
+		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
+				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
-
-
 
 	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
@@ -240,6 +238,22 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return cliente;
 	}
 	
+	
+	private Integer obtenerEstado(String estado){
+		Integer resultado = 1;
+		conex.connectToMySQL();// Conectar base
+		Statement st;
+		try {
+			st = conex.conexion.createStatement();
+			String SentenciaSQL = "select * from ent_estado where ENTE_nombre = '" + estado + "'";
+			st.executeQuery(SentenciaSQL);
+			ResultSet Fila = st.getResultSet();
+			resultado = Fila.getInt("ENTE_id");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
 	
 	
 }
