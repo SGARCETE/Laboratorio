@@ -951,9 +951,9 @@ public class Interfaz_Principal {
 			model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
 		
 		}
-		Tabla_Lista_pedidos.setModel(model);
-		Tabla_Lista_pedidos.repaint();
-//		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
+//		Tabla_Lista_pedidos.setModel(model);
+//		Tabla_Lista_pedidos.repaint();
+		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
 		// Accion al darle doble click sobre un pedido
 		Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
