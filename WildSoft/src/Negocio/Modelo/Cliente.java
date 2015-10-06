@@ -8,6 +8,12 @@ public class Cliente {
 	private String  Detalle = "";
 	private String  Telefono_Fijo = "";
 	
+	public Cliente(){}
+	
+	public Cliente(String nombre){
+		this.Nombre = nombre;
+	}
+	
 	/** GETTERS AND SETTERS **/
 	public Integer getID_Cliente() {
 		return ID_Cliente;
@@ -46,7 +52,6 @@ public class Cliente {
 		Detalle = detalle;
 	}
 
-	
 
 
 	
