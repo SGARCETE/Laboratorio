@@ -183,6 +183,11 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		panelPedido.add(comboBoxProducto);
 		
 		comboBoxVariedad = new JComboBox<String>();
+		comboBoxVariedad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Seleccion_De_Variedad();
+			}
+		});
 		comboBoxVariedad.setBackground(new Color(240, 255, 255));
 		comboBoxVariedad.setBounds(117, 49, 201, 25);
 		panelPedido.add(comboBoxVariedad);
@@ -366,12 +371,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 					p.getLista_Productos().get(i).getPR_precio(), 
 					p.getLista_Productos().get(i).getPR_Observacion()
 					}); 
-//			Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
-
 		}
 		
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
-		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);		
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 	}
 
 	
@@ -467,13 +470,35 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 	}
 
+
+	private void Limpiar_Formulario_pedido() {
+		PRODUCTO_ACTUAL = new Producto();
+		comboBoxProducto.setSelectedIndex(0);
+		comboBoxVariedad.removeAllItems();
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		textValor.setText("");
+		textValorTotal.setText("");
+		textObservaciones.setText("");
+	}
+	
+	private void Seleccion_De_Variedad() {
+		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
+			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
+			for (int i = 0; i < Lista_Variedades.size(); i++) {
+				if (Lista_Variedades.get(i).getPR_nombre().equals(comboBoxVariedad.getSelectedItem().toString()))
+					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL PRODUCTO SELECCIONADO
+			}
+			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
+			Calcula_totales();
+		}
+	}
+	
 	private void Calcula_totales() {
 		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
 
 			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO
 			// PRODUCTO
-			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio()
-					* (Integer.parseInt(spinnerCantidad.getValue().toString()));
+			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio() * (Integer.parseInt(spinnerCantidad.getValue().toString()));
 			textValorTotal.setText(formatoImporte.format(Total_Mismo_Producto));
 
 			// CALCULA EL TOTAL DEL PEDIDO, recorre todos los productos del
@@ -485,16 +510,5 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
-	}
-
-
-	private void Limpiar_Formulario_pedido() {
-		PRODUCTO_ACTUAL = new Producto();
-		comboBoxProducto.setSelectedIndex(0);
-		comboBoxVariedad.removeAllItems();
-		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
-		textValor.setText("");
-		textValorTotal.setText("");
-		textObservaciones.setText("");
 	}
 }

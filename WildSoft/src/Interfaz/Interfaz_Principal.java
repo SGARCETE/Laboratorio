@@ -732,8 +732,7 @@ public class Interfaz_Principal {
 
 			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO
 			// PRODUCTO
-			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio()
-					* (Integer.parseInt(spinnerCantidad.getValue().toString()));
+			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio() * (Integer.parseInt(spinnerCantidad.getValue().toString()));
 			textValorTotal.setText(formatoImporte.format(Total_Mismo_Producto));
 
 			// CALCULA EL TOTAL DEL PEDIDO, recorre todos los productos del
@@ -780,12 +779,10 @@ public class Interfaz_Principal {
 		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
 			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
-				if (Lista_Variedades.get(i).getPR_nombre()
-						.equals(comboBoxVariedad.getSelectedItem().toString()))
+				if (Lista_Variedades.get(i).getPR_nombre().equals(comboBoxVariedad.getSelectedItem().toString()))
 					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL PRODUCTO SELECCIONADO
 			}
-			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL
-					.getPR_precio()));
+			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
 			Calcula_totales();
 		}
 	}
