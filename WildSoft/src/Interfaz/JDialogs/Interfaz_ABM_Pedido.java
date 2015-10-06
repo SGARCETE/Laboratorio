@@ -124,6 +124,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		panel.add(textTelefono);
 		textTelefono.setColumns(10);
 		
+		
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setBounds(140, 122, 106, 25);
 		panel.add(lblTelefono);
