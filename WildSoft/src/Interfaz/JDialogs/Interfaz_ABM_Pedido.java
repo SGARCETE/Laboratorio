@@ -12,23 +12,32 @@ import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
 import Negocio.Modelo.Pedido;
+import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Pedidos;
+import Negocio.Servicios.Servicio_Productos;
 
 import javax.swing.ImageIcon;
+
 import java.awt.SystemColor;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
@@ -39,11 +48,18 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable Tabla_Pedido_Completo;
 	private JScrollPane scrollPane_Pedido_Completo;
+	private Servicio_Productos svProductos;
 	private Servicio_Pedidos SvPedidos;
 	private JTextField textCliente;
 	private JTextField textDetalle;
 	private JTextField textDire;
 	private JTextField textTelefono;
+	
+	private JComboBox<String> comboBoxProducto;
+	private JComboBox<String> comboBoxVariedad;
+	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	
+	
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
@@ -61,6 +77,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	 */
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		SvPedidos = principal_neg_int.getSvPedidos();
+		svProductos = principal_neg_int.getSvProductos();
 		
 		setTitle("ABM Pedido");
 		setBounds(100, 100, 1154, 490);
@@ -159,15 +176,20 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label.setBounds(10, 12, 109, 25);
 		panel_1.add(label);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBackground(new Color(240, 255, 255));
-		comboBox.setBounds(117, 12, 201, 25);
-		panel_1.add(comboBox);
+		comboBoxProducto = new JComboBox<String>();
+		comboBoxProducto.setBackground(new Color(240, 255, 255));
+		comboBoxProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Seleccion_De_Tipo_Producto();
+			}
+		});
+		comboBoxProducto.setBounds(117, 12, 201, 25);
+		panel_1.add(comboBoxProducto);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBackground(new Color(240, 255, 255));
-		comboBox_1.setBounds(117, 49, 201, 25);
-		panel_1.add(comboBox_1);
+		comboBoxVariedad = new JComboBox<String>();
+		comboBoxVariedad.setBackground(new Color(240, 255, 255));
+		comboBoxVariedad.setBounds(117, 49, 201, 25);
+		panel_1.add(comboBoxVariedad);
 		
 		JLabel label_2 = new JLabel("Variedad");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -286,11 +308,24 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		cancelButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
+		
+		
+		iniciarParametros();
+	}
+
+
+	private void iniciarParametros() {
+		
+		// Rellena el combobox de Tipos de productos
+		ArrayList<String> ListaProductos = svProductos.getLista_Productos();
+		comboBoxProducto.addItem("Seleccione el tipo de producto");
+		for (int i = 0; i < ListaProductos.size(); i++) {
+			comboBoxProducto.addItem(ListaProductos.get(i));
+		}
 	}
 
 
 	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
-		// TODO Auto-generated method stub
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		
@@ -342,5 +377,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 		else
 			System.out.println("el pedido llego en null :(");
+	}
+	
+	private void Seleccion_De_Tipo_Producto() {
+		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
+			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
+			Lista_Variedades = svProductos.getVariedad_del_Producto(comboBoxProducto.getSelectedItem().toString());
+			comboBoxVariedad.removeAllItems();
+			for (int i = 0; i < Lista_Variedades.size(); i++) {
+				comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
+			}
+		}
 	}
 }
