@@ -1,12 +1,31 @@
 package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
@@ -17,32 +36,7 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 
-import javax.swing.ImageIcon;
-
-import java.awt.SystemColor;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.border.TitledBorder;
-
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-
+@SuppressWarnings("serial")
 public class Interfaz_ABM_Pedido extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -58,18 +52,20 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	JSpinner spinnerCantidad;
 	
-	
+	private Producto PRODUCTO_ACTUAL = new Producto();
+	private Pedido PEDIDO_ACTUAL = new Pedido();
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private JLabel label_NroPedido;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textValor;
+	private JTextField textObservaciones;
+	private JTextField textValorTotal;
 	private JLabel label_Fecha;
 	private JLabel label_ESTADO;
-	private JLabel label_TOTAL;
+	private JLabel textTotal_Pedido;
 	
 	/**
 	 * Create the dialog.
@@ -164,17 +160,17 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_Fecha.setBounds(474, 11, 167, 42);
 		contentPanel.add(label_Fecha);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(6, 108, 331, 282);
-		contentPanel.add(panel_1);
+		JPanel panelPedido = new JPanel();
+		panelPedido.setLayout(null);
+		panelPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelPedido.setBackground(Color.WHITE);
+		panelPedido.setBounds(6, 108, 331, 282);
+		contentPanel.add(panelPedido);
 		
 		JLabel label = new JLabel("Producto");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label.setBounds(10, 12, 109, 25);
-		panel_1.add(label);
+		panelPedido.add(label);
 		
 		comboBoxProducto = new JComboBox<String>();
 		comboBoxProducto.setBackground(new Color(240, 255, 255));
@@ -184,71 +180,76 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			}
 		});
 		comboBoxProducto.setBounds(117, 12, 201, 25);
-		panel_1.add(comboBoxProducto);
+		panelPedido.add(comboBoxProducto);
 		
 		comboBoxVariedad = new JComboBox<String>();
 		comboBoxVariedad.setBackground(new Color(240, 255, 255));
 		comboBoxVariedad.setBounds(117, 49, 201, 25);
-		panel_1.add(comboBoxVariedad);
+		panelPedido.add(comboBoxVariedad);
 		
 		JLabel label_2 = new JLabel("Variedad");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_2.setBounds(10, 49, 109, 25);
-		panel_1.add(label_2);
+		panelPedido.add(label_2);
 		
 		JLabel label_3 = new JLabel("Cantidad");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_3.setBounds(10, 85, 109, 25);
-		panel_1.add(label_3);
+		panelPedido.add(label_3);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBackground(new Color(240, 255, 255));
-		spinner.setBounds(117, 85, 59, 25);
-		panel_1.add(spinner);
+		spinnerCantidad = new JSpinner();
+		spinnerCantidad.setBackground(new Color(240, 255, 255));
+		spinnerCantidad.setBounds(117, 85, 59, 25);
+		panelPedido.add(spinnerCantidad);
 		
 		JLabel label_4 = new JLabel("Valor c/u     $");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_4.setBounds(10, 122, 109, 25);
-		panel_1.add(label_4);
+		panelPedido.add(label_4);
 		
-		textField = new JTextField();
-		textField.setText("$0,00");
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBackground(new Color(240, 255, 255));
-		textField.setBounds(117, 122, 199, 25);
-		panel_1.add(textField);
+		textValor = new JTextField();
+		textValor.setText("$0,00");
+		textValor.setHorizontalAlignment(SwingConstants.RIGHT);
+		textValor.setEditable(false);
+		textValor.setColumns(10);
+		textValor.setBackground(new Color(240, 255, 255));
+		textValor.setBounds(117, 122, 199, 25);
+		panelPedido.add(textValor);
 		
 		JLabel label_5 = new JLabel("Valor total   $");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_5.setBounds(10, 159, 109, 25);
-		panel_1.add(label_5);
+		panelPedido.add(label_5);
 		
 		JLabel label_6 = new JLabel("Observaciones");
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_6.setBounds(10, 195, 109, 25);
-		panel_1.add(label_6);
+		panelPedido.add(label_6);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBackground(new Color(240, 255, 255));
-		textField_1.setBounds(117, 195, 199, 25);
-		panel_1.add(textField_1);
+		textObservaciones = new JTextField();
+		textObservaciones.setColumns(10);
+		textObservaciones.setBackground(new Color(240, 255, 255));
+		textObservaciones.setBounds(117, 195, 199, 25);
+		panelPedido.add(textObservaciones);
 		
-		textField_2 = new JTextField();
-		textField_2.setToolTipText("");
-		textField_2.setText("$0,00");
-		textField_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBackground(new Color(240, 255, 255));
-		textField_2.setBounds(117, 159, 199, 25);
-		panel_1.add(textField_2);
+		textValorTotal = new JTextField();
+		textValorTotal.setToolTipText("");
+		textValorTotal.setText("$0,00");
+		textValorTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		textValorTotal.setEditable(false);
+		textValorTotal.setColumns(10);
+		textValorTotal.setBackground(new Color(240, 255, 255));
+		textValorTotal.setBounds(117, 159, 199, 25);
+		panelPedido.add(textValorTotal);
 		
 		JButton button = new JButton("Agregar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Agregar_al_Pedido();
+			}
+		});
 		button.setBounds(117, 225, 100, 30);
-		panel_1.add(button);
+		panelPedido.add(button);
 		
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -277,14 +278,14 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		lblTotal_1.setBounds(338, 65, 124, 30);
 		contentPanel.add(lblTotal_1);
 		
-		label_TOTAL = new JLabel("");
-		label_TOTAL.setOpaque(true);
-		label_TOTAL.setHorizontalAlignment(SwingConstants.CENTER);
-		label_TOTAL.setForeground(new Color(60, 179, 113));
-		label_TOTAL.setFont(new Font("SansSerif", Font.BOLD, 28));
-		label_TOTAL.setBackground(new Color(240, 248, 255));
-		label_TOTAL.setBounds(474, 66, 167, 30);
-		contentPanel.add(label_TOTAL);
+		textTotal_Pedido = new JLabel("");
+		textTotal_Pedido.setOpaque(true);
+		textTotal_Pedido.setHorizontalAlignment(SwingConstants.CENTER);
+		textTotal_Pedido.setForeground(new Color(60, 179, 113));
+		textTotal_Pedido.setFont(new Font("SansSerif", Font.BOLD, 28));
+		textTotal_Pedido.setBackground(new Color(240, 248, 255));
+		textTotal_Pedido.setBounds(474, 66, 167, 30);
+		contentPanel.add(textTotal_Pedido);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -324,21 +325,65 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 	}
 
-
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MODIFICAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
-		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+		// traigo el pedido con el id Numero_pedido_modificar
+		Pedido p = SvPedidos.get_pedido(Numero_pedido_modificar);
 		
+		// si el pedido no es nulo cargos los campos del pedido
+		if(p!=null){
+			label_NroPedido.setText(p.getNumero_Pedido().toString());
+			label_ESTADO.setText(p.getESTADO());
+			textTotal_Pedido.setText(formatoImporte.format(p.getTotal()));
+			label_Fecha.setText(formato_ddMMyyyy.format(p.getFecha_Hora_Pedido().getTime()));
+		}
+		
+		// si el cliente no es nulo cargo los campos del cliente
+		if(p.getCliente()!=null){
+			textCliente.setText(p.getCliente().getNombre());
+			textDetalle.setText(p.getCliente().getDetalle());
+			textTelefono.setText(p.getCliente().getTelefono_Fijo());
+			p.getCliente().getID_Cliente();
+		}
+		
+		Model_Pedido_Completo model = new Model_Pedido_Completo();
+		System.out.println("SIZE LISTA PROD\n"+p.getLista_Productos().size());
+		
+		// Traigo todos los productos del pedido y lo pongo en la tabla
+		for (int i = 0; i < p.getLista_Productos().size(); i++) {
+			p.getLista_Productos().get(i).getPR_id();
+			p.getLista_Productos().get(i).getPR_nombre();
+			p.getLista_Productos().get(i).getPR_Observacion();
+			p.getLista_Productos().get(i).getPR_precio();
+			p.getLista_Productos().get(i).getPR_tipo_producto();
+			model.addRow(new Object[] { 
+					model.getRowCount() + 1, 
+					1, 
+					p.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(), 
+					p.getLista_Productos().get(i).getPR_nombre(),
+					p.getLista_Productos().get(i).getPR_precio(),
+					p.getLista_Productos().get(i).getPR_precio(), 
+					p.getLista_Productos().get(i).getPR_Observacion()
+					}); 
+//			Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
+
+		}
+		
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);		
 	}
 
-
+	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VISUALIZAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	public void setPedido_a_visualizar(Integer Numero_pedido_visualizar) {
 		Pedido p = SvPedidos.get_pedido(Numero_pedido_visualizar);
 		if(p!=null){
 			// Datos del pedido
 			label_NroPedido.setText(p.getNumero_Pedido().toString());
 			label_ESTADO.setText(p.getESTADO());
-			label_TOTAL.setText(formatoImporte.format(p.getTotal()));
+			textTotal_Pedido.setText(formatoImporte.format(p.getTotal()));
 			label_Fecha.setText(formato_ddMMyyyy.format(p.getFecha_Hora_Pedido().getTime()));
 			
 //			p.getEs_Delivery();
@@ -388,5 +433,68 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
 			}
 		}
+	}
+	
+	private void Agregar_al_Pedido() {
+		// compruebo que los combos tengan algo seleccionado
+		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
+			// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos
+			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
+			String Variedad = comboBoxVariedad.getSelectedItem().toString();
+
+			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
+				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
+				String Observacion = textObservaciones.getText();
+
+				/**
+				 * Esto va a un objeto pedido, el cual se usara para guardar en
+				 * la base de datos
+				 **/
+				for (int i = 0; i < Cantidad; i++)
+					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+
+				/** Esto va para la parte visual **/ //TODO
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
+				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
+
+				/** Despues que se resetee el formulario de ingreso de pedido **/
+				Limpiar_Formulario_pedido();
+				Calcula_totales();
+			}
+		}
+	}
+
+	private void Calcula_totales() {
+		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
+
+			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO
+			// PRODUCTO
+			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio()
+					* (Integer.parseInt(spinnerCantidad.getValue().toString()));
+			textValorTotal.setText(formatoImporte.format(Total_Mismo_Producto));
+
+			// CALCULA EL TOTAL DEL PEDIDO, recorre todos los productos del
+			// pedido tomando su precio y lo acumula
+			Double TOTAL_PEDIDO = 0.0;
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+			}
+			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
+			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
+		}
+	}
+
+
+	private void Limpiar_Formulario_pedido() {
+		PRODUCTO_ACTUAL = new Producto();
+		comboBoxProducto.setSelectedIndex(0);
+		comboBoxVariedad.removeAllItems();
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		textValor.setText("");
+		textValorTotal.setText("");
+		textObservaciones.setText("");
 	}
 }
