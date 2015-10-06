@@ -12,7 +12,7 @@ public interface PedidoDAO {
 
 	public boolean ELIMINAR_PEDIDO(Pedido p);
 
-	public Pedido MODIFICAR_PEDIDO(Pedido p);
+	public boolean MODIFICAR_PEDIDO(Pedido p);
 
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido);
 

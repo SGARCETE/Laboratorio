@@ -22,7 +22,7 @@ public class Servicio_Pedidos {
 		return pedidoDAO.ELIMINAR_PEDIDO(p);
 	}
 	
-	public Pedido modificar_pedido(Pedido p){
+	public boolean modificar_pedido(Pedido p){
 		return pedidoDAO.MODIFICAR_PEDIDO(p);
 	}
 	

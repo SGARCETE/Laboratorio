@@ -161,9 +161,10 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 	
 
-	public Pedido MODIFICAR_PEDIDO(Pedido p) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean MODIFICAR_PEDIDO(Pedido p) {
+		
+		String SentenciaSQL = "UPDATE Pedido SET PD_Fecha_Hora = '" + p.getFecha_Hora_Pedido() + "', PD_estado = '" + p.getESTADO() + ", PD_cliente =" + p.getCliente() + "' WHERE PD_id=" + p.getNumero_Pedido();
+		return conex.Insertar(SentenciaSQL);
 	}
 
 
