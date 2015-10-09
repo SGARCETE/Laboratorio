@@ -151,7 +151,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_NroPedido.setForeground(new Color(60, 179, 113));
 		label_NroPedido.setBackground(new Color(240, 255, 240));
 		label_NroPedido.setFont(new Font("SansSerif", Font.BOLD, 28));
-		label_NroPedido.setBounds(142, 11, 139, 42);
+		label_NroPedido.setBounds(142, 11, 149, 42);
 		contentPanel.add(label_NroPedido);
 		
 		label_Fecha = new JLabel("");
@@ -280,7 +280,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_ESTADO.setForeground(new Color(60, 179, 113));
 		label_ESTADO.setFont(new Font("SansSerif", Font.BOLD, 28));
 		label_ESTADO.setBackground(new Color(240, 248, 255));
-		label_ESTADO.setBounds(142, 66, 139, 30);
+		label_ESTADO.setBounds(142, 66, 149, 30);
 		contentPanel.add(label_ESTADO);
 		
 		JLabel lblTotal_1 = new JLabel("Total");
@@ -298,13 +298,15 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textTotal_Pedido.setBounds(474, 66, 167, 30);
 		contentPanel.add(textTotal_Pedido);
 		
-		JButton btnNewButton = new JButton("Cambiar");
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/edit-icon16.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cambiar_estado();
 			}
 		});
-		btnNewButton.setBounds(293, 68, 90, 28);
+		btnNewButton.setBounds(293, 68, 30, 30);
 		contentPanel.add(btnNewButton);
 
 		JPanel buttonPane = new JPanel();
@@ -350,8 +352,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		   null,  								// null para icono defecto	
 		   ESTADOS, 							// LISTADO DE ESTADOS OBTENIDO DE LA BD
 		   PEDIDO_ACTUAL.getESTADO());			// SELECCION INICIAR (en el estado que esta el pedido)
-		if(seleccion!=null)
+		if(seleccion!=null){
 			PEDIDO_ACTUAL.setESTADO(seleccion.toString());
+			label_ESTADO.setText(seleccion.toString());
+		}
 	}
 
 
