@@ -10,7 +10,6 @@ public class Pedido {
 	private Date 	Fecha_Hora_Pedido;		// Fecha y hora en la que se ingresa el pedido al sistema
 	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();				// Lista de productos en el pedido
 	private String ESTADO = "Pendiente";
-	private enum Estado_Pedido { Pendiente, Enviado, Cancelado, Preparado, Cobrado};
 	
 	// En caso que sea delivery:
 	private Boolean Es_Delivery = false;
