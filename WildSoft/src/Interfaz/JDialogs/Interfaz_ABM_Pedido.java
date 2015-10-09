@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -52,6 +53,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	private Object[] ESTADOS;
 	JSpinner spinnerCantidad;
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
@@ -74,6 +76,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		SvPedidos = principal_neg_int.getSvPedidos();
 		svProductos = principal_neg_int.getSvProductos();
+		ESTADOS = SvPedidos.getTodos_los_estados();
 		
 		setTitle("ABM Pedido");
 		setBounds(100, 100, 1154, 490);
@@ -249,6 +252,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		panelPedido.add(textValorTotal);
 		
 		JButton button = new JButton("Agregar");
+		button.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
+		button.setBackground(Color.WHITE);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
@@ -292,6 +297,15 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textTotal_Pedido.setBackground(new Color(240, 248, 255));
 		textTotal_Pedido.setBounds(474, 66, 167, 30);
 		contentPanel.add(textTotal_Pedido);
+		
+		JButton btnNewButton = new JButton("Cambiar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cambiar_estado();
+			}
+		});
+		btnNewButton.setBounds(293, 68, 90, 28);
+		contentPanel.add(btnNewButton);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -327,8 +341,21 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 
 
+	private void cambiar_estado() {
+		Object seleccion = JOptionPane.showInputDialog(
+		   this,
+		   "Seleccione el estado a cambiar",	// TEXTO EN VENTANA
+		   "Selector de estados",				// NOMBRE VENTANA
+		   JOptionPane.QUESTION_MESSAGE,		// TIPO DE JOPTIONPANE
+		   null,  								// null para icono defecto	
+		   ESTADOS, 							// LISTADO DE ESTADOS OBTENIDO DE LA BD
+		   PEDIDO_ACTUAL.getESTADO());			// SELECCION INICIAR (en el estado que esta el pedido)
+		if(seleccion!=null)
+			PEDIDO_ACTUAL.setESTADO(seleccion.toString());
+	}
+
+
 	private void iniciarParametros() {
-		
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = svProductos.getLista_Productos();
 		comboBoxProducto.addItem("Seleccione el tipo de producto");
@@ -356,7 +383,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			textCliente.setText(PEDIDO_ACTUAL.getCliente().getNombre());
 			textDetalle.setText(PEDIDO_ACTUAL.getCliente().getDetalle());
 			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
-			PEDIDO_ACTUAL.getCliente().getID_Cliente();
+//			PEDIDO_ACTUAL.getCliente().getID_Cliente();
 		}
 		
 		Model_Pedido_Completo model = new Model_Pedido_Completo();
@@ -364,20 +391,14 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		// Traigo todos los productos del pedido y lo pongo en la tabla
 		for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_id();
-			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
-			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
-			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
-			PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_tipo_producto();
-			model.addRow(new Object[] { 
-					model.getRowCount() + 1, 
-					1, 
-					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(), 
-					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre(),
-					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(),
-					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(), 
-					PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion()
-					}); 
+			Object[] fila = new Object[6];
+			fila[0] = model.getRowCount() + 1;
+			fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(); 
+			fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
+			fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+			fila[4] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(); 
+			fila[5] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
+			model.addRow(fila); 
 		}
 		
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
@@ -408,24 +429,17 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			
 			Model_Pedido_Completo model = new Model_Pedido_Completo();
 			System.out.println("SIZO LISTA PROD\n"+p.getLista_Productos().size());
-			// Productos del pedido
-			for (int i = 0; i < p.getLista_Productos().size(); i++) {
-				p.getLista_Productos().get(i).getPR_id();
-				p.getLista_Productos().get(i).getPR_nombre();
-				p.getLista_Productos().get(i).getPR_Observacion();
-				p.getLista_Productos().get(i).getPR_precio();
-				p.getLista_Productos().get(i).getPR_tipo_producto();
-				model.addRow(new Object[] { 
-						model.getRowCount() + 1, 
-						1, 
-						p.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(), 
-						p.getLista_Productos().get(i).getPR_nombre(),
-						p.getLista_Productos().get(i).getPR_precio(),
-						p.getLista_Productos().get(i).getPR_precio(), 
-						p.getLista_Productos().get(i).getPR_Observacion()
-						}); 
-//				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
-	
+			
+			// Traigo todos los productos del pedido y lo pongo en la tabla
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				Object[] fila = new Object[6];
+				fila[0] = model.getRowCount() + 1;
+				fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(); 
+				fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
+				fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				fila[4] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(); 
+				fila[5] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
+				model.addRow(fila); 
 			}
 			
 			Tabla_Pedido_Completo = new JTable_Listado_Pedidos(model);
@@ -434,6 +448,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		else
 			System.out.println("el pedido llego en null :(");
 	}
+	
+	
 	
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
@@ -459,10 +475,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Observacion = textObservaciones.getText();
 
-				/**
-				 * Esto va a un objeto pedido, el cual se usara para guardar en
-				 * la base de datos
-				 **/
 				for (int i = 0; i < Cantidad; i++)
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 

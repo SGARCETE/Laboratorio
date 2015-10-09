@@ -259,6 +259,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return resultado;
 	}
+
+	@Override
+	public Object[] getTODOS_LOS_ESTADOS() {
+		return new Object[] { "Pendiente", "Preparado", "Enviado","Cobrado","Cancelado"};
+	}
 	
 	
 }

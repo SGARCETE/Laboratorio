@@ -30,4 +30,8 @@ public class Servicio_Pedidos {
 		return pedidoDAO.OBTENER_PEDIDO(Numero_pedido);
 	}
 
+	public Object[] getTodos_los_estados() {
+		return pedidoDAO.getTODOS_LOS_ESTADOS();
+	}
+
 }
