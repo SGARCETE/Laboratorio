@@ -822,6 +822,7 @@ public class Interfaz_Principal {
 		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
+			
 			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
@@ -831,6 +832,7 @@ public class Interfaz_Principal {
 				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Observacion = textObservaciones.getText();
+				
 
 				/**
 				 * Esto va a un objeto pedido, el cual se usara para guardar en
@@ -855,6 +857,7 @@ public class Interfaz_Principal {
 
 				/** Esto va para la parte visual **/ //TODO
 				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				
 				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
 				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
 

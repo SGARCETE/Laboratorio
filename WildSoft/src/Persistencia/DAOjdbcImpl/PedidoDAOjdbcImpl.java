@@ -142,6 +142,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				Prod.setPR_nombre(Fila.getString("PR_nombre"));
 				Prod.setPR_precio(Fila.getDouble("PP_precio"));
 				Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
+				Prod.setCantidad(Fila.getInt("PP_producto_cantidad"));
 				Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
 				Arreglo.add(Prod);
 
