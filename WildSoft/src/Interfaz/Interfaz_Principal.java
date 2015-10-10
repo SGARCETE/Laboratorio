@@ -714,6 +714,8 @@ public class Interfaz_Principal {
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		
+		Actualizar_Lista_pedidos();
+		
 		AutocompletarCliente();
 		
 		// Rellena el combobox de Tipos de productos
