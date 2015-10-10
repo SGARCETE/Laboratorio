@@ -740,7 +740,9 @@ public class Interfaz_Principal {
 			// pedido tomando su precio y lo acumula
 			Double TOTAL_PEDIDO = 0.0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				Double precio = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				int cantidad = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
+				TOTAL_PEDIDO += precio * cantidad;
 			}
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
@@ -812,6 +814,7 @@ public class Interfaz_Principal {
 		textDetalle.setText("");
 		textDomicilio.setText("");
 		textTelefono.setText("");
+		textTotal_Pedido.setText("");
 		CLIENTE_ACTUAL = null;
 		PEDIDO_ACTUAL = new Pedido();
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
@@ -831,6 +834,7 @@ public class Interfaz_Principal {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
 			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
 			String Variedad = comboBoxVariedad.getSelectedItem().toString();
 
@@ -843,8 +847,22 @@ public class Interfaz_Principal {
 				 * Esto va a un objeto pedido, el cual se usara para guardar en
 				 * la base de datos
 				 **/
-				for (int i = 0; i < Cantidad; i++)
+				
+				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
+				
+				boolean productoNoEsta = true;
+				
+				for (int i = 0; i<productos.size(); i++ ) {
+					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+						int cantidad  = productos.get(i).getCantidad();
+						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
+						productoNoEsta = false;
+					}
+				}
+				
+				if(productoNoEsta){
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+				}
 
 				/** Esto va para la parte visual **/ //TODO
 				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();

@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
+import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
@@ -58,6 +59,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
+	private Cliente CLIENTE_ACTUAL;
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
