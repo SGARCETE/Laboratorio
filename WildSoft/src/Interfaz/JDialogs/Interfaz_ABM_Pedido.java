@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,10 +28,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
@@ -71,8 +68,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JLabel label_Fecha;
 	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
-	private Cliente CLIENTE_ACTUAL= new Cliente();
-	
 	/**
 	 * Create the dialog.
 	 * @param principal_neg_int 
@@ -413,69 +408,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 	}
 
-	
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VISUALIZAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Guardar_pedido() {
-		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
-			
-			if(CLIENTE_ACTUAL!=null){
-				CLIENTE_ACTUAL.setNombre(textCliente.getText());
-				CLIENTE_ACTUAL.setTelefono_Fijo(textTelefono.getText());
-				CLIENTE_ACTUAL.setDomicilio(textDire.getText());
-			}
-			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
-			PEDIDO_ACTUAL.setESTADO(label_ESTADO.getText());
-			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
-			
-			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
-			    
-			
-		}
-	}
-	
-	
-	public void setPedido_a_visualizar(Integer Numero_pedido_visualizar) {
-		Pedido p = SvPedidos.get_pedido(Numero_pedido_visualizar);
-		if(p!=null){
-			// Datos del pedido
-			label_NroPedido.setText(p.getNumero_Pedido().toString());
-			label_ESTADO.setText(p.getESTADO());
-			textTotal_Pedido.setText(formatoImporte.format(p.getTotal()));
-			label_Fecha.setText(formato_ddMMyyyy.format(p.getFecha_Hora_Pedido().getTime()));
-			
-//			p.getEs_Delivery();
-			if(p.getCliente()!=null){
-				textCliente.setText(p.getCliente().getNombre());
-				textDetalle.setText(p.getCliente().getDetalle());
-				textTelefono.setText(p.getCliente().getTelefono_Fijo());
-				textDire.setText(p.getCliente().getDomicilio());
-				p.getCliente().getID_Cliente();
-			}
-				
-			
-			Model_Pedido_Completo model = new Model_Pedido_Completo();
-			System.out.println("SIZO LISTA PROD\n"+p.getLista_Productos().size());
-			
-			// Traigo todos los productos del pedido y lo pongo en la tabla
-			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				Object[] fila = new Object[6];
-				fila[0] = model.getRowCount() + 1;
-				fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(); 
-				fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
-				fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
-				fila[4] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(); 
-				fila[5] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
-				model.addRow(fila); 
-			}
-			
-			Tabla_Pedido_Completo = new JTable_Listado_Pedidos(model);
-			scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
-		}
-		else
-			System.out.println("el pedido llego en null :(");
-	}
-	
-	
 	
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
