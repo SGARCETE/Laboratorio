@@ -28,11 +28,17 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
+
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
+import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 
@@ -44,7 +50,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JScrollPane scrollPane_Pedido_Completo;
 	private Servicio_Productos svProductos;
 	private Servicio_Pedidos SvPedidos;
-	private JTextField textCliente;
+	private Servicio_Clientes sv_clientes;
 	private JTextField textDetalle;
 	private JTextField textDire;
 	private JTextField textTelefono;
@@ -57,6 +63,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
+	private Principal_Negocio_Interfaz Principal_neg_int;
+	private Cliente CLIENTE_ACTUAL = null; 
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,10 +75,23 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JLabel label_Fecha;
 	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
+	private JTextField textCliente = new JTextField();
 	/**
 	 * Create the dialog.
 	 * @param principal_neg_int 
 	 */
+	
+	
+
+	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
+	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
+			String Nombre_Cliente_seleccionado = ((String)selectedItem);
+			Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
+			Cargar_datos_Cliente(C);
+		}
+	});
+	
+	
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		SvPedidos = principal_neg_int.getSvPedidos();
 		svProductos = principal_neg_int.getSvProductos();
@@ -202,6 +223,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label_3.setBounds(10, 85, 109, 25);
 		panelPedido.add(label_3);
+		
 		
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
@@ -360,6 +382,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private void iniciarParametros() {
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = svProductos.getLista_Productos();
+		
 		comboBoxProducto.addItem("Seleccione el tipo de producto");
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
@@ -488,5 +511,19 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
+	}
+	
+	private void Cargar_datos_Cliente(Cliente c) {
+		CLIENTE_ACTUAL = c;
+		textDire.setText(c.getDomicilio());
+		textTelefono.setText(c.getTelefono_Fijo());
+		textDetalle.setText(c.getDetalle());
+	}
+
+	private void AutocompletarCliente() {
+		AutoCompleter_Cliente.removeAllItems();
+		AutoCompleter_Cliente.setCaseSensitive(false);
+		AutoCompleter_Cliente.setMode(0);
+		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
 }

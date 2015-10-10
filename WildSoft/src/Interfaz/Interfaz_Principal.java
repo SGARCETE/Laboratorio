@@ -116,6 +116,7 @@ public class Interfaz_Principal {
 		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
+        	
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -856,8 +857,7 @@ public class Interfaz_Principal {
 				}
 
 				/** Esto va para la parte visual **/ //TODO
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
-				
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();				
 				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
 				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
 
