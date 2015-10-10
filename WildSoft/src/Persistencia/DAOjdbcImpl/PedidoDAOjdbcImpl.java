@@ -43,11 +43,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				String OBSERVACION =  p.getLista_Productos().get(i).getPR_Observacion();
 				String SentenciaSQL_producto_pedidos = "INSERT INTO producto_pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_Observacion, PP_precio)"
 						+ "VALUES ("+
-						""+	 PEDIDO_ID			+","+	// INTEGER
-						""+	 PRODUCTO_ID		+","+	// INTEGER
-						""+	 1					+","+	// INTEGER
-						"'"+ OBSERVACION		+" ',"+	// STRING
-						""+  PRECIO_ACTUAL		+ ")";	// DOUBLE
+						""+	 PEDIDO_ID									+","+	// INTEGER
+						""+	 PRODUCTO_ID								+","+	// INTEGER
+						""+	 p.getLista_Productos().get(i).getCantidad()+","+	// INTEGER
+						"'"+ OBSERVACION								+" ',"+	// STRING
+						""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
 				boolean Asociar_producto = conex.Insertar(SentenciaSQL_producto_pedidos);
 				System.out.println(SentenciaSQL_producto_pedidos);
 				if(!Asociar_producto)

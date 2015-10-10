@@ -9,7 +9,16 @@ public class Producto {
 	private String	PR_nombre= "";
 	private String 	PR_Observacion = "";
 	private String 	PR_TIPO_PRODUCTO_STRING ="";
+	private int cantidad = 0;
 	
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	public Integer getPR_id() {
 		return PR_id;
 	}
