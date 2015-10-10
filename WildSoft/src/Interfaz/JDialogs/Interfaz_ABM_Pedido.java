@@ -58,7 +58,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
 	
-	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private JLabel label_NroPedido;
@@ -86,9 +85,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		contentPanel.setLayout(null);
 		
 		scrollPane_Pedido_Completo = new JScrollPane();
-		scrollPane_Pedido_Completo.setBounds(349, 108, 469, 282);
+		scrollPane_Pedido_Completo.setBounds(349
+				, 108, 469, 282);
 		contentPanel.add(scrollPane_Pedido_Completo);
-		
 		
 		JLabel lblNumeroPedido = new JLabel("N\u00BA Pedido");
 		lblNumeroPedido.setHorizontalAlignment(SwingConstants.CENTER);

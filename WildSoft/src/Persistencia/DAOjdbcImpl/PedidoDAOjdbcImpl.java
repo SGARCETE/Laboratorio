@@ -191,14 +191,19 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setNumero_Pedido(Fila.getInt("PD_id"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
-				P.setEs_Delivery(Fila.getBoolean("PD_Delivery")); 
-				P.setTotal(Fila.getDouble("Precio"));
+				P.setEs_Delivery(Fila.getBoolean("PD_Delivery"));
 				ID_Cliente = Fila.getInt("PD_CLIENTE");
 			}
 
 			conex.cerrarConexion();
 			// Obtiene la lista de productos asociado a ese pedido
 			P.setLista_Productos(getLista_Productos(P));
+			
+			ArrayList<Producto> lista = P.getLista_Productos();
+			
+			for (int i = 0; i < lista.size(); i++){
+				P.setTotal(P.getTotal() + (lista.get(i).getCantidad()*lista.get(i).getPR_precio()));
+			}
 			
 			// Obtiene datos del cliente si este no es NULL
 			if(ID_Cliente!=null)
