@@ -3,6 +3,7 @@
 create database wildsoft;
 use wildsoft;
 
+
 CREATE  TABLE Tipo_producto ( 
 						 TP_id int  not null AUTO_INCREMENT ,  
 						 TP_nombre varchar(30) , 
