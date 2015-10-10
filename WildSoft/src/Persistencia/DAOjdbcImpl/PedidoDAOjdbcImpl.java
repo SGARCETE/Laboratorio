@@ -128,10 +128,10 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
-			String Query = "select P.PD_id, PR.Pr_nombre, PP.PP_precio, T.TP_id, T.TP_nombre from " +
-			"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T " +
+			String Query = "select P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
+			"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
 			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
-			P.getNumero_Pedido();
+			        P.getNumero_Pedido();
 
 			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
@@ -164,12 +164,12 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
 		int estado = obtenerEstado(p.getESTADO());
-		estado = 1;
+		
 //		System.out.println("ESTADO"+ estado);
 		int cliente = p.getCliente().getID_Cliente();
 		
 		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
-				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
+				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + "WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
 
