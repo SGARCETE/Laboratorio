@@ -65,7 +65,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Vergara 1567','4456-9874','Javier Pérez'),(2,'Belgrano 100','4456-9292','Daniel Osvaldo'),(3,'Zapiola 1455','4555-2356','Pedro Suarez'),(4,'Zapiola 1454','4555-2356','Martin Safe');
+INSERT INTO `cliente` VALUES (1,NULL,NULL,''),(2,'Belgrano 100','4459-0748','Santiago Garcete'),(3,'Zapiola 1455','4555-2356','Nicolás Cabral'),(4,'Zapiola 1454','4555-2356','Federico Vara');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,10 +101,10 @@ DROP TABLE IF EXISTS `entrega`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entrega` (
+  `ENT_id` int(11) NOT NULL AUTO_INCREMENT,
   `ENT_fecha_salida` datetime DEFAULT NULL,
   `ENT_estado` int(11) DEFAULT NULL,
   `ENT_repartidor` int(11) DEFAULT NULL,
-  `ENT_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ENT_id`),
   KEY `ENT_estado` (`ENT_estado`),
   KEY `ENT_repartidor` (`ENT_repartidor`),
@@ -156,10 +156,12 @@ DROP TABLE IF EXISTS `pedido`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pedido` (
   `PD_id` int(11) NOT NULL AUTO_INCREMENT,
-  `PD_fecha_pedido` date DEFAULT NULL,
+  `PD_fecha_pedido` datetime DEFAULT NULL,
   `PD_estado` int(11) DEFAULT NULL,
   `PD_cliente` int(11) DEFAULT NULL,
   `PD_entrega` int(11) DEFAULT NULL,
+  `PD_Delivery` tinyint(1) DEFAULT NULL,
+  `PD_precio` double DEFAULT NULL,
   PRIMARY KEY (`PD_id`),
   KEY `PD_entrega` (`PD_entrega`),
   KEY `PD_estado` (`PD_estado`),
@@ -167,7 +169,7 @@ CREATE TABLE `pedido` (
   CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`PD_entrega`) REFERENCES `entrega` (`ENT_id`),
   CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`PD_estado`) REFERENCES `pe_estado` (`PEST_id`),
   CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`PD_cliente`) REFERENCES `cliente` (`CL_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +178,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (1,'2015-10-03',1,NULL,NULL),(2,'2015-10-03',1,NULL,NULL),(3,'2015-10-03',1,NULL,NULL),(4,'2015-10-03',1,NULL,NULL),(5,'2015-10-03',1,NULL,NULL),(6,'2015-10-03',1,NULL,NULL),(7,'2015-10-03',1,NULL,NULL),(8,'2015-10-03',1,NULL,NULL),(9,'2015-10-03',1,NULL,NULL),(10,'2015-10-03',1,NULL,NULL),(11,'2015-10-03',1,NULL,NULL),(12,'2015-10-03',1,NULL,NULL),(13,'2015-10-03',1,NULL,NULL),(14,'2015-10-03',1,NULL,NULL),(15,'2015-10-03',1,NULL,NULL),(16,'2015-10-03',1,NULL,NULL),(17,'2015-10-03',1,NULL,NULL),(18,'2015-10-04',1,NULL,NULL),(19,'2015-10-04',1,NULL,NULL),(20,'2015-10-04',1,NULL,NULL),(21,'2015-10-04',1,NULL,NULL);
+INSERT INTO `pedido` VALUES (1,'2015-10-09 00:00:00',1,1,NULL,0,NULL),(2,'2015-10-09 00:00:00',1,1,NULL,0,NULL),(3,'2015-10-09 00:00:00',1,1,NULL,0,NULL),(4,'2015-10-09 00:00:00',1,1,NULL,0,NULL),(5,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(6,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(7,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(8,'2015-10-09 00:00:00',2,3,NULL,0,NULL),(9,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(10,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(11,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(12,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(13,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(14,'2015-10-09 00:00:00',1,1,NULL,1,NULL),(15,'2015-10-09 00:00:00',1,1,NULL,0,NULL),(16,'2015-10-09 00:00:00',1,4,NULL,1,NULL),(17,'2015-10-09 00:00:00',1,3,NULL,1,NULL),(18,'2015-10-09 00:00:00',1,3,NULL,1,NULL),(19,'2015-10-10 00:00:00',1,3,NULL,1,NULL),(20,'2015-10-10 00:00:00',1,4,NULL,1,NULL),(21,'2015-10-10 00:00:00',1,3,NULL,1,NULL),(22,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,10 +196,10 @@ CREATE TABLE `producto` (
   `PR_observacion` varchar(300) DEFAULT NULL,
   `PR_tipo_producto` int(11) DEFAULT NULL,
   PRIMARY KEY (`PR_id`),
-  UNIQUE KEY `PR_nombre` (`PR_nombre`,`PR_tipo_producto`),
+  UNIQUE KEY `PR_nombre` (`PR_nombre`),
   KEY `PR_tipo_producto` (`PR_tipo_producto`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`PR_tipo_producto`) REFERENCES `tipo_producto` (`TP_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +208,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Carne',12,NULL,1),(2,'Verdura',12,NULL,1),(3,'Humita',12,NULL,1),(4,'Pollo',10,NULL,1),(5,'Muzzarella',70,NULL,2),(6,'Jamón y queso',85,NULL,2),(7,'Jamón y morrones',105,NULL,2),(8,'Cochina',120,NULL,2),(9,'Coca Cola',40,NULL,3),(10,'Napolitana',90,NULL,2),(11,'Manaos',45,NULL,3),(12,'Sprite',95,NULL,3),(13,'Pepsi',70,NULL,3),(14,'Cocacola',45,NULL,3);
+INSERT INTO `producto` VALUES (1,'Carne',10,NULL,1),(2,'Verdura',10,NULL,1),(3,'Humita',10,NULL,1),(4,'Pollo',10,NULL,1),(5,'Muzzarella',70,NULL,2),(6,'Jamón y Queso',85,NULL,2),(7,'Jamón y Morrones',105,NULL,2),(8,'Cochina',120,NULL,2),(9,'Coca Cola',40,NULL,3),(10,'Manaos',40,NULL,3),(11,'Pepsi',40,NULL,3),(12,'7UP',40,NULL,3),(13,'Sprite',40,NULL,3);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +223,7 @@ CREATE TABLE `producto_pedidos` (
   `PP_pedidoid` int(11) DEFAULT NULL,
   `PP_productoid` int(11) DEFAULT NULL,
   `PP_producto_cantidad` int(11) DEFAULT NULL,
-  `PP_Observacion` varchar(300) DEFAULT NULL,
+  `PP_observacion` varchar(300) DEFAULT NULL,
   `PP_precio` double DEFAULT NULL,
   KEY `PP_pedidoid` (`PP_pedidoid`),
   KEY `PP_productoid` (`PP_productoid`),
@@ -236,7 +238,7 @@ CREATE TABLE `producto_pedidos` (
 
 LOCK TABLES `producto_pedidos` WRITE;
 /*!40000 ALTER TABLE `producto_pedidos` DISABLE KEYS */;
-INSERT INTO `producto_pedidos` VALUES (3,1,1,' ',12),(5,1,1,' ',12),(6,1,1,' ',12),(7,5,1,' ',70),(7,5,1,' ',70),(9,1,1,' ',12),(9,1,1,' ',12),(9,1,1,' ',12),(12,1,1,' ',12),(12,1,1,' ',12),(13,2,1,' ',12),(13,8,1,' ',120),(13,8,1,' ',120),(14,12,1,' ',95),(14,12,1,' ',95),(15,9,1,' ',40),(16,8,1,' ',120),(17,5,1,' ',70),(18,7,1,' ',105),(18,4,1,' ',10),(18,4,1,' ',10),(19,7,1,' ',105),(20,9,1,' ',40),(20,1,1,' ',12),(20,1,1,' ',12),(20,1,1,' ',12),(20,1,1,' ',12),(20,1,1,' ',12),(21,5,1,' ',70),(21,12,1,' ',95);
+INSERT INTO `producto_pedidos` VALUES (6,5,1,' ',70),(7,1,1,' ',10),(9,3,1,' ',10),(9,3,1,' ',10),(9,3,1,' ',10),(12,4,1,' ',10),(12,4,1,' ',10),(12,4,1,' ',10),(13,13,1,' ',40),(13,13,1,' ',40),(14,5,1,' ',70),(14,5,1,' ',70),(14,5,1,' ',70),(15,9,1,' ',40),(8,1,2,NULL,12),(16,1,4,' ',10),(16,11,3,' ',40),(17,1,1,' ',10),(18,9,5,' ',40),(19,1,1,' ',10),(20,5,1,' ',70),(20,1,1,' ',10),(20,9,1,' ',40),(21,3,2,' ',10);
 /*!40000 ALTER TABLE `producto_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +255,7 @@ CREATE TABLE `repartidor` (
   `RE_vehiculo` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`RE_id`),
   UNIQUE KEY `RE_nombre` (`RE_nombre`,`RE_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +264,6 @@ CREATE TABLE `repartidor` (
 
 LOCK TABLES `repartidor` WRITE;
 /*!40000 ALTER TABLE `repartidor` DISABLE KEYS */;
-INSERT INTO `repartidor` VALUES (1,'Santiago','Moto'),(2,'ac ','b');
 /*!40000 ALTER TABLE `repartidor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,4 +301,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-04 16:28:16
+-- Dump completed on 2015-10-10 18:00:56
