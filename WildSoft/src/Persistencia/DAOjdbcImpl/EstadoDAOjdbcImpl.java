@@ -15,7 +15,6 @@ public class EstadoDAOjdbcImpl implements EstadoDAO{
 	
 	private ConectorMySQL conex = new ConectorMySQL();
 
-	@Override
 	public String getEstado(int id) {
 		
 		String nombre = null;
@@ -34,7 +33,6 @@ public class EstadoDAOjdbcImpl implements EstadoDAO{
 		return nombre;
 	}
 
-	@Override
 	public int getEstado(String nombre) {
 			
 		int id = 0;
@@ -53,7 +51,6 @@ public class EstadoDAOjdbcImpl implements EstadoDAO{
 				return id;
 	}
 
-	@Override
 	public List<String> getListaEstados() {
 		
 		ArrayList<String> Arreglo = new ArrayList<String>();

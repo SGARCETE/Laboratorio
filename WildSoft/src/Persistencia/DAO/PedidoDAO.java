@@ -17,5 +17,7 @@ public interface PedidoDAO {
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido);
 
 	public Object[] getTODOS_LOS_ESTADOS();
+	
+	public boolean ELIMINAR_PRODUCTOS(Pedido P);
 
 }

@@ -78,7 +78,6 @@ public class Interfaz_Principal {
 	private JTextField textTotal_Pedido;
 
 	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
-	@Override
 	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
 			String Nombre_Cliente_seleccionado = ((String)selectedItem);
 			Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);

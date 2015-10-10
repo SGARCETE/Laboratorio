@@ -15,7 +15,6 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	
 	
-	@Override
 	public Cliente getCliente(String nombre_Cliente) {
 		Cliente cliente = new Cliente();
 		try {
@@ -35,7 +34,6 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return cliente;
 	}
 	
-	@Override
 	public Cliente getCliente(Integer ID_Cliente) {
 		Cliente cliente = new Cliente();
 		try {
@@ -72,7 +70,6 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	
 	/*------------------------------------------------------------------------------*/	
 	/** Carga los datos pedidos para el autocompletar. */	
-	@Override
 	public ArrayList<Object> getAutoCompleter_Clientes() {
 		ArrayList<Object> Arreglo = new ArrayList<Object>();
 		try {

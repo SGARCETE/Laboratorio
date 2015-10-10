@@ -33,5 +33,11 @@ public class Servicio_Pedidos {
 	public Object[] getTodos_los_estados() {
 		return pedidoDAO.getTODOS_LOS_ESTADOS();
 	}
+	
+	public boolean eliminar_productos(Pedido P){
+		 return pedidoDAO.ELIMINAR_PRODUCTOS(P);
+	
+	}
+	
 
 }

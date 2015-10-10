@@ -173,7 +173,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 
-	@Override
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
 		Pedido P = null;
 		try {
@@ -260,11 +259,14 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return resultado;
 	}
 
-	@Override
 	public Object[] getTODOS_LOS_ESTADOS() {
 		EstadoDAOjdbcImpl estado = new EstadoDAOjdbcImpl();
 		return new Object[] { "Pendiente", "Preparado", "Enviado","Cobrado","Cancelado"};
 	}
 	
+	public boolean ELIMINAR_PRODUCTOS(Pedido P) {
+		String SentenciaSQL = "delete from producto_pedidos where producto_pedidos.PP_pedidoid = " +P.getNumero_Pedido() ;
+		return conex.Insertar(SentenciaSQL);
+	}
 	
 }
