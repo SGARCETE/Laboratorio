@@ -570,13 +570,6 @@ public class Interfaz_Principal {
 					.addGap(26))
 		);
 
-		JButton btnVer = new JButton("Ver");
-		btnVer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Ver_Pedido_Seleccionado();
-			}
-		});
-
 		JButton btnNuevo = new JButton("Nuevo");
 		btnNuevo.setIcon(new ImageIcon(Interfaz_Principal.class
 				.getResource("/Recursos/IMG/add-1-icon64.png")));
@@ -589,12 +582,6 @@ public class Interfaz_Principal {
 		btnNuevo.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnNuevo.setBackground(Color.WHITE);
 		panel.add(btnNuevo);
-		btnVer.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/search-icon64.png")));
-		btnVer.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnVer.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panel.add(btnVer);
-		btnVer.setBackground(Color.WHITE);
 
 		JButton btnModificar_1 = new JButton("Modificar");
 		btnModificar_1.addActionListener(new ActionListener() {
@@ -977,7 +964,7 @@ public class Interfaz_Principal {
 		Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				if (e.getClickCount() == 2){
-					Ver_Pedido_Seleccionado();
+					Modificar_Pedido_Seleccionado();
 				}
 			}
 		});
@@ -995,17 +982,7 @@ public class Interfaz_Principal {
 			frame.setVisible(true);
 		}
 	}
-	/**
-	 * VISUALIZACION DE PEDIDO
-	 */
-	private void Ver_Pedido_Seleccionado() {
-		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
-			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-			frame.setPedido_a_visualizar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
-			frame.setModal(true);
-			frame.setVisible(true);
-		}
-	}
+	
 	/**
 	 * BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA)
 	 */
