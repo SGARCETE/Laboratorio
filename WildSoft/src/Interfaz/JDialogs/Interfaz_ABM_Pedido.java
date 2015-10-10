@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -59,7 +60,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
-	private Cliente CLIENTE_ACTUAL;
+	
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
@@ -70,6 +71,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JLabel label_Fecha;
 	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
+	private Cliente CLIENTE_ACTUAL= new Cliente();
 	
 	/**
 	 * Create the dialog.
@@ -399,7 +401,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
 			Object[] fila = new Object[6];
 			fila[0] = model.getRowCount() + 1;
-			fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING(); 
+			fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
 			fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
 			fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
 			fila[4] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio(); 
@@ -413,6 +415,24 @@ public class Interfaz_ABM_Pedido extends JDialog {
 
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> VISUALIZAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Guardar_pedido() {
+		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
+			
+			if(CLIENTE_ACTUAL!=null){
+				CLIENTE_ACTUAL.setNombre(textCliente.getText());
+				CLIENTE_ACTUAL.setTelefono_Fijo(textTelefono.getText());
+				CLIENTE_ACTUAL.setDomicilio(textDire.getText());
+			}
+			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
+			PEDIDO_ACTUAL.setESTADO(label_ESTADO.getText());
+			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+			
+			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+			    
+			
+		}
+	}
+	
 	
 	public void setPedido_a_visualizar(Integer Numero_pedido_visualizar) {
 		Pedido p = SvPedidos.get_pedido(Numero_pedido_visualizar);
