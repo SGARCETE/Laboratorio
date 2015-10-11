@@ -338,6 +338,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
+				ArrayList<Producto> lista = PEDIDO_ACTUAL.getLista_Productos();
+				SvPedidos.eliminar_productos(PEDIDO_ACTUAL);
+				PEDIDO_ACTUAL.setLista_Productos(lista);
+				SvPedidos.AGREGAR_PRODUCTO_PEDIDO(PEDIDO_ACTUAL);
 				dispose();
 			}
 		});
@@ -419,8 +423,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			Object[] fila = new Object[7];
 			fila[0] = model.getRowCount() + 1;
 			fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
-			fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
-			fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING();
+			fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
+			fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING();
 			fila[4] = (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio());
 			fila[5] = (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio()*(PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad())); 
 			fila[6] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();

@@ -39,5 +39,9 @@ public class Servicio_Pedidos {
 	
 	}
 	
+	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p){
+		return pedidoDAO.AGREGAR_PRODUCTO_PEDIDO(p);
+	}
+	
 
 }

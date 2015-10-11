@@ -275,4 +275,25 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p){
+		boolean resultado = false;
+		Integer PEDIDO_ID = p.getNumero_Pedido();
+		for (int i = 0; i < p.getLista_Productos().size(); i++) {
+			
+			Integer PRODUCTO_ID = p.getLista_Productos().get(i).getPR_id();
+			Double PRECIO_ACTUAL = p.getLista_Productos().get(i).getPR_precio();
+			String OBSERVACION =  p.getLista_Productos().get(i).getPR_Observacion();
+			String SentenciaSQL_producto_pedidos = "INSERT INTO producto_pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_Observacion, PP_precio)"
+					+ "VALUES ("+
+					""+	 PEDIDO_ID									+","+	// INTEGER
+					""+	 PRODUCTO_ID								+","+	// INTEGER
+					""+	 p.getLista_Productos().get(i).getCantidad()+","+	// INTEGER
+					"'"+ OBSERVACION								+" ',"+	// STRING
+					""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
+			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
+			System.out.println(SentenciaSQL_producto_pedidos);
+		}
+		return resultado;
+		
+	}
 }

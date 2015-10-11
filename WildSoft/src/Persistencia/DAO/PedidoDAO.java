@@ -20,4 +20,5 @@ public interface PedidoDAO {
 	
 	public boolean ELIMINAR_PRODUCTOS(Pedido P);
 
+	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p);
 }
