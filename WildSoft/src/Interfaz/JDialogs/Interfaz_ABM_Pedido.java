@@ -88,6 +88,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
 	private JTextField textCliente = new JTextField();
+	private JButton guardar; 
+	private JButton btnQuitar;
+	private JButton btnNewButton;
 	/**
 	 * Create the dialog.
 	 * @param principal_neg_int 
@@ -330,7 +333,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textTotal_Pedido.setBounds(474, 66, 167, 30);
 		contentPanel.add(textTotal_Pedido);
 		
-		JButton btnNewButton = new JButton("");
+		btnNewButton = new JButton("");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/edit-icon16.png")));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -348,7 +351,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		contentPanel.add(panelModificacionPR);
 		panelModificacionPR.setLayout(null);
 		
-		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar = new JButton("Quitar");
 		btnQuitar.setBounds(210, 24, 91, 38);
 		panelModificacionPR.add(btnQuitar);
 		btnQuitar.addActionListener(new ActionListener() {
@@ -358,7 +361,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		});
 		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		
-		JButton guardar = new JButton("Guardar");
+		guardar = new JButton("Guardar");
 		guardar.setBounds(93, 24, 107, 38);
 		panelModificacionPR.add(guardar);
 		guardar.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
@@ -401,6 +404,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		buttonPane.add(cancelButton);
 
 		iniciarParametros();
+		
+		
 	}
 
 
@@ -445,6 +450,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 
 
 	private void iniciarParametros() {
+		
+	
+			
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = svProductos.getLista_Productos();
 		
@@ -452,6 +460,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
+		
 	}
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MODIFICAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -466,6 +475,28 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
 			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
 			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
+			
+			if (label_ESTADO.getText().equals("Cobrado")){
+				
+				System.out.println(label_ESTADO.getText());
+				textCliente.setEnabled(false);
+				textDire.setEnabled(false);
+				textDetalle.setEnabled(false);
+				textTelefono.setEnabled(false);
+				label_ESTADO.setEnabled(false);
+				comboBoxProducto.setEnabled(false);
+				comboBoxVariedad.setEnabled(false);
+				spinnerCantidad.setEnabled(false);
+				textValor.setEnabled(false);
+				textValorTotal.setEnabled(false);
+				textObservaciones.setEnabled(false);
+				guardar.setEnabled(false);
+				btnQuitar.setEnabled(false);
+				btnNewButton.setEnabled(false);
+				
+				
+				
+			}
 		}
 		
 		// si el cliente no es nulo cargo los campos del cliente
@@ -475,6 +506,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
 //			PEDIDO_ACTUAL.getCliente().getID_Cliente();
 		}
+		
+		
 		
 		Model_Pedido_Completo model = new Model_Pedido_Completo();
 		System.out.println("SIZE LISTA PROD\n"+PEDIDO_ACTUAL.getLista_Productos().size());
@@ -520,6 +553,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 	
 	private void Agregar_al_Pedido() {
+		
 		// compruebo que los combos tengan algo seleccionado
 		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos
@@ -591,6 +625,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 	
 	private void Cargar_datos_Cliente(Cliente c) {
+		
 		CLIENTE_ACTUAL = c;
 		textDire.setText(c.getDomicilio());
 		textTelefono.setText(c.getTelefono_Fijo());
