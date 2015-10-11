@@ -584,18 +584,18 @@ public class Interfaz_Principal {
 		btnNuevo.setBackground(Color.WHITE);
 		panel.add(btnNuevo);
 
-		JButton btnModificar_1 = new JButton("Modificar");
-		btnModificar_1.addActionListener(new ActionListener() {
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Modificar_Pedido_Seleccionado();
 			}
 		});
-		btnModificar_1.setIcon(new ImageIcon(Interfaz_Principal.class
+		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class
 				.getResource("/Recursos/IMG/edit-icon64.png")));
-		btnModificar_1.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnModificar_1.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panel.add(btnModificar_1);
-		btnModificar_1.setBackground(Color.WHITE);
+		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnModificar);
+		btnModificar.setBackground(Color.WHITE);
 
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);

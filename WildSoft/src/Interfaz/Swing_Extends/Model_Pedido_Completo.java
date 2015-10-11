@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class Model_Pedido_Completo extends DefaultTableModel{
 	private static final long serialVersionUID = -3540115245570366100L;
+	boolean editable = false;
 
 	public Model_Pedido_Completo(){
 		// Poner las columnas en el modelo de la tabla
@@ -11,7 +12,7 @@ public class Model_Pedido_Completo extends DefaultTableModel{
 	}
 
 	public boolean isCellEditable(int row, int column) {
-		return false;
+		return editable;
 	}
 	
 	public Class<Object> getColumnClass(int columnIndex) {
@@ -19,6 +20,10 @@ public class Model_Pedido_Completo extends DefaultTableModel{
 		Class<Object>[] columnTypes = new Class[] {Integer.class, Integer.class, String.class, String.class, String.class, String.class, String.class};
 		return columnTypes[columnIndex];
 	};
+	
+	public void setEditable(boolean bool){
+		editable = bool;
+	}
 
 	
 }//----> Fin
