@@ -19,6 +19,9 @@ public class Pedido {
 	
 	/** GETTERS AND SETTERS **/
 	
+	/**
+	 * @return Devuelve la id de pedido
+	 */
 	public Integer getNumero_Pedido() {
 		return Numero_Pedido;
 	}

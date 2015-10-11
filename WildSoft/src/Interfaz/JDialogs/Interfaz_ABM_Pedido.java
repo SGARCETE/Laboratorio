@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -31,17 +30,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-
-
-
-
-
-
-
-
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
-
 import Interfaz.Interfaz_Principal;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
@@ -52,6 +40,9 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
 
 @SuppressWarnings("serial")
 public class Interfaz_ABM_Pedido extends JDialog {
@@ -70,7 +61,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private Object[] ESTADOS;
-	JSpinner spinnerCantidad;
+	private JSpinner spinnerCantidad;
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
@@ -91,6 +82,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JButton guardar; 
 	private JButton btnQuitar;
 	private JButton btnNewButton;
+	private JSpinner spinnerCantNueva;
 	/**
 	 * Create the dialog.
 	 * @param principal_neg_int 
@@ -361,14 +353,22 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		});
 		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		
-		guardar = new JButton("Guardar");
+		guardar = new JButton("Modificar");
+		guardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int posicion = Tabla_Pedido_Completo.getSelectedRow();
+				int cantidad = (int) spinnerCantNueva.getValue();
+				PEDIDO_ACTUAL.getLista_Productos().get(posicion).setCantidad(cantidad);
+				Tabla_Pedido_Completo.setValueAt(cantidad, posicion, 1);
+			}
+		});
 		guardar.setBounds(93, 24, 107, 38);
 		panelModificacionPR.add(guardar);
 		guardar.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(20, 31, 55, 25);
-		panelModificacionPR.add(spinner);
+		spinnerCantNueva = new JSpinner();
+		spinnerCantNueva.setBounds(20, 31, 55, 25);
+		panelModificacionPR.add(spinnerCantNueva);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -529,11 +529,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		Tabla_Pedido_Completo.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent Mouse_evt) {
-				JTable table =(JTable) Mouse_evt.getSource();
-				Point point = Mouse_evt.getPoint();
-				int row = table.rowAtPoint(point);
 				if (Mouse_evt.getClickCount() == 2) {
-					System.out.println("hola "+Tabla_Pedido_Completo.getValueAt(Tabla_Pedido_Completo.getSelectedRow(), 1));
+					spinnerCantNueva.setValue((Tabla_Pedido_Completo.getValueAt(Tabla_Pedido_Completo.getSelectedRow(), 1)));
+					//TODO
 				}
 			}
 			});
