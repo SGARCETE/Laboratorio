@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +30,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+
+
 
 
 
@@ -488,6 +494,17 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+		
+		Tabla_Pedido_Completo.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent Mouse_evt) {
+				JTable table =(JTable) Mouse_evt.getSource();
+				Point point = Mouse_evt.getPoint();
+				int row = table.rowAtPoint(point);
+				if (Mouse_evt.getClickCount() == 2) {
+					System.out.println("hola "+Tabla_Pedido_Completo.getValueAt(Tabla_Pedido_Completo.getSelectedRow(), 1));
+				}
+			}
+			});
 	}
 
 	
