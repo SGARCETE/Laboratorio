@@ -483,7 +483,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				textDire.setEnabled(false);
 				textDetalle.setEnabled(false);
 				textTelefono.setEnabled(false);
-				label_ESTADO.setEnabled(false);
 				comboBoxProducto.setEnabled(false);
 				comboBoxVariedad.setEnabled(false);
 				spinnerCantidad.setEnabled(false);
