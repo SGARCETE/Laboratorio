@@ -128,6 +128,8 @@ public class Interfaz_Principal {
 		frmWildsoft.setBounds(100, 100, 1031, 577);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.menu);
@@ -694,6 +696,7 @@ public class Interfaz_Principal {
 	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
 	 */
 	private void iniciarParametros() {
+		
 		// Creacion de la tabla vacia de lista de pedidos
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
