@@ -882,15 +882,12 @@ public class Interfaz_Principal {
 			 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
 			 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
 			 Integer removidos = 0;
-//			 System.out.println("Antes "+PEDIDO_ACTUAL.getLista_Productos().size());
 			 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
 				 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad)
-//				 	System.out.println(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre());
 					PEDIDO_ACTUAL.getLista_Productos().remove(i);
 				 	removidos++;
 				 } 
 			 }
-//		 	 System.out.println(PEDIDO_ACTUAL.getLista_Productos().size());
 			// LO QUITA DE LA LISTA VISUAL
 			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
 				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
@@ -960,8 +957,7 @@ public class Interfaz_Principal {
 			model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
 		
 		}
-//		Tabla_Lista_pedidos.setModel(model);
-//		Tabla_Lista_pedidos.repaint();
+		
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
 		// Accion al darle doble click sobre un pedido
 		Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
@@ -997,13 +993,6 @@ public class Interfaz_Principal {
 			// LO ELIMINA DE LA BASE DE DATOS
 			sv_pedidos.eliminar_pedido(P_cancelar);
 			Actualizar_Lista_pedidos();
-//			// LO QUITA DE LA LISTA VISUAL
-//			if (Tabla_Lista_pedidos.getSelectedRow() != -1) { 
-//				int indice_Seleccionado = Tabla_Lista_pedidos.getSelectedRow(); 
-//				DefaultTableModel modelo = (DefaultTableModel) Tabla_Lista_pedidos.getModel();
-//				modelo.removeRow(indice_Seleccionado);
-//			}
-
 		}
 	}
 	

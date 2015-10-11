@@ -29,9 +29,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 
+
+
+
+
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 
+import Interfaz.Interfaz_Principal;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
 import Negocio.Modelo.Cliente;
@@ -64,6 +69,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
 	private Principal_Negocio_Interfaz Principal_neg_int;
+	@SuppressWarnings("unused")
 	private Cliente CLIENTE_ACTUAL = null; 
 	
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
@@ -98,7 +104,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		ESTADOS = SvPedidos.getTodos_los_estados();
 		
 		setTitle("ABM Pedido");
-		setBounds(100, 100, 1154, 490);
+		setBounds(100, 100, 1179, 490);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -119,7 +125,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new TitledBorder(null, "Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(830, 108, 264, 199);
+		panel.setBounds(830, 108, 323, 185);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
@@ -129,13 +135,13 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		textCliente = new JTextField();
 		textCliente.setBackground(new Color(240, 255, 240));
-		textCliente.setBounds(22, 42, 224, 30);
+		textCliente.setBounds(22, 42, 291, 25);
 		panel.add(textCliente);
 		textCliente.setColumns(10);
 		
 		textDetalle = new JTextField();
 		textDetalle.setBackground(new Color(240, 255, 240));
-		textDetalle.setBounds(22, 148, 106, 30);
+		textDetalle.setBounds(22, 148, 145, 25);
 		panel.add(textDetalle);
 		textDetalle.setColumns(10);
 		
@@ -149,19 +155,19 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		textDire = new JTextField();
 		textDire.setBackground(new Color(240, 255, 240));
-		textDire.setBounds(22, 98, 224, 30);
+		textDire.setBounds(22, 98, 291, 25);
 		panel.add(textDire);
 		textDire.setColumns(10);
 		
 		textTelefono = new JTextField();
 		textTelefono.setBackground(new Color(240, 255, 240));
-		textTelefono.setBounds(140, 148, 106, 30);
+		textTelefono.setBounds(177, 148, 136, 25);
 		panel.add(textTelefono);
 		textTelefono.setColumns(10);
 		
 		
 		JLabel lblTelefono = new JLabel("Telefono");
-		lblTelefono.setBounds(140, 122, 106, 25);
+		lblTelefono.setBounds(177, 122, 106, 25);
 		panel.add(lblTelefono);
 		
 		label_NroPedido = new JLabel("");
@@ -328,6 +334,32 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		});
 		btnNewButton.setBounds(293, 68, 30, 30);
 		contentPanel.add(btnNewButton);
+		
+		JPanel panelModificacionPR = new JPanel();
+		panelModificacionPR.setBorder(new TitledBorder(null, "Producto", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panelModificacionPR.setBackground(Color.WHITE);
+		panelModificacionPR.setBounds(828, 304, 325, 86);
+		contentPanel.add(panelModificacionPR);
+		panelModificacionPR.setLayout(null);
+		
+		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar.setBounds(210, 24, 91, 38);
+		panelModificacionPR.add(btnQuitar);
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Quitar_al_Pedido();
+			}
+		});
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
+		
+		JButton guardar = new JButton("Guardar");
+		guardar.setBounds(93, 24, 107, 38);
+		panelModificacionPR.add(guardar);
+		guardar.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(20, 31, 55, 25);
+		panelModificacionPR.add(spinner);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -361,9 +393,35 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		cancelButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
-		
-		
+
 		iniciarParametros();
+	}
+
+
+	private void Quitar_al_Pedido() {
+//		 LO QUITA DE LA LISTA DE PEDIDO
+		 if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+			 if (Tabla_Pedido_Completo.getSelectedRow() != -1){
+				 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
+				 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
+				 Integer removidos = 0;
+				 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+						 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad){
+							PEDIDO_ACTUAL.getLista_Productos().remove(i);
+						 	removidos++;
+						 }
+					 } 
+				 }
+			 }
+//		 	 System.out.println(PEDIDO_ACTUAL.getLista_Productos().size());
+			// LO QUITA DE LA LISTA VISUAL
+			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
+				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
+																					// desde la tabla, ojo)
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				modelo.removeRow(indice_Seleccionado);
+				Calcula_totales();
+			}
 	}
 
 
@@ -525,6 +583,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textDetalle.setText(c.getDetalle());
 	}
 
+	@SuppressWarnings("unused")
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
