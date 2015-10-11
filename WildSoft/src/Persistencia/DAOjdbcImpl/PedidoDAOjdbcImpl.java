@@ -128,7 +128,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
-			String Query = "select P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
+			String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
 			"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
 			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
 			        P.getNumero_Pedido();
@@ -138,7 +138,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Producto Prod = new Producto();
-				Prod.setPR_id(Fila.getInt("Pd_id"));
+				Prod.setPR_id(Fila.getInt("PR_id"));
 				Prod.setPR_nombre(Fila.getString("PR_nombre"));
 				Prod.setPR_precio(Fila.getDouble("PP_precio"));
 				Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
@@ -170,7 +170,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		int cliente = p.getCliente().getID_Cliente();
 		
 		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
-				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + "WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
+				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
 
@@ -247,18 +247,20 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	
 	
 	private int obtenerEstado(String estado){
-		int resultado = 0;
+		int resultado = 1;
 		conex.connectToMySQL();// Conectar base
 		Statement st;
 		try {
 			st = conex.conexion.createStatement();
-			String SentenciaSQL = "select * from ent_estado";
+			String SentenciaSQL = "select P.PEST_id from PE_estado P where P.PEST_nombre= '"+ estado    +"'";
 			ResultSet Fila = st.executeQuery(SentenciaSQL);
-			while (Fila.next()){
-				if(Fila.getString(2).equals(estado)){
-					resultado = Fila.getInt(1);
+			
+			while (Fila.next()){	
+				resultado = Fila.getInt(1);
 				}
-			}
+			
+				
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -296,4 +298,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return resultado;
 		
 	}
+	
+	
 }

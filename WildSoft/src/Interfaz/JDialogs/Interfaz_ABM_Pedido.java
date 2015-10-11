@@ -454,13 +454,14 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
 			String Variedad = comboBoxVariedad.getSelectedItem().toString();
-
+				
+			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
 				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Observacion = textObservaciones.getText();
 
-				for (int i = 0; i < Cantidad; i++)
+				
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 
 				/** Esto va para la parte visual **/ //TODO
