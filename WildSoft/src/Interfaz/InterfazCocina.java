@@ -1,6 +1,7 @@
 package Interfaz;
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,9 +18,10 @@ import javax.swing.JLabel;
 public class InterfazCocina extends JFrame {
 
 	private JPanel contentPane;
-	private JTable pedidosActuales;
-	private JTable table_1;
-	private JTextArea jTextArea;
+	private JTable tablaPedidosActuales;
+	private JTable tablaProductosPedido;
+	private JTextArea areaComentarios;
+	private static InterfazCocina INSTANCE = null;
 
 	/**
 	 * Launch the application.
@@ -28,7 +30,7 @@ public class InterfazCocina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfazCocina frame = new InterfazCocina();
+					InterfazCocina frame = InterfazCocina.getInstance();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,11 +38,20 @@ public class InterfazCocina extends JFrame {
 			}
 		});
 	}
+	
+	
+	public static InterfazCocina getInstance() {
+        if (INSTANCE == null){
+        	INSTANCE = new InterfazCocina();
+        }
+        return INSTANCE;
+    }
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public InterfazCocina() {
+	private InterfazCocina() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 724, 424);
 		contentPane = new JPanel();
@@ -53,19 +64,19 @@ public class InterfazCocina extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBounds(12, 12, 306, 164);
-		panel.add(panel_2);
-		panel_2.setLayout(null);
+		JPanel panelPedidos = new JPanel();
+		panelPedidos.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelPedidos.setBounds(12, 12, 306, 164);
+		panel.add(panelPedidos);
+		panelPedidos.setLayout(null);
 		
 		JScrollPane scrollPanePedidos = new JScrollPane();
 		scrollPanePedidos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPanePedidos.setBounds(12, 12, 282, 137);
-		panel_2.add(scrollPanePedidos);
+		panelPedidos.add(scrollPanePedidos);
 		
-		pedidosActuales = new JTable();
-		pedidosActuales.setModel(new DefaultTableModel(
+		tablaPedidosActuales = new JTable();
+		tablaPedidosActuales.setModel(new DefaultTableModel(
 			new Object[][] {
 				{new Integer(5), new Float(124.0f), Boolean.FALSE},
 				{new Integer(4), new Float(1586.8f), Boolean.TRUE},
@@ -86,17 +97,17 @@ public class InterfazCocina extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		});
-		pedidosActuales.getColumnModel().getColumn(0).setResizable(false);
-		pedidosActuales.getColumnModel().getColumn(0).setPreferredWidth(80);
-		pedidosActuales.getColumnModel().getColumn(0).setMaxWidth(80);
-		pedidosActuales.getColumnModel().getColumn(1).setResizable(false);
-		pedidosActuales.getColumnModel().getColumn(2).setResizable(false);
-		pedidosActuales.getColumnModel().getColumn(2).setPreferredWidth(25);
-		pedidosActuales.getColumnModel().getColumn(2).setMaxWidth(25);
-		pedidosActuales.setBounds(12, 12, 282, 140);
-		pedidosActuales.setRowHeight(23);
+		tablaPedidosActuales.getColumnModel().getColumn(0).setResizable(false);
+		tablaPedidosActuales.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tablaPedidosActuales.getColumnModel().getColumn(0).setMaxWidth(80);
+		tablaPedidosActuales.getColumnModel().getColumn(1).setResizable(false);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setResizable(false);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setPreferredWidth(25);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setMaxWidth(25);
+		tablaPedidosActuales.setBounds(12, 12, 282, 140);
+		tablaPedidosActuales.setRowHeight(23);
 		
-		scrollPanePedidos.setViewportView(pedidosActuales);
+		scrollPanePedidos.setViewportView(tablaPedidosActuales);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -129,18 +140,18 @@ public class InterfazCocina extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_4.setBounds(12, 12, 318, 163);
-		panel_1.add(panel_4);
-		panel_4.setLayout(null);
+		JPanel panelProductosPedido = new JPanel();
+		panelProductosPedido.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		panelProductosPedido.setBounds(12, 12, 318, 163);
+		panel_1.add(panelProductosPedido);
+		panelProductosPedido.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 12, 294, 139);
-		panel_4.add(scrollPane);
+		panelProductosPedido.add(scrollPane);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		tablaProductosPedido = new JTable();
+		tablaProductosPedido.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Pizza Napolitana", new Integer(3), Boolean.TRUE},
 				{"Empanada de Carne", new Integer(48), null},
@@ -159,30 +170,48 @@ public class InterfazCocina extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		});
-		table_1.getColumnModel().getColumn(0).setResizable(false);
-		table_1.getColumnModel().getColumn(1).setResizable(false);
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(80);
-		table_1.getColumnModel().getColumn(1).setMaxWidth(80);
-		table_1.getColumnModel().getColumn(2).setResizable(false);
-		table_1.getColumnModel().getColumn(2).setPreferredWidth(25);
-		table_1.getColumnModel().getColumn(2).setMinWidth(12);
-		table_1.getColumnModel().getColumn(2).setMaxWidth(25);
-		table_1.setBounds(12, 12, 294, 139);
-		scrollPane.setViewportView(table_1);
+		tablaProductosPedido.getColumnModel().getColumn(0).setResizable(false);
+		tablaProductosPedido.getColumnModel().getColumn(1).setResizable(false);
+		tablaProductosPedido.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tablaProductosPedido.getColumnModel().getColumn(1).setMaxWidth(80);
+		tablaProductosPedido.getColumnModel().getColumn(2).setResizable(false);
+		tablaProductosPedido.getColumnModel().getColumn(2).setPreferredWidth(25);
+		tablaProductosPedido.getColumnModel().getColumn(2).setMinWidth(12);
+		tablaProductosPedido.getColumnModel().getColumn(2).setMaxWidth(25);
+		tablaProductosPedido.setBounds(12, 12, 294, 139);
+		scrollPane.setViewportView(tablaProductosPedido);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_5.setBounds(12, 187, 318, 163);
-		panel_1.add(panel_5);
-		panel_5.setLayout(null);
+		JPanel comentarios = new JPanel();
+		comentarios.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		comentarios.setBounds(12, 187, 318, 163);
+		panel_1.add(comentarios);
+		comentarios.setLayout(null);
 		
-		jTextArea = new JTextArea();
-		jTextArea.setText("La pizza napolitana sin aceitunas y sin ajo. Ponerle mucho oregano");
-		jTextArea.setBounds(12, 12, 294, 139);
-		panel_5.add(jTextArea);
-		jTextArea.setColumns(10);
-		jTextArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		jTextArea.setLineWrap(true);
-		jTextArea.setWrapStyleWord(true);
+		areaComentarios = new JTextArea();
+		areaComentarios.setText("La pizza napolitana sin aceitunas y sin ajo. Ponerle mucho oregano");
+		areaComentarios.setBounds(12, 12, 294, 139);
+		comentarios.add(areaComentarios);
+		areaComentarios.setColumns(10);
+		areaComentarios.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		areaComentarios.setLineWrap(true);
+		areaComentarios.setWrapStyleWord(true);
+	}
+	
+	public void Actualizar(List<String[]> pedidos,List<String[]> productos){
+		for(int i = 0; i < 5; i++){
+			if(pedidos.size() >= i){
+				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
+				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
+				tablaPedidosActuales.setValueAt(pedidos.get(i)[2], i, 2);
+			}
+		}
+		
+		for(int j = 0; j < 5; j++){
+			if(productos.size() >= j){
+				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
+				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);
+				tablaProductosPedido.setValueAt(productos.get(j)[2], j, 2);
+			}
+		}
 	}
 }

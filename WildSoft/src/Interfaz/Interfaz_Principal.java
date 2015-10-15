@@ -999,15 +999,12 @@ public class Interfaz_Principal {
 		}
 	}
 	
-	
 	private void Cargar_datos_Cliente(Cliente c) {
 		CLIENTE_ACTUAL = c;
 		textDomicilio.setText(c.getDomicilio());
 		textTelefono.setText(c.getTelefono_Fijo());
 		textDetalle.setText(c.getDetalle());
 	}
-
-	
 	
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
@@ -1015,4 +1012,10 @@ public class Interfaz_Principal {
 		AutoCompleter_Cliente.setMode(0);
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
+	
+	public void actualizarCocina() {
+		
+		//InterfazCocina.getInstance().Actualizar(pedidos, productos);
+	}
+	
 }// ---> FIN CLASE
