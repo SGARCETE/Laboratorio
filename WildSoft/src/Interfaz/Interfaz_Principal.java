@@ -1,7 +1,12 @@
 package Interfaz;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -44,7 +49,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
-import Interfaz.JDialogs.Interfaz_cocina;
+import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -103,7 +108,7 @@ public class Interfaz_Principal {
 	//<INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
-	private Interfaz_cocina Instancia_cocina;
+	private Interfaz_Cocina_Pantalla Instancia_cocina;
 	private Cliente CLIENTE_ACTUAL = null; 
 
 	/**
@@ -127,7 +132,7 @@ public class Interfaz_Principal {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-		frmWildsoft.setBounds(100, 100, 1031, 577);
+		frmWildsoft.setBounds(100, 100, 1522, 920);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -723,9 +728,33 @@ public class Interfaz_Principal {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 		
-		Instancia_cocina = new Interfaz_cocina(Instancia_de_Interfaz_Principal);
-		Instancia_cocina.setVisible(true);
 		
+		
+		/**		MANEJA LAS PANTALLAS	**/
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+
+        /** 	INICIO TEST DETECCION DE PANTALLAS	**/
+//        javax.swing.JOptionPane.showConfirmDialog((java.awt.Component)
+//        		null, "Encontrados : " + gs.length, "screen detectados?",
+//            javax.swing.JOptionPane.DEFAULT_OPTION);
+        /**		FIN TEST		**/
+        
+        Integer Pantalla_Numero = 0;
+        for (int j = 0; j < gs.length; j++) {
+        	Pantalla_Numero = j;
+        }
+        GraphicsDevice gd = gs[Pantalla_Numero];
+        
+        JFrame  frame = new JFrame(gd.getDefaultConfiguration());
+        Integer X = frame.getX();
+        Integer Y = frame.getY();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle R = new Rectangle(X, Y, screenSize.width, screenSize.height);
+        
+        frame = new Interfaz_Cocina_Pantalla(Principal_neg_int);
+        frame.setBounds(R);
+        frame.setVisible(true);
 	}
 
 	/***
