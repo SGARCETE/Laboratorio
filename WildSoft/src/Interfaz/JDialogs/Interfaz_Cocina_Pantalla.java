@@ -19,6 +19,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Interfaz_Cocina_Pantalla extends JFrame {
 	private static final long serialVersionUID = 4620505346691032916L;
@@ -34,14 +36,14 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		instancia_de_Interfaz_Principal = principal_neg_int;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 862, 521);
+		setBounds(100, 100, 863, 529);
 		
 //		setAlwaysOnTop(true);
 //		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
 		/*PARA SACARLE LOS BORDES:*/
 //		this.setUndecorated(true);
 		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
-		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
+//		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
 		
 		
 		
@@ -49,18 +51,12 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 375, 471);
-		contentPane.add(panel);
 		
 		JScrollPane scrollPanePedidos = new JScrollPane();
-		scrollPanePedidos.setBounds(12, 11, 350, 246);
 		scrollPanePedidos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		panel.add(scrollPanePedidos);
 		
 		tablaPedidosActuales = new JTable();
 		tablaPedidosActuales.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -98,8 +94,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		scrollPanePedidos.setViewportView(tablaPedidosActuales);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(12, 268, 350, 192);
-		panel.add(panel_2);
 		panel_2.setLayout(null);
 		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		panel_2.setBackground(SystemColor.menu);
@@ -134,14 +128,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(395, 11, 441, 460);
-		contentPane.add(panel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 11, 419, 247);
-		panel_1.add(scrollPane);
 		
 		tablaProductosPedido = new JTable();
 		tablaProductosPedido.setRowHeight(30);
@@ -183,8 +172,66 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		textArea.setLineWrap(true);
 		textArea.setColumns(10);
 		textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		textArea.setBounds(12, 269, 419, 180);
-		panel_1.add(textArea);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+					.addGap(12)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(textArea, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))
+					.addGap(10))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(11)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+					.addGap(11)
+					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		panel_1.setLayout(gl_panel_1);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(12)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPanePedidos, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+					.addGap(13))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(11)
+					.addComponent(scrollPanePedidos, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+					.addGap(11)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
+					.addGap(11))
+		);
+		panel.setLayout(gl_panel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(6))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
+					.addGap(3))
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 
 	}
