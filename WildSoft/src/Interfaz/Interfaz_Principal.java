@@ -101,7 +101,6 @@ public class Interfaz_Principal {
 	private Producto PRODUCTO_ACTUAL = new Producto(); /* Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro*/
 
 	//<INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
-	@SuppressWarnings("unused")
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
 	private Interfaz_cocina Instancia_cocina;
@@ -1027,7 +1026,70 @@ public class Interfaz_Principal {
 	
 	public void actualizarCocina() {
 		
-//		Instancia_cocina.Actualizar(pedidos, productos); // Te lo actualice Fede
+		ArrayList<String[]> pedidos = new ArrayList<String[]>();
+		ArrayList<String[]> productos = new ArrayList<String[]>();
+		
+		int pizzas = 0;
+		int empanadas = 0;
+		int bebidas = 0;
+		
+		
+		// PRIMERO GUARDO LOS PEDIDOS EN UN ARREGLO
+		for(int i = 0; i < Tabla_Lista_pedidos.getRowCount(); i++){
+			if (Tabla_Lista_pedidos.getValueAt(i, 4).equals("Pendiente")){
+				String[] arreglo = {
+				(String) Tabla_Lista_pedidos.getValueAt(i, 0),
+				(String) Tabla_Lista_pedidos.getValueAt(i, 6),
+				(String) Tabla_Lista_pedidos.getValueAt(i, 2)};
+				
+				pedidos.add(arreglo);
+			}
+		}
+		
+		//SEGUNDO TRAIGO TODOS LOS PRODUCTOS DE LOS PEDIDOS Y LOS SUMO PARA EL TOTAL
+		for (int j = 0; j < pedidos.size(); j++){
+			Pedido p = sv_pedidos.get_pedido(Integer.parseInt(pedidos.get(j)[0]));
+			for(int k = 0; k < p.getLista_Productos().size();k++){
+				int tipo = p.getLista_Productos().get(k).getPR_tipo_producto();
+				if(tipo == 1){
+					empanadas++;
+				}else if (tipo == 2){
+					pizzas++;
+				}else if (tipo == 3){
+					bebidas++;
+				}
+			}
+		}
+		
+		//TRAIGO LOS PRODUCTOS DEL PRIMER PEDIDO
+		Pedido p = sv_pedidos.get_pedido(Integer.parseInt(pedidos.get(0)[0]));
+		for (int l = 0; l < p.getLista_Productos().size(); l++){
+			String nombre = "";
+			if(p.getLista_Productos().get(l).getPR_tipo_producto()==1){
+				nombre = "Empanada:		";
+			}else if(p.getLista_Productos().get(l).getPR_tipo_producto()==2){
+				nombre = "Pizza:		";
+			}else if(p.getLista_Productos().get(l).getPR_tipo_producto()==3){
+				nombre = "Bebida:		";
+			}
+			
+			boolean esDelibery = false;
+			
+			if (p.getCliente().getNombre().equals("")){
+				esDelibery = false;
+			}else{
+				esDelibery = true;
+			}
+			
+			String[] arreglo = {
+			nombre + (String)p.getLista_Productos().get(l).getPR_nombre(),
+			String.valueOf(p.getLista_Productos().get(l).getCantidad()),
+			String.valueOf(esDelibery)};
+			
+			productos.add(arreglo);
+		}
+		
+		Instancia_cocina.Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
 	}
 	
 }// ---> FIN CLASE

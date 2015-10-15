@@ -92,8 +92,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return 0;
 	}
-	
-	
+	/*------------------------------------------------------------------------------*/
 	
 	public ArrayList<Pedido> getLISTA_PEDIDOS() {
 		ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
@@ -120,7 +119,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return Arreglo;
 	}
-		
+	/*------------------------------------------------------------------------------*/	
 	
 	private ArrayList<Producto> getLista_Productos(Pedido P) {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
@@ -153,26 +152,25 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return Arreglo;
 	}
-	
+	/*------------------------------------------------------------------------------*/
 	
 	public boolean ELIMINAR_PEDIDO(Pedido P) {
 		String SentenciaSQL = "UPDATE Pedido SET PD_estado = 5 where PD_id= " +P.getNumero_Pedido() ;
 		return conex.Insertar(SentenciaSQL);
 	}
-
-	
+	/*------------------------------------------------------------------------------*/
 
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
 		int estado = obtenerEstado(p.getESTADO());
 		
-//		System.out.println("ESTADO"+ estado);
 		int cliente = p.getCliente().getID_Cliente();
 		
 		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
 				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
+	/*------------------------------------------------------------------------------*/
 
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
 		Pedido P = null;
@@ -217,6 +215,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return P;
 		
 	}
+	/*------------------------------------------------------------------------------*/
 
 	// TEMPORAL
 	private Cliente getCliente(Integer ID_Cliente) {
@@ -268,6 +267,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 
 	public Object[] getTODOS_LOS_ESTADOS() {
+		@SuppressWarnings("unused")
 		EstadoDAOjdbcImpl estado = new EstadoDAOjdbcImpl();
 		return new Object[] { "Pendiente", "Preparado", "Enviado","Cobrado","Cancelado"};
 	}

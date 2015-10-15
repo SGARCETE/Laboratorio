@@ -1,33 +1,27 @@
 package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.SystemColor;
 import java.util.List;
 
-import javax.swing.JButton;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Interfaz_Principal;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Cursor;
-import javax.swing.UIManager;
-import java.awt.SystemColor;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Interfaz_cocina extends JDialog {
 	private static final long serialVersionUID = 4704325022653284338L;
@@ -35,10 +29,12 @@ public class Interfaz_cocina extends JDialog {
 	private JTable tablaPedidosActuales;
 	private JTable tablaProductosPedido;
 	private JTextArea areaComentarios;
+	@SuppressWarnings("unused")
 	private Interfaz_Principal instancia_de_Interfaz_Principal;
 	
 	
 	
+	@SuppressWarnings("serial")
 	public Interfaz_cocina(Interfaz_Principal inst_de_Interfaz_Principal) {
 		setAlwaysOnTop(true);
 		instancia_de_Interfaz_Principal = inst_de_Interfaz_Principal;
@@ -232,7 +228,8 @@ public class Interfaz_cocina extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 	}
 	
-	public void Actualizar(List<String[]> pedidos,List<String[]> productos){
+	public void Actualizar(List<String[]> pedidos,List<String[]> productos, int pizzas, int empanadas, int bebidas){
+		
 		for(int i = 0; i < 5; i++){
 			if(pedidos.size() >= i){
 				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);

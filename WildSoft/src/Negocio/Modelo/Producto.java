@@ -4,9 +4,9 @@ package Negocio.Modelo;
 public class Producto {
 	
 	private Integer	PR_id = 0;
-	private Integer	PR_tipo_producto= 0;
+	private Integer	PR_tipo_producto = 0;
 	private Double	PR_precio = 0.0;
-	private String	PR_nombre= "";
+	private String	PR_nombre = "";
 	private String 	PR_Observacion = "";
 	private String 	PR_TIPO_PRODUCTO_STRING ="";
 	private int cantidad = 0;
