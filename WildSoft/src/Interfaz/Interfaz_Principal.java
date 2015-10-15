@@ -44,6 +44,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
+import Interfaz.JDialogs.Interfaz_cocina;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -103,6 +104,7 @@ public class Interfaz_Principal {
 	@SuppressWarnings("unused")
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
+	private Interfaz_cocina Instancia_cocina;
 	private Cliente CLIENTE_ACTUAL = null; 
 
 	/**
@@ -633,6 +635,11 @@ public class Interfaz_Principal {
 		mnArchivo.add(mntmRestaurarBackup);
 
 		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmWildsoft.dispose();
+			}
+		});
 		mnArchivo.add(mntmSalir);
 
 		JMenu mnPedidos = new JMenu("Pedidos");
@@ -716,6 +723,10 @@ public class Interfaz_Principal {
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
+		
+		Instancia_cocina = new Interfaz_cocina(Instancia_de_Interfaz_Principal);
+		Instancia_cocina.setVisible(true);
+		
 	}
 
 	/***
@@ -1016,7 +1027,7 @@ public class Interfaz_Principal {
 	
 	public void actualizarCocina() {
 		
-		//InterfazCocina.getInstance().Actualizar(pedidos, productos);
+//		Instancia_cocina.Actualizar(pedidos, productos); // Te lo actualice Fede
 	}
 	
 }// ---> FIN CLASE
