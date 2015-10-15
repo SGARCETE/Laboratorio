@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report11" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0aa85ee8-2404-4269-a72b-150eaaa2a2e0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="59"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -14,7 +14,7 @@
 		<![CDATA[select P.PD_id, PR.Pr_nombre, P.PD_fecha_pedido, C.CL_nombre,C.CL_telefono, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
 PP.PP_precio, T.TP_id, T.TP_nombre from Producto PR join Producto_pedidos PP join Pedido P
 join tipo_producto T join Cliente C on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid
-and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
+and P.PD_id=PP.PP_pedidoid and P.PD_id=40 and P.PD_cliente=C.CL_id;]]>
 	</queryString>
 	<field name="PD_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
