@@ -4,20 +4,17 @@
 	<classpathentry kind="lib" path="src/Librerias/SQL/mysql-connector-java-5.1.6-bin.jar"/>
 	<classpathentry kind="lib" path="src/Librerias/Utiles/AutoCompleter.jar"/>
 	<classpathentry kind="lib" path="src/Librerias/Utiles/mail.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/commons-collections-2.1.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/commons-logging-1.0.2.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/groovy-all-1.7.5.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/itext-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/jasperreports-4.7.1.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/jcommon-1.0.15.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/jdtcore-3.1.0.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="src/Librerias/JasperReports/poi-3.7.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-beanutils-1.8.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-digester-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-javaflow-20060411.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/commons-net-3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/groovy-all-1.7.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/iText-2.1.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/itextpdf-5.3.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/jasperreports-4.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/jasperreports-fonts-4.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/jasperreports-javaflow-4.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/png-encoder-1.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Intel/Desktop/JasperReports/poi-3.7-20101029.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

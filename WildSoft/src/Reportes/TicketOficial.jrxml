@@ -7,39 +7,40 @@
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<queryString language="SQL">
-		<![CDATA[select P.PD_id, PR.Pr_nombre, P.PD_fecha_pedido, C.CL_nombre,C.CL_telefono, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
-PP.PP_precio, T.TP_id, T.TP_nombre from Producto PR join Producto_pedidos PP join Pedido P
-join tipo_producto T join Cliente C on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid
-and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
+	<parameter name="ID_PEDIDO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{ID_PEDIDO}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM Producto PR, Producto_pedidos PP ,Pedido P, tipo_producto T, Cliente C
+WHERE
+T.TP_id= PR.PR_tipo_producto AND
+PR.Pr_id=PP.PP_productoid AND
+P.PD_id=PP.PP_pedidoid AND
+P.PD_cliente=C.CL_id AND
+P.PD_ID = $P{ID_PEDIDO};]]>
 	</queryString>
-	<field name="PD_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Pr_nombre" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_fecha_pedido" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CL_nombre" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CL_telefono" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CL_direccion" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="TP_nombre" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PP_producto_cantidad" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PP_precio" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="PR_id" class="java.lang.Integer"/>
+	<field name="PR_nombre" class="java.lang.String"/>
+	<field name="PR_precio" class="java.lang.Double"/>
+	<field name="PR_observacion" class="java.lang.String"/>
+	<field name="PR_tipo_producto" class="java.lang.Integer"/>
+	<field name="PP_pedidoid" class="java.lang.Integer"/>
+	<field name="PP_productoid" class="java.lang.Integer"/>
+	<field name="PP_producto_cantidad" class="java.lang.Integer"/>
+	<field name="PP_Observacion" class="java.lang.String"/>
+	<field name="PP_precio" class="java.lang.Double"/>
+	<field name="PD_id" class="java.lang.Integer"/>
+	<field name="PD_fecha_pedido" class="java.sql.Date"/>
+	<field name="PD_estado" class="java.lang.Integer"/>
+	<field name="PD_cliente" class="java.lang.Integer"/>
+	<field name="PD_entrega" class="java.lang.Integer"/>
+	<field name="PD_Delivery" class="java.lang.Boolean"/>
+	<field name="TP_id" class="java.lang.Integer"/>
+	<field name="TP_nombre" class="java.lang.String"/>
+	<field name="CL_id" class="java.lang.Integer"/>
+	<field name="CL_direccion" class="java.lang.String"/>
+	<field name="CL_telefono" class="java.lang.String"/>
+	<field name="CL_nombre" class="java.lang.String"/>
 	<variable name="PP_precio_1" class="java.lang.Double" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{PP_precio}]]></variableExpression>
 	</variable>
@@ -51,11 +52,13 @@ and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
 		<groupFooter>
 			<band height="38">
 				<staticText>
-					<reportElement x="173" y="14" width="83" height="24" uuid="4dc92451-98c1-48ea-a59f-3ce995a6e289"/>
+					<reportElement uuid="4dc92451-98c1-48ea-a59f-3ce995a6e289" x="173" y="14" width="83" height="24"/>
+					<textElement/>
 					<text><![CDATA[TOTAL]]></text>
 				</staticText>
 				<textField evaluationTime="Column">
-					<reportElement x="263" y="14" width="100" height="24" uuid="614d5afa-55d4-4f2b-a0cc-12c83317648e"/>
+					<reportElement uuid="614d5afa-55d4-4f2b-a0cc-12c83317648e" x="263" y="14" width="100" height="24"/>
+					<textElement/>
 					<textFieldExpression><![CDATA[$V{PP_precio_1}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -67,52 +70,63 @@ and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
 	<title>
 		<band height="146" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="263" height="33" uuid="5c898d10-3676-4259-b3b1-ab767f6df1b0"/>
+				<reportElement uuid="5c898d10-3676-4259-b3b1-ab767f6df1b0" style="Title" x="0" y="0" width="263" height="33"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Ticket]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="207" y="33" width="157" height="24" uuid="8bab5c77-ce6e-4634-92ff-60564a461bbe"/>
+				<reportElement uuid="8bab5c77-ce6e-4634-92ff-60564a461bbe" style="SubTitle" x="201" y="33" width="152" height="24"/>
+				<textElement/>
 				<text><![CDATA[Pizzeria Wildsoft]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="201" y="97" width="62" height="24" uuid="65fb80d6-ca7e-4549-a96d-ca0f5df80c37"/>
+				<reportElement uuid="65fb80d6-ca7e-4549-a96d-ca0f5df80c37" x="201" y="97" width="62" height="24"/>
+				<textElement/>
 				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="97" width="83" height="24" uuid="b3d60877-a808-48b3-b6be-e31c3e06f2b3"/>
+				<reportElement uuid="b3d60877-a808-48b3-b6be-e31c3e06f2b3" x="2" y="97" width="83" height="24"/>
+				<textElement/>
 				<text><![CDATA[N° DE PEDIDO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="97" width="83" height="24" uuid="e16c551a-0e06-48e4-a215-fe0e1323a1cf"/>
+				<reportElement uuid="e16c551a-0e06-48e4-a215-fe0e1323a1cf" x="364" y="97" width="83" height="24"/>
+				<textElement/>
 				<text><![CDATA[DIRECCCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="364" y="121" width="83" height="24" uuid="6b3d4d28-05a0-4052-8310-9aa67d028fc6"/>
+				<reportElement uuid="6b3d4d28-05a0-4052-8310-9aa67d028fc6" x="364" y="121" width="83" height="24"/>
+				<textElement/>
 				<text><![CDATA[TELEFONO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="Detail" x="447" y="121" width="88" height="24" uuid="9691ea67-091e-492e-ba1e-b7205b4d0a68"/>
+				<reportElement uuid="9691ea67-091e-492e-ba1e-b7205b4d0a68" style="Detail" x="447" y="121" width="88" height="24"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{CL_telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="263" y="97" width="90" height="24" uuid="e0e27526-9f2e-413a-b0c7-fbb2a1d81550"/>
+				<reportElement uuid="e0e27526-9f2e-413a-b0c7-fbb2a1d81550" style="Detail" x="263" y="97" width="90" height="24"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{CL_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="447" y="97" width="88" height="24" uuid="6e8b3eae-b444-4b6e-b2ce-2c15db5e509d"/>
+				<reportElement uuid="6e8b3eae-b444-4b6e-b2ce-2c15db5e509d" style="Detail" x="447" y="97" width="88" height="24"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{CL_direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="83" y="97" width="90" height="24" uuid="5363c958-4d21-4ecf-bbe3-9b8c30632a1c"/>
+				<reportElement uuid="5363c958-4d21-4ecf-bbe3-9b8c30632a1c" x="83" y="97" width="90" height="24"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{PD_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="83" y="121" width="90" height="24" uuid="3d42157f-fcdd-498d-b26f-c488fbbeecbf"/>
+				<reportElement uuid="3d42157f-fcdd-498d-b26f-c488fbbeecbf" style="Detail" x="83" y="121" width="90" height="24"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{PD_fecha_pedido}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="121" width="83" height="24" uuid="11f0f768-34f1-4a28-83de-65b192faa3c1"/>
+				<reportElement uuid="11f0f768-34f1-4a28-83de-65b192faa3c1" x="0" y="121" width="83" height="24"/>
+				<textElement/>
 				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 		</band>
@@ -123,25 +137,29 @@ and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
 	<columnHeader>
 		<band height="42" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="ff8029bc-56ac-430d-89d4-e92c38119b81"/>
+				<reportElement uuid="ff8029bc-56ac-430d-89d4-e92c38119b81" positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="0" y="19" width="69" height="15" uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f"/>
+				<reportElement uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f" style="Column header" x="0" y="19" width="69" height="15"/>
+				<textElement/>
 				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="83" y="19" width="69" height="15" uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb"/>
+				<reportElement uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb" style="Column header" x="83" y="19" width="69" height="15"/>
+				<textElement/>
 				<text><![CDATA[Tipo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="173" y="19" width="69" height="15" uuid="a1263bdd-8e6c-41e9-9468-39ccefc5d324"/>
+				<reportElement uuid="a1263bdd-8e6c-41e9-9468-39ccefc5d324" style="Column header" x="173" y="19" width="69" height="15"/>
+				<textElement/>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="263" y="19" width="69" height="15" uuid="5749aff0-58b5-4d90-8095-a9061037e50f"/>
+				<reportElement uuid="5749aff0-58b5-4d90-8095-a9061037e50f" style="Column header" x="263" y="19" width="69" height="15"/>
+				<textElement/>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 		</band>
@@ -149,25 +167,29 @@ and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="e7f623fc-e90a-4958-94e1-a777ca515198"/>
+				<reportElement uuid="e7f623fc-e90a-4958-94e1-a777ca515198" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="Detail" x="0" y="0" width="69" height="15" uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45"/>
-				<textFieldExpression><![CDATA[$F{Pr_nombre}]]></textFieldExpression>
+				<reportElement uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45" style="Detail" x="0" y="0" width="69" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PR_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="83" y="0" width="69" height="15" uuid="1db7e732-f3e2-48df-9081-808c10a03ed6"/>
+				<reportElement uuid="1db7e732-f3e2-48df-9081-808c10a03ed6" style="Detail" x="83" y="0" width="69" height="15"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{TP_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="173" y="0" width="69" height="15" uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d"/>
+				<reportElement uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d" style="Detail" x="173" y="0" width="69" height="15"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{PP_producto_cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="263" y="0" width="69" height="15" uuid="8284d577-7f0f-4782-9fa8-bc6e03985f4b"/>
+				<reportElement uuid="8284d577-7f0f-4782-9fa8-bc6e03985f4b" style="Detail" x="263" y="0" width="69" height="15"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{PP_precio}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -175,7 +197,7 @@ and P.PD_id=PP.PP_pedidoid and P.PD_id=23 and P.PD_cliente=C.CL_id;]]>
 	<columnFooter>
 		<band height="45" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6db7dd5f-1c29-4fc1-b03b-98a5a85c4340"/>
+				<reportElement uuid="6db7dd5f-1c29-4fc1-b03b-98a5a85c4340" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>

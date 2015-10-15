@@ -1,44 +1,62 @@
 package Reportes;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
-import Negocio.Modelo.Pedido;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 
+import Persistencia.Conector.ConectorMySQL;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class ReporteTicket {
 	
-	private JasperReport reporte;
-	private JasperViewer reporteViewer;
-	private JasperPrint reporteLleno;
-	
-	
-	   public ReporteTicket(List<Pedido> pedido)
-	    {
-	    	try 
-			{
-				this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "Reportes\\TicketOficial.jasper" );
-				this.reporteLleno = JasperFillManager.fillReport(this.reporte, null, 
-						new JRBeanCollectionDataSource(pedido));
-			}
-			catch( JRException ex ) 
-			{
-				ex.printStackTrace();
-			}
-	    }       
-	    
-	    public void mostrar()
-		{
-			this.reporteViewer = new JasperViewer(this.reporteLleno);
-			this.reporteViewer.setVisible(true);
-		}
-	        
+	    public void Generar_Ticket_y_comanda(Integer NUMERO_PEDIDO){
+	    	String JXML = "Reportes\\TicketOficial.jrxml";
+	    	JasperPrint jasperPrint = null;
+	    	InputStream inputStream = null;
+	    	Map<String, Object> parametros;
 
+	    	// Le paso un parametro al Ireport para poder filtrarlo
+	    	parametros = new HashMap<String, Object>();
+			parametros.put("ID_PEDIDO", NUMERO_PEDIDO);
+
+			try {
+				inputStream = new FileInputStream(JXML);
+				JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+				JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+				
+				ConectorMySQL con = new ConectorMySQL();
+				con.connectToMySQL();
+				jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.conexion);
+				
+				//* OPCIONAL: GENERA UN ARCHIVO PDF EN EL ESCRITORIO *//
+				File home = FileSystemView.getFileSystemView().getHomeDirectory(); 
+				JasperExportManager.exportReportToPdfFile(jasperPrint, home.getAbsolutePath()+"\\TICKET PEDIDO NUMERO "+NUMERO_PEDIDO+".pdf");
+					
+				con.cerrarConexion();
+				
+			} catch (JRException | FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "Error al leer el fichero de carga jasper report "+e.getMessage());
+			}
+
+			// MOSTRAR REPORTE
+			JasperViewer view = new JasperViewer(jasperPrint,false); 
+			view.setTitle("Ticket y comanda vista previa");
+			view.setVisible(true);
+	    }
+	    
 	
-}
+}//--> FIN

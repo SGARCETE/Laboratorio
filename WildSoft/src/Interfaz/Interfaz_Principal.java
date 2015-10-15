@@ -61,6 +61,7 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
+import Reportes.ReporteTicket;
 
 public class Interfaz_Principal {
 
@@ -617,6 +618,18 @@ public class Interfaz_Principal {
 			}
 		});
 		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
+		
+		JButton btnComandaticket = new JButton("Ticket");
+		btnComandaticket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Generar_Comanda();
+			}
+		});
+		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
+		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnComandaticket.setBackground(Color.WHITE);
+		panel.add(btnComandaticket);
 
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
@@ -1119,6 +1132,14 @@ public class Interfaz_Principal {
 		}
 		
 		Instancia_cocina.Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
+	}
+	
+	private void Generar_Comanda() {
+		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
+			ReporteTicket RT = new ReporteTicket();
+			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
+		}
 	}
 	
 }// ---> FIN CLASE
