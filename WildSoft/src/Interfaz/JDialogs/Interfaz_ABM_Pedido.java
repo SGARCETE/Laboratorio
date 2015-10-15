@@ -462,6 +462,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 		
+		
 	}
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MODIFICAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -506,6 +507,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
 //			PEDIDO_ACTUAL.getCliente().getID_Cliente();
 		}
+		//AutocompletarCliente();
 		
 		
 		
