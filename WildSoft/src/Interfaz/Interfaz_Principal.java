@@ -1118,7 +1118,7 @@ public class Interfaz_Principal {
 			productos.add(arreglo);
 		}
 		
-//		Instancia_cocina.Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
+		Instancia_cocina.Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
 	}
 	
 }// ---> FIN CLASE

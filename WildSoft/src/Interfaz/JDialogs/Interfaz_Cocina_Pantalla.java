@@ -239,7 +239,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 
 
 
-	public void Actualizar(List<String[]> pedidos,List<String[]> productos){
+	public void Actualizar(List<String[]> pedidos,List<String[]> productos, int pizzas, int empanadas, int bebidas){
 		for(int i = 0; i < 5; i++){
 			if(pedidos.size() >= i){
 				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
