@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,9 +42,16 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
+import Persistencia.Conector.ConectorMySQL;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+
 
 @SuppressWarnings("serial")
 public class Interfaz_ABM_Pedido extends JDialog {
@@ -369,6 +378,30 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		spinnerCantNueva = new JSpinner();
 		spinnerCantNueva.setBounds(20, 31, 55, 25);
 		panelModificacionPR.add(spinnerCantNueva);
+		
+		JButton btnGenerarTicketcomanda = new JButton("Generar Ticket/Comanda");
+		btnGenerarTicketcomanda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ConectorMySQL conex =  new ConectorMySQL();
+				conex.connectToMySQL();
+				try
+				{
+					String ubicacionReporte= System.getProperty("user.dir")+"/src/Reportes/TicketOficial.jasper";
+					JasperReport jasperReport = (JasperReport) JRLoader.loadObject(ubicacionReporte);
+					JasperPrint print = JasperFillManager.fillReport(jasperReport, null, (Connection) conex);
+					JasperViewer jasperView = new JasperViewer(print,false);
+					jasperView.setVisible(true);
+				}
+				catch( Exception ex)
+				{
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+				}
+				
+			}
+		});
+		btnGenerarTicketcomanda.setBounds(973, 25, 167, 43);
+		contentPanel.add(btnGenerarTicketcomanda);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -639,4 +672,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		AutoCompleter_Cliente.setMode(0);
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
+
+	
+	
+	
 }
