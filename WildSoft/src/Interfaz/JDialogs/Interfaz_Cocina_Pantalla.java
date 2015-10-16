@@ -33,6 +33,8 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	private JLabel numeroPizzas;
 	private JLabel numeroEmpanadas;
 	private JLabel numeroBebidas;
+	private JScrollPane scrollPanePedidos;
+	private JScrollPane scrollPane;
 
 
 	@SuppressWarnings("serial")
@@ -59,7 +61,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		
-		JScrollPane scrollPanePedidos = new JScrollPane();
+		scrollPanePedidos = new JScrollPane();
 		scrollPanePedidos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
 		tablaPedidosActuales = new JTable();
@@ -142,7 +144,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		
 		tablaProductosPedido = new JTable();
 		tablaProductosPedido.setRowHeight(30);
@@ -253,17 +255,21 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 
 
 	public void Actualizar(List<String[]> pedidos,List<String[]> productos, int pizzas, int empanadas, int bebidas){
+				
 		
-		((DefaultTableModel) tablaPedidosActuales.getModel()).setColumnCount(0);
-		((DefaultTableModel) tablaPedidosActuales.getModel()).setRowCount(0);
+		DefaultTableModel model_pedidos =  (DefaultTableModel) tablaPedidosActuales.getModel();
+		DefaultTableModel model_productos = (DefaultTableModel) tablaProductosPedido.getModel();
 		
-		((DefaultTableModel) tablaProductosPedido.getModel()).setColumnCount(0);
-		((DefaultTableModel) tablaProductosPedido.getModel()).setRowCount(0);
+		model_pedidos.setColumnCount(0);
+		model_pedidos.setRowCount(0);
+		
+		model_productos.setColumnCount(0);
+		model_productos.setRowCount(0);
 		
 		for(int i = 0; i < 5; i++){
 			if(pedidos.size() >= i){
-				String[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
-				((DefaultTableModel) tablaPedidosActuales.getModel()).addRow(arreglo);
+				Object[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
+				model_pedidos.addRow(arreglo);
 //				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
 //				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
 //				tablaPedidosActuales.setValueAt(pedidos.get(i)[2], i, 2);
@@ -272,8 +278,8 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		
 		for(int j = 0; j < 5; j++){
 			if(productos.size() >= j){
-				String[] arreglo = {pedidos.get(j)[0],pedidos.get(j)[1],pedidos.get(j)[2]};
-				((DefaultTableModel) tablaProductosPedido.getModel()).addRow(arreglo);
+				Object[] arreglo = {pedidos.get(j)[0],pedidos.get(j)[1],pedidos.get(j)[2]};
+				model_productos.addRow(arreglo);
 //				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
 //				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);
 //				tablaProductosPedido.setValueAt(productos.get(j)[2], j, 2);
@@ -283,5 +289,16 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		numeroBebidas.setText(String.valueOf(bebidas));
 		numeroEmpanadas.setText(String.valueOf(empanadas));
 		numeroPizzas.setText(String.valueOf(pizzas));
+		
+		tablaPedidosActuales.setModel(model_pedidos);
+		
+		tablaProductosPedido.setModel(model_productos);
+
+		
+		scrollPanePedidos.setViewportView(tablaPedidosActuales);
+		scrollPane.setViewportView(tablaProductosPedido);
+		
+		
+		
 	}
 }//--> FIN

@@ -31,7 +31,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				""+		CLIENTE												+","+
 				""+		PEDIDO												+","+									
 				""+ p.getEs_Delivery()										+")";
-		System.out.println(SentenciaSQL_PEDIDO);
+//		System.out.println(SentenciaSQL_PEDIDO);
 		boolean Exito_al_Ingresar_pedido = conex.Insertar(SentenciaSQL_PEDIDO);
 		
 		if(Exito_al_Ingresar_pedido){
@@ -49,7 +49,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 						"'"+ OBSERVACION								+" ',"+	// STRING
 						""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
 				boolean Asociar_producto = conex.Insertar(SentenciaSQL_producto_pedidos);
-				System.out.println(SentenciaSQL_producto_pedidos);
+//				System.out.println(SentenciaSQL_producto_pedidos);
 				if(!Asociar_producto)
 					return false;
 			}
@@ -132,7 +132,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
 			        P.getNumero_Pedido();
 
-			System.out.println("getLista_Productos:\n"+Query);
+//			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
@@ -181,7 +181,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id AND " +
 			"P.PD_ID = "+ Numero_Pedido;
 			Integer ID_Cliente = null;
-			System.out.println("OBTENER_PEDIDO\n"+SentenciaSQL);
+//			System.out.println("OBTENER_PEDIDO\n"+SentenciaSQL);
 			st.executeQuery(SentenciaSQL);
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){
@@ -293,7 +293,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 					"'"+ OBSERVACION								+" ',"+	// STRING
 					""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
-			System.out.println(SentenciaSQL_producto_pedidos);
+//			System.out.println(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
 		
