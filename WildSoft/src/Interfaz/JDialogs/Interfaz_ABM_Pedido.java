@@ -642,7 +642,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textDetalle.setText(c.getDetalle());
 	}
 
-	@SuppressWarnings("unused")
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
