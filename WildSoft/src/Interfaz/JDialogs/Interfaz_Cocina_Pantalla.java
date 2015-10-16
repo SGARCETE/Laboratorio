@@ -68,21 +68,14 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaPedidosActuales.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tablaPedidosActuales.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
 			},
 			new String[] {
-				"Nro Pedido", "Precio", ""
+				"Nro Pedido", "Precio", "Delivery"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -92,9 +85,8 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaPedidosActuales.getColumnModel().getColumn(0).setMaxWidth(80);
 		tablaPedidosActuales.getColumnModel().getColumn(1).setResizable(false);
 		tablaPedidosActuales.getColumnModel().getColumn(2).setResizable(false);
-		tablaPedidosActuales.getColumnModel().getColumn(2).setPreferredWidth(30);
 		tablaPedidosActuales.getColumnModel().getColumn(2).setMinWidth(75);
-		tablaPedidosActuales.getColumnModel().getColumn(2).setMaxWidth(30);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setMaxWidth(75);
 		tablaPedidosActuales.setBounds(12, 12, 282, 140);
 		tablaPedidosActuales.setRowHeight(30);
 		
@@ -153,19 +145,14 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaProductosPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tablaProductosPedido.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Pizza Napolitana", null, null},
-				{"Empanada de Carne", null, null},
-				{"Bebida CocaCola", null, null},
 			},
 			new String[] {
-				"Producto", "Cantidad", ""
+				"Producto", "Cantidad", "Observacion"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -175,9 +162,8 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaProductosPedido.getColumnModel().getColumn(1).setPreferredWidth(80);
 		tablaProductosPedido.getColumnModel().getColumn(1).setMaxWidth(80);
 		tablaProductosPedido.getColumnModel().getColumn(2).setResizable(false);
-		tablaProductosPedido.getColumnModel().getColumn(2).setPreferredWidth(30);
 		tablaProductosPedido.getColumnModel().getColumn(2).setMinWidth(75);
-		tablaProductosPedido.getColumnModel().getColumn(2).setMaxWidth(30);
+		tablaProductosPedido.getColumnModel().getColumn(2).setMaxWidth(75);
 		tablaProductosPedido.setBounds(12, 12, 294, 139);
 		scrollPane.setViewportView(tablaProductosPedido);
 		
