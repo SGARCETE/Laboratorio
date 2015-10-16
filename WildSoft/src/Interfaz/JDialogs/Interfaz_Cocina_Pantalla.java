@@ -261,15 +261,16 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		
 		model_pedidos.setRowCount(0);
 		model_productos.setRowCount(0);
-		
-		for(int i = 0; i < 5; i++){
-			if(pedidos.size() >= i){
-				String[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
-				model_pedidos.addRow(arreglo);
-//				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
-//				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
-//				tablaPedidosActuales.setValueAt(pedidos.get(i)[2], i, 2);
-			}
+
+		int desde = 0;
+		int hasta = 5;
+		if(pedidos.size() < 5){
+			hasta = pedidos.size();
+		}
+		while (desde < hasta){
+			String[] arreglo = {pedidos.get(desde)[0],pedidos.get(desde)[1],pedidos.get(desde)[2]};
+			model_pedidos.addRow(arreglo);
+			desde++;
 		}
 		
 		for(int j = 0; j < productos.size(); j++){
