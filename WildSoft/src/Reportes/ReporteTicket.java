@@ -24,7 +24,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class ReporteTicket {
 	
 	    public void Generar_Ticket_y_comanda(Integer NUMERO_PEDIDO){
-	    	String JXML = "Reportes\\TicketOficial.jrxml";
+	    	String JXML = "src\\Reportes\\TicketOficial.jrxml";
 	    	JasperPrint jasperPrint = null;
 	    	InputStream inputStream = null;
 	    	Map<String, Object> parametros;

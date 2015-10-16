@@ -889,7 +889,7 @@ public class Interfaz_Principal {
 				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Observacion = textObservaciones.getText();
-				
+				PRODUCTO_ACTUAL.setPR_Observacion(Observacion);
 
 				/**
 				 * Esto va a un objeto pedido, el cual se usara para guardar en
