@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report11" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0aa85ee8-2404-4269-a72b-150eaaa2a2e0">
 	<property name="ireport.zoom" value="1.46410000000001"/>
-	<property name="ireport.x" value="417"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
@@ -258,20 +258,20 @@ P.PD_ID = $P{ID_PEDIDO};]]>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="447" y="10" width="70" height="15" uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb"/>
+				<reportElement style="Column header" x="400" y="11" width="70" height="15" uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb"/>
 				<text><![CDATA[Tipo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="517" y="10" width="70" height="15" uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f"/>
+				<reportElement style="Column header" x="470" y="11" width="118" height="15" uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f"/>
 				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="598" y="10" width="55" height="15" uuid="a1263bdd-8e6c-41e9-9468-39ccefc5d324"/>
+				<reportElement style="Column header" x="588" y="10" width="55" height="15" uuid="a1263bdd-8e6c-41e9-9468-39ccefc5d324"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Cantidad]]></text>
+				<text><![CDATA[Cant]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="663" y="10" width="139" height="15" forecolor="#666666" uuid="54ab06db-afdb-4431-aed5-9047d039984a"/>
+				<reportElement x="643" y="10" width="159" height="15" forecolor="#666666" uuid="54ab06db-afdb-4431-aed5-9047d039984a"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
@@ -316,28 +316,28 @@ P.PD_ID = $P{ID_PEDIDO};]]>
 				<textFieldExpression><![CDATA[$F{PP_precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="598" y="1" width="55" height="15" uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d"/>
+				<reportElement style="Detail" x="588" y="0" width="55" height="15" uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PP_producto_cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="447" y="0" width="70" height="15" uuid="1db7e732-f3e2-48df-9081-808c10a03ed6"/>
+				<reportElement style="Detail" x="400" y="1" width="70" height="15" uuid="1db7e732-f3e2-48df-9081-808c10a03ed6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TP_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="517" y="0" width="70" height="15" uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45"/>
+				<reportElement style="Detail" x="470" y="0" width="118" height="15" uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PR_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="663" y="0" width="137" height="15" uuid="da048f5c-a5b6-4aa9-8114-514393101607"/>
+				<reportElement x="643" y="0" width="157" height="15" uuid="da048f5c-a5b6-4aa9-8114-514393101607"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
