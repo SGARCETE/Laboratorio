@@ -416,7 +416,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				SvPedidos.eliminar_productos(PEDIDO_ACTUAL);
 				PEDIDO_ACTUAL.setLista_Productos(lista);
 				SvPedidos.AGREGAR_PRODUCTO_PEDIDO(PEDIDO_ACTUAL);
-				Principal_neg_int.getInstancia_Interfaz_Principal().actualizarCocina();
+				//Principal_neg_int.getInstancia_Interfaz_Principal().actualizarCocina();
+				// TODO
 				dispose();
 			}
 		});

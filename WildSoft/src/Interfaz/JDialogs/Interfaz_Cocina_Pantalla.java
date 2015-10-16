@@ -68,11 +68,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaPedidosActuales.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tablaPedidosActuales.setModel(new DefaultTableModel(
 			new Object[][] {
-				{new Integer(5), new Float(124.0f), Boolean.FALSE},
-				{new Integer(4), new Float(1586.8f), Boolean.TRUE},
-				{new Integer(3), new Float(348.0f), Boolean.TRUE},
-				{new Integer(2), new Float(85.0f), null},
-				{new Integer(1), new Float(215.0f), Boolean.FALSE},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 			},
 			new String[] {
 				"Nro Pedido", "Precio", ""
@@ -80,7 +80,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
-				Integer.class, Float.class, Boolean.class
+				String.class, String.class, String.class
 			};
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
@@ -92,8 +92,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaPedidosActuales.getColumnModel().getColumn(0).setMaxWidth(80);
 		tablaPedidosActuales.getColumnModel().getColumn(1).setResizable(false);
 		tablaPedidosActuales.getColumnModel().getColumn(2).setResizable(false);
-		tablaPedidosActuales.getColumnModel().getColumn(2).setPreferredWidth(25);
-		tablaPedidosActuales.getColumnModel().getColumn(2).setMaxWidth(25);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setMinWidth(75);
+		tablaPedidosActuales.getColumnModel().getColumn(2).setMaxWidth(30);
 		tablaPedidosActuales.setBounds(12, 12, 282, 140);
 		tablaPedidosActuales.setRowHeight(30);
 		
@@ -105,11 +106,12 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		panel_2.setBackground(SystemColor.menu);
 		
 		JLabel label_5 = new JLabel("Productos Restantes:");
+		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
 		label_5.setBounds(12, 12, 182, 16);
 		panel_2.add(label_5);
 		
 		JLabel labelPizzas = new JLabel("Pizzas:");
-		labelPizzas.setBounds(12, 50, 55, 16);
+		labelPizzas.setBounds(12, 50, 100, 16);
 		panel_2.add(labelPizzas);
 		
 		numeroPizzas = new JLabel("");
@@ -117,7 +119,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		panel_2.add(numeroPizzas);
 		
 		JLabel labelEmpanadas = new JLabel("Empanadas:");
-		labelEmpanadas.setBounds(12, 77, 88, 16);
+		labelEmpanadas.setBounds(12, 77, 128, 16);
 		panel_2.add(labelEmpanadas);
 		
 		numeroEmpanadas = new JLabel("");
@@ -125,7 +127,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		panel_2.add(numeroEmpanadas);
 		
 		JLabel labelBebidas = new JLabel("Bebidas:");
-		labelBebidas.setBounds(12, 104, 46, 14);
+		labelBebidas.setBounds(12, 104, 100, 14);
 		panel_2.add(labelBebidas);
 		
 		numeroBebidas = new JLabel("");
@@ -151,9 +153,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaProductosPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tablaProductosPedido.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Pizza Napolitana", new Integer(3), Boolean.TRUE},
-				{"Empanada de Carne", new Integer(48), null},
-				{"Bebida CocaCola", new Integer(2), null},
+				{"Pizza Napolitana", null, null},
+				{"Empanada de Carne", null, null},
+				{"Bebida CocaCola", null, null},
 			},
 			new String[] {
 				"Producto", "Cantidad", ""
@@ -161,7 +163,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Boolean.class
+				String.class, String.class, String.class
 			};
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
@@ -173,9 +175,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		tablaProductosPedido.getColumnModel().getColumn(1).setPreferredWidth(80);
 		tablaProductosPedido.getColumnModel().getColumn(1).setMaxWidth(80);
 		tablaProductosPedido.getColumnModel().getColumn(2).setResizable(false);
-		tablaProductosPedido.getColumnModel().getColumn(2).setPreferredWidth(25);
-		tablaProductosPedido.getColumnModel().getColumn(2).setMinWidth(12);
-		tablaProductosPedido.getColumnModel().getColumn(2).setMaxWidth(25);
+		tablaProductosPedido.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tablaProductosPedido.getColumnModel().getColumn(2).setMinWidth(75);
+		tablaProductosPedido.getColumnModel().getColumn(2).setMaxWidth(30);
 		tablaProductosPedido.setBounds(12, 12, 294, 139);
 		scrollPane.setViewportView(tablaProductosPedido);
 		
@@ -251,24 +253,18 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 
 	}
 	
-
-
-
 	public void Actualizar(List<String[]> pedidos,List<String[]> productos, int pizzas, int empanadas, int bebidas){
 				
 		
 		DefaultTableModel model_pedidos =  (DefaultTableModel) tablaPedidosActuales.getModel();
 		DefaultTableModel model_productos = (DefaultTableModel) tablaProductosPedido.getModel();
 		
-		model_pedidos.setColumnCount(0);
 		model_pedidos.setRowCount(0);
-		
-		model_productos.setColumnCount(0);
 		model_productos.setRowCount(0);
 		
 		for(int i = 0; i < 5; i++){
 			if(pedidos.size() >= i){
-				Object[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
+				String[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
 				model_pedidos.addRow(arreglo);
 //				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
 //				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
@@ -276,9 +272,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			}
 		}
 		
-		for(int j = 0; j < 5; j++){
+		for(int j = 0; j < productos.size(); j++){
 			if(productos.size() >= j){
-				Object[] arreglo = {pedidos.get(j)[0],pedidos.get(j)[1],pedidos.get(j)[2]};
+				String[] arreglo = {productos.get(j)[0],productos.get(j)[1],productos.get(j)[2]};
 				model_productos.addRow(arreglo);
 //				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
 //				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);

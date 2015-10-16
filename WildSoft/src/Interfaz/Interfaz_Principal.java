@@ -1077,7 +1077,7 @@ public class Interfaz_Principal {
 		int empanadas = 0;
 		int bebidas = 0;
 		
-		boolean esDelibery = false;
+		boolean esDelivery = false;
 		
 		
 		
@@ -1088,15 +1088,15 @@ public class Interfaz_Principal {
 				Pedido p = sv_pedidos.get_pedido((Integer) Tabla_Lista_pedidos.getValueAt(i, 0));
 				
 				if (p.getCliente().getNombre().equals("")){
-					esDelibery = false;
+					esDelivery = false;
 				}else{
-					esDelibery = true;
+					esDelivery = true;
 				}
 				
 				String[] arreglo = {
 				String.valueOf(Tabla_Lista_pedidos.getValueAt(i, 0)),
 				(String) Tabla_Lista_pedidos.getValueAt(i, 5),
-				(String) Tabla_Lista_pedidos.getValueAt(i, 2)};
+				String.valueOf(esDelivery)};
 				
 				pedidos.add(arreglo);
 			}
@@ -1108,11 +1108,11 @@ public class Interfaz_Principal {
 			for(int k = 0; k < p.getLista_Productos().size();k++){
 				int tipo = p.getLista_Productos().get(k).getPR_tipo_producto();
 				if(tipo == 1){
-					empanadas++;
+					empanadas += p.getLista_Productos().get(k).getCantidad();
 				}else if (tipo == 2){
-					pizzas++;
+					pizzas += p.getLista_Productos().get(k).getCantidad();
 				}else if (tipo == 3){
-					bebidas++;
+					bebidas += p.getLista_Productos().get(k).getCantidad();
 				}
 			}
 		}
@@ -1129,12 +1129,22 @@ public class Interfaz_Principal {
 				nombre = "Bebida:		";
 			}
 			
+			boolean comentario = true;
 			
+			if(p.getLista_Productos().get(l).getPR_Observacion().equals("")){
+				comentario = false;
+			}
 			
 			String[] arreglo = {
 			nombre + (String)p.getLista_Productos().get(l).getPR_nombre(),
 			String.valueOf(p.getLista_Productos().get(l).getCantidad()),
-			String.valueOf(esDelibery)};
+			String.valueOf(comentario)};
+			
+			System.out.println("arreglo " + l);
+			System.out.println(arreglo[0]);
+			System.out.println(arreglo[1]);
+			System.out.println(arreglo[2]);
+			System.out.println("");
 			
 			productos.add(arreglo);
 		}
