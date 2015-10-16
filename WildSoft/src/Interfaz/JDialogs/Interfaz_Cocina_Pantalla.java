@@ -277,9 +277,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			if(productos.size() >= j){
 				String[] arreglo = {productos.get(j)[0],productos.get(j)[1],productos.get(j)[2]};
 				model_productos.addRow(arreglo);
-//				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
-//				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);
-//				tablaProductosPedido.setValueAt(productos.get(j)[2], j, 2);
 			}
 		}
 		
