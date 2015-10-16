@@ -19,6 +19,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
@@ -28,10 +29,13 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	private JTable tablaPedidosActuales;
 	private JTable tablaProductosPedido;
 	private JTextArea areaComentarios;
-	private Principal_Negocio_Interfaz instancia_de_Interfaz_Principal; 
-	
+	private Principal_Negocio_Interfaz instancia_de_Interfaz_Principal;
+	private JLabel numeroPizzas;
+	private JLabel numeroEmpanadas;
+	private JLabel numeroBebidas;
 
 
+	@SuppressWarnings("serial")
 	public Interfaz_Cocina_Pantalla(Principal_Negocio_Interfaz principal_neg_int) {
 		instancia_de_Interfaz_Principal = principal_neg_int;
 		
@@ -102,21 +106,29 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		label_5.setBounds(12, 12, 182, 16);
 		panel_2.add(label_5);
 		
-		JLabel label_6 = new JLabel("Pizzas:");
-		label_6.setBounds(12, 50, 55, 16);
-		panel_2.add(label_6);
+		JLabel labelPizzas = new JLabel("Pizzas:");
+		labelPizzas.setBounds(12, 50, 55, 16);
+		panel_2.add(labelPizzas);
 		
-		JLabel label_7 = new JLabel("48");
-		label_7.setBounds(139, 50, 55, 16);
-		panel_2.add(label_7);
+		numeroPizzas = new JLabel("");
+		numeroPizzas.setBounds(139, 50, 55, 16);
+		panel_2.add(numeroPizzas);
 		
-		JLabel label_8 = new JLabel("Empanadas:");
-		label_8.setBounds(12, 92, 88, 16);
-		panel_2.add(label_8);
+		JLabel labelEmpanadas = new JLabel("Empanadas:");
+		labelEmpanadas.setBounds(12, 77, 88, 16);
+		panel_2.add(labelEmpanadas);
 		
-		JLabel label_9 = new JLabel("128");
-		label_9.setBounds(139, 92, 55, 16);
-		panel_2.add(label_9);
+		numeroEmpanadas = new JLabel("");
+		numeroEmpanadas.setBounds(139, 77, 55, 16);
+		panel_2.add(numeroEmpanadas);
+		
+		JLabel labelBebidas = new JLabel("Bebidas:");
+		labelBebidas.setBounds(12, 104, 46, 14);
+		panel_2.add(labelBebidas);
+		
+		numeroBebidas = new JLabel("");
+		numeroBebidas.setBounds(139, 104, 46, 14);
+		panel_2.add(numeroBebidas);
 		
 		JTextArea areaComentarios = new JTextArea();
 		areaComentarios.setBounds(12, 272, 417, 186);
@@ -211,6 +223,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
 					.addGap(11))
 		);
+		
 		panel.setLayout(gl_panel);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -240,22 +253,35 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 
 
 	public void Actualizar(List<String[]> pedidos,List<String[]> productos, int pizzas, int empanadas, int bebidas){
+		
+		((DefaultTableModel) tablaPedidosActuales.getModel()).setColumnCount(0);
+		((DefaultTableModel) tablaPedidosActuales.getModel()).setRowCount(0);
+		
+		((DefaultTableModel) tablaProductosPedido.getModel()).setColumnCount(0);
+		((DefaultTableModel) tablaProductosPedido.getModel()).setRowCount(0);
+		
 		for(int i = 0; i < 5; i++){
 			if(pedidos.size() >= i){
-				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
-				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
-				tablaPedidosActuales.setValueAt(pedidos.get(i)[2], i, 2);
+				String[] arreglo = {pedidos.get(i)[0],pedidos.get(i)[1],pedidos.get(i)[2]};
+				((DefaultTableModel) tablaPedidosActuales.getModel()).addRow(arreglo);
+//				tablaPedidosActuales.setValueAt(pedidos.get(i)[0], i, 0);
+//				tablaPedidosActuales.setValueAt(pedidos.get(i)[1], i, 1);
+//				tablaPedidosActuales.setValueAt(pedidos.get(i)[2], i, 2);
 			}
 		}
 		
 		for(int j = 0; j < 5; j++){
 			if(productos.size() >= j){
-				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
-				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);
-				tablaProductosPedido.setValueAt(productos.get(j)[2], j, 2);
+				String[] arreglo = {pedidos.get(j)[0],pedidos.get(j)[1],pedidos.get(j)[2]};
+				((DefaultTableModel) tablaProductosPedido.getModel()).addRow(arreglo);
+//				tablaProductosPedido.setValueAt(productos.get(j)[0], j, 0);
+//				tablaProductosPedido.setValueAt(productos.get(j)[1], j, 1);
+//				tablaProductosPedido.setValueAt(productos.get(j)[2], j, 2);
 			}
 		}
+		
+		numeroBebidas.setText(String.valueOf(bebidas));
+		numeroEmpanadas.setText(String.valueOf(empanadas));
+		numeroPizzas.setText(String.valueOf(pizzas));
 	}
-	
-	
 }//--> FIN

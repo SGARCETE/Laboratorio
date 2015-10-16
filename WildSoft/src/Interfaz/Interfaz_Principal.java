@@ -2,7 +2,6 @@ package Interfaz;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -44,9 +43,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
-
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
@@ -62,6 +58,9 @@ import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Reportes.ReporteTicket;
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
 
 public class Interfaz_Principal {
 
@@ -107,9 +106,11 @@ public class Interfaz_Principal {
 	private Producto PRODUCTO_ACTUAL = new Producto(); /* Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro*/
 
 	//<INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
+	@SuppressWarnings("unused")
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
-	private Interfaz_Cocina_Pantalla Instancia_cocina;
+	private JFrame frame_cocina;
+	
 	private Cliente CLIENTE_ACTUAL = null; 
 
 	/**
@@ -548,6 +549,7 @@ public class Interfaz_Principal {
 		btnCargarListaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
+				actualizarCocina();
 			}
 		});
 		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(
@@ -759,15 +761,15 @@ public class Interfaz_Principal {
         }
         GraphicsDevice gd = gs[Pantalla_Numero];
         
-        JFrame  frame = new JFrame(gd.getDefaultConfiguration());
-        Integer X = frame.getX();
-        Integer Y = frame.getY();
+        frame_cocina = new JFrame(gd.getDefaultConfiguration());
+        Integer X = frame_cocina.getX();
+        Integer Y = frame_cocina.getY();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle R = new Rectangle(X, Y, screenSize.width, screenSize.height);
         
-        frame = new Interfaz_Cocina_Pantalla(Principal_neg_int);
-        frame.setBounds(R);
-        frame.setVisible(true);
+        frame_cocina = new Interfaz_Cocina_Pantalla(Principal_neg_int);
+        frame_cocina.setBounds(R);
+        frame_cocina.setVisible(true);
 	}
 
 	/***
@@ -912,7 +914,7 @@ public class Interfaz_Principal {
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 				}
 
-				/** Esto va para la parte visual **/ //TODO
+				/** Esto va para la parte visual **/
 				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();				
 				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
 				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
@@ -1075,13 +1077,25 @@ public class Interfaz_Principal {
 		int empanadas = 0;
 		int bebidas = 0;
 		
+		boolean esDelibery = false;
+		
+		
 		
 		// PRIMERO GUARDO LOS PEDIDOS EN UN ARREGLO
 		for(int i = 0; i < Tabla_Lista_pedidos.getRowCount(); i++){
 			if (Tabla_Lista_pedidos.getValueAt(i, 4).equals("Pendiente")){
+				
+				Pedido p = sv_pedidos.get_pedido((Integer) Tabla_Lista_pedidos.getValueAt(i, 0));
+				
+				if (p.getCliente().getNombre().equals("")){
+					esDelibery = false;
+				}else{
+					esDelibery = true;
+				}
+				
 				String[] arreglo = {
-				(String) Tabla_Lista_pedidos.getValueAt(i, 0),
-				(String) Tabla_Lista_pedidos.getValueAt(i, 6),
+				String.valueOf(Tabla_Lista_pedidos.getValueAt(i, 0)),
+				(String) Tabla_Lista_pedidos.getValueAt(i, 5),
 				(String) Tabla_Lista_pedidos.getValueAt(i, 2)};
 				
 				pedidos.add(arreglo);
@@ -1115,13 +1129,7 @@ public class Interfaz_Principal {
 				nombre = "Bebida:		";
 			}
 			
-			boolean esDelibery = false;
 			
-			if (p.getCliente().getNombre().equals("")){
-				esDelibery = false;
-			}else{
-				esDelibery = true;
-			}
 			
 			String[] arreglo = {
 			nombre + (String)p.getLista_Productos().get(l).getPR_nombre(),
@@ -1131,7 +1139,7 @@ public class Interfaz_Principal {
 			productos.add(arreglo);
 		}
 		
-		Instancia_cocina.Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
+		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
 	}
 	
 	private void Generar_Comanda() {
