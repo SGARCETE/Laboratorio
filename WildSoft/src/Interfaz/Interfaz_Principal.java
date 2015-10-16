@@ -545,7 +545,7 @@ public class Interfaz_Principal {
 				TitledBorder.TOP, null, null));
 		panel.setBackground(SystemColor.menu);
 		
-		JButton btnCargarListaDe = new JButton("Cargar lista de pedidos");
+		JButton btnCargarListaDe = new JButton("Actualizar ");
 		btnCargarListaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
@@ -560,13 +560,13 @@ public class Interfaz_Principal {
 					.addContainerGap()
 					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE)
+							.addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 1424, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnCargarListaDe))
 						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)))
+							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 1446, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_panel_Lista_de_pedidos.setVerticalGroup(
@@ -578,8 +578,8 @@ public class Interfaz_Principal {
 						.addComponent(btnCargarListaDe))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane_Lista_Pedidos, 0, 0, Short.MAX_VALUE)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+						.addComponent(scrollPane_Lista_Pedidos, 0, 0, Short.MAX_VALUE))
 					.addGap(26))
 		);
 
@@ -621,7 +621,7 @@ public class Interfaz_Principal {
 		});
 		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 		
-		JButton btnComandaticket = new JButton("Ticket");
+		JButton btnComandaticket = new JButton("Ticket/Comanda");
 		btnComandaticket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Generar_Comanda();

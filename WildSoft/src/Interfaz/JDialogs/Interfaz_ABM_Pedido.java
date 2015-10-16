@@ -378,30 +378,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		spinnerCantNueva = new JSpinner();
 		spinnerCantNueva.setBounds(20, 31, 55, 25);
 		panelModificacionPR.add(spinnerCantNueva);
-		
-		JButton btnGenerarTicketcomanda = new JButton("Generar Ticket/Comanda");
-		btnGenerarTicketcomanda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				ConectorMySQL conex =  new ConectorMySQL();
-				conex.connectToMySQL();
-				try
-				{
-					String ubicacionReporte= System.getProperty("user.dir")+"/src/Reportes/TicketOficial.jasper";
-					JasperReport jasperReport = (JasperReport) JRLoader.loadObject(ubicacionReporte);
-					JasperPrint print = JasperFillManager.fillReport(jasperReport, null, (Connection) conex);
-					JasperViewer jasperView = new JasperViewer(print,false);
-					jasperView.setVisible(true);
-				}
-				catch( Exception ex)
-				{
-					JOptionPane.showMessageDialog(null, ex.getMessage());
-				}
-				
-			}
-		});
-		btnGenerarTicketcomanda.setBounds(973, 25, 167, 43);
-		contentPanel.add(btnGenerarTicketcomanda);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
