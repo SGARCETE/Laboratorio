@@ -79,6 +79,12 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
 		});
 		tablaPedidosActuales.getColumnModel().getColumn(0).setResizable(false);
 		tablaPedidosActuales.getColumnModel().getColumn(0).setPreferredWidth(80);
@@ -155,6 +161,12 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 		});
 		tablaProductosPedido.getColumnModel().getColumn(0).setResizable(false);

@@ -1026,7 +1026,6 @@ public class Interfaz_Principal {
 			}
 		});
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
-		
 	}
 	/**
 	 * MODIFICACION DE PEDIDO
@@ -1154,7 +1153,7 @@ public class Interfaz_Principal {
 	
 	private void Generar_Comanda() {
 		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
-			ReporteTicket RT = new ReporteTicket();
+			ReporteTicket RT = new 					ReporteTicket();
 			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
 		}
