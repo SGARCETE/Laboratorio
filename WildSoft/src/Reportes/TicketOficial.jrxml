@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report11" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0aa85ee8-2404-4269-a72b-150eaaa2a2e0">
-	<property name="ireport.zoom" value="1.46410000000001"/>
-	<property name="ireport.x" value="33"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.1384283767210244"/>
+	<property name="ireport.x" value="193"/>
+	<property name="ireport.y" value="367"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -170,7 +170,7 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5c898d10-3676-4259-b3b1-ab767f6df1b0" style="Title" x="447" y="0" width="353" height="33"/>
+				<reportElement uuid="5c898d10-3676-4259-b3b1-ab767f6df1b0" style="Title" x="400" y="0" width="400" height="33"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Comanda]]></text>
 			</staticText>
@@ -253,12 +253,12 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				<text><![CDATA[Precio U]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb" style="Column header" x="365" y="11" width="50" height="15"/>
+				<reportElement uuid="c33006d4-f14e-4d0f-baf1-88b511a1adcb" style="Column header" x="365" y="10" width="50" height="15"/>
 				<textElement/>
 				<text><![CDATA[Tipo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f" style="Column header" x="432" y="11" width="58" height="15"/>
+				<reportElement uuid="b7bc4be1-e208-46dc-a126-32788d2ef90f" style="Column header" x="432" y="10" width="58" height="15"/>
 				<textElement/>
 				<text><![CDATA[Producto]]></text>
 			</staticText>
@@ -268,7 +268,7 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				<text><![CDATA[Cant]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="54ab06db-afdb-4431-aed5-9047d039984a" x="589" y="11" width="80" height="15" forecolor="#666666"/>
+				<reportElement uuid="54ab06db-afdb-4431-aed5-9047d039984a" x="589" y="10" width="80" height="15" forecolor="#666666"/>
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
@@ -318,13 +318,6 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				<textFieldExpression><![CDATA[$F{PP_precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d" style="Detail" x="534" y="1" width="55" height="15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PP_producto_cantidad}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="1db7e732-f3e2-48df-9081-808c10a03ed6" style="Detail" x="365" y="0" width="67" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -332,7 +325,7 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				<textFieldExpression><![CDATA[$F{TP_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45" style="Detail" x="432" y="1" width="102" height="15"/>
+				<reportElement uuid="e369afb2-f13a-4ca8-a186-4783ebfe1e45" style="Detail" x="432" y="0" width="102" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -345,19 +338,19 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PP_Observacion}.equals(null) ? "" : $F{PP_Observacion}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="4e097b18-dbfa-406a-85e4-e60cd7a78c1b" x="279" y="1" width="74" height="14"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{Total_1}]]></textFieldExpression>
-			</textField>
 			<textField pattern="$ #,##0.00">
-				<reportElement uuid="e035752e-f00c-4b40-9b0d-29a310e2a868" x="295" y="0" width="58" height="14"/>
+				<reportElement uuid="e035752e-f00c-4b40-9b0d-29a310e2a868" x="295" y="0" width="58" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a189fdb1-5fd2-404a-92d2-cfff75b6533d" style="Detail" x="534" y="0" width="55" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PP_producto_cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -374,14 +367,14 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id and P.PD_id=$P{ID_PEDIDO};]]
 	<pageFooter>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement uuid="5a5a7722-1dd2-499d-a0d8-72f58b39c184" x="702" y="7" width="34" height="20"/>
-				<textElement>
+				<reportElement uuid="5a5a7722-1dd2-499d-a0d8-72f58b39c184" x="710" y="0" width="34" height="27"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ab2eda10-71d3-46e8-8a78-7433ce74fa95" x="669" y="3" width="32" height="24"/>
+				<reportElement uuid="ab2eda10-71d3-46e8-8a78-7433ce74fa95" x="677" y="0" width="32" height="27"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
