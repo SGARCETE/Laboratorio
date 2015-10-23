@@ -533,25 +533,44 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 	
 	private void Agregar_al_Pedido() {
-		
-		// compruebo que los combos tengan algo seleccionado
 		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
-			// hacer que tome los datos del formulario de pedido y los agregue a la tabla de pedidos
+			// hacer que tome los datos del formulario de pedido y los agregue a
+			// la tabla de pedidos LISTO
+			
 			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
 			String Variedad = comboBoxVariedad.getSelectedItem().toString();
-				
-			PRODUCTO_ACTUAL.setCantidad(Cantidad);
+
 			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
 				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
 				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Observacion = textObservaciones.getText();
+				PRODUCTO_ACTUAL.setPR_Observacion(Observacion);
 
+				/**
+				 * Esto va a un objeto pedido, el cual se usara para guardar en
+				 * la base de datos
+				 **/
 				
+				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
+				
+				boolean productoNoEsta = true;
+				
+				for (int i = 0; i<productos.size(); i++ ) {
+					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+						int cantidad  = productos.get(i).getCantidad();
+						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
+						productoNoEsta = false;
+					}
+				}
+				
+				if(productoNoEsta){
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+				}
 
-				/** Esto va para la parte visual **/ //TODO
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				/** Esto va para la parte visual **/
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();				
 				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
 				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
 
@@ -561,7 +580,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			}
 		}
 	}
-
 
 	private void Limpiar_Formulario_pedido() {
 		PRODUCTO_ACTUAL = new Producto();
