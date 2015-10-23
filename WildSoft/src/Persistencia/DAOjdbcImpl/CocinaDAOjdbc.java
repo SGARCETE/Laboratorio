@@ -16,7 +16,6 @@ public class CocinaDAOjdbc implements CocinaDAO{
 		
 	}
 
-	@Override
 	public ArrayList<Pedido> getLISTA_PEDIDOS() {
 		// TODO Auto-generated method stub
 		return null;

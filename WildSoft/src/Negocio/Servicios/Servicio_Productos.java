@@ -20,10 +20,11 @@ public class Servicio_Productos {
 //		Lista_Productos = productoDAO.getTipos_Producto();
 		
 		//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
-		String[] Productos =  new String[] {"Pizza", "Empanada", "Bebida"};
+		String[] Productos =  new String[] {"Pizza", "Empanada", "Bebida", "Combo"};
 		Lista_Productos.add(Productos[0]);
 		Lista_Productos.add(Productos[1]);
 		Lista_Productos.add(Productos[2]);
+		Lista_Productos.add(Productos[3]);
 		
 		String[] Variedades = new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"};
 		for (int i = 0; i < Variedades.length; i++) {
