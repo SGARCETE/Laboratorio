@@ -84,6 +84,7 @@ public class Interfaz_Principal {
 	private JTextField textCliente = new JTextField();
 	private JTextField textTotal_Pedido;
 
+	
 	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
 	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
 			String Nombre_Cliente_seleccionado = ((String)selectedItem);
@@ -582,21 +583,10 @@ public class Interfaz_Principal {
 						.addComponent(scrollPane_Lista_Pedidos, 0, 0, Short.MAX_VALUE))
 					.addGap(26))
 		);
-
-		JButton btnNuevo = new JButton("Nuevo");
-		btnNuevo.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/add-1-icon64.png")));
-		btnNuevo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tabbedPane.setSelectedIndex(0);
-			}
-		});
-		btnNuevo.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnNuevo.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNuevo.setBackground(Color.WHITE);
-		panel.add(btnNuevo);
+		panel.setLayout(null);
 
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setBounds(11, 11, 97, 91);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Modificar_Pedido_Seleccionado();
@@ -608,30 +598,119 @@ public class Interfaz_Principal {
 		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panel.add(btnModificar);
 		btnModificar.setBackground(Color.WHITE);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panel.add(btnCancelar);
-		btnCancelar.setBackground(Color.WHITE);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Cancelar_Pedido_seleccionado();
-			}
-		});
-		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 		
 		JButton btnComandaticket = new JButton("Ticket/Comanda");
+		btnComandaticket.setBounds(0, 614, 109, 91);
 		btnComandaticket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Generar_Comanda();
 			}
 		});
+		
+				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBounds(11, 410, 97, 91);
+				btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
+				btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+				panel.add(btnCancelar);
+				btnCancelar.setBackground(Color.WHITE);
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						Cancelar_Pedido_seleccionado();
+					}
+				});
+				btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
 		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnComandaticket.setBackground(Color.WHITE);
 		panel.add(btnComandaticket);
+		
+		
+		
+		
+		//---------------------------
+		// CAMBIAR ESTADOS
+		//---------------------------
+		
+		
+		JButton btnCobrado = new JButton("Cobrado");
+		btnCobrado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+				
+				String Estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+				
+				Pedido pedido = new Pedido();
+				
+				pedido.setNumero_Pedido(Numero_pedido);
+
+				if(Estado.equals("Preparado") || (Estado.equals("Enviado")))
+				{
+					sv_pedidos.modificar_estado(pedido, 4);
+					Actualizar_Lista_pedidos();	
+				}
+			}
+		});
+		btnCobrado.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCobrado.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCobrado.setBackground(Color.WHITE);
+		btnCobrado.setBounds(11, 312, 97, 91);
+		panel.add(btnCobrado);
+		
+		JButton btnEnViaje = new JButton("Enviado");
+		btnEnViaje.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+				
+				String Estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+				
+				
+				Pedido pedido = new Pedido();
+				
+				pedido.setNumero_Pedido(Numero_pedido);
+				
+				if(Estado.equals("Preparado"))
+				{
+					sv_pedidos.modificar_estado(pedido, 3);
+					Actualizar_Lista_pedidos();	
+				}
+			}
+		});
+		btnEnViaje.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnEnViaje.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEnViaje.setBackground(Color.WHITE);
+		btnEnViaje.setBounds(11, 210, 97, 91);
+		panel.add(btnEnViaje);
+		
+		JButton btnPreparado = new JButton("Preparado");
+		btnPreparado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+				
+				String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+				
+				Pedido pedido = new Pedido();
+				
+				pedido.setNumero_Pedido(Numero_pedido);
+				System.out.println(pedido.getESTADO());
+				if(Estado_pedido.equals("Pendiente"))
+				{
+					sv_pedidos.modificar_estado(pedido, 2);
+					Actualizar_Lista_pedidos();
+				}
+				
+			
+				
+			}
+		});
+		btnPreparado.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnPreparado.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnPreparado.setBackground(Color.WHITE);
+		btnPreparado.setBounds(11, 113, 97, 91);
+		panel.add(btnPreparado);
 
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
@@ -1047,9 +1126,15 @@ public class Interfaz_Principal {
 			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(Numero_pedido);
-			// LO ELIMINA DE LA BASE DE DATOS
-			sv_pedidos.eliminar_pedido(P_cancelar);
-			Actualizar_Lista_pedidos();
+			
+			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+			
+			if(!estado.equals("Cobrado"))
+			{
+				sv_pedidos.eliminar_pedido(P_cancelar);
+				Actualizar_Lista_pedidos();	
+			}
+			
 		}
 	}
 	
@@ -1158,5 +1243,4 @@ public class Interfaz_Principal {
 			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
 		}
 	}
-	
 }// ---> FIN CLASE

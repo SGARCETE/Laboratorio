@@ -13,10 +13,4 @@ public class Ejecutar_WILDSOFT {
 			}
 		});
 	}
-		
-	
-
-	
-	
-	
 }//---> FIN CLASE

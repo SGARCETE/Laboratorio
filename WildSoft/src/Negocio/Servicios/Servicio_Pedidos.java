@@ -21,6 +21,11 @@ public class Servicio_Pedidos {
 	public boolean eliminar_pedido(Pedido p){
 		return pedidoDAO.ELIMINAR_PEDIDO(p);
 	}
+	public boolean modificar_estado(Pedido p, Integer numero)
+	{
+		return pedidoDAO.MODIFICAR_ESTADO(p, numero);
+	}
+	
 	
 	public boolean modificar_pedido(Pedido p){
 		return pedidoDAO.MODIFICAR_PEDIDO(p);

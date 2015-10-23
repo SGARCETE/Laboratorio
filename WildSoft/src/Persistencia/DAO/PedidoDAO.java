@@ -11,6 +11,9 @@ public interface PedidoDAO {
 	public ArrayList<Pedido> getLISTA_PEDIDOS();
 
 	public boolean ELIMINAR_PEDIDO(Pedido p);
+	
+	public boolean MODIFICAR_ESTADO(Pedido p, Integer numero);
+	
 
 	public boolean MODIFICAR_PEDIDO(Pedido p);
 

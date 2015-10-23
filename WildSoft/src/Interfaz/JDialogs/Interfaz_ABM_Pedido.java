@@ -90,7 +90,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JTextField textCliente = new JTextField();
 	private JButton guardar; 
 	private JButton btnQuitar;
-	private JButton btnNewButton;
 	private JSpinner spinnerCantNueva;
 	/**
 	 * Create the dialog.
@@ -334,17 +333,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textTotal_Pedido.setBounds(474, 66, 167, 30);
 		contentPanel.add(textTotal_Pedido);
 		
-		btnNewButton = new JButton("");
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/edit-icon16.png")));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cambiar_estado();
-			}
-		});
-		btnNewButton.setBounds(293, 68, 30, 30);
-		contentPanel.add(btnNewButton);
-		
 		JPanel panelModificacionPR = new JPanel();
 		panelModificacionPR.setBorder(new TitledBorder(null, "Producto", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelModificacionPR.setBackground(Color.WHITE);
@@ -444,22 +432,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 
 
-	private void cambiar_estado() {
-		Object seleccion = JOptionPane.showInputDialog(
-		   this,
-		   "Seleccione el estado a cambiar",	// TEXTO EN VENTANA
-		   "Selector de estados",				// NOMBRE VENTANA
-		   JOptionPane.QUESTION_MESSAGE,		// TIPO DE JOPTIONPANE
-		   null,  								// null para icono defecto	
-		   ESTADOS, 							// LISTADO DE ESTADOS OBTENIDO DE LA BD
-		   PEDIDO_ACTUAL.getESTADO());			// SELECCION INICIAR (en el estado que esta el pedido)
-		if(seleccion!=null){
-			PEDIDO_ACTUAL.setESTADO(seleccion.toString());
-			label_ESTADO.setText(seleccion.toString());
-		}
-	}
-
-
 	private void iniciarParametros() {
 		
 	
@@ -488,7 +460,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
 			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
 			
-			if (label_ESTADO.getText().equals("Cobrado")){
+			if (!label_ESTADO.getText().equals("Pendiente")){
 				
 				System.out.println(label_ESTADO.getText());
 				textCliente.setEnabled(false);
@@ -503,11 +475,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				textObservaciones.setEnabled(false);
 				guardar.setEnabled(false);
 				btnQuitar.setEnabled(false);
-				btnNewButton.setEnabled(false);
-				
-				
-				
 			}
+			
+			
 		}
 		
 		// si el cliente no es nulo cargo los campos del cliente

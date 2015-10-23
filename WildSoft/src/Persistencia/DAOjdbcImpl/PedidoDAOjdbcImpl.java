@@ -158,6 +158,13 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		String SentenciaSQL = "UPDATE Pedido SET PD_estado = 5 where PD_id= " +P.getNumero_Pedido() ;
 		return conex.Insertar(SentenciaSQL);
 	}
+	
+	
+	public boolean MODIFICAR_ESTADO(Pedido P, Integer numero) {
+		String SentenciaSQL = "UPDATE Pedido SET PD_estado = "+ numero+ " where PD_id= " +P.getNumero_Pedido() ;
+		return conex.Insertar(SentenciaSQL);
+	}
+	
 	/*------------------------------------------------------------------------------*/
 
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
