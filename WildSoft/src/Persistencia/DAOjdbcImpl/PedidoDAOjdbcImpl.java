@@ -99,7 +99,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select  P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id"
 			 +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
@@ -111,7 +111,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setCliente(new Cliente (Fila.getString("CL_nombre")));
 				P.setTotal(Fila.getDouble("Precio"));
-				P.setEs_Delivery(Boolean.valueOf("P.PD_Delivery"));
+				Boolean delivery = false;
+				if(Fila.getInt("PD_Delivery")==1){
+					delivery = true;
+				}
+				P.setEs_Delivery(delivery);
 				Arreglo.add(P);
 
 			}
