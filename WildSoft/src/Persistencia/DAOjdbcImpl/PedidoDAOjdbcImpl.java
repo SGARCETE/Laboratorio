@@ -112,14 +112,14 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id"
+			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
 			 +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido P = new Pedido();
 				
-				P.setNumero_Pedido(Fila.getInt("PD_id"));
+				P.setNumero_Pedido(Fila.getInt("PD_numero"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setCliente(new Cliente (Fila.getString("CL_nombre")));
