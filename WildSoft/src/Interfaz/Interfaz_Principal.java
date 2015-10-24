@@ -1068,10 +1068,12 @@ public class Interfaz_Principal {
 	 */
 	private void Guardar_pedido() {
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
+		
 			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
 			if (chckbxDelivery.isSelected()) {
 				// agregar datos del pedido
 				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
+				System.out.println(chckbxDelivery.isSelected());
 			}
 			if(CLIENTE_ACTUAL!=null)
 				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
