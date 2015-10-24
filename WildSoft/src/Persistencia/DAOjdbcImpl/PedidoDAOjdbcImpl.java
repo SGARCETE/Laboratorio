@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -18,19 +19,30 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 
+	@SuppressWarnings("deprecation")
 	public boolean AGREGAR_PEDIDO(Pedido p) {
+		
+		int idDiaria = 1;
+		
+		Pedido pedidoAnterior = OBTENER_PEDIDO(ObtenerUltimoPedido());
+		Date fecha = new Date();
+		if(pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
+			idDiaria = pedidoAnterior.getIdDiaria() + 1;
+		}
+		
 		String CLIENTE = "NULL";
 		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
 			CLIENTE = p.getCliente().getID_Cliente().toString();
 		else
 			CLIENTE="1";
 		String PEDIDO = "NULL";
-		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega, PD_Delivery) VALUES ("+
+		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega, PD_Delivery, PD_numero) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(p.getFecha_Hora_Pedido())	+"',"+
 				""+		1													+","+
 				""+		CLIENTE												+","+
 				""+		PEDIDO												+","+									
-				""+ p.getEs_Delivery()										+")";
+				""+ 	p.getEs_Delivery()									+","+
+				""+ 	idDiaria											+");";
 //		System.out.println(SentenciaSQL_PEDIDO);
 		boolean Exito_al_Ingresar_pedido = conex.Insertar(SentenciaSQL_PEDIDO);
 		
@@ -76,6 +88,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	 `PD_entrega` int(11) DEFAULT NULL,
 	*/
 	}
+	
 	/*------------------------------------------------------------------------------*/
 
 	private Integer ObtenerUltimoPedido() {
@@ -202,7 +215,12 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setNumero_Pedido(Fila.getInt("PD_id"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
-				P.setEs_Delivery(Fila.getBoolean("PD_Delivery"));
+				Boolean delivery = false;
+				if(Fila.getInt("PD_Delivery")==1){
+					delivery = true;
+				}
+				P.setEs_Delivery(delivery);
+				P.setIdDiaria(Fila.getInt("PD_numero"));
 				ID_Cliente = Fila.getInt("PD_CLIENTE");
 			}
 

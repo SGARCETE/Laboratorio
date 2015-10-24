@@ -16,6 +16,7 @@ public class Pedido {
 	private Cliente cliente = null;
 	private Double  Total = 0.0;
 	private Date 	Hora_Entrega;			// Hora en la que se debe entregar el pedido
+	private int idDiaria = 1;
 	
 	/** GETTERS AND SETTERS **/
 	
@@ -78,6 +79,12 @@ public class Pedido {
 	}
 	public void setESTADO(String eSTADO) {
 		ESTADO = eSTADO;
+	}
+	public int getIdDiaria() {
+		return idDiaria ;
+	}
+	public void setIdDiaria(int idDiaria){
+		this.idDiaria = idDiaria;
 	}
 	
 	
