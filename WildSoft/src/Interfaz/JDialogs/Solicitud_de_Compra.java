@@ -2,6 +2,7 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,6 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Negocio.Modelo.Proveedor;
+import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Proveedores;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 @SuppressWarnings("serial")
 public class Solicitud_de_Compra extends JDialog {
 
@@ -25,26 +32,22 @@ public class Solicitud_de_Compra extends JDialog {
 	private final ButtonGroup selector = new ButtonGroup();
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTable table;
+	JComboBox<String> comboProveedor;
+	JComboBox<String> comboCategorias;
+	private Servicio_Proveedores sv_proveedor;
+	private ArrayList<String> Lista_Categorias;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Solicitud_de_Compra dialog = new Solicitud_de_Compra();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public Solicitud_de_Compra() {
+	public Solicitud_de_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+		
+		sv_proveedor = principal_neg_int.getSvProveedores();
+		
+		inicializar();
+		
 		setBounds(100, 100, 963, 466);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -59,88 +62,73 @@ public class Solicitud_de_Compra extends JDialog {
 		
 		JRadioButton rdbtnCombo = new JRadioButton("Seleccionar por lista");
 		selector.add(rdbtnCombo);
-		rdbtnCombo.setBounds(38, 7, 147, 23);
+		rdbtnCombo.setBounds(6, 7, 147, 23);
 		panel.add(rdbtnCombo);
 		
 		JRadioButton rdbtnSearch = new JRadioButton("Buscar elementos");
 		selector.add(rdbtnSearch);
-		rdbtnSearch.setBounds(233, 7, 191, 23);
+		rdbtnSearch.setBounds(165, 7, 191, 23);
 		panel.add(rdbtnSearch);
 		
-		JLabel lblProveedor = new JLabel("Proveedor:");
-		lblProveedor.setBounds(10, 94, 64, 25);
-		contentPanel.add(lblProveedor);
+		comboProveedor = new JComboBox<String>();
+		comboProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Seleccion_Categoria();
+			}
+		});
+		comboProveedor.setBounds(617, 6, 304, 25);
+		panel.add(comboProveedor);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(96, 94, 304, 25);
-		contentPanel.add(comboBox);
+		JLabel lblProveedor = new JLabel("Proveedor:");
+		lblProveedor.setBounds(541, 6, 64, 25);
+		panel.add(lblProveedor);
 		
 		textField = new JTextField();
-		textField.setBounds(410, 59, 388, 23);
+		textField.setBounds(433, 60, 368, 23);
 		contentPanel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblCategoria = new JLabel("Categoria:");
-		lblCategoria.setBounds(10, 59, 64, 22);
+		lblCategoria.setBounds(10, 61, 64, 22);
 		contentPanel.add(lblCategoria);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(96, 59, 304, 25);
-		contentPanel.add(comboBox_1);
+		comboCategorias = new JComboBox<String>();
+		comboCategorias.setBounds(117, 60, 304, 25);
+		contentPanel.add(comboCategorias);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(410, 93, 388, 25);
+		textField_1.setBounds(433, 93, 368, 25);
 		contentPanel.add(textField_1);
 		
-		JLabel lblProducto = new JLabel("Producto:");
-		lblProducto.setBounds(10, 128, 64, 28);
+		JLabel lblProducto = new JLabel("Materia Primas:");
+		lblProducto.setBounds(10, 93, 92, 28);
 		contentPanel.add(lblProducto);
 		
 		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setBounds(96, 130, 304, 25);
+		comboBox_2.setBounds(117, 94, 304, 25);
 		contentPanel.add(comboBox_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(410, 129, 388, 25);
-		contentPanel.add(textField_2);
-		
 		JSpinner spinner = new JSpinner();
-		spinner.setBounds(880, 93, 57, 25);
+		spinner.setBounds(880, 74, 57, 25);
 		contentPanel.add(spinner);
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(808, 98, 67, 16);
+		lblCantidad.setBounds(813, 79, 67, 16);
 		contentPanel.add(lblCantidad);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 167, 927, 211);
+		scrollPane.setBounds(10, 130, 931, 253);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
 			},
 			new String[] {
 				"Categoria", "Nombre", "Cantidad"
 			}
-		) {
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class
-			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		));
 		scrollPane.setColumnHeaderView(table);
 		{
 			JPanel buttonPane = new JPanel();
@@ -156,6 +144,28 @@ public class Solicitud_de_Compra extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+			}
+		}
+	}
+	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	private void inicializar(){
+		
+		ArrayList<Proveedor> ListaProveedor = sv_proveedor.getProveedores();
+		comboProveedor.addItem("Seleccione el Proveedor");
+		for (int i = 0; i < ListaProveedor.size(); i++) {
+			comboProveedor.addItem(ListaProveedor.get(i).getNombre());
+		}
+		
+	}
+	
+	private void Seleccion_Categoria() {
+		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
+			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
+			comboCategorias.removeAllItems();
+			for (int i = 0; i < Lista_Categorias.size(); i++) {
+				comboCategorias.addItem(Lista_Categorias.get(i));
 			}
 		}
 	}
