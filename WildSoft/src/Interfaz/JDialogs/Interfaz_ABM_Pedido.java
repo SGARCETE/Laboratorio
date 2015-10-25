@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -42,12 +41,6 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
-import Persistencia.Conector.ConectorMySQL;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -485,6 +478,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			textCliente.setText(PEDIDO_ACTUAL.getCliente().getNombre());
 			textDetalle.setText(PEDIDO_ACTUAL.getCliente().getDetalle());
 			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
+			textDire.setText(PEDIDO_ACTUAL.getCliente().getDomicilio());
 //			PEDIDO_ACTUAL.getCliente().getID_Cliente();
 		}
 		//AutocompletarCliente();
