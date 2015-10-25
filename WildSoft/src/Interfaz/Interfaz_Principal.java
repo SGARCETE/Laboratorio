@@ -535,7 +535,7 @@ public class Interfaz_Principal {
 		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos,
 				null);
 
-		scrollPane_Lista_Pedidos = new JScrollPane();
+		scrollPane_Lista_Pedidos = new JScrollPane();   
 
 		JLabel lblListadoDePedidos = new JLabel("Listado de pedidos");
 		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
