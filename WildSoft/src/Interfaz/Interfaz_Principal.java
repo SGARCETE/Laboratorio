@@ -600,7 +600,7 @@ public class Interfaz_Principal {
 		btnModificar.setBackground(Color.WHITE);
 		
 		JButton btnComandaticket = new JButton("Ticket/Comanda");
-		btnComandaticket.setBounds(0, 614, 109, 91);
+		btnComandaticket.setBounds(11, 512, 98, 91);
 		btnComandaticket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Generar_Comanda();
