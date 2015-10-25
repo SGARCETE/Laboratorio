@@ -6,7 +6,9 @@ public class Proveedor {
 	private String nombre="";
 	private String direccion="";
 	private String telefono="";
-	private String categoria="";
+	private String categoria_String="";
+	private Integer categoria;
+	
 	
 	
 	
@@ -34,10 +36,16 @@ public class Proveedor {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	public String getCategoria() {
+	public String getCategoria_String() {
+		return categoria_String;
+	}
+	public void setCategoria_String(String categoria) {
+		this.categoria_String = categoria;
+	}
+	public Integer getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
+	public void setCategoria(Integer categoria) {
 		this.categoria = categoria;
 	}
 	
