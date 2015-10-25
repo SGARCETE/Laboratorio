@@ -21,7 +21,9 @@ import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -35,8 +37,11 @@ public class Solicitud_de_Compra extends JDialog {
 	private JTable table;
 	JComboBox<String> comboProveedor;
 	JComboBox<String> comboCategorias;
+	JComboBox<String> comboMateriaPrima;
 	private Servicio_Proveedores sv_proveedor;
+	private Servicio_Materia_Prima sv_materiaPrima;
 	private ArrayList<String> Lista_Categorias;
+	private ArrayList<String> Lista_MateriasPrimas;
 
 
 	/**
@@ -93,6 +98,11 @@ public class Solicitud_de_Compra extends JDialog {
 		contentPanel.add(lblCategoria);
 		
 		comboCategorias = new JComboBox<String>();
+		comboCategorias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Seleccion_Materia_Prima();
+			}
+		});
 		comboCategorias.setBounds(117, 60, 304, 25);
 		contentPanel.add(comboCategorias);
 		
@@ -105,9 +115,9 @@ public class Solicitud_de_Compra extends JDialog {
 		lblProducto.setBounds(10, 93, 92, 28);
 		contentPanel.add(lblProducto);
 		
-		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setBounds(117, 94, 304, 25);
-		contentPanel.add(comboBox_2);
+		comboMateriaPrima = new JComboBox<String>();
+		comboMateriaPrima.setBounds(117, 94, 304, 25);
+		contentPanel.add(comboMateriaPrima);
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(880, 74, 57, 25);
@@ -149,7 +159,7 @@ public class Solicitud_de_Compra extends JDialog {
 	}
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
+
 	private void inicializar(){
 		
 		ArrayList<Proveedor> ListaProveedor = sv_proveedor.getProveedores();
@@ -166,6 +176,16 @@ public class Solicitud_de_Compra extends JDialog {
 			comboCategorias.removeAllItems();
 			for (int i = 0; i < Lista_Categorias.size(); i++) {
 				comboCategorias.addItem(Lista_Categorias.get(i));
+			}
+		}
+	}
+	
+	protected void Seleccion_Materia_Prima() {
+		if (!comboCategorias.getSelectedItem().toString().isEmpty()) {
+			Lista_MateriasPrimas = sv_materiaPrima.getMateriasCategoria(comboCategorias.getSelectedItem().toString());
+			comboMateriaPrima.removeAllItems();
+			for (int i = 0; i < Lista_MateriasPrimas.size(); i++) {
+				comboMateriaPrima.addItem(Lista_MateriasPrimas.get(i));
 			}
 		}
 	}
