@@ -634,6 +634,7 @@ public class Interfaz_Principal {
 		
 		
 		JButton btnCobrado = new JButton("Cobrado");
+		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/cobrado64.png")));
 		btnCobrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -659,6 +660,7 @@ public class Interfaz_Principal {
 		panel.add(btnCobrado);
 		
 		JButton btnEnViaje = new JButton("Enviado");
+		btnEnViaje.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/envidao64.png")));
 		btnEnViaje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -685,6 +687,7 @@ public class Interfaz_Principal {
 		panel.add(btnEnViaje);
 		
 		JButton btnPreparado = new JButton("Preparado");
+		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
 		btnPreparado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
