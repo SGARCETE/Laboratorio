@@ -35,7 +35,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select * from Categoria_MP CM JOIN Materia_prima MP where MP.MP_categoria= CA_id and CM.CA_nombre = '" + Categoria_mp + "'");
+			st.executeQuery("select * from Categoria_MP CM JOIN Materia_Prima MP where MP.MP_categoria= CA_id and CM.CA_nombre = '" + Categoria_mp + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Materia_Prima m = new Materia_Prima();				

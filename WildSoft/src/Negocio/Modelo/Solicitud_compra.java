@@ -1,16 +1,24 @@
 package Negocio.Modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Solicitud_compra {
 
 	private Integer id;
 	private String estado;
 	private Proveedor proveedor;
+	private Date fecha;
 	ArrayList<Materia_Prima> lista_materia_prima;
 	
 	
 	
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 	public Integer getId() {
 		return id;
 	}

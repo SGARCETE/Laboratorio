@@ -1,16 +1,24 @@
 package Negocio.Modelo;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 
 public class Materia_Prima {
 
 	private Integer id;
-	private String nombre;
-	private Date fecha_vencimiento;
-	private int categoria;
-	private String categoria_string;
+	private String nombre="";
+	private Date fecha_vencimiento = null;
+	private int categoria = 1;
+	private String categoria_string = "";
+	private int cantidad=0;
 	
 	
+	public int getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 	public Integer getId() {
 		return id;
 	}

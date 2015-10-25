@@ -9,6 +9,9 @@ public class Proveedor {
 	private String categoria_String="";
 	private Integer categoria;
 	
+	public Proveedor(String nombre){
+		this.nombre = nombre;
+	}
 	
 	
 	
