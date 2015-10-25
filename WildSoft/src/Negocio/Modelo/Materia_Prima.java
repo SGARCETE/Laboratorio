@@ -7,7 +7,8 @@ public class Materia_Prima {
 	private Integer id;
 	private String nombre;
 	private Date fecha_vencimiento;
-	private String categoria;
+	private int categoria;
+	private String categoria_string;
 	
 	
 	public Integer getId() {
@@ -28,12 +29,21 @@ public class Materia_Prima {
 	public void setFecha_vencimiento(Date fecha_vencimiento) {
 		this.fecha_vencimiento = fecha_vencimiento;
 	}
-	public String getCategoria() {
-		return categoria;
+	
+	public String getCategoria_string() {
+		return categoria_string;
 	}
-	public void setCategoria(String categoria) {
+	public void setCategoria_string(String categoria_string) {
+		this.categoria_string = categoria_string;
+	}
+	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
+	
+	public int getCategoria() {
+		return this.categoria = categoria;
+	}
+	
 	
 	
 }
