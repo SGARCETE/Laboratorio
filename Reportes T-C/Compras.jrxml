@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Compras" language="groovy" pageWidth="266" pageHeight="432" columnWidth="266" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8473c04b-8e3e-420e-b0e1-91c4830a9953">
+	<property name="ireport.zoom" value="2.853116706110003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT SD_id, PV_nombre, CA_nombre, SD_precio
+FROM Solicitud_compra SD JOIN Solicitud_estado SE JOIN Proveedor PV JOIN Materia_prima MP
+JOIN Compra_MateriaPrima CM JOIN Categoria_MP CA
+ON
+SD.SD_estado= SE.SEST_id AND SD.SD_proveedor= PV.PV_id AND SD.SD_id= CM.CM_compra
+AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id GROUP BY SD_id ;]]>
+	</queryString>
+	<field name="SD_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PV_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CA_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SD_precio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="SD_precio_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{SD_precio}]]></variableExpression>
+	</variable>
+	<variable name="SD_precio_2" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{SD_precio}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="221" height="29" uuid="44391032-84cb-4da9-aa45-9c6c667d75f2"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPRAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="2" width="28" height="15" uuid="782177f3-1967-4938-b835-4bf7e0dcb194"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="31" y="2" width="172" height="15" uuid="1ffe219f-a517-43af-872b-be54ff261b7a"/>
+				<text><![CDATA[PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="203" y="2" width="63" height="15" uuid="41bf942c-251a-4dae-bc6f-925f4c60cbd3"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="0" y="2" width="28" height="15" uuid="6d067e36-72ac-4624-a73a-26890252aa99"/>
+				<textFieldExpression><![CDATA[$F{SD_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="33" y="2" width="170" height="15" uuid="a322839b-d4b6-4435-8099-fca817f3d3c9"/>
+				<textFieldExpression><![CDATA[$F{PV_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00">
+				<reportElement x="213" y="2" width="52" height="15" uuid="a34390ae-f554-482a-9162-e7237a79feef"/>
+				<textFieldExpression><![CDATA[$F{SD_precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="216" height="1" uuid="a2cfda07-fe73-4d01-a169-e5a1bda17a36"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="154" y="4" width="46" height="20" uuid="4c339e17-cd7e-4066-b5b0-46aaaf8991a4"/>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.00">
+				<reportElement x="203" y="3" width="62" height="20" uuid="ac44a968-3672-4754-b076-b08d72346c49"/>
+				<textFieldExpression><![CDATA[$V{SD_precio_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -9,9 +9,17 @@ public class Solicitud_compra {
 	private String estado;
 	private Proveedor proveedor;
 	private Date fecha;
+	private Integer precio;
+	
 	ArrayList<Materia_Prima> lista_materia_prima;
 	
 	
+	public Integer getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Integer precio) {
+		this.precio = precio;
+	}
 	
 	public Date getFecha() {
 		return fecha;
