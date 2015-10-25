@@ -68,11 +68,11 @@ public class Solicitud_de_Compra extends JDialog {
 		panel.add(rdbtnSearch);
 		
 		JLabel lblProveedor = new JLabel("Proveedor:");
-		lblProveedor.setBounds(10, 59, 64, 25);
+		lblProveedor.setBounds(10, 94, 64, 25);
 		contentPanel.add(lblProveedor);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(96, 59, 304, 25);
+		comboBox.setBounds(96, 94, 304, 25);
 		contentPanel.add(comboBox);
 		
 		textField = new JTextField();
@@ -81,11 +81,11 @@ public class Solicitud_de_Compra extends JDialog {
 		textField.setColumns(10);
 		
 		JLabel lblCategoria = new JLabel("Categoria:");
-		lblCategoria.setBounds(10, 95, 64, 22);
+		lblCategoria.setBounds(10, 59, 64, 22);
 		contentPanel.add(lblCategoria);
 		
 		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(96, 94, 304, 25);
+		comboBox_1.setBounds(96, 59, 304, 25);
 		contentPanel.add(comboBox_1);
 		
 		textField_1 = new JTextField();
