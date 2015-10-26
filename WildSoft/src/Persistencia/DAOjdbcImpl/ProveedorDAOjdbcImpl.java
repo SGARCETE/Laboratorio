@@ -37,7 +37,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 			
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("select CA_nombre from Categoria_MP CA, Proveedor PV , proveedor_categoria PC where PC.PC_categoria_id=CA.CA_id"
-					+ " and PV.PV_id=PC.PC_proveedor_id and PV.PV_nombre= '" + nombreProveedor + "'");
+					+ " and PV.PV_id=PC.PC_proveedor_id and PV.PV_nombre= '" + nombreProveedor + "';");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Arreglo.add(Fila.getString("CA_Nombre"));
