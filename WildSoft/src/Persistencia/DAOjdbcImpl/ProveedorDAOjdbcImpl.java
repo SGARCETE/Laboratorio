@@ -19,11 +19,11 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 	
 	public boolean AGREGAR_PROVEEDOR(Proveedor p)
 	{
-		String SentenciaSQL= " INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono , PV_categoria ) VALUES ("+
+		String SentenciaSQL= " INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono ) VALUES ("+
 		"'"+ p.getNombre() + "',"
 		   + p.getDireccion() + "',"
-		   + p.getTelefono()+ "',"
-		   + p.getCategoria() + "')";
+		   + p.getTelefono()+ "',";
+		  
 		
 		return conex.Insertar(SentenciaSQL);
 	}
@@ -59,7 +59,8 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 			conex.connectToMySQL();// Conectar base
 			
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery(" select * from Proveedor P JOIN Categoria_MP C where P.PV_categoria=C.CA_id AND C.CA_nombre='"+ categoria_MP + "'");
+			st.executeQuery(" select * from Proveedor PV JOIN Proveedor_categoria PC JOIN Categoria_MP CA  where PV.PV_id= PC.PC_proveedor_id and  " +
+					"CA.CA_id = PC.PC_categoria_id and CA.CA_nombre = '"+ categoria_MP + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				
@@ -69,6 +70,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 				p.setDireccion(Fila.getString("PV_direccion"));
 				p.setTelefono(Fila.getString("PV_telefono"));
 				p.setCategoria(Fila.getInt("PV_categoria"));
+				Arreglo.add(p);
 			}
 			
 			conex.cerrarConexion();

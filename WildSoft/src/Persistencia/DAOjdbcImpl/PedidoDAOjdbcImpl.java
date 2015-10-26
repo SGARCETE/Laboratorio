@@ -212,7 +212,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){
 				P = new Pedido();
-				P.setNumero_Pedido(Fila.getInt("PD_id"));
+				P.setNumero_Pedido(Fila.getInt("PD_numero"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				Boolean delivery = false;
