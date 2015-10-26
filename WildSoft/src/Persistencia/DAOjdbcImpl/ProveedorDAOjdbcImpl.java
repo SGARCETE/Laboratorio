@@ -36,15 +36,12 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 			conex.connectToMySQL();// Conectar base
 			
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select CA_nombre from Categoria_MP CA JOIN Proveedor PV on PV.PV_categoria= " +
-					        "CA.CA_id and PV.PV_nombre= '" + nombreProveedor + "'");
+			st.executeQuery("select CA_nombre from Categoria_MP CA, Proveedor PV , proveedor_categoria PC where PC.PC_categoria_id=CA.CA_id"
+					+ " and PV.PV_id=PC.PC_proveedor_id and PV.PV_nombre= '" + nombreProveedor + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Arreglo.add(Fila.getString("CA_Nombre"));
-				}
-		
-	
-		
+			}
 	}
 		catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
@@ -59,7 +56,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 			conex.connectToMySQL();// Conectar base
 			
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery(" select * from Proveedor PV JOIN Proveedor_categoria PC JOIN Categoria_MP CA  where PV.PV_id= PC.PC_proveedor_id and  " +
+			st.executeQuery("select * from Proveedor PV JOIN Proveedor_categoria PC JOIN Categoria_MP CA  where PV.PV_id= PC.PC_proveedor_id and  " +
 					"CA.CA_id = PC.PC_categoria_id and CA.CA_nombre = '"+ categoria_MP + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
@@ -90,7 +87,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 			conex.connectToMySQL();// Conectar base
 			
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery(" select * from Proveedor P JOIN Categoria_MP C where P.PV_categoria=C.CA_id");
+			st.executeQuery("SELECT * FROM Proveedor");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				
@@ -99,7 +96,8 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO{
 				p.setNombre(Fila.getString("PV_nombre"));
 				p.setDireccion(Fila.getString("PV_direccion"));
 				p.setTelefono(Fila.getString("PV_telefono"));
-				p.setCategoria(Fila.getInt("PV_categoria"));
+				
+				Arreglo.add(p);
 			}
 			
 			conex.cerrarConexion();
