@@ -53,8 +53,6 @@ public class Solicitud_de_Compra extends JDialog {
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
 		
-		inicializar();
-		
 		setBounds(100, 100, 963, 466);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -158,6 +156,8 @@ public class Solicitud_de_Compra extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		inicializar();
 	}
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

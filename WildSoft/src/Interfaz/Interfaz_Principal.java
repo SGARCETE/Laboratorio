@@ -46,6 +46,7 @@ import javax.swing.table.DefaultTableModel;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
+import Interfaz.JDialogs.Solicitud_de_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -787,6 +788,14 @@ public class Interfaz_Principal {
 
 		JMenu mnMateriasPrimas = new JMenu("Materias primas");
 		mnProveedores.add(mnMateriasPrimas);
+		
+		JMenuItem mnCompraMP = new JMenuItem("Compra de materias primas");
+		mnCompraMP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Abrir_Interfaz_Solicitud_Compra();
+			}
+		});
+		mnMateriasPrimas.add(mnCompraMP);
 
 		JMenu mnReportes = new JMenu("Reportes ventas");
 		menuBar.add(mnReportes);
@@ -1057,8 +1066,15 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//				ABM PEDIDO
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	private void Abrir_Interfaz_ABM_Repartidor() {
 		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+	}
+	
+	private void Abrir_Interfaz_Solicitud_Compra() {
+		Solicitud_de_Compra frame = new Solicitud_de_Compra(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
 	}
