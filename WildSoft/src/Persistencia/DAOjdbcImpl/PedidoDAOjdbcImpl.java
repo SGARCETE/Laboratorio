@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
@@ -14,6 +16,10 @@ import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
+import sun.security.jca.GetInstance;
+import org.apache.poi.ss.usermodel.DateUtil;
+
+import MetAux.MetAux;
 
 public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
@@ -25,11 +31,26 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		int idDiaria = 1;
 		
 		Pedido pedidoAnterior = OBTENER_PEDIDO(ObtenerUltimoPedido());
+		
 		Date fecha = new Date();
-		if(pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
+		if( pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && 
+			pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && 
+			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
 			idDiaria = pedidoAnterior.getIdDiaria() + 1;
 		}
+	
+		// TEST
+		Calendar Fecha_HOY = new GregorianCalendar();
 		
+		Calendar Pedido_Anterior = Calendar.getInstance();
+		Pedido_Anterior.setTime(pedidoAnterior.getFecha_Hora_Pedido());
+
+		if(MetAux.isSameDay(Pedido_Anterior,Fecha_HOY)){
+			System.out.println("Es true");
+//			idDiaria = pedidoAnterior.getIdDiaria() + 1;
+		}
+		// FIN TEST
+
 		String CLIENTE = "NULL";
 		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
 			CLIENTE = p.getCliente().getID_Cliente().toString();
@@ -107,14 +128,23 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	/*------------------------------------------------------------------------------*/
 	
-	public ArrayList<Pedido> getLISTA_PEDIDOS() {
+	public ArrayList<Pedido> getLISTA_PEDIDOS(Calendar Fecha_mostrar) {
+		if(Fecha_mostrar==null)
+			return null;
 		ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
-			 +"  group by P.PD_id");
+			String FECHA_FILTRO = formato_yyyyMMdd.format(Fecha_mostrar.getTime());
+			String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+					+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
+					 +"  group by P.PD_id";
+			System.out.println("getLISTA_PEDIDOS "+Query);
+			st.executeQuery(Query);
+			
+//			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+//			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
+//			 +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido P = new Pedido();
@@ -303,7 +333,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return new Object[] { "Pendiente", "Preparado", "Enviado","Cobrado","Cancelado"};
 	}
 	
-	public boolean ELIMINAR_PRODUCTOS(Pedido P) {
+	public boolean ELIMINAR_PRODUCTOS_DEL_PEDIDO(Pedido P) {
 		String SentenciaSQL = "delete from producto_pedidos where producto_pedidos.PP_pedidoid = " +P.getNumero_Pedido() ;
 		return conex.Insertar(SentenciaSQL);
 	}

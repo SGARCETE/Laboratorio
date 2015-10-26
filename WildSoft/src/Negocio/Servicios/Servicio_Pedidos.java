@@ -1,6 +1,7 @@
 package Negocio.Servicios;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Negocio.Modelo.Pedido;
 import Persistencia.DAO.PedidoDAO;
@@ -10,41 +11,52 @@ public class Servicio_Pedidos {
 	
 	private PedidoDAO pedidoDAO = new PedidoDAOjdbcImpl();
 	
+	
+	// OBTENER UN PEDIDO
+	public Pedido get_pedido(Integer Numero_pedido){
+		return pedidoDAO.OBTENER_PEDIDO(Numero_pedido);
+	}
+	
+	// NUEVO PEDIDO
 	public boolean guardar_nuevo_pedido(Pedido p){
 		return pedidoDAO.AGREGAR_PEDIDO(p);
 	}
 	
-	public ArrayList<Pedido> get_Pedidos(){
-		return pedidoDAO.getLISTA_PEDIDOS();
-	}
-	
+	// ELIMINAR UN PEDIDO
 	public boolean eliminar_pedido(Pedido p){
 		return pedidoDAO.ELIMINAR_PEDIDO(p);
 	}
-	public boolean modificar_estado(Pedido p, Integer numero)
-	{
-		return pedidoDAO.MODIFICAR_ESTADO(p, numero);
-	}
-	
-	
+
+	// MODIFICAR UN PEDIDO
 	public boolean modificar_pedido(Pedido p){
 		return pedidoDAO.MODIFICAR_PEDIDO(p);
 	}
 	
-	public Pedido get_pedido(Integer Numero_pedido){
-		return pedidoDAO.OBTENER_PEDIDO(Numero_pedido);
+	// MODIFICAR ESTADO
+	public boolean modificar_estado(Pedido p, Integer numero){
+		return pedidoDAO.MODIFICAR_ESTADO(p, numero);
 	}
 
+	// OBTENER LISTA DE LOS PEDIDOS DE UNA DETERMINADA FECHA
+	public ArrayList<Pedido> get_Pedidos(Calendar Fecha_mostrar){
+		if(Fecha_mostrar!=null)
+			return pedidoDAO.getLISTA_PEDIDOS(Fecha_mostrar);
+		return null;
+	}
+	
+	// OBTENER TODOS LOS ESTADOS DE UN PEDIDO
 	public Object[] getTodos_los_estados() {
 		return pedidoDAO.getTODOS_LOS_ESTADOS();
 	}
 	
-	public boolean eliminar_productos(Pedido P){
-		 return pedidoDAO.ELIMINAR_PRODUCTOS(P);
+	// ELIMINAR UN PRODUCTO DEL PEDIDO
+	public boolean eliminar_producto_del_pedido(Pedido P){
+		 return pedidoDAO.ELIMINAR_PRODUCTOS_DEL_PEDIDO(P);
 	
 	}
 	
-	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p){
+	// AGREGAR UN PRODUCTO AL PEDIDO
+	public boolean agregar_producto_al_pedido(Pedido p){
 		return pedidoDAO.AGREGAR_PRODUCTO_PEDIDO(p);
 	}
 	

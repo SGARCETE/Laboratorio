@@ -16,6 +16,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -43,6 +44,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.data.general.DatasetChangeListener;
+
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
@@ -62,6 +65,9 @@ import Reportes.ReporteTicket;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import com.toedter.calendar.JDateChooser;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class Interfaz_Principal {
 
@@ -84,20 +90,17 @@ public class Interfaz_Principal {
 	private JTextField textValorTotal;
 	private JTextField textCliente = new JTextField();
 	private JTextField textTotal_Pedido;
-
-	
 	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
-	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
-			String Nombre_Cliente_seleccionado = ((String)selectedItem);
-			Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
-			Cargar_datos_Cliente(C);
-		}
+		public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
+				String Nombre_Cliente_seleccionado = ((String)selectedItem);
+				Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
+				Cargar_datos_Cliente(C);
+			}
 	});
 
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	
-
 	// <SERVICIOS> [solo los que voy a usar en esta clase, la instancia se le pide a Principal_Negocio_principal]
 	private Servicio_Productos sv_productos;
 	private Servicio_Clientes sv_clientes;
@@ -113,12 +116,13 @@ public class Interfaz_Principal {
 	private Principal_Negocio_Interfaz Principal_neg_int;
 	private JFrame frame_cocina;
 	
-	private Cliente CLIENTE_ACTUAL = null; 
+	private Cliente CLIENTE_ACTUAL = null;
+	private JDateChooser dateChooser_Fecha_mostrar;
+	private JButton btn_fecha_anterior;
+	private JButton btn_fecha_siguiente;
 
-	/**
-	 * Create the application.
-	 * @param principal_Negocio_Interfaz 
-	 */
+	/** Create the application.
+	 * @param principal_Negocio_Interfaz  */
 	public Interfaz_Principal(Principal_Negocio_Interfaz iNSTANCIA_principal_Negocio_Interfaz) {
 		Instancia_de_Interfaz_Principal = this; 					/* Esta instancia de Interfaz_principal sirve para poder pasarsela a otras ventanas externas y asi poder comunicarse*/
 		Principal_neg_int = iNSTANCIA_principal_Negocio_Interfaz; 	/* ESTA CLASE ES NECESARIA PARA QUE TODA INTERFAZ PUEDA COMUNICARSE CON LA PARTE DE NEGOCIO*/
@@ -132,6 +136,7 @@ public class Interfaz_Principal {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
@@ -139,7 +144,7 @@ public class Interfaz_Principal {
 		frmWildsoft.setBounds(100, 100, 1522, 920);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -298,15 +303,7 @@ public class Interfaz_Principal {
 		});
 		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		// Tabla que muestra el pedido
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 		scrollPane_Pedido_Completo = new JScrollPane();
-
-		JLabel lblResumenDelPedido = new JLabel("Pedido completo");
-		lblResumenDelPedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResumenDelPedido.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(
 				panel_Resumen_Pedido);
 		gl_panel_Resumen_Pedido.setHorizontalGroup(
@@ -314,18 +311,15 @@ public class Interfaz_Principal {
 				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
 					.addGap(8)
 					.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 1499, Short.MAX_VALUE)
 						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 					.addGap(8))
 		);
 		gl_panel_Resumen_Pedido.setVerticalGroup(
 			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
-					.addGap(9)
-					.addComponent(lblResumenDelPedido, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-					.addGap(6)
-					.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+					.addGap(50)
+					.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
 					.addGap(14)
 					.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(1))
@@ -537,53 +531,28 @@ public class Interfaz_Principal {
 				null);
 
 		scrollPane_Lista_Pedidos = new JScrollPane();   
+		scrollPane_Lista_Pedidos.setBounds(131, 40, 1369, 761);
 
 		JLabel lblListadoDePedidos = new JLabel("Listado de pedidos");
+		lblListadoDePedidos.setBounds(6, 7, 278, 25);
 		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListadoDePedidos.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JPanel panel = new JPanel();
+		panel.setBounds(6, 40, 119, 761);
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panel.setBackground(SystemColor.menu);
 		
 		JButton btnCargarListaDe = new JButton("Actualizar ");
+		btnCargarListaDe.setBounds(1417, 6, 83, 28);
 		btnCargarListaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
 				actualizarCocina();
+				actualizarCocina2();
 			}
 		});
-		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(
-				panel_Lista_de_pedidos);
-		gl_panel_Lista_de_pedidos.setHorizontalGroup(
-			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 1424, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCargarListaDe))
-						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 1446, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_panel_Lista_de_pedidos.setVerticalGroup(
-			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCargarListaDe))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
-						.addComponent(scrollPane_Lista_Pedidos, 0, 0, Short.MAX_VALUE))
-					.addGap(26))
-		);
 		panel.setLayout(null);
 
 		JButton btnModificar = new JButton("Modificar");
@@ -608,26 +577,25 @@ public class Interfaz_Principal {
 			}
 		});
 		
-				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(11, 410, 97, 91);
-				btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
-				btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
-				panel.add(btnCancelar);
-				btnCancelar.setBackground(Color.WHITE);
-				btnCancelar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Cancelar_Pedido_seleccionado();
-					}
-				});
-				btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(11, 410, 97, 91);
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnCancelar);
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cancelar_Pedido_seleccionado();
+			}
+		});
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
 		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnComandaticket.setBackground(Color.WHITE);
 		panel.add(btnComandaticket);
 		
-		
-		
+			
 		
 		//---------------------------
 		// CAMBIAR ESTADOS
@@ -638,20 +606,7 @@ public class Interfaz_Principal {
 		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/cobrado64.png")));
 		btnCobrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-				
-				String Estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
-				
-				Pedido pedido = new Pedido();
-				
-				pedido.setNumero_Pedido(Numero_pedido);
-
-				if(Estado.equals("Preparado") || (Estado.equals("Enviado")))
-				{
-					sv_pedidos.modificar_estado(pedido, 4);
-					Actualizar_Lista_pedidos();	
-				}
+				Setear_como_cobrado();
 			}
 		});
 		btnCobrado.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -664,21 +619,7 @@ public class Interfaz_Principal {
 		btnEnViaje.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/envidao64.png")));
 		btnEnViaje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-				
-				String Estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
-				
-				
-				Pedido pedido = new Pedido();
-				
-				pedido.setNumero_Pedido(Numero_pedido);
-				
-				if(Estado.equals("Preparado"))
-				{
-					sv_pedidos.modificar_estado(pedido, 3);
-					Actualizar_Lista_pedidos();	
-				}
+				Setear_como_Enviado();
 			}
 		});
 		btnEnViaje.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -691,23 +632,7 @@ public class Interfaz_Principal {
 		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
 		btnPreparado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-				
-				String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
-				
-				Pedido pedido = new Pedido();
-				
-				pedido.setNumero_Pedido(Numero_pedido);
-				System.out.println(pedido.getESTADO());
-				if(Estado_pedido.equals("Pendiente"))
-				{
-					sv_pedidos.modificar_estado(pedido, 2);
-					Actualizar_Lista_pedidos();
-				}
-				
-			
-				
+				Setear_como_Preparado();
 			}
 		});
 		btnPreparado.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -715,8 +640,40 @@ public class Interfaz_Principal {
 		btnPreparado.setBackground(Color.WHITE);
 		btnPreparado.setBounds(11, 113, 97, 91);
 		panel.add(btnPreparado);
-
-		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
+		panel_Lista_de_pedidos.setLayout(null);
+		panel_Lista_de_pedidos.add(lblListadoDePedidos);
+		panel_Lista_de_pedidos.add(btnCargarListaDe);
+		panel_Lista_de_pedidos.add(panel);
+		panel_Lista_de_pedidos.add(scrollPane_Lista_Pedidos);
+		
+		btn_fecha_anterior = new JButton("");
+		btn_fecha_anterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Fecha_Anterior();
+			}
+		});
+		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
+		btn_fecha_anterior.setBounds(411, 7, 50, 35);
+		panel_Lista_de_pedidos.add(btn_fecha_anterior);
+		
+		dateChooser_Fecha_mostrar = new JDateChooser();
+		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				Actualizar_Lista_pedidos();
+			}
+		});
+		dateChooser_Fecha_mostrar.setBounds(467, 7, 164, 35);
+		panel_Lista_de_pedidos.add(dateChooser_Fecha_mostrar);
+		
+		btn_fecha_siguiente = new JButton("");
+		btn_fecha_siguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Fecha_Siguiente();
+			}
+		});
+		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
+		btn_fecha_siguiente.setBounds(637, 7, 50, 35);
+		panel_Lista_de_pedidos.add(btn_fecha_siguiente);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -806,15 +763,11 @@ public class Interfaz_Principal {
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
 		mnAyuda.add(mntmAcercaDeWildsoft);
 
-	}// --> FIN INTERFAZ
-
+	}// --> FIN INTERFAZ	
 	
-
-	/**
-	 * CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ
-	 */
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ	 */
 	private void iniciarParametros() {
-		
 		// Creacion de la tabla vacia de lista de pedidos
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
@@ -823,7 +776,9 @@ public class Interfaz_Principal {
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		
-		Actualizar_Lista_pedidos();
+		dateChooser_Fecha_mostrar.setCalendar(new GregorianCalendar());
+		
+//		Actualizar_Lista_pedidos();
 		
 		AutocompletarCliente();
 		
@@ -834,8 +789,11 @@ public class Interfaz_Principal {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 		
-		
-		
+		Generar_Monitor_cocina();
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Generar_Monitor_cocina() {
 		/**		MANEJA LAS PANTALLAS	**/
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
@@ -862,11 +820,10 @@ public class Interfaz_Principal {
         frame_cocina.setBounds(R);
         frame_cocina.setVisible(true);
 	}
-
-	/***
-	 * CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL
-	 * TOTAL DEL PEDIDO
-	 */
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL
+	 * TOTAL DEL PEDIDO */
 	private void Calcula_totales() {
 		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
 
@@ -887,18 +844,14 @@ public class Interfaz_Principal {
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
 	}
-
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL
+	/** CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL
 	 * COMBOBOX, ESTE DATO SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A
 	 * CONTINUACION SE CARGAN LAS VARIEDADES DEL TIPO DE PRODUCTO SELECCIONADO:
 	 * EJEMPLO: SI SE SELECCIONO BEBIDA, SE DEBE OBTENER LAS VARIEDADES DE
 	 * BEBIDAS: COCACOLA, SPRITE, VINO Y SETEAR EN EL COMBOBOX Y AUTOCOMPLETER
-	 * DE VARIEDADES
-	 */
+	 * DE VARIEDADES */
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
 			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
@@ -909,9 +862,9 @@ public class Interfaz_Principal {
 			}
 		}
 	}
-
-	/**
-	 * CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX,
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX,
 	 * ESTE DATO SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE
 	 * CARGA EL PRECIO DE LA VARIEDAD SELECCIONADA. EJEMPLO: SE SELECCIONA LA
 	 * VARIEDAD COCACOLA [DE BEBIDAS], SE OBTIENE EL PRECIO DE DICHO PRODUCTO Y
@@ -932,10 +885,8 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// LIMPIADOR DE CAMPOS
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * SE LIMPIAN LOS DATOS DEL FORMULARIO DE ALTA DE PRODUCTO PARA PODER
-	 * INGRESAR UNO NUEVO
-	 */
+	/** SE LIMPIAN LOS DATOS DEL FORMULARIO DE ALTA DE PRODUCTO PARA PODER
+	 * INGRESAR UNO NUEVO*/
 	private void Limpiar_Formulario_pedido() {
 		PRODUCTO_ACTUAL = new Producto();
 		comboBoxProducto.setSelectedIndex(0);
@@ -946,7 +897,6 @@ public class Interfaz_Principal {
 		textObservaciones.setText("");
 	}
 
-	/**	 */
 	private void Limpiar_Todo() {
 		Limpiar_Formulario_pedido();
 		textCliente.setText("");
@@ -961,13 +911,126 @@ public class Interfaz_Principal {
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 	}
 
+
+
+	
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// AGREGAR
+	/** ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA
+	 * OPCION "DELIVERY" EN LA INTERFAZ*/
+	private void Servicio_Delivery() {
+		textCliente.setEnabled(chckbxDelivery.isSelected());
+		textDomicilio.setEnabled(chckbxDelivery.isSelected());
+		textTelefono.setEnabled(chckbxDelivery.isSelected());
+		textDetalle.setEnabled(chckbxDelivery.isSelected());
+	}
+	
+	
+	
+	
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de
-	 * pedido general
-	 */
+	//				ABM PEDIDO
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Abrir_Interfaz_ABM_Repartidor() {
+		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+	}
+		
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/*** ALTA DE PEDIDO */
+	private void Guardar_pedido() {
+		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
+		
+			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
+			if (chckbxDelivery.isSelected()) {
+				// agregar datos del pedido
+				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
+				System.out.println(chckbxDelivery.isSelected());
+			}
+			if(CLIENTE_ACTUAL!=null)
+				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+			// GUARDA EL PEDIDO
+			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
+			// ACTUALIZA EL LISTADO DE PEDIDOS
+			Actualizar_Lista_pedidos();
+			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
+			Limpiar_Todo();
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** MODIFICACION DE PEDIDO */
+	private void Modificar_Pedido_Seleccionado() {
+		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
+			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
+			frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
+			frame.setModal(true);
+			frame.setVisible(true);
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA)	 */
+	private void Cancelar_Pedido_seleccionado() {
+		if (Tabla_Lista_pedidos != null	&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			Pedido P_cancelar = new Pedido();
+			P_cancelar.setNumero_Pedido(Numero_pedido);
+			
+			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+			
+			if(!estado.equals("Cobrado"))
+			{
+				sv_pedidos.eliminar_pedido(P_cancelar);
+				Actualizar_Lista_pedidos();	
+			}
+			
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Actualizar_Lista_pedidos() {
+		if(dateChooser_Fecha_mostrar.getCalendar()!=null){
+			ArrayList<Pedido> Lista_Pedidos =  sv_pedidos.get_Pedidos(dateChooser_Fecha_mostrar.getCalendar());
+			Model_Listado_Pedidos model = new Model_Listado_Pedidos();
+			
+			for (int i = 0; i < Lista_Pedidos.size(); i++) {
+				Pedido PE = Lista_Pedidos.get(i);
+				String Nombre_Cliente = "";
+				if(PE.getCliente()!=null)
+					Nombre_Cliente = PE.getCliente().getNombre();
+				model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
+			
+			}
+			
+			Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
+			// Accion al darle doble click sobre un pedido
+			Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
+				public void mouseClicked(MouseEvent e){
+					if (e.getClickCount() == 2){
+						Modificar_Pedido_Seleccionado();
+					}
+				}
+			});
+			scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Abrir_Interfaz_Solicitud_Compra() {
+		Solicitud_de_Compra frame = new Solicitud_de_Compra(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+	}
+	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// AGREGAR AL PEDIDO
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de
+	 * pedido general*/
 	private void Agregar_al_Pedido() {
 		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a
@@ -1016,18 +1079,15 @@ public class Interfaz_Principal {
 			}
 		}
 	}
-
-
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// QUITAR/ ELIMINAR/ CANCELAR
+	// QUITAR/ ELIMINAR/ CANCELAR DE UN PEDIDO
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO,
-	 * SE ELIMINARA ESE ELEMENTO DE LA LISTA
-	 */
+	/** SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO,
+	 * SE ELIMINARA ESE ELEMENTO DE LA LISTA */
 	private void Quitar_al_Pedido() {
-//		 LO QUITA DE LA LISTA DE PEDIDO
-		 if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+		//		 LO QUITA DE LA LISTA DE PEDIDO
+		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
 			 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
 			 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
 			 Integer removidos = 0;
@@ -1046,119 +1106,52 @@ public class Interfaz_Principal {
 				Calcula_totales();
 			}
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// CAMBIA ESTADO DEL PEDIDO //
+	private void Setear_como_Preparado() {
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+		Pedido pedido = new Pedido();
+		pedido.setNumero_Pedido(Numero_pedido);
+		System.out.println(pedido.getESTADO());
 
-	
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA
-	 * OPCION "DELIVERY" EN LA INTERFAZ
-	 */
-	private void Servicio_Delivery() {
-		textCliente.setEnabled(chckbxDelivery.isSelected());
-		textDomicilio.setEnabled(chckbxDelivery.isSelected());
-		textTelefono.setEnabled(chckbxDelivery.isSelected());
-		textDetalle.setEnabled(chckbxDelivery.isSelected());
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//				ABM PEDIDO
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-	private void Abrir_Interfaz_ABM_Repartidor() {
-		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
-		frame.setModal(true);
-		frame.setVisible(true);
-	}
-	
-	private void Abrir_Interfaz_Solicitud_Compra() {
-		Solicitud_de_Compra frame = new Solicitud_de_Compra(Principal_neg_int);
-		frame.setModal(true);
-		frame.setVisible(true);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//				ABM PEDIDO
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**
-	 * ALTA DE PEDIDO
-	 */
-	private void Guardar_pedido() {
-		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
 		
-			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
-			if (chckbxDelivery.isSelected()) {
-				// agregar datos del pedido
-				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
-				System.out.println(chckbxDelivery.isSelected());
-			}
-			if(CLIENTE_ACTUAL!=null)
-				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
-			// GUARDA EL PEDIDO
-			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
-			// ACTUALIZA EL LISTADO DE PEDIDOS
+		if(Estado_pedido.equals("Pendiente")){
+			sv_pedidos.modificar_estado(pedido, 2);
 			Actualizar_Lista_pedidos();
-			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
-			Limpiar_Todo();
 		}
 	}
-	private void Actualizar_Lista_pedidos() {
-		ArrayList<Pedido> Lista_Pedidos =  sv_pedidos.get_Pedidos();
-		Model_Listado_Pedidos model = new Model_Listado_Pedidos();
-		for (int i = 0; i < Lista_Pedidos.size(); i++) {
-			Pedido PE = Lista_Pedidos.get(i);
-			String Nombre_Cliente = "";
-			if(PE.getCliente()!=null)
-				Nombre_Cliente = PE.getCliente().getNombre();
-			model.addRow(new Object[] { PE.getNumero_Pedido(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
+	// CAMBIA ESTADO DEL PEDIDO //
+	private void Setear_como_Enviado() {
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+		Pedido pedido = new Pedido();
+		pedido.setNumero_Pedido(Numero_pedido);
+		System.out.println(pedido.getESTADO());
 		
+		
+		if(Estado_pedido.equals("Preparado")){
+			sv_pedidos.modificar_estado(pedido, 3);
+			Actualizar_Lista_pedidos();	
 		}
-		
-		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
-		// Accion al darle doble click sobre un pedido
-		Tabla_Lista_pedidos.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				if (e.getClickCount() == 2){
-					Modificar_Pedido_Seleccionado();
-				}
-			}
-		});
-		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 	}
-	/**
-	 * MODIFICACION DE PEDIDO
-	 */
-	private void Modificar_Pedido_Seleccionado() {
-		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
-			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-			frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0));
-			frame.setModal(true);
-			frame.setVisible(true);
+	// CAMBIA ESTADO DEL PEDIDO //
+	private void Setear_como_cobrado() {
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
+		Pedido pedido = new Pedido();
+		pedido.setNumero_Pedido(Numero_pedido);
+		System.out.println(pedido.getESTADO());
+		
+		
+		if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
+			sv_pedidos.modificar_estado(pedido, 4);
+			Actualizar_Lista_pedidos();	
 		}
 	}
 	
-	/**
-	 * BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA)
-	 */
-	private void Cancelar_Pedido_seleccionado() {
-		if (Tabla_Lista_pedidos != null	&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-			Pedido P_cancelar = new Pedido();
-			P_cancelar.setNumero_Pedido(Numero_pedido);
-			
-			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 4);
-			
-			if(!estado.equals("Cobrado"))
-			{
-				sv_pedidos.eliminar_pedido(P_cancelar);
-				Actualizar_Lista_pedidos();	
-			}
-			
-		}
-	}
-	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Cargar_datos_Cliente(Cliente c) {
 		CLIENTE_ACTUAL = c;
 		textDomicilio.setText(c.getDomicilio());
@@ -1166,6 +1159,8 @@ public class Interfaz_Principal {
 		textDetalle.setText(c.getDetalle());
 	}
 	
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
@@ -1173,8 +1168,14 @@ public class Interfaz_Principal {
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
 	
-	public void actualizarCocina() {
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
+	private void actualizarCocina2() {
+		// TODO Auto-generated method stub
 		
+	}
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void actualizarCocina() {
 		ArrayList<String[]> pedidos = new ArrayList<String[]>();
 		ArrayList<String[]> productos = new ArrayList<String[]>();
 		
@@ -1257,6 +1258,7 @@ public class Interfaz_Principal {
 		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Comanda() {
 		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
 			ReporteTicket RT = new 					ReporteTicket();
@@ -1264,4 +1266,24 @@ public class Interfaz_Principal {
 			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
 		}
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Fecha_Siguiente() {
+		Calendar c = dateChooser_Fecha_mostrar.getCalendar();
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		dateChooser_Fecha_mostrar.setCalendar(c);
+		Actualizar_Lista_pedidos();
+		actualizarCocina();
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Fecha_Anterior() {
+		Calendar c = dateChooser_Fecha_mostrar.getCalendar();
+		c.add(Calendar.DAY_OF_MONTH, -1);
+		dateChooser_Fecha_mostrar.setCalendar(c);
+		Actualizar_Lista_pedidos();
+		actualizarCocina();
+	}
+	
+	
 }// ---> FIN CLASE
