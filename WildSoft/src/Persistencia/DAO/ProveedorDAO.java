@@ -11,5 +11,9 @@ public interface ProveedorDAO {
 	boolean AGREGAR_PROVEEDOR(Proveedor p);
 	
 	boolean ELIMINAR_Proveedor(Proveedor p);
+	
+	ArrayList<Proveedor> get_Proveedores();
+	
+	ArrayList<String> getCategoriasProveedor(String nombreProveedor);
 
 }
