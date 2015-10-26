@@ -19,7 +19,7 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Clientes  		SvClientes = new Servicio_Clientes();
 	private Servicio_Repartidores 	SvRepartidores = new Servicio_Repartidores();
 	private Servicio_Proveedores 	SvProveedores = new Servicio_Proveedores();
-	
+	private Servicio_Materia_Prima  SvMateria_Prima = new Servicio_Materia_Prima();
 	
 	/**############################################################################**/
 	/**############################################################################**/
@@ -60,6 +60,10 @@ public class Principal_Negocio_Interfaz {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Servicio_Proveedores getSvProveedores() {
 		return SvProveedores;
+	}
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public Servicio_Materia_Prima getSvMateriaPrima() {
+		return SvMateria_Prima;
 	}
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	

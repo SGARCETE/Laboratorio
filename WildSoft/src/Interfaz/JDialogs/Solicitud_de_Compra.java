@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
@@ -41,7 +42,7 @@ public class Solicitud_de_Compra extends JDialog {
 	private Servicio_Proveedores sv_proveedor;
 	private Servicio_Materia_Prima sv_materiaPrima;
 	private ArrayList<String> Lista_Categorias;
-	private ArrayList<String> Lista_MateriasPrimas;
+	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
 
 
 	/**
@@ -50,6 +51,7 @@ public class Solicitud_de_Compra extends JDialog {
 	public Solicitud_de_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		
 		sv_proveedor = principal_neg_int.getSvProveedores();
+		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
 		
 		inicializar();
 		
@@ -182,10 +184,10 @@ public class Solicitud_de_Compra extends JDialog {
 	
 	protected void Seleccion_Materia_Prima() {
 		if (!comboCategorias.getSelectedItem().toString().isEmpty()) {
-			Lista_MateriasPrimas = sv_materiaPrima.getMateriasCategoria(comboCategorias.getSelectedItem().toString());
+			Lista_MateriasPrimas = sv_materiaPrima.getVARIEDAD_Materia_Prima(comboCategorias.getSelectedItem().toString());
 			comboMateriaPrima.removeAllItems();
 			for (int i = 0; i < Lista_MateriasPrimas.size(); i++) {
-				comboMateriaPrima.addItem(Lista_MateriasPrimas.get(i));
+				comboMateriaPrima.addItem(Lista_MateriasPrimas.get(i).getNombre());
 			}
 		}
 	}
