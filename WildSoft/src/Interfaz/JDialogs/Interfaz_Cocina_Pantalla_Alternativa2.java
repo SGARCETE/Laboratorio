@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
@@ -29,6 +30,7 @@ import Interfaz.Swing_Extends.JTable_Cocina_vista_pedido;
 import Interfaz.Swing_Extends.Model_Cocina_vista_pedido;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
+import Negocio.Servicios.Principal_Negocio_Interfaz;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -38,7 +40,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.awt.Dimension;
 
-public class Interfaz_Cocina_Pantalla_Alternativa2 extends JDialog {
+public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private static final long serialVersionUID = 4440791632042457639L;
 	
 	private final JPanel contentPanel = new JPanel();
@@ -62,24 +64,11 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JDialog {
 	private JScrollPane scrollPane_prioridad5;
 	private JTable[] Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4,table_prioridad5};
 	private JLabel[] Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4, lbl_NroPedido_Prioridad5,};
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");	// LookAndFeel por defecto: Nimbus
-			Interfaz_Cocina_Pantalla_Alternativa2 dialog = new Interfaz_Cocina_Pantalla_Alternativa2();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private Principal_Negocio_Interfaz principal_neg_int;
 
-	/**
-	 * Create the dialog.
-	 */
-	public Interfaz_Cocina_Pantalla_Alternativa2() {
+
+	public Interfaz_Cocina_Pantalla_Alternativa2(Principal_Negocio_Interfaz Principal_neg_int) {
+		principal_neg_int = Principal_neg_int;
 		setMinimumSize(new Dimension(1024, 768));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Cocina_Pantalla_Alternativa2.class.getResource("/Recursos/Pizza-icon16.png")));
 		setTitle("Monitor Cocina");

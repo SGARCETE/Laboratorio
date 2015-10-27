@@ -58,7 +58,15 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JTextField textDetalle;
 	private JTextField textDire;
 	private JTextField textTelefono;
-	
+	private JTextField textCliente = new JTextField();
+	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
+		public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
+				String Nombre_Cliente_seleccionado = ((String)selectedItem);
+				Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
+				Cargar_datos_Cliente(C);
+			}
+		}
+	);
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
@@ -80,7 +88,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JLabel label_Fecha;
 	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
-	private JTextField textCliente = new JTextField();
+
 	private JButton guardar; 
 	private JButton btnQuitar;
 	private JSpinner spinnerCantNueva;
@@ -91,18 +99,14 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	
 	
 
-	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
-	public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
-			String Nombre_Cliente_seleccionado = ((String)selectedItem);
-			Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
-			Cargar_datos_Cliente(C);
-		}
-	});
+
 	
 	
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
-		SvPedidos = principal_neg_int.getSvPedidos();
-		svProductos = principal_neg_int.getSvProductos();
+		Principal_neg_int = principal_neg_int;
+		sv_clientes = Principal_neg_int.getSvClientes();
+		SvPedidos = Principal_neg_int.getSvPedidos();
+		svProductos = Principal_neg_int.getSvProductos();
 		ESTADOS = SvPedidos.getTodos_los_estados();
 		
 		setTitle("ABM Pedido");
@@ -135,7 +139,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		lblDireccion.setBounds(22, 16, 106, 25);
 		panel.add(lblDireccion);
 		
-		textCliente = new JTextField();
 		textCliente.setBackground(new Color(240, 255, 240));
 		textCliente.setBounds(22, 42, 291, 25);
 		panel.add(textCliente);
@@ -437,7 +440,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 		
-		
+		AutocompletarCliente();
 	}
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MODIFICAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -617,7 +620,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 	
 	private void Cargar_datos_Cliente(Cliente c) {
-		
 		CLIENTE_ACTUAL = c;
 		textDire.setText(c.getDomicilio());
 		textTelefono.setText(c.getTelefono_Fijo());

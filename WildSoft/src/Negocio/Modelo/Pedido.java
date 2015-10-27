@@ -41,7 +41,7 @@ public class Pedido {
 	public void setLista_Productos(ArrayList<Producto> lista_Productos) {
 		Lista_Productos = lista_Productos;
 	}
-	public Boolean getEs_Delivery() {
+	public boolean getEs_Delivery() {
 		return Es_Delivery;
 	}
 	public void setEs_Delivery(Boolean es_Delivery) {
