@@ -547,8 +547,7 @@ public class Interfaz_Principal {
 		btnCargarListaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
-				actualizarCocina();
-				actualizarCocina2();
+				ACTUALIZAR_MONITOR();
 			}
 		});
 		panel.setLayout(null);
@@ -767,12 +766,12 @@ public class Interfaz_Principal {
 	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ	 */
 	private void iniciarParametros() {
 		// Creacion de la tabla vacia de lista de pedidos
-//		Tabla_Lista_pedidos = new JTable_Listado_Pedidos2(new Model_Listado_Pedidos2());
-//		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
+		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
+		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 
 		// Creacion de la tabla vacia con el contenido de un pedido
-//		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
-//		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		
 		dateChooser_Fecha_mostrar.setCalendar(new GregorianCalendar());
 		
@@ -817,6 +816,8 @@ public class Interfaz_Principal {
         frame_cocina = new Interfaz_Cocina_Pantalla_Alternativa2(Principal_neg_int);
         frame_cocina.setBounds(R);
         frame_cocina.setVisible(true);
+        
+        ACTUALIZAR_MONITOR();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -909,7 +910,6 @@ public class Interfaz_Principal {
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 	}
 
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA
 	 * OPCION "DELIVERY" EN LA INTERFAZ*/
@@ -919,7 +919,6 @@ public class Interfaz_Principal {
 		textTelefono.setEnabled(chckbxDelivery.isSelected());
 		textDetalle.setEnabled(chckbxDelivery.isSelected());
 	}
-	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//				ABM PEDIDO
@@ -1150,7 +1149,6 @@ public class Interfaz_Principal {
 		textDetalle.setText(c.getDetalle());
 	}
 	
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
@@ -1159,96 +1157,11 @@ public class Interfaz_Principal {
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
 	
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	private void actualizarCocina2() {
-		// TODO Auto-generated method stub
-		
+	private void ACTUALIZAR_MONITOR() {
+		 ((Interfaz_Cocina_Pantalla_Alternativa2) frame_cocina).Actualizar_monitor(sv_pedidos.get_Pedidos(new GregorianCalendar()));
 	}
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void actualizarCocina() {
-		ArrayList<String[]> pedidos = new ArrayList<String[]>();
-		ArrayList<String[]> productos = new ArrayList<String[]>();
 		
-		int pizzas = 0;
-		int empanadas = 0;
-		int bebidas = 0;
-		
-		boolean esDelivery = false;
-		
-		
-		
-		// PRIMERO GUARDO LOS PEDIDOS EN UN ARREGLO
-		for(int i = 0; i < Tabla_Lista_pedidos.getRowCount(); i++){
-			if (Tabla_Lista_pedidos.getValueAt(i, 5).equals("Pendiente")){
-				
-				Pedido p = sv_pedidos.get_pedido((Integer) Tabla_Lista_pedidos.getValueAt(i, 0));
-				
-				if (p.getCliente().getNombre().equals("")){
-					esDelivery = false;
-				}else{
-					esDelivery = true;
-				}
-				
-				String[] arreglo = {
-				String.valueOf(Tabla_Lista_pedidos.getValueAt(i, 0)),
-				(String) Tabla_Lista_pedidos.getValueAt(i, 6),
-				String.valueOf(esDelivery)};
-				
-				pedidos.add(arreglo);
-			}
-		}
-		
-		//SEGUNDO TRAIGO TODOS LOS PRODUCTOS DE LOS PEDIDOS Y LOS SUMO PARA EL TOTAL
-		for (int j = 0; j < pedidos.size(); j++){
-			Pedido p = sv_pedidos.get_pedido(Integer.parseInt(pedidos.get(j)[0]));
-			for(int k = 0; k < p.getLista_Productos().size();k++){
-				int tipo = p.getLista_Productos().get(k).getPR_tipo_producto();
-				if(tipo == 1){
-					empanadas += p.getLista_Productos().get(k).getCantidad();
-				}else if (tipo == 2){
-					pizzas += p.getLista_Productos().get(k).getCantidad();
-				}else if (tipo == 3){
-					bebidas += p.getLista_Productos().get(k).getCantidad();
-				}
-			}
-		}
-		
-		//TRAIGO LOS PRODUCTOS DEL PRIMER PEDIDO
-		Pedido p = sv_pedidos.get_pedido(Integer.parseInt(pedidos.get(0)[0]));
-		for (int l = 0; l < p.getLista_Productos().size(); l++){
-			String nombre = "";
-			if(p.getLista_Productos().get(l).getPR_tipo_producto()==1){
-				nombre = "Empanada:		";
-			}else if(p.getLista_Productos().get(l).getPR_tipo_producto()==2){
-				nombre = "Pizza:		";
-			}else if(p.getLista_Productos().get(l).getPR_tipo_producto()==3){
-				nombre = "Bebida:		";
-			}
-			
-			boolean comentario = true;
-			
-			if(p.getLista_Productos().get(l).getPR_Observacion().equals("")){
-				comentario = false;
-			}
-			
-			String[] arreglo = {
-			nombre + (String)p.getLista_Productos().get(l).getPR_nombre(),
-			String.valueOf(p.getLista_Productos().get(l).getCantidad()),
-			String.valueOf(comentario)};
-			
-			System.out.println("arreglo " + l);
-			System.out.println(arreglo[0]);
-			System.out.println(arreglo[1]);
-			System.out.println(arreglo[2]);
-			System.out.println("");
-			
-			productos.add(arreglo);
-		}
-		
-		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar(pedidos, productos, pizzas, empanadas, bebidas);
-	}
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Comanda() {
 		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
@@ -1264,7 +1177,7 @@ public class Interfaz_Principal {
 		c.add(Calendar.DAY_OF_MONTH, 1);
 		dateChooser_Fecha_mostrar.setCalendar(c);
 		Actualizar_Lista_pedidos();
-		actualizarCocina();
+		ACTUALIZAR_MONITOR();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1273,7 +1186,7 @@ public class Interfaz_Principal {
 		c.add(Calendar.DAY_OF_MONTH, -1);
 		dateChooser_Fecha_mostrar.setCalendar(c);
 		Actualizar_Lista_pedidos();
-		actualizarCocina();
+		ACTUALIZAR_MONITOR();
 	}
 	
 	

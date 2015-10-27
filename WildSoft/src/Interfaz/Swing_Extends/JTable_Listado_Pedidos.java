@@ -21,29 +21,24 @@ public class JTable_Listado_Pedidos extends JTable{
 	public JTable_Listado_Pedidos(DefaultTableModel model){
 		setModel(model);
 		
-		// Ordenar tabla por hora, por defecto
+		// Ordenar tabla 
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		this.setRowSorter(sorter);
 		
-		// Centrar Nro de chofer
 		
+		this.getColumnModel().getColumn(0).setMaxWidth(0);
+		
+		// Centrar Celdas
 		DefaultTableCellRenderer Centrar_Celda = new DefaultTableCellRenderer();
 	    Centrar_Celda.setHorizontalAlignment(SwingConstants.CENTER);
-	    
-	    this.getColumnModel().getColumn(0).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(1).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(2).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(3).setCellRenderer(Centrar_Celda);
-	    
 	    this.getColumnModel().getColumn(5).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(6).setCellRenderer(Centrar_Celda);
 	    
 	    this.setFont(new Font(FuenteTablas, Font.PLAIN, FuenteSize));
 	    
-		this.getColumnModel().getColumn(0).setPreferredWidth(0);
-		this.getColumnModel().getColumn(0).setMaxWidth(0);
-		this.getColumnModel().getColumn(0).setMinWidth(0);
-		
 //		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		this.setRowHeight(25);

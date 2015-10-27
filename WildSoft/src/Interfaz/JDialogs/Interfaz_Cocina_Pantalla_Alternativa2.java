@@ -28,6 +28,7 @@ import Interfaz.Swing_Extends.JTable_Cocina_Pedidos_Actuales;
 import Interfaz.Swing_Extends.JTable_Cocina_Producto_pedido;
 import Interfaz.Swing_Extends.JTable_Cocina_vista_pedido;
 import Interfaz.Swing_Extends.Model_Cocina_vista_pedido;
+import MetAux.MetAux;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
@@ -62,9 +63,10 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private JScrollPane scrollPane_prioridad3;
 	private JScrollPane scrollPane_prioridad4;
 	private JScrollPane scrollPane_prioridad5;
-	private JTable[] Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4,table_prioridad5};
-	private JLabel[] Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4, lbl_NroPedido_Prioridad5,};
+	private JTable[] Lista_Tablas = null; 
+	private JLabel[] Lista_Label  = null; 
 	private Principal_Negocio_Interfaz principal_neg_int;
+	private JScrollPane scrollPane_Detalles;
 
 
 	public Interfaz_Cocina_Pantalla_Alternativa2(Principal_Negocio_Interfaz Principal_neg_int) {
@@ -368,19 +370,19 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		);
 		panel_13.setLayout(gl_panel_13);
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_Detalles = new JScrollPane();
 		
 		table_Detalles_Pedido = new JTable();
 		table_Detalles_Pedido.setRowHeight(25);
 		table_Detalles_Pedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		table_Detalles_Pedido.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"4", "Pizza", "Napolitana", "Sin aceitunas"},
-				{"1", "Pizza", "Muzzarella", null},
-				{"1", "Empanada", "Hawaiana", "123456789012345678901234567890123"},
-				{"12", "Empanada", "Humita", "1234567890123"},
-				{"12", "Empanada", "Carne", "Sin pasas"},
-				{"5", "Empanada", "Pollo", null},
+//				{"4", "Pizza", "Napolitana", "Sin aceitunas"},
+//				{"1", "Pizza", "Muzzarella", null},
+//				{"1", "Empanada", "Hawaiana", "123456789012345678901234567890123"},
+//				{"12", "Empanada", "Humita", "1234567890123"},
+//				{"12", "Empanada", "Carne", "Sin pasas"},
+//				{"5", "Empanada", "Pollo", null},
 			},
 			new String[] {
 				"Cantidad", "Tipo", "Producto", "Observacion"
@@ -397,7 +399,7 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		table_Detalles_Pedido.getColumnModel().getColumn(3).setMinWidth(90);
 		table_Detalles_Pedido.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 //		table_2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollPane_2.setViewportView(table_Detalles_Pedido);
+		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		
 		lblDetalle_Pedido = new JLabel("Pedido 12 - Detalles");
 		lblDetalle_Pedido.setHorizontalAlignment(SwingConstants.CENTER);
@@ -412,7 +414,7 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 				.addGroup(gl_panel_11.createSequentialGroup()
 					.addGap(4)
 					.addGroup(gl_panel_11.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+						.addComponent(scrollPane_Detalles, GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
 						.addGroup(gl_panel_11.createSequentialGroup()
 							.addGap(4)
 							.addComponent(lblDetalle_Pedido, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)))
@@ -426,7 +428,7 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 			gl_panel_11.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_11.createSequentialGroup()
 					.addGap(30)
-					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+					.addComponent(scrollPane_Detalles, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
 				.addComponent(lblDetalle_Pedido, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 				.addComponent(lblResumenUltimos, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
 				.addGroup(gl_panel_11.createSequentialGroup()
@@ -440,8 +442,8 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void iniciarParametros() {
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Pedidos_Actuales();
-//		table_Detalles_Pedido;
-
+//		table_Detalles_Pedido = new JTable();
+//		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad2 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad3 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
@@ -453,13 +455,17 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
 		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
 		scrollPane_prioridad5.setColumnHeaderView(table_prioridad5);
-		Hardcodear_Tablas();
+		
+		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4,table_prioridad5};
+		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4, lbl_NroPedido_Prioridad5,};
+		
+//		Hardcodear_Tablas();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void resetear_campos(){
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Pedidos_Actuales();
-//		table_Detalles_Pedido;
+//		table_Detalles_Pedido = new JTable();
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad2 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad3 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
@@ -516,11 +522,14 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void Actualizar_monitor(ArrayList<Pedido> Lista_Pedidos){
 		resetear_campos();
+		System.out.println("ActualizarMonitor_ Tamaño lista de pedidos: " +Lista_Pedidos.size());
 		if(Lista_Pedidos!=null && Lista_Pedidos.size()>0){
 			for (int i = 0; i < Lista_Pedidos.size(); i++) 
 				Mostrar_pedido(Lista_Pedidos.get(i), i);
-			
-			setPedido_para_hacer(Lista_Pedidos.get(0));
+			if(Lista_Pedidos.size()>0){
+				System.out.println("Tamaño de lista de productos del pedido 0 "+Lista_Pedidos.get(0).getLista_Productos().size());
+				setPedido_para_hacer(Lista_Pedidos.get(0));
+			}
 		}
 	}
 
@@ -539,15 +548,22 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Mostrar_pedido(Pedido p, Integer Index){
-		JTable JT= Lista_Tablas[Index];
+		JTable JT = Lista_Tablas[Index];
 		JLabel JL = Lista_Label[Index];
 		DefaultTableModel model = (DefaultTableModel) JT.getModel();
+		JL.setText(p.getNumero_Pedido().toString());
 		
-		for (int i = 0; i < p.getLista_Productos().size(); i++) {
-			JL.setText(p.getNumero_Pedido().toString());
-			Producto pr = p.getLista_Productos().get(i);
-//			if()
-//				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
+		ArrayList<Producto> LISTA_PRODUCTOS_ORDENADA = MetAux.mergeSort(p.getLista_Productos());
+		String TIPO_PR = "";
+		String TIPO_PR_ACTUAL = ""; 
+		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
+			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
+			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
+			
+			if(!TIPO_PR_ACTUAL.equals(TIPO_PR)){
+				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
+				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
+			}
 			model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
 			if(!pr.getPR_Observacion().isEmpty())
 				model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
@@ -560,11 +576,17 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private void setPedido_para_hacer(Pedido p){
 		DefaultTableModel model = (DefaultTableModel) table_Detalles_Pedido.getModel();
 		lblDetalle_Pedido.setText(p.getNumero_Pedido()+" - Detalles");
-		for (int i = 0; i < Lista_Label.length; i++) {
+		
+//		Producto prod = new Producto("Pizza", "Muzzarella", 2, "Sin aceitunas man", 50.0, 5);// TODO TEST
+		
+//		p.getLista_Productos().add(prod);
+		
+		for (int i = 0; i < p.getLista_Productos().size(); i++) {
 			Producto pr = p.getLista_Productos().get(i);
 			model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre(), pr.getPR_Observacion()});
 		}
 		table_Detalles_Pedido.setModel(model);
+		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 	}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

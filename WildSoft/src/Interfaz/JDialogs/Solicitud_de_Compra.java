@@ -78,7 +78,7 @@ public class Solicitud_de_Compra extends JDialog {
 		comboProveedor = new JComboBox<String>();
 		comboProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Seleccion_Categoria();
+				Seleccion_Proveedor();
 			}
 		});
 		comboProveedor.setBounds(617, 6, 304, 25);
@@ -100,7 +100,7 @@ public class Solicitud_de_Compra extends JDialog {
 		comboCategorias = new JComboBox<String>();
 		comboCategorias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Seleccion_Materia_Prima();
+				Seleccion_Categoria();
 			}
 		});
 		comboCategorias.setBounds(117, 60, 304, 25);
@@ -124,7 +124,7 @@ public class Solicitud_de_Compra extends JDialog {
 		contentPanel.add(spinner);
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(813, 79, 67, 16);
+		lblCantidad.setBounds(811, 74, 67, 25);
 		contentPanel.add(lblCantidad);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -160,22 +160,27 @@ public class Solicitud_de_Compra extends JDialog {
 		inicializar();
 	}
 	
+
+
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	private void inicializar(){
-		
+		Cargar_ComboBox_Todos_los_proveedores();
+	}
+	
+	private void Cargar_ComboBox_Todos_los_proveedores() {
 		ArrayList<Proveedor> ListaProveedor = sv_proveedor.getProveedores();
 		comboProveedor.addItem("Seleccione el Proveedor");
 		for (int i = 0; i < ListaProveedor.size(); i++) {
 			comboProveedor.addItem(ListaProveedor.get(i).getNombre());
 		}
-		
 	}
-	
-	private void Seleccion_Categoria() {
+
+	private void Seleccion_Proveedor() {
 		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
-			System.out.println(comboProveedor.getSelectedItem().toString());
 			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
+			System.out.println("Tamaño lista de "+ comboProveedor.getSelectedItem().toString()+" es de "+Lista_Categorias.size());// TODO
+			
 			comboCategorias.removeAllItems();
 			for (int i = 0; i < Lista_Categorias.size(); i++) {
 				comboCategorias.addItem(Lista_Categorias.get(i));
@@ -183,8 +188,8 @@ public class Solicitud_de_Compra extends JDialog {
 		}
 	}
 	
-	protected void Seleccion_Materia_Prima() {
-		if (!comboCategorias.getSelectedItem().toString().isEmpty()) {
+	private void Seleccion_Categoria() {
+		if (comboCategorias.getSelectedIndex()!=-1) {
 			Lista_MateriasPrimas = sv_materiaPrima.getVARIEDAD_Materia_Prima(comboCategorias.getSelectedItem().toString());
 			comboMateriaPrima.removeAllItems();
 			for (int i = 0; i < Lista_MateriasPrimas.size(); i++) {
@@ -192,4 +197,4 @@ public class Solicitud_de_Compra extends JDialog {
 			}
 		}
 	}
-}
+}//---> FIN CLASE

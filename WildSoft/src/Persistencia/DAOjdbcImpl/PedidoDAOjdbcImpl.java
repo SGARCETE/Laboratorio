@@ -159,6 +159,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 					delivery = true;
 				}
 				P.setEs_Delivery(delivery);
+				P.setLista_Productos(getLista_Productos(P));
 				Arreglo.add(P);
 
 			}
