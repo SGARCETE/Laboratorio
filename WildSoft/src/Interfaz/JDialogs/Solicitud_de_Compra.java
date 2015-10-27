@@ -1,6 +1,7 @@
 package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,9 +35,6 @@ public class Solicitud_de_Compra extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup selector = new ButtonGroup();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTable table;
 	JComboBox<String> comboProveedor;
 	JComboBox<String> comboCategorias;
 	JComboBox<String> comboMateriaPrima;
@@ -43,7 +42,9 @@ public class Solicitud_de_Compra extends JDialog {
 	private Servicio_Materia_Prima sv_materiaPrima;
 	private ArrayList<String> Lista_Categorias;
 	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
-
+	private JTable table;
+	private JTextField textField;
+	private JSpinner spinnerCantidad;
 
 	/**
 	 * Create the dialog.
@@ -88,11 +89,6 @@ public class Solicitud_de_Compra extends JDialog {
 		lblProveedor.setBounds(541, 6, 64, 25);
 		panel.add(lblProveedor);
 		
-		textField = new JTextField();
-		textField.setBounds(433, 60, 368, 23);
-		contentPanel.add(textField);
-		textField.setColumns(10);
-		
 		JLabel lblCategoria = new JLabel("Categoria:");
 		lblCategoria.setBounds(10, 61, 64, 22);
 		contentPanel.add(lblCategoria);
@@ -106,11 +102,6 @@ public class Solicitud_de_Compra extends JDialog {
 		comboCategorias.setBounds(117, 60, 304, 25);
 		contentPanel.add(comboCategorias);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(433, 93, 368, 25);
-		contentPanel.add(textField_1);
-		
 		JLabel lblProducto = new JLabel("Materia Primas:");
 		lblProducto.setBounds(10, 93, 92, 28);
 		contentPanel.add(lblProducto);
@@ -119,16 +110,20 @@ public class Solicitud_de_Compra extends JDialog {
 		comboMateriaPrima.setBounds(117, 94, 304, 25);
 		contentPanel.add(comboMateriaPrima);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(880, 74, 57, 25);
-		contentPanel.add(spinner);
+		spinnerCantidad = new JSpinner();
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		spinnerCantidad.setBackground(new Color(240, 255, 255));
+		spinnerCantidad.setBounds(498, 95, 57, 25);
+		contentPanel.add(spinnerCantidad);
+		
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(811, 74, 67, 25);
+		lblCantidad.setBounds(431, 95, 67, 25);
 		contentPanel.add(lblCantidad);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 130, 931, 253);
+		scrollPane.setEnabled(false);
+		scrollPane.setBounds(10, 130, 931, 218);
 		contentPanel.add(scrollPane);
 		
 		table = new JTable();
@@ -136,10 +131,23 @@ public class Solicitud_de_Compra extends JDialog {
 			new Object[][] {
 			},
 			new String[] {
-				"Categoria", "Nombre", "Cantidad"
+				"N\u00B0", "Categoria" , "Materia Prima", "Cantidad"
 			}
 		));
-		scrollPane.setColumnHeaderView(table);
+		scrollPane.setViewportView(table);
+		
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setBounds(580, 59, 104, 62);
+		contentPanel.add(btnAgregar);
+		
+		JLabel lblNewLabel = new JLabel("TOTAL     $");
+		lblNewLabel.setBounds(782, 359, 59, 25);
+		contentPanel.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(851, 359, 86, 28);
+		contentPanel.add(textField);
+		textField.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -152,6 +160,11 @@ public class Solicitud_de_Compra extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -166,6 +179,7 @@ public class Solicitud_de_Compra extends JDialog {
 
 	private void inicializar(){
 		Cargar_ComboBox_Todos_los_proveedores();
+		
 	}
 	
 	private void Cargar_ComboBox_Todos_los_proveedores() {

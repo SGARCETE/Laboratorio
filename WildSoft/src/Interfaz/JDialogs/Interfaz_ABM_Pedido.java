@@ -583,6 +583,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		comboBoxProducto.setSelectedIndex(0);
 		comboBoxVariedad.removeAllItems();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		
 		textValor.setText("");
 		textValorTotal.setText("");
 		textObservaciones.setText("");
