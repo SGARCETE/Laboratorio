@@ -174,6 +174,7 @@ public class Solicitud_de_Compra extends JDialog {
 	
 	private void Seleccion_Categoria() {
 		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
+			System.out.println(comboProveedor.getSelectedItem().toString());
 			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
 			comboCategorias.removeAllItems();
 			for (int i = 0; i < Lista_Categorias.size(); i++) {

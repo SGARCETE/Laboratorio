@@ -5,6 +5,8 @@ public class Repartidor {
 	private Integer ID_Repartidor;
 	private String Nombre;
 	private String Vehiculo;
+	
+	
 
 	public Repartidor(String nombre, String vehiculo) {
 		Nombre = nombre;
