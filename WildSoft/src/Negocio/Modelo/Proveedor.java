@@ -3,11 +3,12 @@ package Negocio.Modelo;
 public class Proveedor {
 
 	private Integer id;
-	private String nombre="";
-	private String direccion="";
-	private String telefono="";
-	private String categoria_String="";
+	private String nombre = "";
+	private String direccion = "";
+	private String telefono = "";
+	private String categoria_String = "";
 	private Integer categoria;
+	private String mail = "";
 	
 	public Proveedor(){}
 	
@@ -53,6 +54,14 @@ public class Proveedor {
 	}
 	public void setCategoria(Integer categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getMail(){
+		return mail;
+	}
+	
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	
 	

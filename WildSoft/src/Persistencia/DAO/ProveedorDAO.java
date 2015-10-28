@@ -15,5 +15,7 @@ public interface ProveedorDAO {
 	ArrayList<Proveedor> get_Proveedores();
 	
 	ArrayList<String> getCategoriasProveedor(String nombreProveedor);
+	
+	Proveedor obtenerProveedor(String nombre);
 
 }

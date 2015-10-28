@@ -12,35 +12,30 @@ import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;
+import Persistencia.DAO.Solicitud_compraDAO;
 
-public class Solicitud_compraDAOjdbc {
+public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 	
 	// FALTA TERMINAR ESTE METODO !!! 
-	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud)
-	{
-		
+	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
 		String PROVEEDOR = "NULL";
 		if(solicitud.getProveedor()!=null && solicitud.getProveedor().getId()!=0)
 			PROVEEDOR = solicitud.getProveedor().getId().toString();
 		
-		String SentenciaSQL_Solicitud = "INSERT INTO Solicitud_compra (SD_estado, SD_proveedor,SD_fecha, SD_precio) VALUES ("+
+		String SentenciaSQL_Solicitud = "INSERT INTO Solicitud_compra (SD_estado, SD_proveedor,SD_fecha) VALUES ("+
 				"'"+	1                                               	+"',"+
 				""+		PROVEEDOR											+","+
-				""+		formato_yyyyMMdd.format(solicitud.getFecha())		+","+											
-				""+		solicitud.getPrecio()								+");";
+				""+		formato_yyyyMMdd.format(solicitud.getFecha())		+");";
 		
 		boolean Exito_al_Ingresar_Solicitud = conex.Insertar(SentenciaSQL_Solicitud);
 		
 		return Exito_al_Ingresar_Solicitud;
-		
-		
 	}
 	
-	
-public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
+	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		
 		ArrayList<Solicitud_compra> Arreglo = new ArrayList<Solicitud_compra>();
 		try {
@@ -71,8 +66,6 @@ public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		}
 		return Arreglo;
 	}
-	
-	
 	
 	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd) {
 		
@@ -124,9 +117,7 @@ public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		return conex.Insertar(SentenciaSQL);
 	}
     
-    
-    @SuppressWarnings("unused")
-	private Proveedor getProveedor(Integer ID_Proveedor) {
+    public Proveedor getProveedor(Integer ID_Proveedor) {
 		Proveedor Proveedor= new Proveedor();
 		try {
 			conex.connectToMySQL();// Conectar base
@@ -146,10 +137,8 @@ public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		}
 		return Proveedor;
 	}
-	
-	
-	
-    private int obtenerEstado(String estado){
+
+    public int obtenerEstado(String estado){
 		int resultado = 1;
 		conex.connectToMySQL();// Conectar base
 		Statement st;
@@ -170,19 +159,18 @@ public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		return resultado;
 	}
     
-    
     public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd) {
 		String SentenciaSQL = "delete from Compra_MateriaPrima where Compra_MateriaPrima.CM_compra = " +sd.getId() ;
 		return conex.Insertar(SentenciaSQL);
 	}
     
-    public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sd){
+    public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sc){
 		boolean resultado = false;
-		Integer SOLICITUD_ID = sd.getId();
-		for (int i = 0; i < sd.getLista_materia_prima().size(); i++) {
+		Integer SOLICITUD_ID = sc.getId();
+		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			
-			Integer MATERIA_ID = sd.getLista_materia_prima().get(i).getId();
-		    Integer CANTIDAD = sd.getLista_materia_prima().get(i).getCantidad();
+			Integer MATERIA_ID = sc.getLista_materia_prima().get(i).getId();
+		    Integer CANTIDAD = sc.getLista_materia_prima().get(i).getCantidad();
 			
 			String SentenciaSQL_producto_pedidos = "INSERT INTO Compra_MateriaPrima " +
 					"(CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES ("+

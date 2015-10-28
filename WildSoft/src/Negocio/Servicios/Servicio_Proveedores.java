@@ -26,9 +26,7 @@ public class Servicio_Proveedores {
 			
 			return proveedorDAO.getCategoriasProveedor(nombreProveedor);
 		}
-		
-		
-		
+
 		// Retorna los proveedores que tienen  la categoria recibida.
 		public ArrayList<Proveedor> get_Proveedor_Categoria(String categoria_MP) {
 			return proveedorDAO.get_Proveedor_Categoria(categoria_MP);
@@ -43,7 +41,14 @@ public class Servicio_Proveedores {
 			return proveedorDAO.AGREGAR_PROVEEDOR(p);
 		}
 		
-		
+		/**
+		 * Obtiene el proveedor dado
+		 * @param nobreProveedor Es el nombre por el cual buscara el proveedor en la base de datos
+		 * @return Devuelve los datos del proveedor en una clase {@link Proveedor}
+		 */
+		public Proveedor getProveedor(String nobreProveedor){
+			return proveedorDAO.obtenerProveedor(nobreProveedor);
+		}
 }
 
 

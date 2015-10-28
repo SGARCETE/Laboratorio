@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
@@ -24,11 +25,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
+import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
+import Negocio.Servicios.Servicio_Solicitud_compra;
 
 @SuppressWarnings("serial")
 public class Solicitud_de_Compra extends JDialog {
@@ -41,6 +45,7 @@ public class Solicitud_de_Compra extends JDialog {
 	HashMap<String, Integer> ListaMateriaPrima = new HashMap<String, Integer>();
 	private Servicio_Proveedores sv_proveedor;
 	private Servicio_Materia_Prima sv_materiaPrima;
+	private Servicio_Solicitud_compra sv_SolicitudCompra;
 	private ArrayList<String> Lista_Categorias;
 	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
 	private JTable tablaMateriasPrimas;
@@ -54,6 +59,7 @@ public class Solicitud_de_Compra extends JDialog {
 		
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
+		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		
 		setBounds(100, 100, 963, 466);
 		getContentPane().setLayout(new BorderLayout());
@@ -160,10 +166,12 @@ public class Solicitud_de_Compra extends JDialog {
 		contentPanel.add(btnAgregar);
 		
 		JLabel lblNewLabel = new JLabel("TOTAL     $");
+		lblNewLabel.setVisible(false);
 		lblNewLabel.setBounds(782, 359, 59, 25);
 		contentPanel.add(lblNewLabel);
 		
 		textField = new JTextField();
+		textField.setVisible(false);
 		textField.setBounds(851, 359, 86, 28);
 		contentPanel.add(textField);
 		textField.setColumns(10);
@@ -193,7 +201,13 @@ public class Solicitud_de_Compra extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Agregar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
+						dispose();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -213,8 +227,6 @@ public class Solicitud_de_Compra extends JDialog {
 		inicializar();
 	}
 	
-
-
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	private void inicializar(){
@@ -251,4 +263,24 @@ public class Solicitud_de_Compra extends JDialog {
 			}
 		}
 	}
+	
+	private Solicitud_compra obtenerSolicitud() {
+		Solicitud_compra sc = new Solicitud_compra();
+		sc.setEstado("Pendiente");
+		sc.setFecha(MetAux.toDate(Calendar.getInstance()));
+		Proveedor p = sv_proveedor.getProveedor(comboProveedor.getSelectedItem().toString());
+		sc.setProveedor(p);
+		ArrayList<Materia_Prima> listaMateriaPrima = new ArrayList<Materia_Prima>();
+		for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
+			Materia_Prima mp = new Materia_Prima();
+			//mp.setCategoria(1); //TODO
+			mp.setCategoria_string((String) tablaMateriasPrimas.getValueAt(i, 1));
+			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
+			mp.setNombre((String) tablaMateriasPrimas.getValueAt(i, 2));
+			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
+		}
+		sc.setLista_materia_prima(listaMateriaPrima);
+		return sc;
+	}
+
 }//---> FIN CLASE
