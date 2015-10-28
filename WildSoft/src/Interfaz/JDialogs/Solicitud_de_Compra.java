@@ -3,22 +3,25 @@ package Interfaz.JDialogs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JSpinner;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Materia_Prima;
@@ -26,9 +29,6 @@ import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class Solicitud_de_Compra extends JDialog {
@@ -38,11 +38,12 @@ public class Solicitud_de_Compra extends JDialog {
 	JComboBox<String> comboProveedor;
 	JComboBox<String> comboCategorias;
 	JComboBox<String> comboMateriaPrima;
+	HashMap<String, Integer> ListaMateriaPrima = new HashMap<String, Integer>();
 	private Servicio_Proveedores sv_proveedor;
 	private Servicio_Materia_Prima sv_materiaPrima;
 	private ArrayList<String> Lista_Categorias;
 	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
-	private JTable table;
+	private JTable tablaMateriasPrimas;
 	private JTextField textField;
 	private JSpinner spinnerCantidad;
 
@@ -113,12 +114,12 @@ public class Solicitud_de_Compra extends JDialog {
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		spinnerCantidad.setBackground(new Color(240, 255, 255));
-		spinnerCantidad.setBounds(498, 95, 57, 25);
+		spinnerCantidad.setBounds(497, 77, 57, 25);
 		contentPanel.add(spinnerCantidad);
 		
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(431, 95, 67, 25);
+		lblCantidad.setBounds(432, 78, 67, 25);
 		contentPanel.add(lblCantidad);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -126,18 +127,36 @@ public class Solicitud_de_Compra extends JDialog {
 		scrollPane.setBounds(10, 130, 931, 218);
 		contentPanel.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		tablaMateriasPrimas = new JTable();
+		tablaMateriasPrimas.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"N\u00B0", "Categoria" , "Materia Prima", "Cantidad"
 			}
 		));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tablaMateriasPrimas);
 		
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(580, 59, 104, 62);
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
+				if(posicionMateriaPrimaActual == null){
+					String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1), comboCategorias.getSelectedItem().toString(),
+							comboMateriaPrima.getSelectedItem().toString(), String.valueOf(spinnerCantidad.getValue())};
+					DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+					modelo.addRow(arreglo);
+					tablaMateriasPrimas.setModel(modelo);
+					ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
+				}else{
+					int cantidadSpinner = (int) spinnerCantidad.getValue();
+					int cantidadTabla = Integer.parseInt((String) tablaMateriasPrimas.getValueAt(posicionMateriaPrimaActual, 3));
+					int cantidadNueva = cantidadTabla + cantidadSpinner;
+					tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
+				}
+				
+			}});
+		btnAgregar.setBounds(580, 72, 104, 37);
 		contentPanel.add(btnAgregar);
 		
 		JLabel lblNewLabel = new JLabel("TOTAL     $");
@@ -148,6 +167,27 @@ public class Solicitud_de_Compra extends JDialog {
 		textField.setBounds(851, 359, 86, 28);
 		contentPanel.add(textField);
 		textField.setColumns(10);
+		
+		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
+				if(!(filaSeleccionada == -1)){
+					
+					ListaMateriaPrima.remove(tablaMateriasPrimas.getValueAt(filaSeleccionada, 2));
+					
+					DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+					modelo.removeRow(filaSeleccionada);
+					tablaMateriasPrimas.setModel(modelo);
+					
+					for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
+						tablaMateriasPrimas.setValueAt(i+1, i, 0);
+					}
+				}
+			}
+		});
+		btnQuitar.setBounds(696, 72, 104, 37);
+		contentPanel.add(btnQuitar);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
