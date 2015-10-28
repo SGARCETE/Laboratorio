@@ -25,8 +25,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	private JPanel contentPane;
 	private JTable tablaPedidosActuales;
 	private JTable tablaProductosPedido;
-	private JTextArea areaComentarios;
-	private Principal_Negocio_Interfaz instancia_de_Interfaz_Principal;
 	private JLabel numeroPizzas;
 	private JLabel numeroEmpanadas;
 	private JLabel numeroBebidas;
@@ -36,8 +34,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 
 	@SuppressWarnings("serial")
 	public Interfaz_Cocina_Pantalla(Principal_Negocio_Interfaz principal_neg_int) {
-		instancia_de_Interfaz_Principal = principal_neg_int;
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 529);
 		
@@ -70,9 +66,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 				"Nro Pedido", "Precio", "Delivery"
 			}
 		) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class
 			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -153,9 +151,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 				"Producto", "Cantidad", "Observacion"
 			}
 		) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class
 			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}

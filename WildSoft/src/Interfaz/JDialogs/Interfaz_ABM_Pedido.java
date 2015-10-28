@@ -70,7 +70,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
-	private Object[] ESTADOS;
 	private JSpinner spinnerCantidad;
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
@@ -102,7 +101,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		sv_clientes = Principal_neg_int.getSvClientes();
 		SvPedidos = Principal_neg_int.getSvPedidos();
 		svProductos = Principal_neg_int.getSvProductos();
-		ESTADOS = SvPedidos.getTodos_los_estados();
+		SvPedidos.getTodos_los_estados();
 		
 		setTitle("ABM Pedido");
 		setBounds(100, 100, 1179, 490);

@@ -30,9 +30,11 @@ public class Materia_Prima {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
 	public Date getFecha_vencimiento() {
 		return fecha_vencimiento;
 	}
+	
 	public void setFecha_vencimiento(Date fecha_vencimiento) {
 		this.fecha_vencimiento = fecha_vencimiento;
 	}
@@ -40,15 +42,17 @@ public class Materia_Prima {
 	public String getCategoria_string() {
 		return categoria_string;
 	}
+	
 	public void setCategoria_string(String categoria_string) {
 		this.categoria_string = categoria_string;
 	}
+	
 	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
 	
 	public int getCategoria() {
-		return this.categoria = categoria;
+		return categoria;
 	}
 	
 	

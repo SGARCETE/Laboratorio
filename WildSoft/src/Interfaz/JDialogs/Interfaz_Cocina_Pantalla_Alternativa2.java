@@ -63,13 +63,9 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private JScrollPane scrollPane_Resumen_Productos_Pendientes;
 	private JTable table_Resumen_Productos_Pendientes;
 	private JTable table_Detalles_Pedido;
-	private Principal_Negocio_Interfaz principal_neg_int;
 	
-
-
-
+	
 	public Interfaz_Cocina_Pantalla_Alternativa2(Principal_Negocio_Interfaz Principal_neg_int) {
-		principal_neg_int = Principal_neg_int;
 		setMinimumSize(new Dimension(1024, 768));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Cocina_Pantalla_Alternativa2.class.getResource("/Recursos/Pizza-icon16.png")));
 		setTitle("Monitor Cocina");

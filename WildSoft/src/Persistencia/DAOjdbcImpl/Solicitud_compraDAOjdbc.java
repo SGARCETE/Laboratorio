@@ -34,7 +34,7 @@ public class Solicitud_compraDAOjdbc {
 		
 		boolean Exito_al_Ingresar_Solicitud = conex.Insertar(SentenciaSQL_Solicitud);
 		
-		return false;
+		return Exito_al_Ingresar_Solicitud;
 		
 		
 	}
@@ -125,7 +125,8 @@ public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 	}
     
     
-    private Proveedor getProveedor(Integer ID_Proveedor) {
+    @SuppressWarnings("unused")
+	private Proveedor getProveedor(Integer ID_Proveedor) {
 		Proveedor Proveedor= new Proveedor();
 		try {
 			conex.connectToMySQL();// Conectar base
