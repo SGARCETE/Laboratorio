@@ -15,6 +15,7 @@ public class Servicio_entrega {
 	ArrayList<Repartidor> getLISTA_REPARTIDORES(){
 		return entregaDAO.getLISTA_REPARTIDORES();
 		
+		
 	}
 	
 	ArrayList<Pedido> getLISTA_PEDIDOS(){
