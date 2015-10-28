@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ProveedorDAO;

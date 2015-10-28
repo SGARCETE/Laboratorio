@@ -5,14 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Materia_Prima;
-import Negocio.Modelo.Pedido;
-import Negocio.Modelo.Producto;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;

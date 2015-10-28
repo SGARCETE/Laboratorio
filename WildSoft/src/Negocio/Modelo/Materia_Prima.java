@@ -1,7 +1,6 @@
 package Negocio.Modelo;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 
 public class Materia_Prima {
 

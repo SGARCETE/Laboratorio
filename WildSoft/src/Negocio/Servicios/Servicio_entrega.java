@@ -6,7 +6,6 @@ import Negocio.Modelo.Entrega;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Repartidor;
 import Persistencia.DAOjdbcImpl.EntregaDAOjdbcImplement;
-import Persistencia.DAOjdbcImpl.MateriaPrimaDAOjdbcImpl;
 
 public class Servicio_entrega {
 	

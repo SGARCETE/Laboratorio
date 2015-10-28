@@ -2,11 +2,11 @@ package Interfaz.JDialogs;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
 import java.awt.SystemColor;
 import java.util.List;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,9 +19,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.Servicios.Principal_Negocio_Interfaz;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 public class Interfaz_Cocina_Pantalla extends JFrame {
 	private static final long serialVersionUID = 4620505346691032916L;

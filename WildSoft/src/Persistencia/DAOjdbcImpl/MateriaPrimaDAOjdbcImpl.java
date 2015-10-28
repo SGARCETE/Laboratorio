@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Materia_Prima;
-import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.MateriaPrimaDAO;
 
 public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
-	@SuppressWarnings("unused")
 	private ConectorMySQL conex = new ConectorMySQL();
 	
 	
