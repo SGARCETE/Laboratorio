@@ -26,57 +26,74 @@ public class Pedido {
 	public Integer getNumero_Pedido() {
 		return Numero_Pedido;
 	}
+	
 	public void setNumero_Pedido(Integer numero_Pedido) {
 		Numero_Pedido = numero_Pedido;
 	}
+	
 	public Date getFecha_Hora_Pedido() {
 		return Fecha_Hora_Pedido;
 	}	
+	
 	public void setFecha_Hora_Pedido(Date fecha_Hora_Pedido) {
 		Fecha_Hora_Pedido = fecha_Hora_Pedido;
 	}
+	
 	public ArrayList<Producto> getLista_Productos() {
 		return Lista_Productos;
 	}
+	
 	public void setLista_Productos(ArrayList<Producto> lista_Productos) {
 		Lista_Productos = lista_Productos;
 	}
+	
 	public boolean getEs_Delivery() {
 		return Es_Delivery;
 	}
+	
 	public void setEs_Delivery(Boolean es_Delivery) {
 		Es_Delivery = es_Delivery;
 	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
 	public Date getHora_Entrega() {
 		return Hora_Entrega;
 	}
+		
 	public void setHora_Entrega(Date hora_Entrega) {
 		Hora_Entrega = hora_Entrega;
 	}
+	
 	public void agregar_un_producto(Producto PRODUCTO) {
 		if(PRODUCTO!=null)
 			Lista_Productos.add(PRODUCTO);
 	}
+	
 	public void quitar_un_producto(Producto PRODUCTO) {
 //		if(PRODUCTO!=null)
 //			Lista_Productos.remove();
 		System.out.println("Producto.quitar_un_producto NO ESTA IMPLEMENTADO" );
 	}
+	
 	public Double getTotal() {
 		return Total;
 	}
+	
 	public void setTotal(Double total) {
 		Total = total;
 	}
+	
 	public String getESTADO() {
 		return ESTADO;
 	}
+	
 	public void setESTADO(String eSTADO) {
 		ESTADO = eSTADO;
 	}
@@ -84,12 +101,10 @@ public class Pedido {
 	public Integer getID_DIARIO() {
 		return ID_DIARIO;
 	}
+	
 	public void setID_DIARIO(Integer iD_DIARIO) {
 		ID_DIARIO = iD_DIARIO;
 	}
-	
-	
-
 	
 }//--> FIN CLASE
 

@@ -7,17 +7,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Entrega;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Repartidor;
-import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.EntregaDAO;
-
-import javax.swing.JOptionPane;
 
 public class EntregaDAOjdbcImplement implements EntregaDAO {
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,7 +74,7 @@ public ArrayList<Pedido> getLISTA_PEDIDOS() {
 			while (Fila.next()) {
 				Pedido p = new Pedido();
 			    p.setNumero_Pedido(Fila.getInt("PD_id"));
-			    p.setIdDiaria(Fila.getInt("PD_numero"));
+			    p.setID_DIARIO(Fila.getInt("PD_numero"));
 			    p.setCliente(new Cliente (Fila.getString("CL_nombre")));
 			    
 				Arreglo.add(p);
@@ -108,7 +106,7 @@ public ArrayList<Pedido> getENTREGA_PEDIDOS(Entrega ent) {
 		while (Fila.next()) {
 			Pedido p = new Pedido();
 		    p.setNumero_Pedido(Fila.getInt("PD_id"));
-		    p.setIdDiaria(Fila.getInt("PD_numero"));
+		    p.setID_DIARIO(Fila.getInt("PD_numero"));
 		    p.setCliente(new Cliente (Fila.getString("CL_nombre")));
 		    
 			Arreglo.add(p);

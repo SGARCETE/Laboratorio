@@ -1,27 +1,26 @@
 package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Interfaz.Swing_Extends.JTable_Cocina_Detalles_Pedido;
@@ -34,14 +33,6 @@ import MetAux.MetAux;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.UIManager;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.awt.Dimension;
 
 public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private static final long serialVersionUID = 4440791632042457639L;
