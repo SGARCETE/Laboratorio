@@ -33,8 +33,8 @@ public class Servicio_Pedidos {
 	}
 	
 	// MODIFICAR ESTADO
-	public boolean modificar_estado(Pedido p, Integer numero){
-		return pedidoDAO.MODIFICAR_ESTADO(p, numero);
+	public boolean modificar_estado(Pedido p, Integer ID_ESTADO){
+		return pedidoDAO.MODIFICAR_ESTADO(p, ID_ESTADO);
 	}
 
 	// OBTENER LISTA DE LOS PEDIDOS DE UNA DETERMINADA FECHA

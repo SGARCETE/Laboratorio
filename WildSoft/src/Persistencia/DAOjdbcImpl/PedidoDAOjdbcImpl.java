@@ -11,15 +11,12 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.PedidoDAO;
-import sun.security.jca.GetInstance;
-import org.apache.poi.ss.usermodel.DateUtil;
-
-import MetAux.MetAux;
 
 public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
@@ -36,7 +33,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		if( pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && 
 			pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && 
 			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
-			idDiaria = pedidoAnterior.getIdDiaria() + 1;
+			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
 		}
 	
 		// TEST
@@ -64,7 +61,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				""+		PEDIDO												+","+									
 				""+ 	p.getEs_Delivery()									+","+
 				""+ 	idDiaria											+");";
-//		System.out.println(SentenciaSQL_PEDIDO);
 		boolean Exito_al_Ingresar_pedido = conex.Insertar(SentenciaSQL_PEDIDO);
 		
 		if(Exito_al_Ingresar_pedido){
@@ -110,8 +106,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	*/
 	}
 	
-	/*------------------------------------------------------------------------------*/
-
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private Integer ObtenerUltimoPedido() {
 		try {
 			conex.connectToMySQL();
@@ -126,8 +121,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return 0;
 	}
-	/*------------------------------------------------------------------------------*/
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Pedido> getLISTA_PEDIDOS(Calendar Fecha_mostrar) {
 		if(Fecha_mostrar==null)
 			return null;
@@ -139,17 +134,15 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 					+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
 					 +"  group by P.PD_id";
-			System.out.println("getLISTA_PEDIDOS "+Query);
+//			System.out.println("getLISTA_PEDIDOS "+Query);
 			st.executeQuery(Query);
 			
-//			st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-//			+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
-//			 +"  group by P.PD_id");
+			
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido P = new Pedido();
-				
-				P.setNumero_Pedido(Fila.getInt("PD_numero"));
+				P.setID_DIARIO(Fila.getInt("PD_numero"));
+				P.setNumero_Pedido(Fila.getInt("PD_ID"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setCliente(new Cliente (Fila.getString("CL_nombre")));
@@ -169,8 +162,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return Arreglo;
 	}
-	/*------------------------------------------------------------------------------*/	
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private ArrayList<Producto> getLista_Productos(Pedido P) {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 		try {
@@ -202,21 +195,21 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return Arreglo;
 	}
-	/*------------------------------------------------------------------------------*/
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean ELIMINAR_PEDIDO(Pedido P) {
 		String SentenciaSQL = "UPDATE Pedido SET PD_estado = 5 where PD_id= " +P.getNumero_Pedido() ;
 		return conex.Insertar(SentenciaSQL);
 	}
 	
-	
-	public boolean MODIFICAR_ESTADO(Pedido P, Integer numero) {
-		String SentenciaSQL = "UPDATE Pedido SET PD_estado = "+ numero+ " where PD_id= " +P.getNumero_Pedido() ;
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public boolean MODIFICAR_ESTADO(Pedido P, Integer ID_ESTADO) {
+		String SentenciaSQL = "UPDATE Pedido SET PD_estado = "+ ID_ESTADO+ " where PD_id= " +P.getNumero_Pedido() ;
+		System.out.println(SentenciaSQL);
 		return conex.Insertar(SentenciaSQL);
 	}
 	
-	/*------------------------------------------------------------------------------*/
-
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
 		int estado = obtenerEstado(p.getESTADO());
@@ -227,8 +220,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
-	/*------------------------------------------------------------------------------*/
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Pedido OBTENER_PEDIDO(Integer Numero_Pedido) {
 		Pedido P = null;
 		try {
@@ -243,7 +236,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){
 				P = new Pedido();
-				P.setNumero_Pedido(Fila.getInt("PD_numero"));
+				P.setID_DIARIO(Fila.getInt("PD_numero"));
+				P.setNumero_Pedido(Fila.getInt("PD_id"));
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				Boolean delivery = false;
@@ -251,7 +245,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 					delivery = true;
 				}
 				P.setEs_Delivery(delivery);
-				P.setIdDiaria(Fila.getInt("PD_numero"));
 				ID_Cliente = Fila.getInt("PD_CLIENTE");
 			}
 
@@ -277,9 +270,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return P;
 		
 	}
-	/*------------------------------------------------------------------------------*/
-
-	// TEMPORAL
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private Cliente getCliente(Integer ID_Cliente) {
 		Cliente cliente = new Cliente();
 		try {
@@ -306,7 +298,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return cliente;
 	}
 	
-	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private int obtenerEstado(String estado){
 		int resultado = 1;
 		conex.connectToMySQL();// Conectar base
@@ -327,18 +319,21 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return resultado;
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Object[] getTODOS_LOS_ESTADOS() {
 		@SuppressWarnings("unused")
 		EstadoDAOjdbcImpl estado = new EstadoDAOjdbcImpl();
 		return new Object[] { "Pendiente", "Preparado", "Enviado","Cobrado","Cancelado"};
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean ELIMINAR_PRODUCTOS_DEL_PEDIDO(Pedido P) {
 		String SentenciaSQL = "delete from producto_pedidos where producto_pedidos.PP_pedidoid = " +P.getNumero_Pedido() ;
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p){
 		boolean resultado = false;
 		Integer PEDIDO_ID = p.getNumero_Pedido();
@@ -361,5 +356,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
-}
+}//---> FIN

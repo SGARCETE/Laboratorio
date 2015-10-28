@@ -97,11 +97,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	 * @param principal_neg_int 
 	 */
 	
-	
-
-
-	
-	
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		Principal_neg_int = principal_neg_int;
 		sv_clientes = Principal_neg_int.getSvClientes();
@@ -451,7 +446,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		// si el pedido no es nulo cargos los campos del pedido
 		if(PEDIDO_ACTUAL!=null){
-			label_NroPedido.setText(PEDIDO_ACTUAL.getNumero_Pedido().toString());
+			label_NroPedido.setText(PEDIDO_ACTUAL.getID_DIARIO().toString());
 			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
 			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
 			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));

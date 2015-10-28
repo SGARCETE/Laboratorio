@@ -13,10 +13,10 @@ public class JTable_Pedido_Completo extends JTable{
 	
 	public JTable_Pedido_Completo(DefaultTableModel model){
 		setModel(model);
-		this.setFont(new Font("Tahoma", Font.PLAIN, 12));
+//		this.setFont(new Font("Tahoma", Font.PLAIN, 12));
 //		this.getColumnModel().getColumn(0).setPreferredWidth(0);
 		this.getColumnModel().getColumn(0).setMaxWidth(0);
-		this.getColumnModel().getColumn(0).setMinWidth(0);
+//		this.getColumnModel().getColumn(0).setMinWidth(0);
 //		this.getColumnModel().getColumn(0).setPreferredWidth(34);
 		this.getColumnModel().getColumn(1).setPreferredWidth(75);
 		this.getColumnModel().getColumn(2).setPreferredWidth(80);
@@ -27,7 +27,7 @@ public class JTable_Pedido_Completo extends JTable{
 		
 		
 	    this.setFont(new Font(FuenteTablas, Font.PLAIN, FuenteSize));
-		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+//		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		this.setRowHeight(25);
 	}

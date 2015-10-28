@@ -31,6 +31,7 @@ public class JTable_Listado_Pedidos extends JTable{
 		// Centrar Celdas
 		DefaultTableCellRenderer Centrar_Celda = new DefaultTableCellRenderer();
 	    Centrar_Celda.setHorizontalAlignment(SwingConstants.CENTER);
+	    
 	    this.getColumnModel().getColumn(1).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(2).setCellRenderer(Centrar_Celda);
 	    this.getColumnModel().getColumn(3).setCellRenderer(Centrar_Celda);

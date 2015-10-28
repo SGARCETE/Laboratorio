@@ -51,7 +51,6 @@ import com.toedter.calendar.JDateChooser;
 
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
-import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla_Alternativa2;
 import Interfaz.JDialogs.Solicitud_de_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
@@ -946,6 +945,7 @@ public class Interfaz_Principal {
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// ACTUALIZA EL LISTADO DE PEDIDOS
 			Actualizar_Lista_pedidos();
+			ACTUALIZAR_MONITOR();
 			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
@@ -959,6 +959,8 @@ public class Interfaz_Principal {
 			frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0)); // TODO
 			frame.setModal(true);
 			frame.setVisible(true);
+			Actualizar_Lista_pedidos();
+			ACTUALIZAR_MONITOR();
 		}
 	}
 	
@@ -972,10 +974,10 @@ public class Interfaz_Principal {
 			
 			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
 			
-			if(!estado.equals("Cobrado"))
-			{
+			if(!estado.equals("Cobrado")){
 				sv_pedidos.eliminar_pedido(P_cancelar);
-				Actualizar_Lista_pedidos();	
+				Actualizar_Lista_pedidos();
+				ACTUALIZAR_MONITOR();
 			}
 			
 		}
@@ -992,7 +994,7 @@ public class Interfaz_Principal {
 				String Nombre_Cliente = "";
 				if(PE.getCliente()!=null)
 					Nombre_Cliente = PE.getCliente().getNombre();
-				model.addRow(new Object[] { PE.getNumero_Pedido(), PE.getIdDiaria(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
+				model.addRow(new Object[] { PE.getNumero_Pedido(), PE.getID_DIARIO(), Nombre_Cliente , formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()), PE.getEs_Delivery(), PE.getESTADO(), formatoImporte.format(PE.getTotal()) });
 			}
 			
 			Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
@@ -1032,20 +1034,16 @@ public class Interfaz_Principal {
 			String Variedad = comboBoxVariedad.getSelectedItem().toString();
 
 			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
-				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
-				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
-				String Observacion = textObservaciones.getText();
-				PRODUCTO_ACTUAL.setPR_Observacion(Observacion);
+				
+				PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
+				PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
 
-				/**
-				 * Esto va a un objeto pedido, el cual se usara para guardar en
-				 * la base de datos
-				 **/
+				/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
 				
 				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
 				
+				// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
 				boolean productoNoEsta = true;
-				
 				for (int i = 0; i<productos.size(); i++ ) {
 					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
 						int cantidad  = productos.get(i).getCantidad();
@@ -1053,22 +1051,42 @@ public class Interfaz_Principal {
 						productoNoEsta = false;
 					}
 				}
-				
 				if(productoNoEsta){
 					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
 				}
 
 				/** Esto va para la parte visual **/
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();				
-				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
-				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
-
+				Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+				
 				/** Despues que se resetee el formulario de ingreso de pedido **/
 				Limpiar_Formulario_pedido();
 				Calcula_totales();
 			}
 		}
 	}
+	
+	private void Actualizar_Tabla_Productos_del_Pedido(Pedido P){
+		Model_Pedido_Completo model = new Model_Pedido_Completo();
+//		DefaultTableModel model = new Model_Pedido_Completo();
+//		DefaultTableModel model = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
+		for (int i = 0; i < P.getLista_Productos().size(); i++) {
+			Object[] datos = new Object[7];
+			String ValorU = formatoImporte.format(P.getLista_Productos().get(i).getPR_precio());
+			String ValorT = formatoImporte.format(P.getLista_Productos().get(i).getPR_precio() * P.getLista_Productos().get(i).getCantidad());
+			datos[0] = i+1;
+			datos[1] = P.getLista_Productos().get(i).getCantidad();
+			datos[2] = P.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING();
+			datos[3] = P.getLista_Productos().get(i).getPR_nombre();
+			datos[4] = ValorU;
+			datos[5] = ValorT;
+			datos[6] = P.getLista_Productos().get(i).getPR_Observacion();
+			model.addRow( datos);
+		}
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+//		Tabla_Pedido_Completo.setModel(model);
+	}
+	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// QUITAR/ ELIMINAR/ CANCELAR DE UN PEDIDO
@@ -1106,11 +1124,15 @@ public class Interfaz_Principal {
 		pedido.setNumero_Pedido(Numero_pedido);
 		System.out.println(pedido.getESTADO());
 
-		
+
 		if(Estado_pedido.equals("Pendiente")){
 			sv_pedidos.modificar_estado(pedido, 2);
 			Actualizar_Lista_pedidos();
+			ACTUALIZAR_MONITOR();
 		}
+
+//		sv_pedidos.eliminar_pedido(P_cancelar);
+
 	}
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Enviado() {
@@ -1123,9 +1145,11 @@ public class Interfaz_Principal {
 		
 		if(Estado_pedido.equals("Preparado")){
 			sv_pedidos.modificar_estado(pedido, 3);
-			Actualizar_Lista_pedidos();	
+			Actualizar_Lista_pedidos();
+			ACTUALIZAR_MONITOR();	
 		}
 	}
+	
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_cobrado() {
 		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);// TODO
@@ -1137,7 +1161,8 @@ public class Interfaz_Principal {
 		
 		if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
 			sv_pedidos.modificar_estado(pedido, 4);
-			Actualizar_Lista_pedidos();	
+			Actualizar_Lista_pedidos();
+			ACTUALIZAR_MONITOR();
 		}
 	}
 	
@@ -1159,7 +1184,9 @@ public class Interfaz_Principal {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	private void ACTUALIZAR_MONITOR() {
-		 ((Interfaz_Cocina_Pantalla_Alternativa2) frame_cocina).Actualizar_monitor(sv_pedidos.get_Pedidos(new GregorianCalendar()));
+		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.get_Pedidos(new GregorianCalendar());
+		System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " + Lista_Productos_de_Hoy.size());
+		((Interfaz_Cocina_Pantalla_Alternativa2) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
 	}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
