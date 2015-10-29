@@ -57,6 +57,7 @@ public class AM_Solicitud_Compra extends JDialog {
 	 * Create the dialog.
 	 */
 	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+		setResizable(false);
 		
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
@@ -205,8 +206,13 @@ public class AM_Solicitud_Compra extends JDialog {
 				JButton okButton = new JButton("Agregar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
-						dispose();
+						if(tablaMateriasPrimas.getRowCount()>0){
+							sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
+							dispose();
+							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(principal_neg_int);
+							frame.setModal(true);
+							frame.setVisible(true);
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -218,6 +224,9 @@ public class AM_Solicitud_Compra extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
+						Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(principal_neg_int);
+						frame.setModal(true);
+						frame.setVisible(true);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -245,6 +254,10 @@ public class AM_Solicitud_Compra extends JDialog {
 
 	private void Seleccion_Proveedor() {
 		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
+			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			modelo.setRowCount(0);
+			tablaMateriasPrimas.setModel(modelo);
+			comboMateriaPrima.removeAllItems();
 			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
 			System.out.println("Tamaño lista de "+ comboProveedor.getSelectedItem().toString()+" es de "+Lista_Categorias.size());// TODO
 			

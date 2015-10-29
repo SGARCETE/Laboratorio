@@ -29,6 +29,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private Principal_Negocio_Interfaz principal_neg_int;
 
 	public Interfaz_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+		setResizable(false);
 		this.principal_neg_int = principal_neg_int;
 		setBounds(100, 100, 969, 455);
 		getContentPane().setLayout(new BorderLayout());
@@ -60,11 +61,12 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		table.getColumnModel().getColumn(0).setPreferredWidth(30);
 		table.getColumnModel().getColumn(0).setMinWidth(30);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
-		scrollPane.setColumnHeaderView(table);
+		scrollPane.setViewportView(table);
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 				AM_Solicitud_Compra frame = new AM_Solicitud_Compra(principal_neg_int);
 				frame.setModal(true);
 				frame.setVisible(true);
@@ -95,6 +97,11 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Cerrar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
