@@ -172,9 +172,6 @@ INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('D
 INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Zapiola 1454', "4555-2356", "Federico Vara","Cuidado con el perro");
 INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Villegas 1454', "4555-5456", "Lucas Tolosa","Timbre de abajo");
 
-
-select * from Cliente;
-
 create table Repartidor (
 							RE_id int AUTO_INCREMENT , 
 							RE_nombre varchar(50),
