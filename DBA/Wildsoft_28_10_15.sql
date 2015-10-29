@@ -156,24 +156,24 @@ INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('12 empana
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('Cumpleaños', 1200,4);
 
 
-
-
 create table Cliente (
 					   CL_id int AUTO_INCREMENT ,
 					   CL_direccion varchar (50),
 					   CL_telefono varchar (50),
 					   CL_nombre varchar (50),
+                       CL_detalle varchar (100),
 					   UNIQUE (CL_direccion, CL_telefono),
 					   PRIMARY KEY (CL_id)
 );
 
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle) VALUES (null, null, "","");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Belgrano 100', "4459-0748", "Santiago Garcete","No anda timbre, golpeear");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Dell Eva 2211', "4555-2680", "Nicolás Cabral","Timbre de arriba");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Zapiola 1454', "4555-2356", "Federico Vara","Cuidado con el perro");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Villegas 1454', "4555-5456", "Lucas Tolosa","Timbre de abajo");
 
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre) VALUES (null, null, "");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre)VALUES ('Belgrano 100', "4459-0748", "Santiago Garcete");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre)VALUES ('Zapiola 1455', "4555-2356", "Nicolás Cabral");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre)VALUES ('Zapiola 1454', "4555-2356", "Federico Vara");
 
-
+select * from Cliente;
 
 create table Repartidor (
 							RE_id int AUTO_INCREMENT , 
