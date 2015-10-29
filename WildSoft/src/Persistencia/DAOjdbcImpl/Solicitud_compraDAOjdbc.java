@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -25,10 +26,12 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		if(solicitud.getProveedor()!=null && solicitud.getProveedor().getId()!=0)
 			PROVEEDOR = solicitud.getProveedor().getId().toString();
 		
-		String SentenciaSQL_Solicitud = "INSERT INTO Solicitud_compra (SD_estado, SD_proveedor,SD_fecha) VALUES ("+
-				"'"+	1                                               	+"',"+
-				""+		PROVEEDOR											+","+
-				""+		formato_yyyyMMdd.format(solicitud.getFecha())		+");";
+		String SentenciaSQL_Solicitud = "INSERT INTO Solicitud_compra ( SD_fecha, SD_estado, SD_proveedor) VALUES ("+
+				"'"+	formato_yyyyMMdd.format(new Date())                 +"',"+
+				""+		1											        +","+
+				""+     PROVEEDOR                                           +");";
+		
+		
 		
 		boolean Exito_al_Ingresar_Solicitud = conex.Insertar(SentenciaSQL_Solicitud);
 		
