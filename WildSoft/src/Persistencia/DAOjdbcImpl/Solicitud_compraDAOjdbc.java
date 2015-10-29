@@ -46,7 +46,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			Statement st = conex.conexion.createStatement();
 			
 			String Query = "select * from Solicitud_compra SD join Solicitud_estado SEST join Proveedor PV on " +
-		    "SD.SD_Proveedor= PV.PV_id and SD.SD_estado= SEST.SEST_id;" ;
+		    "SD.SD_Proveedor= PV.PV_id and SD.SD_estado= SEST.SEST_id ORDER BY SD_id DESC;" ;
 			System.out.println("getLISTA_MATERIA_SOLICITUDES "+Query);
 			st.executeQuery(Query);
 			
@@ -54,6 +54,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Solicitud_compra sd = new Solicitud_compra();
+				sd.setId(Integer.parseInt(Fila.getString("SD_id")));
 				sd.setEstado(Fila.getString("SEST_nombre"));
 				sd.setFecha(Fila.getDate("SD_fecha"));
 				sd.setProveedor(new Proveedor (Fila.getString("PV_nombre")));

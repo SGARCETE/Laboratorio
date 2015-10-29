@@ -43,21 +43,21 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Id", "Fecha", "Proveedor", "Precio", "Estado"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class, String.class, String.class
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(0).setMinWidth(30);
+		table.getColumnModel().getColumn(0).setMaxWidth(30);
 		scrollPane.setColumnHeaderView(table);
 		
 		JButton btnAgregar = new JButton("Agregar");
@@ -115,8 +115,8 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		ArrayList<Solicitud_compra> lista = sv_solicitudCompra.getLISTA_SOLICITUDES();
 		for (int i = 0; i < lista.size(); i++) {
-			String precio = "";
-			if(lista.get(i).getPrecio()!=null){
+			String precio = " ";
+			if(lista.get(i).getPrecio()!=null && lista.get(i).getPrecio()!=0){
 				precio = String.valueOf(lista.get(i).getPrecio());
 			}
 			String[] fila = {String.valueOf(lista.get(i).getId()),
