@@ -65,7 +65,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Solicitud_de_Compra frame = new Solicitud_de_Compra(principal_neg_int);
+				AM_Solicitud_Compra frame = new AM_Solicitud_Compra(principal_neg_int);
 				frame.setModal(true);
 				frame.setVisible(true);
 			}

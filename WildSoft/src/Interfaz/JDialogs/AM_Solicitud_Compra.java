@@ -36,7 +36,7 @@ import Negocio.Servicios.Servicio_Solicitud_compra;
 
 
 @SuppressWarnings("serial")
-public class Solicitud_de_Compra extends JDialog {
+public class AM_Solicitud_Compra extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup selector = new ButtonGroup();
@@ -56,7 +56,7 @@ public class Solicitud_de_Compra extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Solicitud_de_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
