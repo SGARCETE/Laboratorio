@@ -132,9 +132,9 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	
 	//----------------------------------------------------------------------------------------------------------------
 		private void Generar_Solicitud() {
-			if(table!=null && table.getSelectedRow()!=-1){
+			if(table.getSelectedRow()!=-1){
 				ReporteSolicitud RS = new ReporteSolicitud();
-				Integer NUMERO_SOLICITUD =  (Integer) table.getValueAt(table.getSelectedRow(), 0);// TODO
+				Integer NUMERO_SOLICITUD =  Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)) ;// TODO
 				RS.Generar_Solicitud(NUMERO_SOLICITUD);
 			}
 		}

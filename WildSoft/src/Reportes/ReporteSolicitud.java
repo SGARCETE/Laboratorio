@@ -1,6 +1,5 @@
 package Reportes;
 
-import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -8,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
-import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Persistencia.Conector.ConectorMySQL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -47,7 +45,7 @@ public class ReporteSolicitud {
 		catch (JRException | FileNotFoundException e) {
 			JOptionPane.showMessageDialog(null, "Error al leer el fichero de carga jasper report "+e.getMessage());
 		}	
-			
+				
 				// MOSTRAR REPORTE
 				JasperViewer view = new JasperViewer(jasperPrint,false); 
 				view.setTitle("Solicitud De Compra");
@@ -55,8 +53,8 @@ public class ReporteSolicitud {
 	}
 	
 /*	public static void main(String[] args) {
-		int numerodesolicitud=1;
+		int numerodesolicitud=2;
 		ReporteSolicitud rs = new ReporteSolicitud();
 		rs.Generar_Solicitud(numerodesolicitud);
-	}  */ 
+	}  */   
 }
