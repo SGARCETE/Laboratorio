@@ -96,19 +96,17 @@ INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("L
 INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los amigos","Roca 2743- CABA",null, "9750-6799");
 INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los pollos hermanos","Roca 25643- CABA",null, "9750-6799");
 
-
+/*drop table solicitud_estado; */
 create table Solicitud_estado (
 						SEST_id int AUTO_INCREMENT,
 						SEST_nombre varchar (30),
-						SEST_proveedor int,
 						unique (SEST_nombre),
-						primary key (SEST_id),
-						FOREIGN KEY (SEST_proveedor) REFERENCES Proveedor(PV_ID) 
+						primary key (SEST_id)
+					
 );
 
 
 INSERT INTO Solicitud_estado (SEST_nombre) VALUES ('Pendiente');
-INSERT INTO Solicitud_estado (SEST_nombre) VALUES ('Recibida');
 INSERT INTO Solicitud_estado (SEST_nombre) VALUES ('Enviada');
 INSERT INTO Solicitud_estado (SEST_nombre) VALUES ('Pagada');
 INSERT INTO Solicitud_estado (SEST_nombre) VALUES ('Cancelada');
