@@ -162,7 +162,6 @@ public class AM_Solicitud_Compra extends JDialog {
 					int cantidadNueva = cantidadTabla + cantidadSpinner;
 					tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
 				}
-				
 			}});
 		btnAgregar.setBounds(579, 73, 92, 32);
 		contentPanel.add(btnAgregar);
@@ -257,6 +256,7 @@ public class AM_Solicitud_Compra extends JDialog {
 			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
 			modelo.setRowCount(0);
 			tablaMateriasPrimas.setModel(modelo);
+			ListaMateriaPrima = new HashMap<String, Integer>();
 			comboMateriaPrima.removeAllItems();
 			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
 			System.out.println("Tamaño lista de "+ comboProveedor.getSelectedItem().toString()+" es de "+Lista_Categorias.size());// TODO
