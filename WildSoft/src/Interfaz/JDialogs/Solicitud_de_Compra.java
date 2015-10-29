@@ -279,6 +279,7 @@ public class Solicitud_de_Compra extends JDialog {
 			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
 			mp.setNombre((String) tablaMateriasPrimas.getValueAt(i, 2));
 			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
+			listaMateriaPrima.add(mp);
 		}
 		sc.setLista_materia_prima(listaMateriaPrima);
 		return sc;

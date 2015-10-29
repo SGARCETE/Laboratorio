@@ -6,9 +6,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.JOptionPane;
-
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
@@ -169,8 +167,9 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	}
     
     public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sc){
+    	
 		boolean resultado = false;
-		Integer SOLICITUD_ID = sc.getId();
+		Integer SOLICITUD_ID = obtenerUltimaSolicitud();
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			
 			Integer MATERIA_ID = sc.getLista_materia_prima().get(i).getId();
@@ -189,5 +188,30 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		return resultado;
 		
 	}
+    
+    
+    
+    
+    public Integer obtenerUltimaSolicitud()
+    {
+    	try
+    	{
+    		conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			String SentenciaSQL= "SELECT SD_id from Solicitud_compra where SD_id= (select max(SD_id) from Solicitud_compra)";
+			ResultSet rs= st.executeQuery(SentenciaSQL);
+			rs.first();
+			int ID = rs.getInt("SD_id");
+			conex.cerrarConexion();
+			return ID;
+    		
+    	}
+    	catch (SQLException SQLE)
+    	{
+    		JOptionPane.showMessageDialog(null,"No se puede dar la fila solicitada! \n ERROR : " + SQLE.getMessage());
+    	}
+    	return 0;
+    }
 	
 }
