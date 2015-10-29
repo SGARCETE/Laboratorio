@@ -34,6 +34,7 @@ import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 import Negocio.Servicios.Servicio_Solicitud_compra;
 
+
 @SuppressWarnings("serial")
 public class Solicitud_de_Compra extends JDialog {
 
@@ -162,7 +163,7 @@ public class Solicitud_de_Compra extends JDialog {
 				}
 				
 			}});
-		btnAgregar.setBounds(580, 72, 104, 37);
+		btnAgregar.setBounds(579, 73, 92, 32);
 		contentPanel.add(btnAgregar);
 		
 		JLabel lblNewLabel = new JLabel("TOTAL     $");
@@ -194,7 +195,7 @@ public class Solicitud_de_Compra extends JDialog {
 				}
 			}
 		});
-		btnQuitar.setBounds(696, 72, 104, 37);
+		btnQuitar.setBounds(675, 73, 97, 32);
 		contentPanel.add(btnQuitar);
 		{
 			JPanel buttonPane = new JPanel();

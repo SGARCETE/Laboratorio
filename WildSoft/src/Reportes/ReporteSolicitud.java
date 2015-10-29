@@ -1,11 +1,14 @@
 package Reportes;
 
+import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+
+import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Persistencia.Conector.ConectorMySQL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -18,7 +21,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class ReporteSolicitud {
 
-	public void Generar_Solicitud(Integer numero_solicitud)
+	public void Generar_Solicitud(Integer NUMERO_SOLICITUD)
 	{
 		String JXML = "src\\Reportes\\Solicitud.jrxml";
 		JasperPrint jasperPrint = null;
@@ -26,7 +29,7 @@ public class ReporteSolicitud {
 		Map<String, Object> parametros;
 		
 		parametros = new HashMap<String, Object>();
-		parametros.put("SD_id", numero_solicitud);
+		parametros.put("ID_SOLICITUD", NUMERO_SOLICITUD);
 		
 		
 		try
@@ -50,5 +53,10 @@ public class ReporteSolicitud {
 				view.setTitle("Solicitud De Compra");
 				view.setVisible(true);
 	}
-		
+	
+/*	public static void main(String[] args) {
+		int numerodesolicitud=1;
+		ReporteSolicitud rs = new ReporteSolicitud();
+		rs.Generar_Solicitud(numerodesolicitud);
+	}  */ 
 }

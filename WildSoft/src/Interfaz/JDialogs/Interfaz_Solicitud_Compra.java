@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Solicitud_compra;
+import Reportes.ReporteSolicitud;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -77,6 +78,15 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setBounds(220, 339, 90, 28);
 		contentPanel.add(btnEditar);
+		
+		JButton btnGenerarSolicitud = new JButton("Generar Solicitud");
+		btnGenerarSolicitud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Generar_Solicitud();
+			}
+		});
+		btnGenerarSolicitud.setBounds(403, 342, 218, 25);
+		contentPanel.add(btnGenerarSolicitud);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -118,4 +128,17 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		}
 		table.setModel(modelo);
 	}
+	
+	
+	//----------------------------------------------------------------------------------------------------------------
+		private void Generar_Solicitud() {
+			if(table!=null && table.getSelectedRow()!=-1){
+				ReporteSolicitud RS = new ReporteSolicitud();
+				Integer NUMERO_SOLICITUD =  (Integer) table.getValueAt(table.getSelectedRow(), 1);// TODO
+				RS.Generar_Solicitud(NUMERO_SOLICITUD);
+			}
+		}
+		
+	//-------------------------------------------------------------------------------------------------------------------	
+		
 }
