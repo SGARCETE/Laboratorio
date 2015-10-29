@@ -40,10 +40,10 @@ public class AM_Solicitud_Compra extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private final ButtonGroup selector = new ButtonGroup();
-	JComboBox<String> comboProveedor;
-	JComboBox<String> comboCategorias;
-	JComboBox<String> comboMateriaPrima;
-	HashMap<String, Integer> ListaMateriaPrima = new HashMap<String, Integer>();
+	private JComboBox<String> comboProveedor;
+	private JComboBox<String> comboCategorias;
+	private JComboBox<String> comboMateriaPrima;
+	private HashMap<String, Integer> ListaMateriaPrima = new HashMap<String, Integer>();
 	private Servicio_Proveedores sv_proveedor;
 	private Servicio_Materia_Prima sv_materiaPrima;
 	private Servicio_Solicitud_compra sv_SolicitudCompra;
@@ -52,7 +52,7 @@ public class AM_Solicitud_Compra extends JDialog {
 	private JTable tablaMateriasPrimas;
 	private JTextField textField;
 	private JSpinner spinnerCantidad;
-
+	private Principal_Negocio_Interfaz Principal_neg_int;
 	/**
 	 * Create the dialog.
 	 */
@@ -62,7 +62,7 @@ public class AM_Solicitud_Compra extends JDialog {
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
 		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
-		
+		Principal_neg_int = principal_neg_int;
 		setBounds(100, 100, 963, 466);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -208,7 +208,7 @@ public class AM_Solicitud_Compra extends JDialog {
 						if(tablaMateriasPrimas.getRowCount()>0){
 							sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
 							dispose();
-							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(principal_neg_int);
+							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 							frame.setModal(true);
 							frame.setVisible(true);
 						}
@@ -223,7 +223,7 @@ public class AM_Solicitud_Compra extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
-						Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(principal_neg_int);
+						Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 						frame.setModal(true);
 						frame.setVisible(true);
 					}

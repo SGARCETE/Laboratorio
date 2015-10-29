@@ -16,12 +16,9 @@ public class JTable_Cocina_Detalles_Pedido extends JTable{
 	private String FuenteTablas = "Arial Unicode MS"; //"Verdana";
 	private int FuenteSize = 18;
 	
-	
 	public JTable_Cocina_Detalles_Pedido(DefaultTableModel model){
 		setModel(model);
-//		this.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    this.setFont(new Font(FuenteTablas, Font.PLAIN, FuenteSize));
-		
+
 		// Ordenar tabla 
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
 		this.setRowSorter(sorter);
@@ -32,22 +29,23 @@ public class JTable_Cocina_Detalles_Pedido extends JTable{
 	    Centrar_Celda.setHorizontalAlignment(SwingConstants.CENTER);
 	    this.getColumnModel().getColumn(0).setCellRenderer(Centrar_Celda);
 	    
-	    
+		// setar tamaños de las columnas
 	    this.getColumnModel().getColumn(0).setPreferredWidth(75);
 		this.getColumnModel().getColumn(0).setMinWidth(75);
 		this.getColumnModel().getColumn(0).setMaxWidth(100);
-		
 		this.getColumnModel().getColumn(1).setPreferredWidth(400);
 		this.getColumnModel().getColumn(1).setMinWidth(90);
-		
 		this.getColumnModel().getColumn(2).setPreferredWidth(400);
 		this.getColumnModel().getColumn(2).setMinWidth(90);
-		
 		this.getColumnModel().getColumn(3).setPreferredWidth(500);
 		this.getColumnModel().getColumn(3).setMinWidth(90);
-//		table_2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
+	    // Fuente
+	    this.setFont(new Font(FuenteTablas, Font.PLAIN, FuenteSize));
+	    
+		// Altura de cada fila
 		this.setRowHeight(25);
+		
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
 }//---> FIN

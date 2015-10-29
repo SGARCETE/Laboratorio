@@ -35,7 +35,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
 			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
 		}
-	
 		// TEST
 		Calendar Fecha_HOY = new GregorianCalendar();
 		
@@ -170,7 +169,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
-			String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
+			String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_Observacion, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
 			"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
 			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
 			        P.getNumero_Pedido();
@@ -183,6 +182,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				Prod.setPR_id(Fila.getInt("PR_id"));
 				Prod.setPR_nombre(Fila.getString("PR_nombre"));
 				Prod.setPR_precio(Fila.getDouble("PP_precio"));
+				Prod.setPR_Observacion(Fila.getString("PP_Observacion"));
 				Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
 				Prod.setCantidad(Fila.getInt("PP_producto_cantidad"));
 				Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
@@ -215,9 +215,14 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		int estado = obtenerEstado(p.getESTADO());
 		
 		int cliente = p.getCliente().getID_Cliente();
-		
-		String SentenciaSQL = "UPDATE Pedido SET PD_fecha_pedido = '" + formato_yyyyMMdd.format(p.getFecha_Hora_Pedido()) + "', "
-				+ "PD_estado = " + estado + ", " + "PD_cliente =" + cliente + " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
+		boolean delivery = p.getEs_Delivery();
+		String Fecha = formato_yyyyMMdd.format(p.getFecha_Hora_Pedido());
+		String SentenciaSQL = "UPDATE Pedido SET "
+				+ "PD_fecha_pedido = '" + Fecha + "', "
+				+ "PD_estado = " + estado + ", " 
+				+ "PD_cliente = " + cliente + ","
+				+ "PD_Delivery = " + delivery
+				+ " WHERE Pedido.PD_id=" + p.getNumero_Pedido() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
 	
@@ -247,8 +252,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setEs_Delivery(delivery);
 				ID_Cliente = Fila.getInt("PD_CLIENTE");
 			}
-
 			conex.cerrarConexion();
+			
 			// Obtiene la lista de productos asociado a ese pedido
 			P.setLista_Productos(getLista_Productos(P));
 			
@@ -261,14 +266,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			// Obtiene datos del cliente si este no es NULL
 			if(ID_Cliente!=null)
 				P.setCliente(getCliente(ID_Cliente));
-			else
-				P.setCliente(null);
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return P;
-		
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -277,13 +279,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-//			String SentenciaSQL_CLIENTE = "SELECT * FROM "
-//			+"CLIENTE," 
-//			+"PEDIDO "
-//			+"WHERE "
-//			+"PEDIDO JOIN CLIENTE PEDIDO.PD_CLIENTE = CLIENTE.CL_id AND" 
-//			+"PEDIDO.PD_ID ="+ID_Cliente;
-//			st.executeQuery(SentenciaSQL_CLIENTE);
 			st.executeQuery("SELECT * FROM Cliente WHERE CL_id = "+ID_Cliente);
 			ResultSet Fila = st.getResultSet();
 			Fila.first();
@@ -291,6 +286,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			cliente.setNombre(Fila.getString("CL_nombre"));
 			cliente.setDomicilio(Fila.getString("CL_direccion"));
 			cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
+//			cliente.setDetalle(Fila.getString("CL_Detalle"));
 			conex.cerrarConexion();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
@@ -310,9 +306,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			
 			while (Fila.next()){	
 				resultado = Fila.getInt(1);
-				}
-			
-				
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

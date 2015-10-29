@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -73,13 +75,12 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		
 		
-//		setAlwaysOnTop(true);
+
 //		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
 //		/*PARA SACARLE LOS BORDES:*/
 //		this.setUndecorated(true);
-//		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
-//		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
-		
+		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
+		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
 		
 		
 		contentPanel.setBackground(Color.BLACK);
@@ -91,36 +92,6 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		panel_11.setBackground(Color.WHITE);
 		
 		scrollPane_Resumen_Productos_Pendientes = new JScrollPane();
-		
-//		table_Resumen_Productos_Pendientes = new JTable();
-//		table_Resumen_Productos_Pendientes.setFont(new Font("SansSerif", Font.PLAIN, 13));
-//		table_Resumen_Productos_Pendientes.setRowHeight(18);
-//		table_Resumen_Productos_Pendientes.setModel(new DefaultTableModel(
-//			new Object[][] {
-////				{null, "8", "Pizza", "Napolitana"},
-////				{null, "4", "Pizza", "Muzzarella"},
-////				{null, "2", "Pizza", "Jamon y Queso"},
-////				{null, "5", "Empanada", "Hawaiana"},
-////				{null, "48", "Empanada", "Humita"},
-////				{null, "36", "Empanada", "Carne"},
-////				{null, "10", "Empanada", "Pollo"},
-//			},
-//			new String[] {
-//				"ID", "Cantidad", "Tipo", "Producto"
-//			}
-//		));
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(0).setPreferredWidth(0);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(0).setMinWidth(0);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(0).setMaxWidth(0);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(1).setPreferredWidth(60);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(1).setMinWidth(60);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(1).setMaxWidth(60);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(2).setPreferredWidth(150);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(2).setMinWidth(80);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(2).setMaxWidth(150);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(3).setPreferredWidth(99);
-//		table_Resumen_Productos_Pendientes.getColumnModel().getColumn(3).setMinWidth(90);
-//		scrollPane.setViewportView(table_Resumen_Productos_Pendientes);
 		
 		JPanel panel_13 = new JPanel();
 		panel_13.setBackground(SystemColor.textHighlight);
@@ -434,6 +405,7 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		iniciarParametros();
 	}
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	private void iniciarParametros() {
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
 		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
@@ -556,7 +528,8 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 		}
 	}
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+	// TODO BUG, AGREGA EL MISMO PRODUCTO EN OTRA FILA SI ESTA PERTENECE A OTRO PEDIDO 
 	private void setResumen_Productos_Pendientes(ArrayList<Pedido> Lista_Pedidos){
 		DefaultTableModel model = (DefaultTableModel) table_Resumen_Productos_Pendientes.getModel();
 		for (int i = 0; i < Lista_Pedidos.size(); i++) {
@@ -589,10 +562,11 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
 				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
 			}
-			if(pr.getPR_tipo_producto()!=3 )									// SI NO ES UNA BEBIDA
+			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA
 				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
-			if(!pr.getPR_Observacion().isEmpty())
-				model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
+				if(!pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
+					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
+			}
 			
 		}
 		JT.setModel(model);

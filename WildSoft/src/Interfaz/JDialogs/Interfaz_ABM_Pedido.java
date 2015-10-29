@@ -44,6 +44,7 @@ import Negocio.Servicios.Servicio_Productos;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
+import javax.swing.JToggleButton;
 
 
 @SuppressWarnings("serial")
@@ -52,9 +53,9 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable Tabla_Pedido_Completo;
 	private JScrollPane scrollPane_Pedido_Completo;
-	private Servicio_Productos svProductos;
-	private Servicio_Pedidos SvPedidos;
-	private Servicio_Clientes sv_clientes;
+	private JTextField textValor;
+	private JTextField textObservaciones;
+	private JTextField textValorTotal;
 	private JTextField textDetalle;
 	private JTextField textDire;
 	private JTextField textTelefono;
@@ -67,6 +68,13 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			}
 		}
 	);
+	private JButton Modificar_Cantidad; 
+	private JButton btnQuitar;
+	private JLabel label_NroPedido;
+	private JLabel label_Fecha;
+	private JLabel label_ESTADO;
+	private JLabel textTotal_Pedido;
+	private JSpinner spinnerCantNueva;
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
@@ -75,22 +83,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
 	private Principal_Negocio_Interfaz Principal_neg_int;
-	@SuppressWarnings("unused")
 	private Cliente CLIENTE_ACTUAL = null; 
-	
+	private Servicio_Productos svProductos;
+	private Servicio_Pedidos SvPedidos;
+	private Servicio_Clientes sv_clientes;
+
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
-	private JLabel label_NroPedido;
-	private JTextField textValor;
-	private JTextField textObservaciones;
-	private JTextField textValorTotal;
-	private JLabel label_Fecha;
-	private JLabel label_ESTADO;
-	private JLabel textTotal_Pedido;
-
-	private JButton guardar; 
-	private JButton btnQuitar;
-	private JSpinner spinnerCantNueva;
+	private JButton btn_Agregar;
+	private JButton btnGuardarModificacionPedido;
+	private JToggleButton tglbtnDelivery;
 	
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		Principal_neg_int = principal_neg_int;
@@ -100,7 +102,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		SvPedidos.getTodos_los_estados();
 		
 		setTitle("ABM Pedido");
-		setBounds(100, 100, 1179, 490);
+		setBounds(100, 100, 987, 630);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -108,8 +110,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		contentPanel.setLayout(null);
 		
 		scrollPane_Pedido_Completo = new JScrollPane();
-		scrollPane_Pedido_Completo.setBounds(349
-				, 108, 469, 282);
+		scrollPane_Pedido_Completo.setBounds(348
+				, 108, 613, 282);
 		contentPanel.add(scrollPane_Pedido_Completo);
 		
 		JLabel lblNumeroPedido = new JLabel("N\u00BA Pedido");
@@ -120,13 +122,13 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBorder(new TitledBorder(null, "Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(830, 108, 323, 185);
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel.setBounds(345, 401, 616, 135);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblDireccion = new JLabel("Cliente");
-		lblDireccion.setBounds(22, 16, 106, 25);
+		lblDireccion.setBounds(22, 16, 291, 25);
 		panel.add(lblDireccion);
 		
 		textCliente.setBackground(new Color(240, 255, 240));
@@ -136,16 +138,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		textDetalle = new JTextField();
 		textDetalle.setBackground(new Color(240, 255, 240));
-		textDetalle.setBounds(22, 148, 145, 25);
+		textDetalle.setBounds(349, 42, 201, 25);
 		panel.add(textDetalle);
 		textDetalle.setColumns(10);
 		
-		JLabel lblDetalle = new JLabel("Detalle");
-		lblDetalle.setBounds(22, 122, 106, 25);
+		JLabel lblDetalle = new JLabel("Observacion");
+		lblDetalle.setBounds(349, 16, 145, 25);
 		panel.add(lblDetalle);
 		
-		JLabel lblDireccion_1 = new JLabel("Direccion");
-		lblDireccion_1.setBounds(22, 72, 106, 25);
+		JLabel lblDireccion_1 = new JLabel("Direcci\u00F3n");
+		lblDireccion_1.setBounds(22, 72, 291, 25);
 		panel.add(lblDireccion_1);
 		
 		textDire = new JTextField();
@@ -156,13 +158,13 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 		textTelefono = new JTextField();
 		textTelefono.setBackground(new Color(240, 255, 240));
-		textTelefono.setBounds(177, 148, 136, 25);
+		textTelefono.setBounds(349, 98, 201, 25);
 		panel.add(textTelefono);
 		textTelefono.setColumns(10);
 		
 		
-		JLabel lblTelefono = new JLabel("Telefono");
-		lblTelefono.setBounds(177, 122, 106, 25);
+		JLabel lblTelefono = new JLabel("Tel\u00E9fono");
+		lblTelefono.setBounds(349, 72, 145, 25);
 		panel.add(lblTelefono);
 		
 		label_NroPedido = new JLabel("");
@@ -272,16 +274,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textValorTotal.setBounds(117, 159, 199, 25);
 		panelPedido.add(textValorTotal);
 		
-		JButton button = new JButton("Agregar");
-		button.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
-		button.setBackground(Color.WHITE);
-		button.addActionListener(new ActionListener() {
+		btn_Agregar = new JButton("Agregar");
+		btn_Agregar.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
+		btn_Agregar.setBackground(Color.WHITE);
+		btn_Agregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
 			}
 		});
-		button.setBounds(117, 225, 100, 30);
-		panelPedido.add(button);
+		btn_Agregar.setBounds(117, 225, 100, 30);
+		panelPedido.add(btn_Agregar);
 		
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
@@ -320,14 +322,14 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		contentPanel.add(textTotal_Pedido);
 		
 		JPanel panelModificacionPR = new JPanel();
-		panelModificacionPR.setBorder(new TitledBorder(null, "Producto", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panelModificacionPR.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Producto", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelModificacionPR.setBackground(Color.WHITE);
-		panelModificacionPR.setBounds(828, 304, 325, 86);
+		panelModificacionPR.setBounds(6, 401, 331, 135);
 		contentPanel.add(panelModificacionPR);
 		panelModificacionPR.setLayout(null);
 		
 		btnQuitar = new JButton("Quitar");
-		btnQuitar.setBounds(210, 24, 91, 38);
+		btnQuitar.setBounds(211, 50, 91, 38);
 		panelModificacionPR.add(btnQuitar);
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -336,46 +338,54 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		});
 		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		
-		guardar = new JButton("Modificar");
-		guardar.addActionListener(new ActionListener() {
+		Modificar_Cantidad = new JButton("Modificar");
+		Modificar_Cantidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int posicion = Tabla_Pedido_Completo.getSelectedRow();
-				int cantidad = (int) spinnerCantNueva.getValue();
-				PEDIDO_ACTUAL.getLista_Productos().get(posicion).setCantidad(cantidad);
-				Tabla_Pedido_Completo.setValueAt(cantidad, posicion, 1);
+				Modificar_cantidad();
 			}
 		});
-		guardar.setBounds(93, 24, 107, 38);
-		panelModificacionPR.add(guardar);
-		guardar.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
+		Modificar_Cantidad.setBounds(94, 50, 107, 38);
+		panelModificacionPR.add(Modificar_Cantidad);
+		Modificar_Cantidad.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
 		
 		spinnerCantNueva = new JSpinner();
-		spinnerCantNueva.setBounds(20, 31, 55, 25);
+		spinnerCantNueva.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinnerCantNueva.setBounds(21, 57, 55, 25);
 		panelModificacionPR.add(spinnerCantNueva);
+		
+		tglbtnDelivery = new JToggleButton();
+		tglbtnDelivery.setBackground(Color.WHITE);
+		tglbtnDelivery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Servicio_Delivery();				
+			}
+		});
+		tglbtnDelivery.setBounds(785, 65, 83, 32);
+		contentPanel.add(tglbtnDelivery);
+		
+		JLabel lblConDelivery = new JLabel("Delivery");
+		lblConDelivery.setHorizontalAlignment(SwingConstants.CENTER);
+		lblConDelivery.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		lblConDelivery.setBounds(651, 65, 124, 30);
+		contentPanel.add(lblConDelivery);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JButton okButton = new JButton("Guardar");
-		okButton.addActionListener(new ActionListener() {
+		btnGuardarModificacionPedido = new JButton("Guardar");
+		btnGuardarModificacionPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
-				ArrayList<Producto> lista = PEDIDO_ACTUAL.getLista_Productos();
-				SvPedidos.eliminar_producto_del_pedido(PEDIDO_ACTUAL);
-				PEDIDO_ACTUAL.setLista_Productos(lista);
-				SvPedidos.agregar_producto_al_pedido(PEDIDO_ACTUAL);
-				//Principal_neg_int.getInstancia_Interfaz_Principal().actualizarCocina();
-				// TODO
-				dispose();
+				Guardar_pedido();
+				
 			}
 		});
-		okButton.setBackground(Color.WHITE);
-		okButton.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
+		btnGuardarModificacionPedido.setBackground(Color.WHITE);
+		btnGuardarModificacionPedido.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
+		btnGuardarModificacionPedido.setActionCommand("OK");
+		buttonPane.add(btnGuardarModificacionPedido);
+		getRootPane().setDefaultButton(btnGuardarModificacionPedido);
 
 		JButton cancelButton = new JButton("Salir");
 		cancelButton.setBackground(Color.WHITE);
@@ -389,122 +399,30 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		buttonPane.add(cancelButton);
 
 		iniciarParametros();
-		
-		
 	}
-
-	private void Quitar_al_Pedido() {
-//		 LO QUITA DE LA LISTA DE PEDIDO
-		 if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
-			 if (Tabla_Pedido_Completo.getSelectedRow() != -1){
-				 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
-				 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-						 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad)){
-							PEDIDO_ACTUAL.getLista_Productos().remove(i);
-						 }
-					 } 
-				 }
-			 }
-//		 	 System.out.println(PEDIDO_ACTUAL.getLista_Productos().size());
-			// LO QUITA DE LA LISTA VISUAL
-			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
-				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
-																					// desde la tabla, ojo)
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
-				modelo.removeRow(indice_Seleccionado);
-				Calcula_totales();
-			}
-	}
-
-	private void iniciarParametros() {
-		
 	
-			
+	private void Servicio_Delivery() {
+		PEDIDO_ACTUAL.setEs_Delivery(tglbtnDelivery.isSelected());
+		tglbtnDelivery.setText(PEDIDO_ACTUAL.getEs_Delivery() ? "SI" : "NO");
+	}
+
+	/** >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>**/
+	private void iniciarParametros() {
+		Cargar_ComboBox_TipoProductos();
+		AutocompletarCliente();
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Cargar_ComboBox_TipoProductos() {
 		// Rellena el combobox de Tipos de productos
 		ArrayList<String> ListaProductos = svProductos.getLista_Productos();
-		
 		comboBoxProducto.addItem("Seleccione el tipo de producto");
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
-		
-		AutocompletarCliente();
 	}
 
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MODIFICAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
-		// traigo el pedido con el id Numero_pedido_modificar
-		PEDIDO_ACTUAL = SvPedidos.get_pedido(Numero_pedido_modificar);
-		
-		// si el pedido no es nulo cargos los campos del pedido
-		if(PEDIDO_ACTUAL!=null){
-			label_NroPedido.setText(PEDIDO_ACTUAL.getID_DIARIO().toString());
-			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
-			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
-			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
-			
-			if (!label_ESTADO.getText().equals("Pendiente")){
-				
-				System.out.println(label_ESTADO.getText());
-				textCliente.setEnabled(false);
-				textDire.setEnabled(false);
-				textDetalle.setEnabled(false);
-				textTelefono.setEnabled(false);
-				comboBoxProducto.setEnabled(false);
-				comboBoxVariedad.setEnabled(false);
-				spinnerCantidad.setEnabled(false);
-				textValor.setEnabled(false);
-				textValorTotal.setEnabled(false);
-				textObservaciones.setEnabled(false);
-				guardar.setEnabled(false);
-				btnQuitar.setEnabled(false);
-			}
-			
-			
-		}
-		
-		// si el cliente no es nulo cargo los campos del cliente
-		if(PEDIDO_ACTUAL.getCliente()!=null){
-			textCliente.setText(PEDIDO_ACTUAL.getCliente().getNombre());
-			textDetalle.setText(PEDIDO_ACTUAL.getCliente().getDetalle());
-			textTelefono.setText(PEDIDO_ACTUAL.getCliente().getTelefono_Fijo());
-			textDire.setText(PEDIDO_ACTUAL.getCliente().getDomicilio());
-//			PEDIDO_ACTUAL.getCliente().getID_Cliente();
-		}
-		//AutocompletarCliente();
-		
-		
-		
-		Model_Pedido_Completo model = new Model_Pedido_Completo();
-		System.out.println("SIZE LISTA PROD\n"+PEDIDO_ACTUAL.getLista_Productos().size());
-		
-		// Traigo todos los productos del pedido y lo pongo en la tabla
-		for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-			Object[] fila = new Object[7];
-			fila[0] = model.getRowCount() + 1;
-			fila[1] = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
-			fila[3] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre();
-			fila[2] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING();
-			fila[4] = (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio());
-			fila[5] = (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio()*(PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad())); 
-			fila[6] = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_Observacion();
-			model.addRow(fila); 
-		}
-		
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
-		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
-		
-		Tabla_Pedido_Completo.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent Mouse_evt) {
-				if (Mouse_evt.getClickCount() == 2) {
-					spinnerCantNueva.setValue((Tabla_Pedido_Completo.getValueAt(Tabla_Pedido_Completo.getSelectedRow(), 1)));
-					//TODO
-				}
-			}
-			});
-	}
-
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
 			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
@@ -515,67 +433,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			}
 		}
 	}
-	
-	private void Agregar_al_Pedido() {
-		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
-			// hacer que tome los datos del formulario de pedido y los agregue a
-			// la tabla de pedidos LISTO
-			
-			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-			PRODUCTO_ACTUAL.setCantidad(Cantidad);
-			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
-			String Variedad = comboBoxVariedad.getSelectedItem().toString();
 
-			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
-				Double ValorU = PRODUCTO_ACTUAL.getPR_precio();
-				Double ValorT = PRODUCTO_ACTUAL.getPR_precio() * Integer.parseInt(spinnerCantidad.getValue().toString());
-				String Observacion = textObservaciones.getText();
-				PRODUCTO_ACTUAL.setPR_Observacion(Observacion);
-
-				/**
-				 * Esto va a un objeto pedido, el cual se usara para guardar en
-				 * la base de datos
-				 **/
-				
-				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
-				
-				boolean productoNoEsta = true;
-				
-				for (int i = 0; i<productos.size(); i++ ) {
-					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
-						int cantidad  = productos.get(i).getCantidad();
-						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
-						productoNoEsta = false;
-					}
-				}
-				
-				if(productoNoEsta){
-					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-				}
-
-				/** Esto va para la parte visual **/
-				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();				
-				modelo.addRow(new Object[] { modelo.getRowCount() + 1,Cantidad, Tipo_producto, Variedad,formatoImporte.format(ValorU),formatoImporte.format(ValorT), Observacion }); 
-				Tabla_Pedido_Completo.setModel(modelo); // Lo seteo en la tabla para que se vea
-
-				/** Despues que se resetee el formulario de ingreso de pedido **/
-				Limpiar_Formulario_pedido();
-				Calcula_totales();
-			}
-		}
-	}
-
-	private void Limpiar_Formulario_pedido() {
-		PRODUCTO_ACTUAL = new Producto();
-		comboBoxProducto.setSelectedIndex(0);
-		comboBoxVariedad.removeAllItems();
-		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
-		
-		textValor.setText("");
-		textValorTotal.setText("");
-		textObservaciones.setText("");
-	}
-	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_De_Variedad() {
 		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
 			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
@@ -588,6 +447,202 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 	}
 	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO,
+	 * SE ELIMINARA ESE ELEMENTO DE LA LISTA */
+	private void Quitar_al_Pedido() {
+		//		 LO QUITA DE LA LISTA DE PEDIDO
+		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
+			 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
+			 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
+			 Integer removidos = 0;
+			 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad)
+					PEDIDO_ACTUAL.getLista_Productos().remove(i);
+				 	removidos++;
+				 } 
+			 }
+			// LO QUITA DE LA LISTA VISUAL
+			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
+				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
+																					// desde la tabla, ojo)
+				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
+				modelo.removeRow(indice_Seleccionado);
+				Calcula_totales();
+			}
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/** Toma los datos del panel "panelAltaPedido" y los inserta en la tabla de pedido general*/
+	private void Agregar_al_Pedido() {
+		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
+			// hacer que tome los datos del formulario de pedido y los agregue a
+			// la tabla de pedidos LISTO
+			
+			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			PRODUCTO_ACTUAL.setCantidad(Cantidad);
+			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
+			String Variedad = comboBoxVariedad.getSelectedItem().toString();
+
+			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+				
+				PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
+				PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
+
+				/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
+				
+				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
+				
+				// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
+				boolean productoNoEsta = true;
+				for (int i = 0; i<productos.size(); i++ ) {
+					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+						int cantidad  = productos.get(i).getCantidad();
+						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
+						productoNoEsta = false;
+					}
+				}
+				if(productoNoEsta){
+					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+				}
+				textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));
+				/** Esto va para la parte visual **/
+				Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+				
+				/** Despues que se resetee el formulario de ingreso de pedido **/
+				Limpiar_Formulario_pedido();
+				Calcula_totales();
+			}
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Modificar_cantidad() {
+		if(Tabla_Pedido_Completo.getSelectedRow()!=-1){
+			int posicion = Tabla_Pedido_Completo.getSelectedRow();
+			int cantidad = (int) spinnerCantNueva.getValue();
+			PEDIDO_ACTUAL.getLista_Productos().get(posicion).setCantidad(cantidad);
+			Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+			Calcula_totales();
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
+		// traigo el pedido con el id Numero_pedido_modificar
+		PEDIDO_ACTUAL = SvPedidos.get_pedido(Numero_pedido_modificar);
+		
+		// si el pedido no es nulo cargos los campos del pedido
+		if(PEDIDO_ACTUAL!=null){
+			label_NroPedido.setText(PEDIDO_ACTUAL.getID_DIARIO().toString());
+			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
+			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
+			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));		// ACTUALIZA EL TOTAL
+			
+			if (!label_ESTADO.getText().equals("Pendiente")){
+				textCliente.setEditable(false);
+				textDire.setEditable(false);
+				textDetalle.setEditable(false);
+				textTelefono.setEditable(false);
+				textObservaciones.setEditable(false);
+				
+				comboBoxProducto.setEnabled(false);
+				comboBoxVariedad.setEnabled(false);
+				
+				spinnerCantidad.setEnabled(false);
+				spinnerCantNueva.setEnabled(false);
+				
+				btnGuardarModificacionPedido.setEnabled(false);
+				Modificar_Cantidad.setEnabled(false);
+				btnQuitar.setEnabled(false);
+				btn_Agregar.setEnabled(false);
+			}
+		}
+		
+		tglbtnDelivery.setText(PEDIDO_ACTUAL.getEs_Delivery() ? "SI" : "NO");
+		tglbtnDelivery.setSelected(PEDIDO_ACTUAL.getEs_Delivery());
+		
+		Cargar_datos_Cliente(PEDIDO_ACTUAL.getCliente());
+		Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+	}
+	
+	
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	/*** ALTA DE PEDIDO */
+	private void Guardar_pedido() {
+		SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
+		
+		ArrayList<Producto> lista = PEDIDO_ACTUAL.getLista_Productos();
+		
+		SvPedidos.eliminar_producto_del_pedido(PEDIDO_ACTUAL);
+		
+		PEDIDO_ACTUAL.setLista_Productos(lista);
+		
+		SvPedidos.agregar_producto_al_pedido(PEDIDO_ACTUAL);
+
+		dispose();
+		
+		
+//		
+//		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
+//		
+//			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
+//			if (chckbxDelivery.isSelected()) {
+//				// agregar datos del pedido
+//				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
+//				System.out.println(chckbxDelivery.isSelected());
+//			}
+//			if(CLIENTE_ACTUAL!=null)
+//				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+//			// GUARDA EL PEDIDO
+//			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
+//			// ACTUALIZA EL LISTADO DE PEDIDOS
+//			Actualizar_Lista_pedidos();
+//			ACTUALIZAR_MONITOR();
+//			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
+//			Limpiar_Todo();
+//		}
+	}
+	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Actualizar_Tabla_Productos_del_Pedido(Pedido P){
+		Model_Pedido_Completo model = new Model_Pedido_Completo();
+
+		for (int i = 0; i < P.getLista_Productos().size(); i++) {
+			Object[] datos = new Object[7];
+			String ValorU = formatoImporte.format(P.getLista_Productos().get(i).getPR_precio());
+			String ValorT = formatoImporte.format(P.getLista_Productos().get(i).getPR_precio() * P.getLista_Productos().get(i).getCantidad());
+			datos[0] = i+1;
+			datos[1] = P.getLista_Productos().get(i).getCantidad();
+			datos[2] = P.getLista_Productos().get(i).getPR_TIPO_PRODUCTO_STRING();
+			datos[3] = P.getLista_Productos().get(i).getPR_nombre();
+			datos[4] = ValorU;
+			datos[5] = ValorT;
+			datos[6] = P.getLista_Productos().get(i).getPR_Observacion();
+			model.addRow( datos);
+		}
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
+		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+//		Tabla_Pedido_Completo.setModel(model);
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Limpiar_Formulario_pedido() {
+		PRODUCTO_ACTUAL = new Producto();
+		comboBoxProducto.setSelectedIndex(0);
+		comboBoxVariedad.removeAllItems();
+		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		
+		textValor.setText("");
+		textValorTotal.setText("");
+		textObservaciones.setText("");
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Calcula_totales() {
 		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
 
@@ -600,25 +655,33 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			// pedido tomando su precio y lo acumula
 			Double TOTAL_PEDIDO = 0.0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				TOTAL_PEDIDO += PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				
+				Double precio = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				int cantidad = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
+				TOTAL_PEDIDO += precio * cantidad;
 			}
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Cargar_datos_Cliente(Cliente c) {
-		CLIENTE_ACTUAL = c;
-		textDire.setText(c.getDomicilio());
-		textTelefono.setText(c.getTelefono_Fijo());
-		textDetalle.setText(c.getDetalle());
+		if(c!=null){
+			CLIENTE_ACTUAL = c;
+			textCliente.setText(c.getNombre());
+			textDire.setText(c.getDomicilio());
+			textTelefono.setText(c.getTelefono_Fijo());
+			textDetalle.setText(c.getDetalle());
+			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+		}
 	}
 
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
 		AutoCompleter_Cliente.setMode(0);
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
-
-}
+}//---> FIN CLASE

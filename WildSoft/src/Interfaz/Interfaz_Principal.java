@@ -65,6 +65,7 @@ import Reportes.ReporteTicket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Cursor;
 
 public class Interfaz_Principal {
 
@@ -138,7 +139,8 @@ public class Interfaz_Principal {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-		frmWildsoft.setBounds(100, 100, 1522, 920);
+//		frmWildsoft.setBounds(100, 100, 1522, 920);
+		frmWildsoft.setBounds(100, 100, 1000, 920);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -653,6 +655,7 @@ public class Interfaz_Principal {
 		panel_Lista_de_pedidos.add(btn_fecha_anterior);
 		
 		dateChooser_Fecha_mostrar = new JDateChooser();
+		dateChooser_Fecha_mostrar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0) {
 				Actualizar_Lista_pedidos();
@@ -956,7 +959,8 @@ public class Interfaz_Principal {
 	private void Modificar_Pedido_Seleccionado() {
 		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
 			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
-			frame.setPedido_a_modificar((Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0)); // TODO
+			Integer ID_PEDIDO_MODIFICAR = (Integer)Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			frame.setPedido_a_modificar(ID_PEDIDO_MODIFICAR);
 			frame.setModal(true);
 			frame.setVisible(true);
 			Actualizar_Lista_pedidos();

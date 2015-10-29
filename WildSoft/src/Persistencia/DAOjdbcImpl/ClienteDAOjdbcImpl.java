@@ -16,17 +16,20 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	
 	
 	public Cliente getCliente(String nombre_Cliente) {
-		Cliente cliente = new Cliente();
+		Cliente cliente = null;
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("SELECT * FROM Cliente WHERE CL_nombre = '"+nombre_Cliente+"'");
 			ResultSet Fila = st.getResultSet();
-			Fila.first();
-			cliente.setID_Cliente(Fila.getInt("CL_id"));
-			cliente.setNombre(Fila.getString("CL_nombre"));
-			cliente.setDomicilio(Fila.getString("CL_direccion"));
-			cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
+			while(Fila.next()){
+				cliente = new Cliente();
+				cliente.setID_Cliente(Fila.getInt("CL_id"));
+				cliente.setNombre(Fila.getString("CL_nombre"));
+				cliente.setDomicilio(Fila.getString("CL_direccion"));
+				cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
+	//			cliente.setDetalle(Fila.getString("CL_Detalle"));
+			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());

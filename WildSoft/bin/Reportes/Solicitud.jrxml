@@ -52,7 +52,7 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 					<text><![CDATA[Materia prima]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="211" y="0" width="79" height="15" uuid="05c383de-597b-4830-96d5-ae16acf1a550"/>
+					<reportElement style="Column header" x="263" y="0" width="79" height="15" uuid="05c383de-597b-4830-96d5-ae16acf1a550"/>
 					<text><![CDATA[Cantidad]]></text>
 				</staticText>
 			</band>
@@ -90,7 +90,7 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="74" splitType="Stretch">
+		<band height="73" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="60" width="555" height="1" uuid="593cdd39-983d-4a98-91eb-2b12e4cdc1f4"/>
 				<graphicElement>
@@ -168,11 +168,11 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 				<textFieldExpression><![CDATA[$F{CA_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="94" y="1" width="79" height="15" uuid="41b7f100-cd28-45c1-95da-7a6180329a03"/>
+				<reportElement style="Detail" x="94" y="1" width="169" height="15" uuid="41b7f100-cd28-45c1-95da-7a6180329a03"/>
 				<textFieldExpression><![CDATA[$F{MP_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="211" y="1" width="79" height="15" uuid="5ee530e6-0f15-43db-b121-9bc01fd111f9"/>
+				<reportElement style="Detail" x="263" y="0" width="79" height="15" uuid="5ee530e6-0f15-43db-b121-9bc01fd111f9"/>
 				<textFieldExpression><![CDATA[$F{CM_cantidad_mp}]]></textFieldExpression>
 			</textField>
 		</band>

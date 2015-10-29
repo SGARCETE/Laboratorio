@@ -11,10 +11,16 @@ public class JTable_Cocina_vista_pedido extends JTable{
 
 	public JTable_Cocina_vista_pedido(DefaultTableModel model){
 		setModel(model);
-		this.setRowHeight(20);
-		this.setFont(new Font("Tahoma", Font.PLAIN, 18));
+	    
+		// Color del fondo de la tabla
 		this.setBackground(SystemColor.menu);
-		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
+		// Fuente
+		this.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		// Altura de cada fila
 		this.setRowHeight(25);
+		
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
 }//---> FIN

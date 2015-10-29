@@ -26,11 +26,11 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private Servicio_Solicitud_compra sv_solicitudCompra;
-	private Principal_Negocio_Interfaz principal_neg_int;
+	private Principal_Negocio_Interfaz Principal_neg_int;
 
 	public Interfaz_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setResizable(false);
-		this.principal_neg_int = principal_neg_int;
+		Principal_neg_int = principal_neg_int;
 		setBounds(100, 100, 969, 455);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -67,7 +67,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				AM_Solicitud_Compra frame = new AM_Solicitud_Compra(principal_neg_int);
+				AM_Solicitud_Compra frame = new AM_Solicitud_Compra(Principal_neg_int);
 				frame.setModal(true);
 				frame.setVisible(true);
 			}
@@ -112,7 +112,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 
 	private void inicializar() {
 		
-		sv_solicitudCompra = principal_neg_int.getSvSolicitudCompra();
+		sv_solicitudCompra = Principal_neg_int.getSvSolicitudCompra();
 		llenarTabla();
 		
 	}
