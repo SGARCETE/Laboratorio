@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ItinerarioEntrega" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="718cc30f-771a-4b53-b521-74cd4ee56fa4">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="22"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="ENT_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{ENT_ID}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from Entrega ENT join Pedido PD join Entrega_pedido EP join  Repartidor RE join CLIENTE CL
+on ENT.ENT_id = EP.EP_entrega_id and RE.RE_ID=  ENT.ENT_repartidor and CL.CL_ID= PD.PD_ID and
+EP.EP_pedido_id = Pd.PD_id and ENT_ID=$P{ENT_ID};]]>
+	</queryString>
+	<field name="CL_direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_detalle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RE_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PD_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENT_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="263" height="33" uuid="2f65d645-cb24-4e18-8e41-336bab8f0d44"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Itinerario de Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="a0916b38-9679-4f54-aa72-bb894d15d3ab"/>
+				<text><![CDATA[Pizzería Wildsoft]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="59" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="18" width="555" height="1" uuid="1961acf6-fbac-415a-adba-5b1d5647fc30"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="177" y="34" width="79" height="15" uuid="9174cd2a-1605-4922-8275-e4e223aed669"/>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="82" y="34" width="79" height="15" uuid="afd42774-b9ee-4a99-836a-c27313d2eebc"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="277" y="34" width="79" height="15" uuid="9de4dad3-0382-4f99-9816-5ae5500fea23"/>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="369" y="34" width="79" height="15" uuid="3795ea05-b7cb-4fb5-8576-1028a3a86987"/>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="316" y="0" width="79" height="15" uuid="d58ee0fb-c7b4-407a-948b-d1e4916e8f1f"/>
+				<text><![CDATA[Repartidor :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="34" width="79" height="15" uuid="0b90668a-ceee-4f9c-b185-6d0bd77454ed"/>
+				<text><![CDATA[N° de pedido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="79" height="15" uuid="25c5c623-029b-482c-9d25-e3480bf737f6"/>
+				<text><![CDATA[N° de Entrega]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Detail" x="89" y="0" width="79" height="15" uuid="b63530ae-5d4b-4dd6-864d-1ffb2f5d529b"/>
+				<textFieldExpression><![CDATA[$F{ENT_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="397" y="0" width="79" height="15" uuid="dfa047b5-9db7-4af5-9d60-323d54d286ed"/>
+				<textFieldExpression><![CDATA[$F{RE_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="6256ec2f-258c-4cbd-bfb7-c2f8ca60d545"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="177" y="0" width="97" height="15" uuid="38f5efa8-7a0f-40f5-a5a8-3438570e8b66"/>
+				<textFieldExpression><![CDATA[$F{CL_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="82" y="0" width="79" height="15" uuid="366347bd-d53c-4a95-be03-d06dd3360a84"/>
+				<textFieldExpression><![CDATA[$F{CL_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="277" y="0" width="79" height="15" uuid="a1c2df66-dcd1-448a-b2a0-475d5404871d"/>
+				<textFieldExpression><![CDATA[$F{CL_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="369" y="0" width="156" height="15" uuid="779e01fa-17df-44ef-86a0-944c5e90c5e7"/>
+				<textFieldExpression><![CDATA[$F{CL_detalle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="22" y="1" width="30" height="15" uuid="39da8d39-aec5-4e51-8ce3-78cf73752f9c"/>
+				<textFieldExpression><![CDATA[$F{PD_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="8c70b8a2-d0da-4c6b-b9be-a1189e31cea4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="506" y="0" width="49" height="20" uuid="da1064e1-f108-4a3e-b116-01c1d08ee5ff"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="f0a420ea-aa91-4340-b376-94eba2c4c26f"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="476" y="0" width="29" height="20" uuid="6dd869b8-99f5-4d1a-891c-ed793445e3c2"/>
+				<text><![CDATA[Hoja]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

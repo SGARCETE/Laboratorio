@@ -5,9 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.JOptionPane;
-
 import Persistencia.Conector.ConectorMySQL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,13 +20,13 @@ public class ReporteItinerario {
 	
 	public void Generar_Itinerario (Integer NUMERO_ITINERARIO)
 	{
-		String JXML = "src\\Reportes\\Itinerario.jrxml";
+		String JXML = "src\\Reportes\\ItinerarioEntrega.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;
 		
 		parametros = new HashMap<String, Object>();
-		parametros.put("ID_ITINERARIO", NUMERO_ITINERARIO);
+		parametros.put("ENT_ID", NUMERO_ITINERARIO);
 		
 		
 		try
@@ -46,10 +44,15 @@ public class ReporteItinerario {
 		catch (JRException | FileNotFoundException e) {
 			JOptionPane.showMessageDialog(null, "Error al leer el fichero de carga jasper report "+e.getMessage());
 		}	
-				
 				// MOSTRAR REPORTE
 				JasperViewer view = new JasperViewer(jasperPrint,false); 
 				view.setTitle("Itinenario de Entregas");
 				view.setVisible(true);
 	}
+	
+/*	public static void main(String[] args) {
+		Integer iditi= 3;
+		ReporteItinerario ri= new ReporteItinerario();
+		ri.Generar_Itinerario(iditi);
+	}   */ 
 }
