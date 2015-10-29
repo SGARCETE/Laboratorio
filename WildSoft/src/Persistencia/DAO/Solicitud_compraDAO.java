@@ -10,7 +10,7 @@ public interface Solicitud_compraDAO {
 	
 	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud);
 	
-	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES();
+	ArrayList<Solicitud_compra> getLISTA_SOLICITUDES();
 	
 	ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd);
 	

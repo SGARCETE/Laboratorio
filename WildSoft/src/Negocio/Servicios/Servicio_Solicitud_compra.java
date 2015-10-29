@@ -1,5 +1,9 @@
 package Negocio.Servicios;
 
+import java.util.ArrayList;
+
+import Negocio.Modelo.Materia_Prima;
+import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
 import Persistencia.DAO.Solicitud_compraDAO;
 import Persistencia.DAOjdbcImpl.Solicitud_compraDAOjdbc;
@@ -12,5 +16,33 @@ public class Servicio_Solicitud_compra {
 		scDAO.AGREGAR_SOLICITUD(sc);
 		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
 	}
+	
+	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
+		return scDAO.AGREGAR_SOLICITUD(solicitud);
+		}
+	
+	ArrayList<Solicitud_compra> getLISTA_SOLICITUDES(){
+		return scDAO.getLISTA_SOLICITUDES();
+	}
+	
+	boolean MODIFICAR_ESTADO(Solicitud_compra sd, Integer numero){
+		return scDAO.MODIFICAR_ESTADO(sd, numero);
+		}
+	
+	boolean MODIFICAR_Solicitud(Solicitud_compra sd){
+		return scDAO.MODIFICAR_Solicitud(sd);
+	}
+	
+	Proveedor getProveedor(Integer ID_Proveedor){
+		return scDAO.getProveedor(ID_Proveedor);
+	}
+	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd){
+		return scDAO.getLISTA_Materia_Prima(sd);
+	}
+	
+	int obtenerEstado(String estado) {
+		return scDAO.obtenerEstado(estado);
+	}
+	
 
 }
