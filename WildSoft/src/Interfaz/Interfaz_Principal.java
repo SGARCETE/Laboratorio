@@ -45,14 +45,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
-import com.toedter.calendar.JDateChooser;
-
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla_Alternativa2;
-import Interfaz.JDialogs.Solicitud_de_Compra;
+import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -65,6 +61,10 @@ import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Reportes.ReporteTicket;
+
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
+import com.toedter.calendar.JDateChooser;
 
 public class Interfaz_Principal {
 
@@ -1012,7 +1012,7 @@ public class Interfaz_Principal {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_Solicitud_Compra() {
-		Solicitud_de_Compra frame = new Solicitud_de_Compra(Principal_neg_int);
+		Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
 	}

@@ -91,10 +91,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JButton guardar; 
 	private JButton btnQuitar;
 	private JSpinner spinnerCantNueva;
-	/**
-	 * Create the dialog.
-	 * @param principal_neg_int 
-	 */
 	
 	public Interfaz_ABM_Pedido(Principal_Negocio_Interfaz principal_neg_int) {
 		Principal_neg_int = principal_neg_int;
@@ -397,7 +393,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		
 	}
 
-
 	private void Quitar_al_Pedido() {
 //		 LO QUITA DE LA LISTA DE PEDIDO
 		 if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
@@ -420,7 +415,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				Calcula_totales();
 			}
 	}
-
 
 	private void iniciarParametros() {
 		
@@ -511,7 +505,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			});
 	}
 
-	
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
 			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
@@ -628,7 +621,4 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
 
-	
-	
-	
 }
