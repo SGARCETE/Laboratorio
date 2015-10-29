@@ -14,9 +14,6 @@ import Persistencia.DAO.MateriaPrimaDAO;
 public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	
-	
-	
-	
 	public boolean AGREGAR_Materia_Prima(Materia_Prima m) {
 	    String SentenciaSQL = "INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES"+
 			"'"+	m.getNombre()			+"',"
@@ -27,7 +24,6 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 
-	
 	public ArrayList<Materia_Prima> getVARIEDAD_Materia_Prima(String Categoria_mp) {
 		ArrayList<Materia_Prima> Arreglo = new ArrayList<Materia_Prima>();
 		try {
@@ -41,8 +37,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 				m.setNombre(Fila.getString("MP_nombre"));
 				m.setFecha_vencimiento(Fila.getDate("MP_fecha_vencimiento"));
 				m.setCategoria(Fila.getInt("MP_categoria"));
-				
-				
+
 				Arreglo.add(m);
 			}
 			conex.cerrarConexion();
@@ -51,7 +46,6 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		}
 		return Arreglo;
 	}
-	
 	
 	public boolean ELIMINAR__Materia_Prima(Materia_Prima m) {
 		String SentenciaSQL = "DELETE * FROM Materia_Prima WHERE MP_id="
@@ -75,10 +69,21 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		}
 		return Arreglo;
 	}
-
-
 	
-	
-	
-	
+	public Integer obtenerId(String nombreMateriaPrima){
+		try{
+			
+			conex.connectToMySQL();
+			Statement st = conex.conexion.createStatement();
+			ResultSet rs = st.executeQuery("SELECT MP_id FROM materia_prima where MP_nombre = '" + nombreMateriaPrima + "';");
+			rs.first();
+			int ID = rs.getInt("MP_id");
+			conex.cerrarConexion();
+			return ID;
+			
+		}catch(Exception e){
+			
+		}
+		return 0;
+	}
 }

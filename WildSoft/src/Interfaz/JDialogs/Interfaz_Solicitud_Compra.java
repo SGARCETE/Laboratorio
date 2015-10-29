@@ -48,9 +48,11 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				"Id", "Fecha", "Proveedor", "Precio", "Estado"
 			}
 		) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class, String.class, String.class
 			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}

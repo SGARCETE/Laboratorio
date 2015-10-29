@@ -274,6 +274,7 @@ public class Solicitud_de_Compra extends JDialog {
 		ArrayList<Materia_Prima> listaMateriaPrima = new ArrayList<Materia_Prima>();
 		for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
 			Materia_Prima mp = new Materia_Prima();
+			mp.setId(sv_materiaPrima.obtenerId((String)tablaMateriasPrimas.getValueAt(i, 2)));
 			//mp.setCategoria(1); //TODO
 			mp.setCategoria_string((String) tablaMateriasPrimas.getValueAt(i, 1));
 			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
