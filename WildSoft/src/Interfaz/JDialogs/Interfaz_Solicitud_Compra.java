@@ -28,6 +28,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private Principal_Negocio_Interfaz principal_neg_int;
 
 	public Interfaz_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+		this.principal_neg_int = principal_neg_int;
 		setBounds(100, 100, 969, 455);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
