@@ -39,7 +39,7 @@ public class ReporteSolicitud {
 			ConectorMySQL con = new ConectorMySQL();
 			con.connectToMySQL();
 			jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.conexion);
-		
+			
 			con.cerrarConexion();
 		} 
 		catch (JRException | FileNotFoundException e) {

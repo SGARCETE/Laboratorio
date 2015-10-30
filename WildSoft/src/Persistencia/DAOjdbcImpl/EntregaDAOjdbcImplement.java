@@ -63,7 +63,7 @@ public ArrayList<Pedido> getLISTA_PEDIDOS() {
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			String Query = "select * from pedido PD join Cliente CL where PD.PD_estado=2 and PD.PD_cliente= CL.CL_id";
+			String Query = "select * from pedido PD join Cliente CL where PD.PD_estado=2 and PD.PD_cliente= CL.CL_id and PD.PD_Delivery= 1";
 			System.out.println("getLISTA_PEDIDOS "+Query);
 			st.executeQuery(Query);
 			

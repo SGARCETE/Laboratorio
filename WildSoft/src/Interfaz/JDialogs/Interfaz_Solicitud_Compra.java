@@ -28,7 +28,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private Servicio_Solicitud_compra sv_solicitudCompra;
 	private Principal_Negocio_Interfaz Principal_neg_int;
 
-	public Interfaz_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+	public Interfaz_Solicitud_Compra(final Principal_Negocio_Interfaz principal_neg_int) {
 		setResizable(false);
 		Principal_neg_int = principal_neg_int;
 		setBounds(100, 100, 969, 455);
