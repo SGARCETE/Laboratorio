@@ -61,7 +61,7 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 			<band height="16">
 				<staticText>
 					<reportElement style="Column header" x="415" y="0" width="59" height="15" uuid="d2698938-eafc-42a0-8289-82188dab8de3"/>
-					<text><![CDATA[Precio  :]]></text>
+					<text><![CDATA[Precio:   $]]></text>
 				</staticText>
 				<textField>
 					<reportElement style="Detail" x="474" y="0" width="79" height="15" uuid="ec1e5a6b-c499-4464-99eb-91c60997ffb7"/>
