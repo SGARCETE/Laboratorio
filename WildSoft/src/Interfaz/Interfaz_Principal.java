@@ -823,8 +823,11 @@ public class Interfaz_Principal {
 		});
 		mnMateriasPrimas.add(mnCompraMP);
 
-		JMenu mnReportes = new JMenu("Reportes ventas");
-		menuBar.add(mnReportes);
+		JMenu mnReporteContabilidad = new JMenu("Reporte Contabilidad");
+		menuBar.add(mnReporteContabilidad);
+		
+		JMenuItem mntmVerContabilidad = new JMenuItem("Ver Mini-Contabilidad");
+		mnReporteContabilidad.add(mntmVerContabilidad);
 
 		JMenu mnAyuda = new JMenu("Ayuda");
 		menuBar.add(mnAyuda);
