@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mini_contabilidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8348bc9-b139-4edc-84fe-69daaa9ff43e">
-	<property name="ireport.zoom" value="0.6830134553650711"/>
+	<property name="ireport.zoom" value="1.100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="21"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Intel\\Desktop\\Labo\\trunk\\WildSoft\\src\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[select * from Pedido join Solicitud_compra]]>
 	</queryString>
@@ -63,19 +66,19 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="308" splitType="Stretch">
-			<subreport>
-				<reportElement x="279" y="23" width="276" height="283" uuid="12f4e74b-3f73-484d-a8e1-db20ae0a2e38"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\le\\Desktop\\Nueva Carpeta\\Compras.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="3" y="0" width="266" height="306" uuid="7f812022-aed5-47ad-8bc7-117b9e797564"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\le\\Desktop\\Nueva Carpeta\\pEDIDOS.jasper"]]></subreportExpression>
-			</subreport>
 			<line>
 				<reportElement x="269" y="0" width="1" height="306" uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9"/>
 			</line>
+			<subreport>
+				<reportElement x="0" y="0" width="259" height="306" uuid="c80f84a2-0cfd-4d7a-b2d7-44293eed5935"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "pEDIDOS.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="282" y="17" width="271" height="277" uuid="0742fa76-81ec-4b71-884e-3a25b12cca25"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Compras.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</columnHeader>
 	<detail>

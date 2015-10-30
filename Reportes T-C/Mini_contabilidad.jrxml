@@ -71,7 +71,7 @@
 			<subreport>
 				<reportElement x="3" y="0" width="266" height="306" uuid="7f812022-aed5-47ad-8bc7-117b9e797564"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\le\\Desktop\\Nueva Carpeta\\pEDIDOS.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\Users\Intel\Desktop\Labo\trunk\Reportes T-C"]]></subreportExpression>
 			</subreport>
 			<line>
 				<reportElement x="269" y="0" width="1" height="306" uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9"/>

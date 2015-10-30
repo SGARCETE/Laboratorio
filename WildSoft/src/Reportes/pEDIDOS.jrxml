@@ -6,15 +6,16 @@
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<queryString>
-		<![CDATA[select P.PD_Delivery, P.PD_id, PR.PR_nombre, P.PD_fecha_pedido,PP.PP_Observacion,  C.CL_nombre,C.CL_telefono,(PP.PP_precio*PP.PP_producto_cantidad) as Total, PR.PR_Observacion, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
+		<![CDATA[select P.PD_Delivery, P.PD_numero, PR.PR_nombre, P.PD_fecha_pedido,PP.PP_Observacion,  C.CL_nombre,C.CL_telefono,(PP.PP_precio*PP.PP_producto_cantidad) as Total, PR.PR_Observacion, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
 PP.PP_precio, T.TP_id, T.TP_nombre from Producto PR join Producto_pedidos PP join Pedido P
 join tipo_producto T join Cliente C on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_estado= 4
-and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id]]>
+and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id
+and MONTH(P.PD_fecha_pedido) = MONTH(CURDATE()) group by P.PD_id;]]>
 	</queryString>
 	<field name="PD_Delivery" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PD_id" class="java.lang.Integer">
+	<field name="PD_numero" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="PR_nombre" class="java.lang.String">
@@ -89,10 +90,6 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id]]>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<textField>
-				<reportElement style="Detail" x="2" y="0" width="36" height="15" uuid="1d212474-9447-4bc4-9cc5-d4ddb4925fbc"/>
-				<textFieldExpression><![CDATA[$F{PD_id}]]></textFieldExpression>
-			</textField>
 			<textField pattern="$ #,##0.00">
 				<reportElement style="Detail" x="144" y="0" width="80" height="15" uuid="961024ef-9537-41f1-8f59-0b206546912c"/>
 				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
@@ -100,6 +97,10 @@ and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id]]>
 			<textField>
 				<reportElement x="39" y="0" width="48" height="15" uuid="978128fe-762f-47e7-a74d-4f8592ffcedc"/>
 				<textFieldExpression><![CDATA[$F{PD_fecha_pedido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="25" height="15" uuid="f52d098a-24dd-41c0-8532-8a3c0413965e"/>
+				<textFieldExpression><![CDATA[$F{PD_numero}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
