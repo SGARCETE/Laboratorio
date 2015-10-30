@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pedidos" language="groovy" pageWidth="265" pageHeight="648" columnWidth="225" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8d15374-273b-4037-8d06-67002aaffd3f">
+	<property name="ireport.zoom" value="2.143588810000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[select P.PD_Delivery, P.PD_id, PR.PR_nombre, P.PD_fecha_pedido,PP.PP_Observacion,  C.CL_nombre,C.CL_telefono,(PP.PP_precio*PP.PP_producto_cantidad) as Total, PR.PR_Observacion, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
+PP.PP_precio, T.TP_id, T.TP_nombre from Producto PR join Producto_pedidos PP join Pedido P
+join tipo_producto T join Cliente C on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_estado= 4
+and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id]]>
+	</queryString>
+	<field name="PD_Delivery" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PD_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PR_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PD_fecha_pedido" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PP_Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double"/>
+	<field name="PR_Observacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CL_direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TP_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PP_producto_cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PP_precio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TP_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Total_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="225" height="24" uuid="156de66b-ccd2-417a-bcc9-a28741357bd7"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PEDIDOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="2" width="38" height="15" uuid="cdb14052-5857-449a-a94d-0bad9c26de1c"/>
+				<text><![CDATA[Nro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="144" y="2" width="81" height="15" uuid="4a536f4e-fc86-4aa3-a660-712668cd6676"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="39" y="2" width="59" height="15" uuid="30fdb1c0-86b4-4cdc-9b9d-0ddd1c9d1ad1"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="2" y="0" width="36" height="15" uuid="1d212474-9447-4bc4-9cc5-d4ddb4925fbc"/>
+				<textFieldExpression><![CDATA[$F{PD_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00">
+				<reportElement style="Detail" x="144" y="0" width="80" height="15" uuid="961024ef-9537-41f1-8f59-0b206546912c"/>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="0" width="48" height="15" uuid="978128fe-762f-47e7-a74d-4f8592ffcedc"/>
+				<textFieldExpression><![CDATA[$F{PD_fecha_pedido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch">
+			<textField pattern="$ #,##0.00">
+				<reportElement x="144" y="1" width="81" height="20" uuid="6459b583-ad62-404b-a5bc-bc84da51e370"/>
+				<textFieldExpression><![CDATA[$V{Total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="102" y="2" width="42" height="20" uuid="5f9e1d6b-91b1-4509-a094-0d3da7fbd08b"/>
+				<text><![CDATA[TOTAL: ]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="225" height="1" uuid="725cb1e4-c971-4ed3-a7e7-7bb73b123c9a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
