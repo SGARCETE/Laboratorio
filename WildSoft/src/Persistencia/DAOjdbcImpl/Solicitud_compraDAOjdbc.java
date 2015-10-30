@@ -18,7 +18,6 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 	
-	// FALTA TERMINAR ESTE METODO !!! 
 	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
 		String PROVEEDOR = "NULL";
 		if(solicitud.getProveedor()!=null && solicitud.getProveedor().getId()!=0)
@@ -28,13 +27,12 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				"'"+	formato_yyyyMMdd.format(new Date())                 +"',"+
 				""+		1											        +","+
 				""+     PROVEEDOR                                           +");";
-		
-		
-		
+
 		boolean Exito_al_Ingresar_Solicitud = conex.Insertar(SentenciaSQL_Solicitud);
 		
 		return Exito_al_Ingresar_Solicitud;
 	}
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		
@@ -48,7 +46,6 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			System.out.println("getLISTA_MATERIA_SOLICITUDES "+Query);
 			st.executeQuery(Query);
 			
-//		
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Solicitud_compra sd = new Solicitud_compra();
@@ -58,9 +55,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				sd.setProveedor(new Proveedor (Fila.getString("PV_nombre")));
 				sd.setPrecio(Fila.getInt("SD_precio"));
 				
-				
 				Arreglo.add(sd);
-
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -68,6 +63,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		}
 		return Arreglo;
 	}
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd) {
 		
@@ -81,10 +77,8 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			"JOIN Compra_MateriaPrima CM JOIN Categoria_MP CA  ON  SD.SD_estado= SE.SEST_id " +
 			"AND SD.SD_proveedor= PV.PV_id AND SD.SD_id= CM.CM_compra  AND MP.MP_id= CM.CM_materia_prima " +
 			"AND MP.MP_categoria= CA.CA_id and SD.SD_id = " + sd.getId() ;
-			System.out.println("getLISTA_MATERIA_PRIMA "+Query);
 			st.executeQuery(Query);
 			
-//		
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Materia_Prima mp = new Materia_Prima();
@@ -94,7 +88,6 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				mp.setFecha_vencimiento(Fila.getDate("MP_fecha_vencimiento"));
 				
 				Arreglo.add(mp);
-
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -102,27 +95,29 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		}
 		return Arreglo;
 	}
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	public boolean MODIFICAR_ESTADO(Solicitud_compra sd, Integer numero) {
 		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_estado = "+ numero+ " where SD_id= " + sd.getId() ;
 		return conex.Insertar(SentenciaSQL);
 	}
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
     public boolean MODIFICAR_Solicitud(Solicitud_compra sd) {
 		
 		int estado = obtenerEstado(sd.getEstado());
-		
 		int Proveedor = sd.getProveedor().getId();
 		
 		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_fecha = '" + formato_yyyyMMdd.format(sd.getFecha()) + "', "
 				+ "SD_estado = " + estado + ", " + "SD_proveedor =" + Proveedor + ", " + "SD_precio =" + sd.getPrecio() + " WHERE Solicitud_compra.SD_id=" + sd.getId() + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public Proveedor getProveedor(Integer ID_Proveedor) {
 		Proveedor Proveedor= new Proveedor();
 		try {
-			conex.connectToMySQL();// Conectar base
+			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement();
 
 			st.executeQuery("SELECT * FROM Proveedor WHERE PV_id = "+ID_Proveedor);
@@ -139,10 +134,11 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		}
 		return Proveedor;
 	}
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     public int obtenerEstado(String estado){
 		int resultado = 1;
-		conex.connectToMySQL();// Conectar base
+		conex.connectToMySQL();
 		Statement st;
 		try {
 			st = conex.conexion.createStatement();
@@ -151,20 +147,19 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			
 			while (Fila.next()){	
 				resultado = Fila.getInt(1);
-				}
-			
-				
-			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return resultado;
 	}
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd) {
 		String SentenciaSQL = "delete from Compra_MateriaPrima where Compra_MateriaPrima.CM_compra = " +sd.getId() ;
 		return conex.Insertar(SentenciaSQL);
 	}
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sc){
     	
@@ -183,14 +178,10 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 					""+	 CANTIDAD 	// INTEGER
 					+ ")";	// DOUBLE
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
-//			System.out.println(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
-		
 	}
-    
-    
-    
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public Integer obtenerUltimaSolicitud()
     {
@@ -205,7 +196,6 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			int ID = rs.getInt("SD_id");
 			conex.cerrarConexion();
 			return ID;
-    		
     	}
     	catch (SQLException SQLE)
     	{
@@ -213,5 +203,6 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
     	}
     	return 0;
     }
-	
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    
 }

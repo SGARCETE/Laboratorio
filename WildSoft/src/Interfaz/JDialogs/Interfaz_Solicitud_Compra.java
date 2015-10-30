@@ -57,10 +57,19 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			@Override
+			public boolean isCellEditable(int row, int col){
+				return false;
+			}
 		});
+		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(30);
 		table.getColumnModel().getColumn(0).setMinWidth(30);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(4).setResizable(false);
 		scrollPane.setViewportView(table);
 		
 		JButton btnAgregar = new JButton("Agregar");
@@ -80,6 +89,18 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		contentPanel.add(btnBorrar);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(table.getRowCount()>0){
+					Solicitud_compra sc = sv_solicitudCompra.obtenerSolicitud(Integer.valueOf((String)table.getValueAt(table.getSelectedRow(), 0)));
+					dispose();
+					AM_Solicitud_Compra frame = new AM_Solicitud_Compra(principal_neg_int);
+					frame.setSolicictud(sc);
+					frame.setModal(true);
+					frame.setVisible(true);
+				}
+			}
+		});
 		btnEditar.setBounds(220, 339, 90, 28);
 		contentPanel.add(btnEditar);
 		
@@ -87,6 +108,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		btnGenerarSolicitud.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Generar_Solicitud();
+				dispose();
 			}
 		});
 		btnGenerarSolicitud.setBounds(403, 342, 218, 25);

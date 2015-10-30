@@ -143,7 +143,7 @@ public class Interfaz_Principal {
 		frmWildsoft.setBounds(100, 100, 1000, 920);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-//		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);

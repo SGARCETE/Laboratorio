@@ -19,7 +19,7 @@ public class Servicio_Solicitud_compra {
 	
 	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
 		return scDAO.AGREGAR_SOLICITUD(solicitud);
-		}
+	}
 	
 	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES(){
 		return scDAO.getLISTA_SOLICITUDES();
@@ -36,12 +36,20 @@ public class Servicio_Solicitud_compra {
 	public Proveedor getProveedor(Integer ID_Proveedor){
 		return scDAO.getProveedor(ID_Proveedor);
 	}
+	
 	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd){
 		return scDAO.getLISTA_Materia_Prima(sd);
 	}
 	
 	public int obtenerEstado(String estado) {
 		return scDAO.obtenerEstado(estado);
+	}
+	
+	public Solicitud_compra obtenerSolicitud(int id){
+		int index = scDAO.getLISTA_SOLICITUDES().indexOf(new Solicitud_compra(id));
+		Solicitud_compra sc = scDAO.getLISTA_SOLICITUDES().get(index);
+		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
+		return sc;
 	}
 	
 

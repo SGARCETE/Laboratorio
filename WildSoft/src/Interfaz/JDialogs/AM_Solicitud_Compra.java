@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -39,7 +38,6 @@ import Negocio.Servicios.Servicio_Solicitud_compra;
 public class AM_Solicitud_Compra extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private final ButtonGroup selector = new ButtonGroup();
 	private JComboBox<String> comboProveedor;
 	private JComboBox<String> comboCategorias;
 	private JComboBox<String> comboMateriaPrima;
@@ -50,12 +48,11 @@ public class AM_Solicitud_Compra extends JDialog {
 	private ArrayList<String> Lista_Categorias;
 	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
 	private JTable tablaMateriasPrimas;
-	private JTextField textField;
+	private JTextField textTotal;
 	private JSpinner spinnerCantidad;
+	private JLabel lblTotal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
-	/**
-	 * Create the dialog.
-	 */
+
 	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setResizable(false);
 		
@@ -74,16 +71,6 @@ public class AM_Solicitud_Compra extends JDialog {
 		panel.setBounds(10, 11, 927, 37);
 		contentPanel.add(panel);
 		panel.setLayout(null);
-		
-		JRadioButton rdbtnCombo = new JRadioButton("Seleccionar por lista");
-		selector.add(rdbtnCombo);
-		rdbtnCombo.setBounds(6, 7, 147, 23);
-		panel.add(rdbtnCombo);
-		
-		JRadioButton rdbtnSearch = new JRadioButton("Buscar elementos");
-		selector.add(rdbtnSearch);
-		rdbtnSearch.setBounds(165, 7, 191, 23);
-		panel.add(rdbtnSearch);
 		
 		comboProveedor = new JComboBox<String>();
 		comboProveedor.addActionListener(new ActionListener() {
@@ -156,26 +143,28 @@ public class AM_Solicitud_Compra extends JDialog {
 					modelo.addRow(arreglo);
 					tablaMateriasPrimas.setModel(modelo);
 					ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
+					spinnerCantidad.setValue(1);
 				}else{
 					int cantidadSpinner = (int) spinnerCantidad.getValue();
 					int cantidadTabla = Integer.parseInt((String) tablaMateriasPrimas.getValueAt(posicionMateriaPrimaActual, 3));
 					int cantidadNueva = cantidadTabla + cantidadSpinner;
 					tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
+					spinnerCantidad.setValue(1);
 				}
 			}});
 		btnAgregar.setBounds(579, 73, 92, 32);
 		contentPanel.add(btnAgregar);
 		
-		JLabel lblNewLabel = new JLabel("TOTAL     $");
-		lblNewLabel.setVisible(false);
-		lblNewLabel.setBounds(782, 359, 59, 25);
-		contentPanel.add(lblNewLabel);
+		lblTotal = new JLabel("TOTAL     $");
+		lblTotal.setVisible(false);
+		lblTotal.setBounds(782, 359, 59, 25);
+		contentPanel.add(lblTotal);
 		
-		textField = new JTextField();
-		textField.setVisible(false);
-		textField.setBounds(851, 359, 86, 28);
-		contentPanel.add(textField);
-		textField.setColumns(10);
+		textTotal = new JTextField();
+		textTotal.setVisible(false);
+		textTotal.setBounds(851, 359, 86, 28);
+		contentPanel.add(textTotal);
+		textTotal.setColumns(10);
 		
 		JButton btnQuitar = new JButton("Quitar");
 		btnQuitar.addActionListener(new ActionListener() {
@@ -253,13 +242,18 @@ public class AM_Solicitud_Compra extends JDialog {
 
 	private void Seleccion_Proveedor() {
 		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
-			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
-			modelo.setRowCount(0);
-			tablaMateriasPrimas.setModel(modelo);
-			ListaMateriaPrima = new HashMap<String, Integer>();
+			if(tablaMateriasPrimas.getRowCount() > 0){
+				int RESPUESTA = JOptionPane.showConfirmDialog(null,"Si cambia de proveedor perdera las materia primas cargadas \n ¿Desea continuar?","TITULO DE LA VENTANA",JOptionPane.OK_CANCEL_OPTION);
+				if(RESPUESTA == JOptionPane.OK_OPTION){
+					DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+					modelo.setRowCount(0);
+					tablaMateriasPrimas.setModel(modelo);
+					ListaMateriaPrima = new HashMap<String, Integer>();
+				}
+			}
+			
 			comboMateriaPrima.removeAllItems();
 			Lista_Categorias = sv_proveedor.getCategoriasProveedor(comboProveedor.getSelectedItem().toString());
-			System.out.println("Tamaño lista de "+ comboProveedor.getSelectedItem().toString()+" es de "+Lista_Categorias.size());// TODO
 			
 			comboCategorias.removeAllItems();
 			for (int i = 0; i < Lista_Categorias.size(); i++) {
@@ -297,6 +291,23 @@ public class AM_Solicitud_Compra extends JDialog {
 		}
 		sc.setLista_materia_prima(listaMateriaPrima);
 		return sc;
+	}
+
+	public void setSolicictud(Solicitud_compra sc) {
+		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
+		comboProveedor.setEditable(false);
+		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
+			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
+			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
+					sc.getLista_materia_prima().get(i).getCategoria_string(),
+					sc.getLista_materia_prima().get(i).getNombre(),
+					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
+			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			modelo.addRow(arreglo);
+			tablaMateriasPrimas.setModel(modelo);
+		}
+		lblTotal.setVisible(true);
+		textTotal.setVisible(true);
 	}
 
 }//---> FIN CLASE
