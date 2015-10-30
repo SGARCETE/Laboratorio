@@ -130,7 +130,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			String FECHA_FILTRO = formato_yyyyMMdd.format(Fecha_mostrar.getTime());
-			String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+			String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre, C.CL_direccion, C.CL_telefono,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 					+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
 					 +"  group by P.PD_id";
 //			System.out.println("getLISTA_PEDIDOS "+Query);
@@ -145,6 +145,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
 				P.setESTADO(Fila.getString("PEST_nombre"));
 				P.setCliente(new Cliente (Fila.getString("CL_nombre")));
+				P.getCliente().setDomicilio(Fila.getString("CL_direccion"));
+				P.getCliente().setTelefono_Fijo(Fila.getString("CL_telefono"));
 				P.setTotal(Fila.getDouble("Precio"));
 				Boolean delivery = false;
 				if(Fila.getInt("PD_Delivery")==1){
