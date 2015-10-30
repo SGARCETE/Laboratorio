@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 
 import javax.swing.SpinnerNumberModel;
 
+import Reportes.ReporteContabilidad;
+import Reportes.ReporteSolicitud;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -55,6 +58,11 @@ public class Interfaz_Contabilidad {
 		frame.getContentPane().add(lblSeleccioneElMes);
 		
 		JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
+		btnGenerarContabilidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GenerarContabilidad();
+			}
+		});
 		btnGenerarContabilidad.setBounds(203, 74, 175, 68);
 		frame.getContentPane().add(btnGenerarContabilidad);
 		
@@ -77,4 +85,10 @@ public class Interfaz_Contabilidad {
 		lblContabilidad.setBounds(130, 11, 168, 36);
 		frame.getContentPane().add(lblContabilidad);
 	}
-}
+	private void GenerarContabilidad() {
+		ReporteContabilidad rc = new ReporteContabilidad();
+		Integer fecha = 10;  
+		rc.Generar_Contabilidad(fecha);	
+		}
+	}
+
