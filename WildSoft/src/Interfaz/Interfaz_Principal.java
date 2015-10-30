@@ -69,6 +69,8 @@ import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
+import Reportes.ReporteItinerario;
+import Reportes.ReporteSolicitud;
 import Reportes.ReporteTicket;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
@@ -761,6 +763,9 @@ public class Interfaz_Principal {
 					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0))));
 				}
 				sv_Entrega.AGREGAR_PEDIDO(entrega);
+				
+				Generar_Itinerario(entrega.getId());
+				
 			}
 		});
 		btnGenerarnItinerario.setBounds(570, 269, 217, 45);
@@ -1415,5 +1420,12 @@ public class Interfaz_Principal {
 		}
 		
 		tablePedidos.setModel(modelo);
+	}
+	
+	private void Generar_Itinerario(int id) {
+		
+		ReporteItinerario ri= new ReporteItinerario();
+		ri.Generar_Itinerario(id);
+		
 	}
 }// ---> FIN CLASE
