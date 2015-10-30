@@ -5,12 +5,15 @@
 	<property name="ireport.y" value="0"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="PD_fecha_pedido" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{PD_fecha_pedido}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select P.PD_Delivery, P.PD_numero, PR.PR_nombre, P.PD_fecha_pedido,PP.PP_Observacion,  C.CL_nombre,C.CL_telefono,(PP.PP_precio*PP.PP_producto_cantidad) as Total, PR.PR_Observacion, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
+		<![CDATA[select P.PD_Delivery, P.PD_numero, PR.PR_nombre, PD_fecha_pedido,PP.PP_Observacion,  C.CL_nombre,C.CL_telefono,(PP.PP_precio*PP.PP_producto_cantidad) as Total, PR.PR_Observacion, C.CL_direccion, T.TP_nombre,  PP.PP_producto_cantidad,
 PP.PP_precio, T.TP_id, T.TP_nombre from Producto PR join Producto_pedidos PP join Pedido P
 join tipo_producto T join Cliente C on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_estado= 4
 and P.PD_id=PP.PP_pedidoid and P.PD_cliente=C.CL_id
-and MONTH(P.PD_fecha_pedido) = MONTH(CURDATE()) group by P.PD_id;]]>
+and MONTH(P.PD_fecha_pedido) =$P{PD_fecha_pedido} group by P.PD_id;]]>
 	</queryString>
 	<field name="PD_Delivery" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[]]></fieldDescription>

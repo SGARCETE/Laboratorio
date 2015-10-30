@@ -8,6 +8,7 @@ import javax.swing.SpinnerNumberModel;
 
 import Reportes.ReporteCompras;
 import Reportes.ReporteContabilidad;
+import Reportes.ReportePedidos;
 import Reportes.ReporteSolicitud;
 
 import javax.swing.JLabel;
@@ -62,6 +63,7 @@ public class Interfaz_Contabilidad {
 		btnGenerarContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GenerarContabilidadCompras();
+				GenerarContabilidadPedidos();
 			}
 		});
 		btnGenerarContabilidad.setBounds(203, 74, 175, 68);
@@ -91,5 +93,12 @@ public class Interfaz_Contabilidad {
 		Integer fecha = (Integer) spinner.getValue();
 		rc.Generar_Compras(fecha);
 		}
+	
+	private void GenerarContabilidadPedidos() {
+		ReportePedidos rp= new ReportePedidos();
+		Integer fecha = (Integer) spinner.getValue();
+		rp.Generar_Pedido(fecha);
+	
 	}
+}
 
