@@ -12,7 +12,6 @@ public class Servicio_Repartidores {
 
 	private RepartidorDAO repartidorDAO = new RepartidorDAOjdbcImpl();
 
-
 	public boolean guardar_nuevo_pedido(Repartidor R){
 		return repartidorDAO.Nuevo_Repartidor(R);
 	}
@@ -27,6 +26,10 @@ public class Servicio_Repartidores {
 	
 	public boolean Modificar_Repartidor(Repartidor R){
 		return repartidorDAO.Modificar_Repartidor(R);
+	}
+
+	public Repartidor getRepartidor(String nombreRepartidor) {
+		return repartidorDAO.getRepartidor(nombreRepartidor);
 	}
 
 

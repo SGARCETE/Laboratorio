@@ -21,6 +21,7 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Proveedores 		SvProveedores = new Servicio_Proveedores();
 	private Servicio_Materia_Prima  	SvMateria_Prima = new Servicio_Materia_Prima();
 	private Servicio_Solicitud_compra	SvSolicitudCompra = new Servicio_Solicitud_compra();
+	private Servicio_entrega			svEntrega = new Servicio_entrega();
 	
 	/**############################################################################**/
 	/**############################################################################**/
@@ -77,5 +78,10 @@ public class Principal_Negocio_Interfaz {
 	public Servicio_Solicitud_compra getSvSolicitudCompra() {
 		return SvSolicitudCompra;
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		public Servicio_entrega getSvEntrega() {
+			return svEntrega;
+		}
 	
 }//---> FIN CLASE

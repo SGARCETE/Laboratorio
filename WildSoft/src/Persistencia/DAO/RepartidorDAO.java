@@ -13,5 +13,7 @@ public interface RepartidorDAO {
 	public ArrayList<Repartidor> getRepartidores();
 	
 	public boolean Modificar_Repartidor(Repartidor R);
+
+	public Repartidor getRepartidor(String nombreRepartidor);
 	
 }

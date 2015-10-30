@@ -56,6 +56,32 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 		String SentenciaSQL = "UPDATE Repartidor SET RE_nombre = '" + R.getNombre() + "', RE_vehiculo = '" + R.getVehiculo() + "' WHERE RE_id=" + R.getID_Repartidor();
 		return conex.Insertar(SentenciaSQL);
 	}
+
+	@Override
+	public Repartidor getRepartidor(String nombreRepartidor) {
+		Repartidor R = new Repartidor();
+		String SentenciaSQL = "SELECT * FROM repartidor WHERE RE_nombre='" + nombreRepartidor + "';";
+		conex.connectToMySQL();// Conectar base
+		Statement st;
+		try {
+			st = conex.conexion.createStatement();
+			st.executeQuery(SentenciaSQL);
+			ResultSet Fila = st.getResultSet();
+			
+			while (Fila.next()) {
+				R.setID_Repartidor(Fila.getInt("RE_id"));
+				R.setNombre(Fila.getString("RE_nombre"));
+				R.setVehiculo(Fila.getString("RE_vehiculo"));
+			}
+			
+			conex.cerrarConexion();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return R;
+	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	

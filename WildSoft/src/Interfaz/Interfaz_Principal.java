@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -56,13 +57,18 @@ import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
+import MetAux.MetAux;
 import Negocio.Modelo.Cliente;
+import Negocio.Modelo.Entrega;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
+import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
+import Negocio.Servicios.Servicio_Repartidores;
+import Negocio.Servicios.Servicio_entrega;
 import Reportes.ReporteTicket;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
@@ -98,6 +104,8 @@ public class Interfaz_Principal {
 			}
 	});
 	private ArrayList<Integer> pedidodItinerario = new ArrayList<Integer>();
+	private HashMap<String, Integer> listaRepartidores;
+	JComboBox<String> comboRepartidores;
 
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
@@ -106,6 +114,8 @@ public class Interfaz_Principal {
 	private Servicio_Productos sv_productos;
 	private Servicio_Clientes sv_clientes;
 	private Servicio_Pedidos sv_pedidos;
+	private Servicio_Repartidores sv_Repartidores;
+	private Servicio_entrega sv_Entrega;
 	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private Pedido PEDIDO_ACTUAL = new Pedido(); 	   /* Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea */
@@ -132,6 +142,8 @@ public class Interfaz_Principal {
 		sv_productos = Principal_neg_int.getSvProductos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		sv_clientes  = Principal_neg_int.getSvClientes();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
+		sv_Repartidores = Principal_neg_int.getSvRepartidores();
+		sv_Entrega = Principal_neg_int.getSvEntrega();
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
@@ -739,6 +751,16 @@ public class Interfaz_Principal {
 		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
 		btnGenerarnItinerario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Entrega entrega = new Entrega();
+				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
+				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
+				sv_Entrega.agregarEntrega(entrega);
+				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
+				entrega.setLista_pedidos(new ArrayList<Pedido>());
+				for (int i = 0; i < tableItinerario.getRowCount(); i++) {
+					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0))));
+				}
+				sv_Entrega.AGREGAR_PEDIDO(entrega);
 			}
 		});
 		btnGenerarnItinerario.setBounds(570, 269, 217, 45);
@@ -769,6 +791,15 @@ public class Interfaz_Principal {
 		JLabel label_1 = new JLabel("Itinerario De Entrega");
 		label_1.setBounds(1226, 24, 121, 14);
 		panel_Itinerario.add(label_1);
+		
+		comboRepartidores = new JComboBox<String>();
+		comboRepartidores.setBounds(598, 231, 163, 27);
+		panel_Itinerario.add(comboRepartidores);
+		
+		JLabel lblRepartidor = new JLabel("Repartidor:");
+		lblRepartidor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRepartidor.setBounds(624, 206, 109, 14);
+		panel_Itinerario.add(lblRepartidor);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -898,6 +929,14 @@ public class Interfaz_Principal {
 		comboBoxProducto.addItem("Seleccione el tipo de producto");
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
+		}
+		
+		ArrayList<Repartidor> lista = sv_Repartidores.get_Repartidores();
+		listaRepartidores = new HashMap<String, Integer>();
+		comboRepartidores.addItem("Seleccione un repartidor");
+		for (int i = 0; i < lista.size(); i++) {
+			comboRepartidores.addItem(lista.get(i).getNombre());
+			listaRepartidores.put(lista.get(i).getNombre(), lista.get(i).getID_Repartidor());
 		}
 		
 		Generar_Monitor_cocina();
@@ -1377,5 +1416,4 @@ public class Interfaz_Principal {
 		
 		tablePedidos.setModel(modelo);
 	}
-	
 }// ---> FIN CLASE
