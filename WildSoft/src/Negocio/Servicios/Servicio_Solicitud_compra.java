@@ -63,8 +63,7 @@ public class Servicio_Solicitud_compra {
 	
 	//TODO
 	/**
-	 * ESTE METODO ESTA MAL ES SOLO PARA QUE ANDE DURANTE LA ENTREGA NO USAR
-	 * @param id
+	 * ESTE METODO ESTA MAL ES SOLO PARA QUE ANDE DURANTE LA ENTREGA, NO USAR!!!!!
 	 */
 	public void modificacionMAAAAAAAL(int id, int precio) {
 		
