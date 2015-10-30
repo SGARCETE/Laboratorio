@@ -85,7 +85,7 @@ AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id and MONTH(SD.SD_
 				<reportElement style="Detail" x="33" y="2" width="121" height="15" uuid="a322839b-d4b6-4435-8099-fca817f3d3c9"/>
 				<textFieldExpression><![CDATA[$F{PV_nombre}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$ #,##0.00">
+			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
 				<reportElement x="211" y="2" width="52" height="15" uuid="a34390ae-f554-482a-9162-e7237a79feef"/>
 				<textFieldExpression><![CDATA[$F{SD_precio}]]></textFieldExpression>
 			</textField>

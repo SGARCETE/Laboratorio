@@ -93,7 +93,7 @@ and MONTH(P.PD_fecha_pedido) =$P{PD_fecha_pedido} group by P.PD_id;]]>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<textField pattern="$ #,##0.00">
+			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
 				<reportElement style="Detail" x="144" y="0" width="80" height="15" uuid="961024ef-9537-41f1-8f59-0b206546912c"/>
 				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
 			</textField>
