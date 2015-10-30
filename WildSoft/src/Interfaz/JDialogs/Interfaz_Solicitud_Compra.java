@@ -2,6 +2,9 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,10 +18,6 @@ import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Solicitud_compra;
 import Reportes.ReporteSolicitud;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class Interfaz_Solicitud_Compra extends JDialog {
@@ -120,8 +119,22 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				dispose();
 			}
 		});
-		btnGenerarSolicitud.setBounds(403, 342, 218, 25);
+		btnGenerarSolicitud.setBounds(424, 341, 218, 25);
 		contentPanel.add(btnGenerarSolicitud);
+		
+		JButton btnNewButton = new JButton("Pagar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(table.getRowCount() > 0){
+					
+					auxiliar frame = new auxiliar(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
+					frame.setVisible(true);
+					frame.setAlwaysOnTop(true);
+				}
+			}
+		});
+		btnNewButton.setBounds(322, 339, 90, 28);
+		contentPanel.add(btnNewButton);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -179,7 +192,4 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				RS.Generar_Solicitud(NUMERO_SOLICITUD);
 			}
 		}
-		
-	//-------------------------------------------------------------------------------------------------------------------	
-		
 }

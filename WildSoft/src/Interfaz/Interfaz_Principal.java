@@ -686,6 +686,13 @@ public class Interfaz_Principal {
 		tabbedPane.addTab("Itinerario de Entrega", null, panel_Itinerario, null);
 		
 		JButton btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tablePedidos.getSelectedRow()>-1){
+					
+				}
+			}
+		});
 		btnAgregar_1.setBounds(624, 49, 109, 35);
 		panel_Itinerario.add(btnAgregar_1);
 		
@@ -1296,7 +1303,7 @@ public class Interfaz_Principal {
 				new Object[][] {
 				},
 				new String[] {
-					"Id", "Nombre Cliente", "Direccion", "Telefono", "Precio"
+					"Pedido N°", "Nombre Cliente", "Direccion", "Telefono", "Precio"
 				}
 			) {
 				@SuppressWarnings("rawtypes")

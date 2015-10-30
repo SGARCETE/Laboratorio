@@ -52,7 +52,12 @@ public class AM_Solicitud_Compra extends JDialog {
 	private JSpinner spinnerCantidad;
 	private JLabel lblTotal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
+	@SuppressWarnings("unused")
 	private boolean esEdicion; 
+	private JButton btnQuitar;
+	private JButton btnAgregar;
+	private JButton okButton;
+	private JButton cancelButton;
 
 	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setResizable(false);
@@ -133,7 +138,7 @@ public class AM_Solicitud_Compra extends JDialog {
 		));
 		scrollPane.setViewportView(tablaMateriasPrimas);
 		
-		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
@@ -167,7 +172,7 @@ public class AM_Solicitud_Compra extends JDialog {
 		contentPanel.add(textTotal);
 		textTotal.setColumns(10);
 		
-		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar = new JButton("Quitar");
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
@@ -192,15 +197,15 @@ public class AM_Solicitud_Compra extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Agregar");
+				okButton = new JButton("Agregar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if(tablaMateriasPrimas.getRowCount()>0){
-							if(!esEdicion){
+							//if(!esEdicion){
 								sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
-							}else{
-								sv_SolicitudCompra.MODIFICAR_Solicitud(obtenerSolicitud());
-							}
+							//}else{
+							//	sv_SolicitudCompra.MODIFICAR_Solicitud(obtenerSolicitud());
+							//}
 							dispose();
 							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 							frame.setModal(true);
@@ -213,7 +218,7 @@ public class AM_Solicitud_Compra extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
@@ -301,6 +306,10 @@ public class AM_Solicitud_Compra extends JDialog {
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false);
+		comboCategorias.setEnabled(false);
+		comboMateriaPrima.setEnabled(false);
+		btnAgregar.setEnabled(false);
+		btnQuitar.setEnabled(false);
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
 			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
@@ -311,8 +320,11 @@ public class AM_Solicitud_Compra extends JDialog {
 			modelo.addRow(arreglo);
 			tablaMateriasPrimas.setModel(modelo);
 		}
-		lblTotal.setVisible(true);
-		textTotal.setVisible(true);
+//		lblTotal.setVisible(true);
+//		textTotal.setVisible(true);
+		okButton.setVisible(false);
+		cancelButton.setText("Salir");
+		spinnerCantidad.setEnabled(false);
 		esEdicion = true;
 	}
 
