@@ -123,9 +123,9 @@ create table Solicitud_compra (
 						primary key (SD_id)
 );
 
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,3,"2015-10-10");
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,1,"2015-10-10");
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,2,"2015-10-10");
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,3,"2015-10-10",100);
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,1,"2015-10-10",80);
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,2,"2015-10-10",300);
 
 CREATE  TABLE Producto ( 
 						 PR_id int AUTO_INCREMENT ,  
@@ -221,9 +221,10 @@ create table Pedido (
 Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (1,"2015-10-10",1,null, null,false);
 Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (2,"2015-10-10",1,null,1,true);
 Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (3,"2015-10-10",1,null, 3,true);
-Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (4,"2015-10-10",1,null, 3,true);
-Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (5,"2015-10-10",1,null, 3,false);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (4,"2015-10-10",1,null, 2,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (5,"2015-10-10",1,null, 5,false);
 Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (6,"2015-10-10",1,null, 3,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (1,"2015-10-30",1,null, 4,false);
 
 CREATE TABLE Combo (
 						CO_id int AUTO_INCREMENT,
@@ -290,7 +291,11 @@ create table Compra_MateriaPrima(
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (1, 3, 2);
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (1, 4, 3);
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 14, 1);
-INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 15, 2);	
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 15, 2);
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (3, 14, 2);
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (3, 15, 5);
+
+	
 
 create table Proveedor_categoria (
 								PC_proveedor_id int,
@@ -306,6 +311,7 @@ Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (1,1);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (1,3);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (2,2);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (2,3);
+Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (3,2);
 
 create table Entrega_pedido(
 							EP_entrega_id int,
