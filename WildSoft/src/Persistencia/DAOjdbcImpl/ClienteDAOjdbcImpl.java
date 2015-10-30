@@ -57,11 +57,12 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	}
 	
 	public boolean Nuevo_Cliente(Cliente c) {
-		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono) VALUES ("+
+		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono, CL_Detalle) VALUES ("+
 			"'"+	c.getNombre()			+"',"+
 			"'"+	c.getApellido()			+"',"+
 			"'"+	c.getDomicilio() 		+"',"+
-			"'"+	c.getTelefono_Fijo()	+"')";
+			"'"+	c.getTelefono_Fijo()	+"',"+
+			"'"+ 	c.getDetalle()			+"')";
 		return conex.Insertar(SentenciaSQL);
 	}
 	
