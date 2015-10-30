@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
+import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.Solicitud_compraDAO;
 import Persistencia.DAOjdbcImpl.Solicitud_compraDAOjdbc;
 
@@ -56,6 +57,21 @@ public class Servicio_Solicitud_compra {
 	public void eliminarSolicitudCompra(Solicitud_compra sc){
 		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
 		scDAO.eliminarSolicitud(sc);
+	}
+
+	
+	
+	//TODO
+	/**
+	 * ESTE METODO ESTA MAL ES SOLO PARA QUE ANDE DURANTE LA ENTREGA NO USAR
+	 * @param id
+	 */
+	public void modificacionMAAAAAAAL(int id) {
+		
+		ConectorMySQL conex = new ConectorMySQL();
+		
+		conex.Insertar("UPDATE solicitud_compra set SD_estado=3, SD_precio=500 WHERE SD_id=" + id + ";");
+		
 	}
 	
 

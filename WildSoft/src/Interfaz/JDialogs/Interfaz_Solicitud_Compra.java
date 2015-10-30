@@ -125,9 +125,9 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		JButton btnNewButton = new JButton("Pagar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(table.getRowCount() > 0){
-					
-					auxiliar frame = new auxiliar(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
+				if(table.getSelectedRow() > -1){
+					dispose();
+					auxiliar frame = new auxiliar(principal_neg_int, Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
 					frame.setVisible(true);
 					frame.setAlwaysOnTop(true);
 				}
