@@ -25,7 +25,7 @@ public class auxiliar extends JDialog {
 	private Servicio_Solicitud_compra sv_SolicitudCompra;
 
 
-	public auxiliar(Principal_Negocio_Interfaz principal_neg_int ,int id) {
+	public auxiliar(final Principal_Negocio_Interfaz principal_neg_int ,final int id) {
 		
 		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		

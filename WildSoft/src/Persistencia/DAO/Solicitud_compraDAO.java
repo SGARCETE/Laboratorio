@@ -20,6 +20,8 @@ public interface Solicitud_compraDAO {
 	
 	Proveedor getProveedor(Integer ID_Proveedor);
 	
+	
+	
 	int obtenerEstado(String estado);
 	
 	public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd);

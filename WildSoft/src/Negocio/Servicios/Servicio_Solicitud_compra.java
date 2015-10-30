@@ -18,6 +18,12 @@ public class Servicio_Solicitud_compra {
 		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
 	}
 	
+	
+	public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd){
+		return scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sd);
+	}
+	
+	
 	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
 		return scDAO.AGREGAR_SOLICITUD(solicitud);
 	}

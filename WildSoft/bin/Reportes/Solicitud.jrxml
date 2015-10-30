@@ -61,9 +61,9 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 			<band height="16">
 				<staticText>
 					<reportElement style="Column header" x="415" y="0" width="59" height="15" uuid="d2698938-eafc-42a0-8289-82188dab8de3"/>
-					<text><![CDATA[Precio  :]]></text>
+					<text><![CDATA[Precio:   $]]></text>
 				</staticText>
-				<textField>
+				<textField isBlankWhenNull="true">
 					<reportElement style="Detail" x="474" y="0" width="79" height="15" uuid="ec1e5a6b-c499-4464-99eb-91c60997ffb7"/>
 					<textFieldExpression><![CDATA[$F{SD_precio}]]></textFieldExpression>
 				</textField>
@@ -189,12 +189,12 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 	</columnFooter>
 	<pageFooter>
 		<band height="24" splitType="Stretch">
-			<textField evaluationTime="Report">
+			<textField evaluationTime="Report" isBlankWhenNull="true">
 				<reportElement style="Column header" x="478" y="2" width="77" height="20" uuid="a1a333df-c768-4988-bd4c-af6349498436"/>
 				<textElement>
 					<font size="14" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="Column header" x="433" y="2" width="43" height="18" uuid="b89b64cc-8e81-46db-b0a2-67aff9cab810"/>
