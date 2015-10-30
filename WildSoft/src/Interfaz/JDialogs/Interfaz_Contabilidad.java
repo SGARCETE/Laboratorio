@@ -1,57 +1,32 @@
 package Interfaz.JDialogs;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
-
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import Reportes.ReporteCompras;
-import Reportes.ReporteContabilidad;
 import Reportes.ReportePedidos;
-import Reportes.ReporteSolicitud;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.JSpinner;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Interfaz_Contabilidad {
 
-	private JFrame frame;
+	private JDialog frame;
 	JSpinner spinner = new JSpinner();
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interfaz_Contabilidad window = new Interfaz_Contabilidad();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
 	public Interfaz_Contabilidad() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JDialog();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblSeleccioneElMes = new JLabel("Seleccione el mes");
@@ -100,5 +75,10 @@ public class Interfaz_Contabilidad {
 		rp.Generar_Pedido(fecha);
 	
 	}
+	
+	public JDialog getDialog(){
+		return frame;
+	}
+	
 }
 

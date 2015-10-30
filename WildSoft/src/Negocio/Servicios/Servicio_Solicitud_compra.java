@@ -66,11 +66,11 @@ public class Servicio_Solicitud_compra {
 	 * ESTE METODO ESTA MAL ES SOLO PARA QUE ANDE DURANTE LA ENTREGA NO USAR
 	 * @param id
 	 */
-	public void modificacionMAAAAAAAL(int id) {
+	public void modificacionMAAAAAAAL(int id, int precio) {
 		
 		ConectorMySQL conex = new ConectorMySQL();
 		
-		conex.Insertar("UPDATE solicitud_compra set SD_estado=3, SD_precio=500 WHERE SD_id=" + id + ";");
+		conex.Insertar("UPDATE solicitud_compra set SD_estado=3, SD_precio=" + precio + " WHERE SD_id=" + id + ";");
 		
 	}
 	

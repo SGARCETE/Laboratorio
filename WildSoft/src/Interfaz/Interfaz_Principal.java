@@ -50,6 +50,7 @@ import javax.swing.table.DefaultTableModel;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla_Alternativa2;
+import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
@@ -96,6 +97,7 @@ public class Interfaz_Principal {
 				Cargar_datos_Cliente(C);
 			}
 	});
+	private ArrayList<Integer> pedidodItinerario = new ArrayList<Integer>();
 
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
@@ -689,18 +691,43 @@ public class Interfaz_Principal {
 		btnAgregar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tablePedidos.getSelectedRow()>-1){
-					
+					if(!pedidodItinerario.contains(Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)))){
+						pedidodItinerario.add(Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)));
+						DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
+						String[] arreglo = {
+								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0),
+								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 1),
+								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 2),
+								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 3),
+								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)
+								};
+						modelo.addRow(arreglo);
+						}}
 				}
-			}
-		});
+			});
 		btnAgregar_1.setBounds(624, 49, 109, 35);
 		panel_Itinerario.add(btnAgregar_1);
 		
 		JButton button_1 = new JButton("Quitar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tableItinerario.getSelectedRow()>-1){
+					DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
+					modelo.removeRow(tableItinerario.getSelectedRow());
+					tableItinerario.setModel(modelo);
+				}
+			}
+		});
 		button_1.setBounds(624, 95, 109, 35);
 		panel_Itinerario.add(button_1);
 		
 		JButton btnVaciar = new JButton("Vaciar");
+		btnVaciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pedidodItinerario = new ArrayList<Integer>();
+				tableItinerario.setModel(obtenerModel());
+			}
+		});
 		btnVaciar.setBounds(624, 141, 109, 35);
 		panel_Itinerario.add(btnVaciar);
 		
@@ -827,6 +854,12 @@ public class Interfaz_Principal {
 		menuBar.add(mnReporteContabilidad);
 		
 		JMenuItem mntmVerContabilidad = new JMenuItem("Ver Mini-Contabilidad");
+		mntmVerContabilidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Interfaz_Contabilidad frame = new Interfaz_Contabilidad();
+				frame.getDialog().setVisible(true);
+			}
+		});
 		mnReporteContabilidad.add(mntmVerContabilidad);
 
 		JMenu mnAyuda = new JMenu("Ayuda");

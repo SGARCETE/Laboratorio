@@ -61,7 +61,7 @@ public class auxiliar extends JDialog {
 //						sv_SolicitudCompra.MODIFICAR_ESTADO(sc, 3);
 //						sc.setPrecio(Integer.parseInt(textField.getText()));
 //						sv_SolicitudCompra.MODIFICAR_Solicitud(sc);
-						sv_SolicitudCompra.modificacionMAAAAAAAL(id);
+						sv_SolicitudCompra.modificacionMAAAAAAAL(id, Integer.valueOf(textField.getText()));
 						dispose();
 						Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(principal_neg_int);
 						frame.setVisible(true);
