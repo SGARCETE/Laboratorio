@@ -1,6 +1,7 @@
 package Interfaz;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
@@ -35,6 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -65,7 +67,6 @@ import Reportes.ReporteTicket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Cursor;
 
 public class Interfaz_Principal {
 
@@ -118,6 +119,8 @@ public class Interfaz_Principal {
 	private JDateChooser dateChooser_Fecha_mostrar;
 	private JButton btn_fecha_anterior;
 	private JButton btn_fecha_siguiente;
+	private JTable tablePedidos;
+	private JTable tableItinerario;
 
 	/** Create the application.
 	 * @param principal_Negocio_Interfaz  */
@@ -131,9 +134,6 @@ public class Interfaz_Principal {
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
 	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	
 	private void initialize() {
 		frmWildsoft = new JFrame();
@@ -673,7 +673,70 @@ public class Interfaz_Principal {
 		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
 		btn_fecha_siguiente.setBounds(637, 7, 50, 35);
 		panel_Lista_de_pedidos.add(btn_fecha_siguiente);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		// >>>>>>>>>>>>>>>>>>>>>>>>>       PANEL ITINERARIO DE ENTREGA       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+		JPanel panel_Itinerario = new JPanel();
+		panel_Itinerario.setLayout(null);
+		panel_Itinerario.setBackground(SystemColor.menu);
+		tabbedPane.addTab("Itinerario de Entrega", null, panel_Itinerario, null);
+		
+		JButton btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1.setBounds(624, 49, 109, 35);
+		panel_Itinerario.add(btnAgregar_1);
+		
+		JButton button_1 = new JButton("Quitar");
+		button_1.setBounds(624, 95, 109, 35);
+		panel_Itinerario.add(button_1);
+		
+		JButton btnVaciar = new JButton("Vaciar");
+		btnVaciar.setBounds(624, 141, 109, 35);
+		panel_Itinerario.add(btnVaciar);
+		
+		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
+		btnGenerarnItinerario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnGenerarnItinerario.setBounds(570, 269, 217, 45);
+		panel_Itinerario.add(btnGenerarnItinerario);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 49, 550, 629);
+		panel_Itinerario.add(scrollPane);
+		
+		tablePedidos = new JTable();
+		tablePedidos.setModel(obtenerModel());
+		scrollPane.setViewportView(tablePedidos);
+		
+		llenarTablaPedidos();
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(797, 49, 550, 629);
+		panel_Itinerario.add(scrollPane_1);
+		
+		tableItinerario = new JTable();
+		tableItinerario.setModel(obtenerModel());
+		scrollPane_1.setViewportView(tableItinerario);
+		
+		JLabel label = new JLabel("Lista De Pedidos");
+		label.setBounds(10, 18, 109, 27);
+		panel_Itinerario.add(label);
+		
+		JLabel label_1 = new JLabel("Itinerario De Entrega");
+		label_1.setBounds(1226, 24, 121, 14);
+		panel_Itinerario.add(label_1);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		// >>>>>>>>>>>>>>>>>>>>>       FIN DEL PANEL ITINERARIO DE ENTREGA       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		// Menu
@@ -764,6 +827,7 @@ public class Interfaz_Principal {
 
 	}// --> FIN INTERFAZ	
 	
+
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ	 */
 	private void iniciarParametros() {
@@ -1220,5 +1284,50 @@ public class Interfaz_Principal {
 		ACTUALIZAR_MONITOR();
 	}
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>       METODOS ITINERARIO DE ENTREGA       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	@SuppressWarnings("serial")
+	private DefaultTableModel obtenerModel(){
+		return new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Id", "Nombre Cliente", "Direccion", "Telefono", "Precio"
+				}
+			) {
+				@SuppressWarnings("rawtypes")
+				Class[] columnTypes = new Class[] {
+					String.class, String.class, String.class, String.class, String.class
+				};
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			};
+	}
+	
+	private void llenarTablaPedidos() {
+
+		ArrayList<Pedido> lista = sv_pedidos.get_Pedidos(Calendar.getInstance());
+		DefaultTableModel modelo = obtenerModel();
+		
+		for (int i = 0; i < lista.size(); i++) {
+			if(!lista.get(i).getCliente().getNombre().equals("")){
+				String[] arreglo = {String.valueOf(lista.get(i).getID_DIARIO()),
+						lista.get(i).getCliente().getNombre(),
+						lista.get(i).getCliente().getDomicilio(),
+						lista.get(i).getCliente().getTelefono_Fijo(),
+						String.valueOf(lista.get(i).getTotal())
+				};
+				modelo.addRow(arreglo);
+			}
+		}
+		
+		tablePedidos.setModel(modelo);
+	}
 	
 }// ---> FIN CLASE
