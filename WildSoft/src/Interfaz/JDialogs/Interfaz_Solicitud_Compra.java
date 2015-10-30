@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Solicitud_compra;
@@ -96,7 +97,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		btnBorrar.setBounds(120, 339, 90, 28);
 		contentPanel.add(btnBorrar);
 		
-		JButton btnEditar = new JButton("Editar");
+		JButton btnEditar = new JButton("Consultar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(table.getRowCount()>0){
@@ -125,14 +126,43 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		JButton btnNewButton = new JButton("Pagar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(table.getSelectedRow() > -1){
-					dispose();
-					auxiliar frame = new auxiliar(principal_neg_int, Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
-					frame.setVisible(true);
-					frame.setAlwaysOnTop(true);
+				
+				String Estado_Solicitud= (String) table.getValueAt(table.getSelectedRow(), 4);
+				System.out.println(Estado_Solicitud);
+				if(table.getSelectedRow() > -1 ){
+					if(Estado_Solicitud.equals("Pendiente"))
+					{
+						dispose();
+						auxiliar frame = new auxiliar(principal_neg_int, Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)));
+						frame.setVisible(true);
+						frame.setAlwaysOnTop(true);
+					}
+				
+					
 				}
 			}
 		});
+		
+		
+	/*	private void Setear_como_Preparado() {
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0); // TODO
+			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
+			Pedido pedido = new Pedido();
+			pedido.setNumero_Pedido(Numero_pedido);
+			System.out.println(pedido.getESTADO());
+
+
+			if(Estado_pedido.equals("Pendiente")){
+				sv_pedidos.modificar_estado(pedido, 2);
+				Actualizar_Lista_pedidos();
+				ACTUALIZAR_MONITOR();
+			}
+
+//			sv_pedidos.eliminar_pedido(P_cancelar);
+
+		}  */ 
+		
+		
 		btnNewButton.setBounds(322, 339, 90, 28);
 		contentPanel.add(btnNewButton);
 		{
