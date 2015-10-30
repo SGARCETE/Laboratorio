@@ -712,6 +712,11 @@ public class Interfaz_Principal {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableItinerario.getSelectedRow()>-1){
+					for (int i = 0; i < pedidodItinerario.size(); i++) {
+						if(pedidodItinerario.get(i)==Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0))){
+							pedidodItinerario.remove(i);
+						}
+					}
 					DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
 					modelo.removeRow(tableItinerario.getSelectedRow());
 					tableItinerario.setModel(modelo);
