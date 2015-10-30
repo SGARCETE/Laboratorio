@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import javax.swing.SpinnerNumberModel;
 
+import Reportes.ReporteCompras;
 import Reportes.ReporteContabilidad;
 import Reportes.ReporteSolicitud;
 
@@ -19,7 +20,7 @@ import java.awt.event.ActionEvent;
 public class Interfaz_Contabilidad {
 
 	private JFrame frame;
-
+	JSpinner spinner = new JSpinner();
 	/**
 	 * Launch the application.
 	 */
@@ -60,13 +61,13 @@ public class Interfaz_Contabilidad {
 		JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
 		btnGenerarContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GenerarContabilidad();
+				GenerarContabilidadCompras();
 			}
 		});
 		btnGenerarContabilidad.setBounds(203, 74, 175, 68);
 		frame.getContentPane().add(btnGenerarContabilidad);
 		
-		JSpinner spinner = new JSpinner();
+		
 		spinner.setBounds(69, 112, 51, 32);
 		frame.getContentPane().add(spinner);
 		spinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
@@ -85,10 +86,10 @@ public class Interfaz_Contabilidad {
 		lblContabilidad.setBounds(130, 11, 168, 36);
 		frame.getContentPane().add(lblContabilidad);
 	}
-	private void GenerarContabilidad() {
-		ReporteContabilidad rc = new ReporteContabilidad();
-		Integer fecha = 10;  
-		rc.Generar_Contabilidad(fecha);	
+	private void GenerarContabilidadCompras() {
+		ReporteCompras rc = new ReporteCompras();
+		Integer fecha = (Integer) spinner.getValue();
+		rc.Generar_Compras(fecha);
 		}
 	}
 

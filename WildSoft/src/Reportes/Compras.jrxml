@@ -6,13 +6,16 @@
 	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="SD_fecha" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{SD_fecha}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT SD_id, SD_fecha,  PV_nombre, CA_nombre, SD_precio
 FROM Solicitud_compra SD JOIN Solicitud_estado SE JOIN Proveedor PV JOIN Materia_prima MP
 JOIN Compra_MateriaPrima CM JOIN Categoria_MP CA
 ON
 SD.SD_estado= SE.SEST_id AND SD.SD_proveedor= PV.PV_id AND SD.SD_id= CM.CM_compra
-AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id GROUP BY SD_id ;]]>
+AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id and MONTH(SD.SD_fecha)=$P{SD_fecha} GROUP BY SD_id ;]]>
 	</queryString>
 	<field name="SD_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -56,7 +59,7 @@ AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id GROUP BY SD_id ;
 		<band height="18" splitType="Stretch">
 			<staticText>
 				<reportElement style="Column header" x="0" y="2" width="28" height="15" uuid="782177f3-1967-4938-b835-4bf7e0dcb194"/>
-				<text><![CDATA[ID]]></text>
+				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="31" y="2" width="123" height="15" uuid="1ffe219f-a517-43af-872b-be54ff261b7a"/>
