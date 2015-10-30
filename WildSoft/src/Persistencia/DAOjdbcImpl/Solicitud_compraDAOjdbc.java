@@ -155,6 +155,11 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	}
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
+    public void eliminarSolicitud(Solicitud_compra sc){
+    	String SentenciaSQL = "delete from solicitud_compra where solicitud_compra.SD_id = " +sc.getId() ;
+		conex.Insertar(SentenciaSQL);
+    }
+    
     public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd) {
 		String SentenciaSQL = "delete from Compra_MateriaPrima where Compra_MateriaPrima.CM_compra = " +sd.getId() ;
 		return conex.Insertar(SentenciaSQL);

@@ -85,6 +85,15 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		contentPanel.add(btnAgregar);
 		
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getRowCount()>0){
+					Integer id = Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
+					sv_solicitudCompra.eliminarSolicitudCompra(sv_solicitudCompra.obtenerSolicitud(id));
+					llenarTabla();
+				}
+			}
+		});
 		btnBorrar.setBounds(120, 339, 90, 28);
 		contentPanel.add(btnBorrar);
 		
@@ -144,6 +153,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private void llenarTabla() {
 		
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+		modelo.setRowCount(0);
 		ArrayList<Solicitud_compra> lista = sv_solicitudCompra.getLISTA_SOLICITUDES();
 		for (int i = 0; i < lista.size(); i++) {
 			String precio = " ";

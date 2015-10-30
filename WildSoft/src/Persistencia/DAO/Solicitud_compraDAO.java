@@ -26,4 +26,6 @@ public interface Solicitud_compraDAO {
 	
 	public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sd);
 
+	public void eliminarSolicitud(Solicitud_compra sc);
+
 }

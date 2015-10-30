@@ -52,6 +52,7 @@ public class AM_Solicitud_Compra extends JDialog {
 	private JSpinner spinnerCantidad;
 	private JLabel lblTotal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
+	private boolean esEdicion; 
 
 	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setResizable(false);
@@ -195,7 +196,11 @@ public class AM_Solicitud_Compra extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if(tablaMateriasPrimas.getRowCount()>0){
-							sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
+							if(!esEdicion){
+								sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
+							}else{
+								sv_SolicitudCompra.MODIFICAR_Solicitud(obtenerSolicitud());
+							}
 							dispose();
 							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 							frame.setModal(true);
@@ -229,7 +234,7 @@ public class AM_Solicitud_Compra extends JDialog {
 
 	private void inicializar(){
 		Cargar_ComboBox_Todos_los_proveedores();
-		
+		esEdicion = false;
 	}
 	
 	private void Cargar_ComboBox_Todos_los_proveedores() {
@@ -295,7 +300,7 @@ public class AM_Solicitud_Compra extends JDialog {
 
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
-		comboProveedor.setEditable(false);
+		comboProveedor.setEnabled(false);
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
 			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
@@ -308,6 +313,7 @@ public class AM_Solicitud_Compra extends JDialog {
 		}
 		lblTotal.setVisible(true);
 		textTotal.setVisible(true);
+		esEdicion = true;
 	}
 
 }//---> FIN CLASE

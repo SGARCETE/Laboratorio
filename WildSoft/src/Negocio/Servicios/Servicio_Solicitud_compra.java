@@ -29,8 +29,9 @@ public class Servicio_Solicitud_compra {
 		return scDAO.MODIFICAR_ESTADO(sd, numero);
 		}
 	
-	public boolean MODIFICAR_Solicitud(Solicitud_compra sd){
-		return scDAO.MODIFICAR_Solicitud(sd);
+	public void MODIFICAR_Solicitud(Solicitud_compra sc){
+		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
+		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
 	}
 	
 	public Proveedor getProveedor(Integer ID_Proveedor){
@@ -50,6 +51,11 @@ public class Servicio_Solicitud_compra {
 		Solicitud_compra sc = scDAO.getLISTA_SOLICITUDES().get(index);
 		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
 		return sc;
+	}
+	
+	public void eliminarSolicitudCompra(Solicitud_compra sc){
+		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
+		scDAO.eliminarSolicitud(sc);
 	}
 	
 
