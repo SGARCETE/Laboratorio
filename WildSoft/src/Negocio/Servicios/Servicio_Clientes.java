@@ -7,6 +7,7 @@ import Persistencia.DAO.ClienteDAO;
 import Persistencia.DAOjdbcImpl.ClienteDAOjdbcImpl;
 
 public class Servicio_Clientes {
+	
 	private ClienteDAO clienteDAO = new ClienteDAOjdbcImpl();
 	private ArrayList<Object> Lista_Clientes_AutoCompleter = clienteDAO.getAutoCompleter_Clientes();
 
@@ -14,6 +15,14 @@ public class Servicio_Clientes {
 	private boolean Nuevo_Cliente(Cliente c){
 		if(c!=null)
 			return clienteDAO.Nuevo_Cliente(c);
+		return false;
+	}
+	
+	
+	public boolean guardar_nuevo_cliente (Cliente c)
+	{
+		if(c!=null)
+			return clienteDAO.guardar_cliente(c);
 		return false;
 	}
 

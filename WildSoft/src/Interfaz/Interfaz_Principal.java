@@ -48,6 +48,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla_Alternativa2;
@@ -867,10 +868,16 @@ public class Interfaz_Principal {
 
 		JMenuItem mntmNuevoCliente = new JMenuItem("Nuevo Cliente");
 		mnClientes.add(mntmNuevoCliente);
+		
 
 		JMenuItem mntmAdmClientes = new JMenuItem("ADM Clientes");
 		mnClientes.add(mntmAdmClientes);
-
+		mntmAdmClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Abrir_Interfaz_ABM_Cliente();
+			}
+		});
+		
 		JMenu mnCombos = new JMenu("Combos");
 		menuBar.add(mnCombos);
 
@@ -1079,12 +1086,21 @@ public class Interfaz_Principal {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	//				ABM PEDIDO
+	//				ABM Repartidor
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_ABM_Repartidor() {
 		ADM_Repartidor frame = new ADM_Repartidor(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
+	}
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		//				ABM Client
+		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Abrir_Interfaz_ABM_Cliente() {
+		ADM_Cliente frame = new ADM_Cliente(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
 	}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

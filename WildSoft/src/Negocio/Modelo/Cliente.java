@@ -3,15 +3,21 @@ package Negocio.Modelo;
 public class Cliente {
 	private Integer ID_Cliente = 0;
 	private String  Nombre = "";
-	private String  Apellido = "";
-	private String  Domicilio = "";
+	private String  Direccion = "";
 	private String  Detalle = "";
-	private String  Telefono_Fijo = "";
+	private String  Telefono = "";
 	
 	public Cliente(){}
 	
-	public Cliente(String nombre){
-		this.Nombre = nombre;
+	public Cliente(String nombre_,String direccion_, String telefono_, String detalle_){
+		this.Nombre = nombre_;
+		this.Direccion= direccion_;
+		this.Telefono= telefono_;
+		this.Detalle= detalle_;
+	}
+	public Cliente(String nombre_)
+	{
+		this.Nombre=nombre_;
 	}
 	
 	/** GETTERS AND SETTERS **/
@@ -28,23 +34,18 @@ public class Cliente {
 		Nombre = nombre;
 	}
 	public String getDomicilio() {
-		return Domicilio;
+		return Direccion;
 	}
 	public void setDomicilio(String domicilio) {
-		Domicilio = domicilio;
+		Direccion = domicilio;
 	}
 	public String getTelefono_Fijo() {
-		return Telefono_Fijo;
+		return Telefono;
 	}
 	public void setTelefono_Fijo(String telefono_Fijo) {
-		Telefono_Fijo = telefono_Fijo;
+		Telefono = telefono_Fijo;
 	}
-	public String getApellido() {
-		return Apellido;
-	}
-	public void setApellido(String apellido) {
-		Apellido = apellido;
-	}
+	
 	public String getDetalle() {
 		return Detalle;
 	}

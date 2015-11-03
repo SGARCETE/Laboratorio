@@ -56,7 +56,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return cliente;
 	}
 	
-	public boolean Nuevo_Cliente(Cliente c) {
+/*	public boolean Nuevo_Cliente(Cliente c) {
 		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono, CL_Detalle) VALUES ("+
 			"'"+	c.getNombre()			+"',"+
 			"'"+	c.getApellido()			+"',"+
@@ -64,7 +64,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 			"'"+	c.getTelefono_Fijo()	+"',"+
 			"'"+ 	c.getDetalle()			+"')";
 		return conex.Insertar(SentenciaSQL);
-	}
+	}  */ 
 	
 	/*------------------------------------------------------------------------------*/	
 	public boolean Eliminar_Cliente(Cliente c) {
@@ -89,6 +89,22 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
+	}
+
+	@Override
+	public boolean guardar_cliente(Cliente c) {
+		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Direccion,CL_telefono, CL_Detalle) VALUES ("+
+				"'"+	c.getNombre()			+"',"+
+				"'"+	c.getDomicilio() 		+"',"+
+				"'"+	c.getTelefono_Fijo()	+"',"+
+				"'"+ 	c.getDetalle()			+"')";
+			return conex.Insertar(SentenciaSQL);
+	}
+
+	@Override
+	public boolean Nuevo_Cliente(Cliente c) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }//---> FIN CLASE
