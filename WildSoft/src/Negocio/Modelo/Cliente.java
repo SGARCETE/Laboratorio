@@ -1,7 +1,7 @@
 package Negocio.Modelo;
 
 public class Cliente {
-	private Integer ID_Cliente = 0;
+	private Integer ID_Cliente;
 	private String  Nombre = "";
 	private String  Direccion = "";
 	private String  Detalle = "";
@@ -10,6 +10,13 @@ public class Cliente {
 	public Cliente(){}
 	
 	public Cliente(String nombre_,String direccion_, String telefono_, String detalle_){
+		this.Nombre = nombre_;
+		this.Direccion= direccion_;
+		this.Telefono= telefono_;
+		this.Detalle= detalle_;
+	}
+	public Cliente(int id_,String nombre_,String direccion_, String telefono_, String detalle_){
+		this.ID_Cliente=id_;
 		this.Nombre = nombre_;
 		this.Direccion= direccion_;
 		this.Telefono= telefono_;

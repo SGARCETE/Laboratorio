@@ -865,12 +865,9 @@ public class Interfaz_Principal {
 
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
-
-		JMenuItem mntmNuevoCliente = new JMenuItem("Nuevo Cliente");
-		mnClientes.add(mntmNuevoCliente);
 		
 
-		JMenuItem mntmAdmClientes = new JMenuItem("ADM Clientes");
+		JMenuItem mntmAdmClientes = new JMenuItem("Administracion de Clientes");
 		mnClientes.add(mntmAdmClientes);
 		mntmAdmClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

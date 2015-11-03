@@ -7,11 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import Negocio.Modelo.Cliente;
+import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import javax.swing.border.TitledBorder;
@@ -40,12 +41,22 @@ public class ADM_Cliente extends JDialog {
 	private JTextField textTelefono;
 	private JTextField textDetalle;
 	private JLabel lblAviso;
-	
+	private String[] datoTabla;
+	private JButton btnEliminar;
+	private JButton btnModificar;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
+	private JButton btnAgregar;
 
 	public ADM_Cliente(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("ABM Cliente");
 		Principal = instancia_negocio;
 		SvCliente = Principal.getSvClientes();
+		
+		table = new JTable();
+		iniciarlizarTablaCliente();
+		
+		llenar_tabla();
 		
 		setResizable(false);
 		setBounds(100, 100, 1023, 453);
@@ -87,7 +98,7 @@ public class ADM_Cliente extends JDialog {
 		lblDetalle.setBounds(10, 151, 63, 14);
 		panel_1.add(lblDetalle);
 		
-		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregar_cliente();
@@ -111,6 +122,24 @@ public class ADM_Cliente extends JDialog {
 		textDetalle.setBounds(79, 144, 210, 28);
 		panel_1.add(textDetalle);
 		
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Aceptar_modificar_Cliente();
+			}
+		});
+		btnAceptar.setBounds(29, 193, 96, 49);
+		panel_1.add(btnAceptar);
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Cancelar_modificar_Cliente();
+			}
+		});
+		btnCancelar.setBounds(171, 193, 96, 49);
+		panel_1.add(btnCancelar);
+		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Lista de Clientes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_2.setBounds(312, 11, 695, 255);
@@ -121,31 +150,31 @@ public class ADM_Cliente extends JDialog {
 		scrollPane.setBounds(10, 21, 643, 223);
 		panel_2.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(102);
-		table.getColumnModel().getColumn(1).setPreferredWidth(112);
-		table.getColumnModel().getColumn(3).setPreferredWidth(150);
+		
 		scrollPane.setViewportView(table);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow()!=-1){
+					Eliminar_cliente();	
+				}
+				
 			}
 		});
 		btnEliminar.setBounds(668, 347, 111, 66);
 		panel.add(btnEliminar);
 		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
 		
-		JButton btnModificar = new JButton("Modificar");
+		
+		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow()!=-1)
+				{
+					Modificar_Cliente();
+				}
+				
 			}
 		});
 		btnModificar.setBounds(789, 347, 111, 66);
@@ -173,17 +202,17 @@ public class ADM_Cliente extends JDialog {
 		panel_3.add(lblAviso);
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
+		
+		btnAceptar.setVisible(false);
+		btnCancelar.setVisible(false);
 	}
 	
 	private void agregar_cliente(){
-		if(!textNombre.getText().equals(""))
-		{
-			if(!textDireccion.getText().equals(""))
-			{
-				if(!textTelefono.getText().equals(""))
-				{
-					if(!textDetalle.getText().equals(""))
-					{
+		
+		if(!textNombre.getText().equals("")){
+			if(!textDireccion.getText().equals("")){
+				if(!textTelefono.getText().equals("")){
+					if(!textDetalle.getText().equals("")){
 						SvCliente.guardar_nuevo_cliente(new Cliente(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textDetalle.getText()));
 						textNombre.setText("");
 						textDireccion.setText("");
@@ -191,28 +220,152 @@ public class ADM_Cliente extends JDialog {
 						textDetalle.setText("");
 						lblAviso.setVisible(false);
 						
+						iniciarlizarTablaCliente();
+						llenar_tabla();
 						JOptionPane.showMessageDialog(null, "Cliente agregado con éxito");	
-						
-						
 					}
 					else {
 					lblAviso.setText("Debes completar el campo 'Detalle' para continuar");
-					lblAviso.setVisible(true);
-					}
-				}
+					lblAviso.setVisible(true);}}
 				else {
 					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
-					lblAviso.setVisible(true);
-					}
-			}
+					lblAviso.setVisible(true);}}
 			else {
 				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
-				lblAviso.setVisible(true);
-				}
-		}
+				lblAviso.setVisible(true);}}
 		else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
+			}}
+	
+	private void iniciarlizarTablaCliente()
+	{
+		
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
 			}
+		));
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		
+		table.getColumnModel().getColumn(1).setPreferredWidth(102);
+		table.getColumnModel().getColumn(2).setPreferredWidth(112);
+		table.getColumnModel().getColumn(3).setPreferredWidth(50);
+		table.getColumnModel().getColumn(4).setPreferredWidth(175);
+		
+		
+	}
+	
+	private void llenar_tabla(){
+		for(Cliente cliente: SvCliente.get_Lista_Clientes())
+		{
+			String[] fila= new String[5];
+			fila[0]= cliente.getID_Cliente().toString();
+			fila[1]= cliente.getNombre();
+			fila[2]= cliente.getDomicilio();
+			fila[3]= cliente.getTelefono_Fijo();
+			fila[4]= cliente.getDetalle();
+			
+			((DefaultTableModel) this.table.getModel()).addRow(fila);
+		}
+	}
+	
+	protected void Eliminar_cliente() {
+		datoTabla = obtenerSeleccion();
+		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar este Cliente?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
+		if(RESPUESTA == JOptionPane.OK_OPTION ){
+			SvCliente.Eliminar_cliente(new Cliente(Integer.parseInt(datoTabla[1]),datoTabla[2], datoTabla[3], datoTabla[4], datoTabla[5]));
+			iniciarlizarTablaCliente();
+			llenar_tabla();
+		}
+	}
+	private String[] obtenerSeleccion() {
+		int indice = table.getSelectedRow();
+		String id = (String) table.getModel().getValueAt(indice, 0);
+		String nombre = (String) table.getModel().getValueAt(indice, 1);
+		String direccion = (String) table.getModel().getValueAt(indice, 2);
+		String telefono = (String) table.getModel().getValueAt(indice, 3);
+		String detalle = (String) table.getModel().getValueAt(indice, 4);
+		
+		String[] dato = { String.valueOf(indice), id, nombre, direccion,telefono,detalle };
+		return dato;
+	}
+	protected void Modificar_Cliente() {
+		lblAviso.setVisible(false);
+		datoTabla = obtenerSeleccion();
+		textNombre.setText(datoTabla[2]);
+		textDireccion.setText(datoTabla[3]);
+		textTelefono.setText(datoTabla[4]);
+		textDetalle.setText(datoTabla[5]);
+		
+		btnModificar.setVisible(false);
+		btnEliminar.setVisible(false);
+		btnAgregar.setVisible(false);
+		btnAceptar.setVisible(true);
+		btnCancelar.setVisible(true);
+		
+		}
+	protected void Cancelar_modificar_Cliente() {
+		textNombre.setText("");
+		textDireccion.setText("");
+		textTelefono.setText("");
+		textDetalle.setText("");
+		
+		
+		btnAceptar.setVisible(false);
+		btnAgregar.setVisible(true);
+		btnCancelar.setVisible(false);
+		lblAviso.setVisible(false);
+		btnModificar.setVisible(true);
+		btnEliminar.setVisible(true);
+		
+	}
+	protected void guardarCambios(String nombre, String direccion, String telefono, String detalle) {
+		SvCliente.Modificar_Cliente(new Cliente(Integer.parseInt(datoTabla[1]), nombre, direccion, telefono, detalle));
+	}
+	protected void Aceptar_modificar_Cliente() {
+		if (!textNombre.getText().equals("")) {
+			if (!textDireccion.getText().equals("")) {
+				if(!textTelefono.getText().equals(""))
+				{
+					if(!textDetalle.getText().equals(""))
+					{
+						guardarCambios(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textDetalle.getText());
+						textNombre.setText("");
+						textDireccion.setText("");
+						textTelefono.setText("");
+						textDetalle.setText("");
+						
+						iniciarlizarTablaCliente();
+						llenar_tabla();
+						lblAviso.setVisible(false);
+						btnAceptar.setVisible(false);
+						btnAgregar.setVisible(true);
+						btnCancelar.setVisible(false);
+						btnModificar.setVisible(true);
+						btnEliminar.setVisible(true);
+					}
+					else{
+						lblAviso.setText("Debes completar el campo 'Detalle' para continuar");
+						lblAviso.setVisible(true);
+					}
+						
+				}else{
+					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
+					lblAviso.setVisible(true);
+				}
+			
+			}else{
+				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
+				lblAviso.setVisible(true);
+			}
+		} else{
+			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
+			lblAviso.setVisible(true);
+		}
 	}
 }
+

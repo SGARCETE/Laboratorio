@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Cliente;
+import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ClienteDAO;
 
@@ -56,19 +57,10 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		return cliente;
 	}
 	
-/*	public boolean Nuevo_Cliente(Cliente c) {
-		String SentenciaSQL = "INSERT INTO CLIENTE(CL_Nombre, CL_Apellido, CL_Direccion,CL_telefono, CL_Detalle) VALUES ("+
-			"'"+	c.getNombre()			+"',"+
-			"'"+	c.getApellido()			+"',"+
-			"'"+	c.getDomicilio() 		+"',"+
-			"'"+	c.getTelefono_Fijo()	+"',"+
-			"'"+ 	c.getDetalle()			+"')";
-		return conex.Insertar(SentenciaSQL);
-	}  */ 
 	
 	/*------------------------------------------------------------------------------*/	
 	public boolean Eliminar_Cliente(Cliente c) {
-		String SentenciaSQL = "DELETE from Cliente C where C.CL_id =" + c.getID_Cliente();
+		String SentenciaSQL = "DELETE from Cliente where CL_id =" + c.getID_Cliente();
 		return conex.Insertar(SentenciaSQL);
 	}
 	
@@ -105,6 +97,36 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	public boolean Nuevo_Cliente(Cliente c) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<Cliente> getListaCliente() {
+		ArrayList<Cliente> Arreglo = new ArrayList<Cliente>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("SELECT * FROM Cliente");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Cliente C = new Cliente();
+				C.setID_Cliente(Fila.getInt("CL_id"));
+				C.setNombre(Fila.getString("CL_nombre"));
+				C.setDomicilio(Fila.getString("CL_direccion"));
+				C.setTelefono_Fijo(Fila.getString("CL_telefono"));
+				C.setDetalle(Fila.getString("CL_detalle"));
+				Arreglo.add(C);
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
+	}
+
+	@Override
+	public boolean modificar_cliente(Cliente c) {
+		String SentenciaSQL = "UPDATE Cliente SET CL_nombre = '" + c.getNombre() + "', CL_direccion = '" + c.getDomicilio() +"' ,CL_telefono= '" +c.getTelefono_Fijo()+"', CL_detalle=' "+ c.getDetalle()+ "' WHERE CL_id=" + c.getID_Cliente();
+		return conex.Insertar(SentenciaSQL);
 	}
 
 }//---> FIN CLASE

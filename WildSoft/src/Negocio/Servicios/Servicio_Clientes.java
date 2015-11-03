@@ -29,6 +29,10 @@ public class Servicio_Clientes {
 	public ArrayList<Object> getLISTA_CLIENTES() {
 		return Lista_Clientes_AutoCompleter;
 	}
+	public ArrayList<Cliente> get_Lista_Clientes()
+	{
+		return clienteDAO.getListaCliente();
+	}
 
 	public Cliente getCliente(String Nombre_Cliente) {
 		return clienteDAO.getCliente(Nombre_Cliente);
@@ -36,6 +40,14 @@ public class Servicio_Clientes {
 	
 	public Cliente getCliente(Integer ID_CLIENTE){
 		return clienteDAO.getCliente(ID_CLIENTE);
+	}
+	public boolean Eliminar_cliente(Cliente c)
+	{
+		return clienteDAO.Eliminar_Cliente(c);
+	}
+	public boolean Modificar_Cliente(Cliente c)
+	{
+		return clienteDAO.modificar_cliente(c);
 	}
 	
 }//--> FIN CLASE
