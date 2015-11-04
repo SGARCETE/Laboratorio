@@ -745,7 +745,23 @@ public class Interfaz_Principal {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		tablePedidos = new JTable();
-		tablePedidos.setModel(obtenerModel());
+		tablePedidos.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"", "Pedido N\u00B0", "Cliente", "Direccion", "Telefono", "Precio"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		tablePedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tablePedidos.getColumnModel().getColumn(0).setMinWidth(0);
+		tablePedidos.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(tablePedidos);
 		
 		llenarTablaPedidos();
@@ -1478,12 +1494,12 @@ public class Interfaz_Principal {
 				new Object[][] {
 				},
 				new String[] {
-					"Pedido N°", "Cliente", "Direccion", "Telefono", "Precio"
+					"","Pedido N°", "Cliente", "Direccion", "Telefono", "Precio"
 				}
 			) {
 				@SuppressWarnings("rawtypes")
 				Class[] columnTypes = new Class[] {
-					String.class, String.class, String.class, String.class, String.class
+					String.class,String.class, String.class, String.class, String.class, String.class
 				};
 				@SuppressWarnings({ "unchecked", "rawtypes" })
 				public Class getColumnClass(int columnIndex) {
