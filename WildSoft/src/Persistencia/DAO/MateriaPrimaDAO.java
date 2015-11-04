@@ -12,6 +12,6 @@ public interface MateriaPrimaDAO {
 	 
 	 ArrayList<String> getCategoria_MP() ;
 	
-	
+	 Integer obtenerIdCategoria(String nombreCategoria);
 	
 }

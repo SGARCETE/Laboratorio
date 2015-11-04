@@ -86,4 +86,25 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		}
 		return 0;
 	}
+	
+	// Devuelve el id de la categoria que recibe
+	public Integer obtenerIdCategoria(String nombreCategoria){
+		try{
+			
+			conex.connectToMySQL();
+			Statement st = conex.conexion.createStatement();
+			ResultSet rs = st.executeQuery("select CA_id from Categoria_mp CA where CA.CA_nombre = '" + nombreCategoria + "';");
+			rs.first();
+			int ID = rs.getInt("CA_id");
+			conex.cerrarConexion();
+			return ID;
+			
+		}catch(Exception e){
+			
+		}
+		return 0;
+	}
+	
+	
+	
 }

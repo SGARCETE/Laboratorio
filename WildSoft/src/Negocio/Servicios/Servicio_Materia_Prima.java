@@ -24,4 +24,8 @@ public class Servicio_Materia_Prima {
 	public Integer obtenerId(String nombreMP){
 		return MateriaPrimaDAO.obtenerId(nombreMP);
 	}
+	
+	public Integer obtenerIdCategoria(String nombreCategoria){
+		return MateriaPrimaDAO.obtenerIdCategoria(nombreCategoria);
+	}
 }
