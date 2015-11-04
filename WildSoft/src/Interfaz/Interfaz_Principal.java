@@ -15,8 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +39,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -73,13 +72,11 @@ import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
 import Reportes.ReporteItinerario;
-import Reportes.ReporteSolicitud;
 import Reportes.ReporteTicket;
 
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Interfaz_Principal {
 
@@ -1223,11 +1220,11 @@ public class Interfaz_Principal {
 	/** BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA)	 */
 	private void Cancelar_Pedido_seleccionado() {
 		if (Tabla_Lista_pedidos != null	&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);// TODO
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(Numero_pedido);
 			
-			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
+			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			
 			if(!estado.equals("Cobrado")){
 				sv_pedidos.eliminar_pedido(P_cancelar);
@@ -1373,8 +1370,8 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Preparado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0); // TODO
-		String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 		Pedido pedido = new Pedido();
 		pedido.setNumero_Pedido(Numero_pedido);
 		System.out.println(pedido.getESTADO());
@@ -1391,8 +1388,8 @@ public class Interfaz_Principal {
 	}
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Enviado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);// TODO
-		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 		Pedido pedido = new Pedido();
 		pedido.setNumero_Pedido(Numero_pedido);
 		System.out.println(pedido.getESTADO());
@@ -1407,8 +1404,8 @@ public class Interfaz_Principal {
 	
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_cobrado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);// TODO
-		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
+		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 		Pedido pedido = new Pedido();
 		pedido.setNumero_Pedido(Numero_pedido);
 		System.out.println(pedido.getESTADO());
@@ -1447,8 +1444,8 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Comanda() {
 		if(Tabla_Lista_pedidos!=null && Tabla_Lista_pedidos.getSelectedRow()!=-1){
-			ReporteTicket RT = new 					ReporteTicket();
-			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);// TODO
+			ReporteTicket RT = new ReporteTicket();
+			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
 		}
 	}
@@ -1472,9 +1469,7 @@ public class Interfaz_Principal {
 	}
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>       METODOS ITINERARIO DE ENTREGA       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	@SuppressWarnings("serial")
