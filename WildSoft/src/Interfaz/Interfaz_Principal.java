@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,6 +79,7 @@ import Reportes.ReporteTicket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Interfaz_Principal {
 
@@ -157,10 +160,10 @@ public class Interfaz_Principal {
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
 //		frmWildsoft.setBounds(100, 100, 1522, 920);
-		frmWildsoft.setBounds(100, 100, 1000, 920);
+		frmWildsoft.setBounds(100, 100, 1133, 780);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -546,22 +549,18 @@ public class Interfaz_Principal {
 		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos,
 				null);
 
-		scrollPane_Lista_Pedidos = new JScrollPane();   
-		scrollPane_Lista_Pedidos.setBounds(131, 40, 1369, 761);
+		scrollPane_Lista_Pedidos = new JScrollPane();
 
 		JLabel lblListadoDePedidos = new JLabel("Listado de pedidos");
-		lblListadoDePedidos.setBounds(6, 7, 278, 25);
 		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListadoDePedidos.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JPanel panel = new JPanel();
-		panel.setBounds(6, 40, 119, 761);
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panel.setBackground(SystemColor.menu);
 		
 		JButton btnCargarListaDe = new JButton("Actualizar ");
-		btnCargarListaDe.setBounds(1417, 6, 83, 28);
 		btnCargarListaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
@@ -655,11 +654,6 @@ public class Interfaz_Principal {
 		btnPreparado.setBackground(Color.WHITE);
 		btnPreparado.setBounds(11, 113, 97, 91);
 		panel.add(btnPreparado);
-		panel_Lista_de_pedidos.setLayout(null);
-		panel_Lista_de_pedidos.add(lblListadoDePedidos);
-		panel_Lista_de_pedidos.add(btnCargarListaDe);
-		panel_Lista_de_pedidos.add(panel);
-		panel_Lista_de_pedidos.add(scrollPane_Lista_Pedidos);
 		
 		btn_fecha_anterior = new JButton("");
 		btn_fecha_anterior.addActionListener(new ActionListener() {
@@ -668,8 +662,6 @@ public class Interfaz_Principal {
 			}
 		});
 		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
-		btn_fecha_anterior.setBounds(411, 7, 50, 35);
-		panel_Lista_de_pedidos.add(btn_fecha_anterior);
 		
 		dateChooser_Fecha_mostrar = new JDateChooser();
 		dateChooser_Fecha_mostrar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -678,8 +670,6 @@ public class Interfaz_Principal {
 				Actualizar_Lista_pedidos();
 			}
 		});
-		dateChooser_Fecha_mostrar.setBounds(467, 7, 164, 35);
-		panel_Lista_de_pedidos.add(dateChooser_Fecha_mostrar);
 		
 		btn_fecha_siguiente = new JButton("");
 		btn_fecha_siguiente.addActionListener(new ActionListener() {
@@ -688,8 +678,62 @@ public class Interfaz_Principal {
 			}
 		});
 		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
-		btn_fecha_siguiente.setBounds(637, 7, 50, 35);
-		panel_Lista_de_pedidos.add(btn_fecha_siguiente);
+		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
+		gl_panel_Lista_de_pedidos.setHorizontalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+											.addGap(506)
+											.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+											.addGap(755)
+											.addComponent(btnCargarListaDe))
+										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+											.addGap(280)
+											.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
+									.addGap(10))
+								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+									.addGap(342)
+									.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))))))
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(131)
+					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_Lista_de_pedidos.setVerticalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCargarListaDe, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addGap(33)
+							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)))
+					.addContainerGap())
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(7)
+					.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(7)
+					.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(40)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -698,11 +742,135 @@ public class Interfaz_Principal {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JPanel panel_Itinerario = new JPanel();
-		panel_Itinerario.setLayout(null);
 		panel_Itinerario.setBackground(SystemColor.menu);
 		tabbedPane.addTab("Itinerario de Entrega", null, panel_Itinerario, null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		tablePedidos = new JTable();
+		tablePedidos.setModel(obtenerModel());
+		scrollPane.setViewportView(tablePedidos);
+		
+		llenarTablaPedidos();
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		tableItinerario = new JTable();
+		tableItinerario.setModel(obtenerModel());
+		scrollPane_1.setViewportView(tableItinerario);
+		
+		JLabel label = new JLabel("Lista De Pedidos");
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_1 = new JLabel("Itinerario De Entrega");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setLayout(null);
+		
 		JButton btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1.setBounds(64, 11, 109, 35);
+		panel_1.add(btnAgregar_1);
+		
+		JButton button_1 = new JButton("Quitar");
+		button_1.setBounds(64, 57, 109, 35);
+		panel_1.add(button_1);
+		
+		JButton btnVaciar = new JButton("Vaciar");
+		btnVaciar.setBounds(64, 103, 109, 35);
+		panel_1.add(btnVaciar);
+		
+		JLabel lblRepartidor = new JLabel("Repartidor:");
+		lblRepartidor.setBounds(64, 168, 109, 14);
+		panel_1.add(lblRepartidor);
+		lblRepartidor.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		comboRepartidores = new JComboBox<String>();
+		comboRepartidores.setBounds(38, 193, 163, 27);
+		panel_1.add(comboRepartidores);
+		
+		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
+		btnGenerarnItinerario.setBounds(10, 231, 217, 45);
+		panel_1.add(btnGenerarnItinerario);
+		GroupLayout gl_panel_Itinerario = new GroupLayout(panel_Itinerario);
+		gl_panel_Itinerario.setHorizontalGroup(
+			gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Itinerario.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_Itinerario.createSequentialGroup()
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+							.addGap(260)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 464, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_Itinerario.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+							.addGap(10)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)))
+					.addGap(10))
+		);
+		gl_panel_Itinerario.setVerticalGroup(
+			gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Itinerario.createSequentialGroup()
+					.addGap(18)
+					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+						.addComponent(label, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(4)
+					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE))
+					.addGap(11))
+		);
+		panel_Itinerario.setLayout(gl_panel_Itinerario);
+		btnGenerarnItinerario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Entrega entrega = new Entrega();
+				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
+				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
+				sv_Entrega.agregarEntrega(entrega);
+				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
+				entrega.setLista_pedidos(new ArrayList<Pedido>());
+				for (int i = 0; i < tableItinerario.getRowCount(); i++) {
+					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0))));
+					Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0)));
+					sv_pedidos.modificar_estado(pedido, 3);
+					Actualizar_Lista_pedidos();
+					ACTUALIZAR_MONITOR();
+					System.out.println("Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tableItinerario.getValueAt(i, 0)) );
+				}
+				sv_Entrega.AGREGAR_PEDIDO(entrega);
+				System.out.println(entrega.getId());
+				
+				Generar_Itinerario(entrega.getId());
+				
+			}
+		});
+		btnVaciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pedidodItinerario = new ArrayList<Integer>();
+				tableItinerario.setModel(obtenerModel());
+			}
+		});
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tableItinerario.getSelectedRow()>-1){
+					for (int i = 0; i < pedidodItinerario.size(); i++) {
+						if(pedidodItinerario.get(i)==Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0))){
+							pedidodItinerario.remove(i);
+						}
+					}
+					DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
+					modelo.removeRow(tableItinerario.getSelectedRow());
+					tableItinerario.setModel(modelo);
+				}
+			}
+		});
 		btnAgregar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tablePedidos.getSelectedRow()>-1){
@@ -720,92 +888,6 @@ public class Interfaz_Principal {
 						}}
 				}
 			});
-		btnAgregar_1.setBounds(624, 49, 109, 35);
-		panel_Itinerario.add(btnAgregar_1);
-		
-		JButton button_1 = new JButton("Quitar");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(tableItinerario.getSelectedRow()>-1){
-					for (int i = 0; i < pedidodItinerario.size(); i++) {
-						if(pedidodItinerario.get(i)==Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0))){
-							pedidodItinerario.remove(i);
-						}
-					}
-					DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
-					modelo.removeRow(tableItinerario.getSelectedRow());
-					tableItinerario.setModel(modelo);
-				}
-			}
-		});
-		button_1.setBounds(624, 95, 109, 35);
-		panel_Itinerario.add(button_1);
-		
-		JButton btnVaciar = new JButton("Vaciar");
-		btnVaciar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				pedidodItinerario = new ArrayList<Integer>();
-				tableItinerario.setModel(obtenerModel());
-			}
-		});
-		btnVaciar.setBounds(624, 141, 109, 35);
-		panel_Itinerario.add(btnVaciar);
-		
-		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
-		btnGenerarnItinerario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Entrega entrega = new Entrega();
-				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
-				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
-				sv_Entrega.agregarEntrega(entrega);
-				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
-				entrega.setLista_pedidos(new ArrayList<Pedido>());
-				for (int i = 0; i < tableItinerario.getRowCount(); i++) {
-					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0))));
-				}
-				sv_Entrega.AGREGAR_PEDIDO(entrega);
-				
-				Generar_Itinerario(entrega.getId());
-				
-			}
-		});
-		btnGenerarnItinerario.setBounds(570, 269, 217, 45);
-		panel_Itinerario.add(btnGenerarnItinerario);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 49, 550, 629);
-		panel_Itinerario.add(scrollPane);
-		
-		tablePedidos = new JTable();
-		tablePedidos.setModel(obtenerModel());
-		scrollPane.setViewportView(tablePedidos);
-		
-		llenarTablaPedidos();
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(797, 49, 550, 629);
-		panel_Itinerario.add(scrollPane_1);
-		
-		tableItinerario = new JTable();
-		tableItinerario.setModel(obtenerModel());
-		scrollPane_1.setViewportView(tableItinerario);
-		
-		JLabel label = new JLabel("Lista De Pedidos");
-		label.setBounds(10, 18, 109, 27);
-		panel_Itinerario.add(label);
-		
-		JLabel label_1 = new JLabel("Itinerario De Entrega");
-		label_1.setBounds(1226, 24, 121, 14);
-		panel_Itinerario.add(label_1);
-		
-		comboRepartidores = new JComboBox<String>();
-		comboRepartidores.setBounds(598, 231, 163, 27);
-		panel_Itinerario.add(comboRepartidores);
-		
-		JLabel lblRepartidor = new JLabel("Repartidor:");
-		lblRepartidor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRepartidor.setBounds(624, 206, 109, 14);
-		panel_Itinerario.add(lblRepartidor);
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1401,7 +1483,7 @@ public class Interfaz_Principal {
 				new Object[][] {
 				},
 				new String[] {
-					"Pedido N°", "Nombre Cliente", "Direccion", "Telefono", "Precio"
+					"Pedido N°", "Cliente", "Direccion", "Telefono", "Precio"
 				}
 			) {
 				@SuppressWarnings("rawtypes")
@@ -1417,12 +1499,13 @@ public class Interfaz_Principal {
 	
 	private void llenarTablaPedidos() {
 
-		ArrayList<Pedido> lista = sv_pedidos.get_Pedidos(Calendar.getInstance());
+		ArrayList<Pedido> lista = sv_pedidos.get_pedidos_preparados(Calendar.getInstance());
 		DefaultTableModel modelo = obtenerModel();
 		
 		for (int i = 0; i < lista.size(); i++) {
 			if(!lista.get(i).getCliente().getNombre().equals("")){
-				String[] arreglo = {String.valueOf(lista.get(i).getID_DIARIO()),
+				String[] arreglo = {String.valueOf(lista.get(i).getNumero_Pedido()),
+						String.valueOf(lista.get(i).getID_DIARIO()),
 						lista.get(i).getCliente().getNombre(),
 						lista.get(i).getCliente().getDomicilio(),
 						lista.get(i).getCliente().getTelefono_Fijo(),
@@ -1441,4 +1524,61 @@ public class Interfaz_Principal {
 		ri.Generar_Itinerario(id);
 		
 	}
+	
+	// Métodos para backup.
+	
+	/*
+	private static void backup() {
+		   try {
+		      Process p = Runtime
+		            .getRuntime()
+		            .exec("C:/Aplicaciones/wamp/bin/mysql/mysql5.1.36/bin/mysqldump -u root -ppassword database");
+		 
+		      InputStream is = p.getInputStream();
+		      FileOutputStream fos = new FileOutputStream("wildsoft.sql");
+		      byte[] buffer = new byte[1000];
+		 
+		      int leido = is.read(buffer);
+		      while (leido > 0) {
+		         fos.write(buffer, 0, leido);
+		         leido = is.read(buffer);
+		      }
+		 
+		      fos.close();
+		 
+		   } catch (Exception e) {
+		      e.printStackTrace();
+		   }
+		} */
+	
+	/*
+	 private static void restore() {
+   try {
+      Process p = Runtime
+            .getRuntime()
+            .exec("C:/Aplicaciones/wamp/bin/mysql/mysql5.1.36/bin/mysql -u root -ppassword database");
+ 
+      OutputStream os = p.getOutputStream();
+      FileInputStream fis = new FileInputStream("backup_pruebas.sql");
+      byte[] buffer = new byte[1000];
+ 
+      int leido = fis.read(buffer);
+      while (leido > 0) {
+         os.write(buffer, 0, leido);
+         leido = fis.read(buffer);
+      }
+ 
+      os.flush();
+      os.close();
+      fis.close();
+ 
+   } catch (Exception e) {
+      e.printStackTrace();
+   }
+}
+*/
+	 
+	
+	
+	
 }// ---> FIN CLASE

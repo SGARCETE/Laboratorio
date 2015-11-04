@@ -60,5 +60,11 @@ public class Servicio_Pedidos {
 		return pedidoDAO.AGREGAR_PRODUCTO_PEDIDO(p);
 	}
 	
+	// OBTENER TODOS LOS PEDIDOS EN ESTADO "PREPARADO"
+	
+	public ArrayList<Pedido> get_pedidos_preparados(Calendar Fecha_mostrar){
+		return pedidoDAO.getLISTA_PEDIDOS_PREPARADOS(Fecha_mostrar);
+	}
+	
 
 }

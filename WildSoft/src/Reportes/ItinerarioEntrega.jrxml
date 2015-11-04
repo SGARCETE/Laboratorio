@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ItinerarioEntrega" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="718cc30f-771a-4b53-b521-74cd4ee56fa4">
 	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="44"/>
+	<property name="ireport.y" value="83"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -138,7 +138,7 @@ EP.EP_pedido_id = Pd.PD_id and ENT_ID=$P{ENT_ID};]]>
 				<textFieldExpression><![CDATA[$F{ENT_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="397" y="0" width="79" height="15" uuid="dfa047b5-9db7-4af5-9d60-323d54d286ed"/>
+				<reportElement style="Detail" x="397" y="0" width="158" height="15" uuid="dfa047b5-9db7-4af5-9d60-323d54d286ed"/>
 				<textFieldExpression><![CDATA[$F{RE_nombre}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -156,7 +156,7 @@ EP.EP_pedido_id = Pd.PD_id and ENT_ID=$P{ENT_ID};]]>
 				<textFieldExpression><![CDATA[$F{CL_direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="82" y="0" width="79" height="15" uuid="366347bd-d53c-4a95-be03-d06dd3360a84"/>
+				<reportElement style="Detail" x="82" y="0" width="95" height="15" uuid="366347bd-d53c-4a95-be03-d06dd3360a84"/>
 				<textFieldExpression><![CDATA[$F{CL_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -164,12 +164,12 @@ EP.EP_pedido_id = Pd.PD_id and ENT_ID=$P{ENT_ID};]]>
 				<textFieldExpression><![CDATA[$F{CL_telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="369" y="0" width="156" height="15" uuid="779e01fa-17df-44ef-86a0-944c5e90c5e7"/>
+				<reportElement style="Detail" x="369" y="0" width="186" height="15" uuid="779e01fa-17df-44ef-86a0-944c5e90c5e7"/>
 				<textFieldExpression><![CDATA[$F{CL_detalle}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="22" y="1" width="30" height="15" uuid="39da8d39-aec5-4e51-8ce3-78cf73752f9c"/>
-				<textFieldExpression><![CDATA[$F{PD_id}]]></textFieldExpression>
+				<reportElement x="0" y="0" width="79" height="15" uuid="e00084c2-4f5e-4116-b7d7-c7437f902e63"/>
+				<textFieldExpression><![CDATA[$F{PD_numero}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

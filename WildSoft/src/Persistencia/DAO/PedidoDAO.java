@@ -24,4 +24,6 @@ public interface PedidoDAO {
 	public boolean ELIMINAR_PRODUCTOS_DEL_PEDIDO(Pedido P);
 
 	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p);
+	
+	ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar);
 }

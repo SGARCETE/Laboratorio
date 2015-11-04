@@ -125,7 +125,7 @@ public class EntregaDAOjdbcImplement implements EntregaDAO {
 		for (int i = 0; i < e.getLista_pedidos().size(); i++) {
 
 			Integer PEDIDO_ID = e.getLista_pedidos().get(i).getNumero_Pedido();
-
+			System.out.println("Se agregó el pedido" + PEDIDO_ID + " a la entrega");
 			String SentenciaSQL_producto_pedidos = "insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values ( "
 					+ "" + ENTREGA_ID + "," + // INTEGER
 					"" + PEDIDO_ID + ")"; // INTEGER
