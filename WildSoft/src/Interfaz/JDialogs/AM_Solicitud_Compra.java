@@ -201,11 +201,7 @@ public class AM_Solicitud_Compra extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if(tablaMateriasPrimas.getRowCount()>0){
-							//if(!esEdicion){
-								sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
-							//}else{
-							//	sv_SolicitudCompra.MODIFICAR_Solicitud(obtenerSolicitud());
-							//}
+							sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
 							dispose();
 							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 							frame.setModal(true);

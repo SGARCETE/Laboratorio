@@ -14,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Solicitud_compra;
@@ -137,32 +136,10 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 						frame.setVisible(true);
 						frame.setAlwaysOnTop(true);
 					}
-				
-					
 				}
 			}
 		});
-		
-		
-	/*	private void Setear_como_Preparado() {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0); // TODO
-			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);// TODO
-			Pedido pedido = new Pedido();
-			pedido.setNumero_Pedido(Numero_pedido);
-			System.out.println(pedido.getESTADO());
-
-
-			if(Estado_pedido.equals("Pendiente")){
-				sv_pedidos.modificar_estado(pedido, 2);
-				Actualizar_Lista_pedidos();
-				ACTUALIZAR_MONITOR();
-			}
-
-//			sv_pedidos.eliminar_pedido(P_cancelar);
-
-		}  */ 
-		
-		
+	
 		btnNewButton.setBounds(322, 339, 90, 28);
 		contentPanel.add(btnNewButton);
 		{
@@ -218,7 +195,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		private void Generar_Solicitud() {
 			if(table.getSelectedRow()!=-1){
 				ReporteSolicitud RS = new ReporteSolicitud();
-				Integer NUMERO_SOLICITUD =  Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0)) ;// TODO
+				Integer NUMERO_SOLICITUD =  Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
 				RS.Generar_Solicitud(NUMERO_SOLICITUD);
 			}
 		}
