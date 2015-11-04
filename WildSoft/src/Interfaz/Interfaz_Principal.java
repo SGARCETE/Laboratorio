@@ -52,7 +52,7 @@ import javax.swing.table.DefaultTableModel;
 import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
-import Interfaz.JDialogs.Interfaz_Cocina_Pantalla_Alternativa2;
+import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
@@ -1070,7 +1070,7 @@ public class Interfaz_Principal {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle R = new Rectangle(X, Y, screenSize.width, screenSize.height);
         
-        frame_cocina = new Interfaz_Cocina_Pantalla_Alternativa2(Principal_neg_int);
+        frame_cocina = new Interfaz_Cocina_Pantalla(Principal_neg_int);
         frame_cocina.setBounds(R);
         frame_cocina.setVisible(true);
         
@@ -1454,7 +1454,7 @@ public class Interfaz_Principal {
 	private void ACTUALIZAR_MONITOR() {
 		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.get_Pedidos(new GregorianCalendar());
 		System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " + Lista_Productos_de_Hoy.size());
-		((Interfaz_Cocina_Pantalla_Alternativa2) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
+		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
 	}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

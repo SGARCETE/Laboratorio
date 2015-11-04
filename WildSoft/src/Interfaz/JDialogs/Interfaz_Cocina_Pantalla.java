@@ -36,7 +36,7 @@ import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 
-public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
+public class Interfaz_Cocina_Pantalla extends JFrame {
 	private static final long serialVersionUID = 4440791632042457639L;
 	
 	private final JPanel contentPanel = new JPanel();
@@ -67,9 +67,9 @@ public class Interfaz_Cocina_Pantalla_Alternativa2 extends JFrame {
 	private JTable table_Detalles_Pedido;
 	
 	
-	public Interfaz_Cocina_Pantalla_Alternativa2(Principal_Negocio_Interfaz Principal_neg_int) {
+	public Interfaz_Cocina_Pantalla(Principal_Negocio_Interfaz Principal_neg_int) {
 		setMinimumSize(new Dimension(1024, 768));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Cocina_Pantalla_Alternativa2.class.getResource("/Recursos/Pizza-icon16.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Cocina_Pantalla.class.getResource("/Recursos/Pizza-icon16.png")));
 		setTitle("Monitor Cocina");
 		setBounds(100, 100, 1024, 768);
 		getContentPane().setLayout(new BorderLayout());

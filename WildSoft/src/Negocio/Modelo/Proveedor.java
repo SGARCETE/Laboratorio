@@ -1,5 +1,7 @@
 package Negocio.Modelo;
 
+import java.util.ArrayList;
+
 public class Proveedor {
 
 	private Integer id;
@@ -7,7 +9,7 @@ public class Proveedor {
 	private String direccion = "";
 	private String telefono = "";
 	private String categoria_String = "";
-	private Integer categoria;
+	private ArrayList<Integer> categoria;
 	private String mail = "";
 	
 	public Proveedor(){}
@@ -19,6 +21,13 @@ public class Proveedor {
 	
 	
 	
+	public Proveedor(String nombre, String direccion, String telefono, String mail) {
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.mail = mail;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -49,10 +58,10 @@ public class Proveedor {
 	public void setCategoria_String(String categoria) {
 		this.categoria_String = categoria;
 	}
-	public Integer getCategoria() {
+	public ArrayList<Integer> getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(Integer categoria) {
+	public void setCategoria(ArrayList<Integer> categoria) {
 		this.categoria = categoria;
 	}
 
