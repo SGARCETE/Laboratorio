@@ -123,7 +123,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			st.executeQuery("SELECT * FROM Proveedor WHERE PV_id = "+ID_Proveedor);
 			ResultSet Fila = st.getResultSet();
 			Fila.first();
-			Proveedor.setCategoria(Fila.getInt("PV_categoria"));
+			//Proveedor.setCategoria(Fila.getInt("PV_categoria")); TODO
 			Proveedor.setDireccion(Fila.getString("PV_direccion"));
 			Proveedor.setNombre(Fila.getString("PV_nombre"));
 			Proveedor.setTelefono(Fila.getString("PV_telefono"));

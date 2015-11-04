@@ -87,10 +87,13 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		return 0;
 	}
 	
-	// Devuelve el id de la categoria que recibe
+	/**
+	 * Devuelve el ID de una categoria
+	 * @param nombreCategoria El es nombre de la categoria
+	 * @return Devuelve el ID de la categoria, si el nombre de categoria no existe entonces devuelve 0
+	 */
 	public Integer obtenerIdCategoria(String nombreCategoria){
 		try{
-			
 			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement();
 			ResultSet rs = st.executeQuery("select CA_id from Categoria_mp CA where CA.CA_nombre = '" + nombreCategoria + "';");
@@ -98,9 +101,8 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 			int ID = rs.getInt("CA_id");
 			conex.cerrarConexion();
 			return ID;
-			
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}
 		return 0;
 	}

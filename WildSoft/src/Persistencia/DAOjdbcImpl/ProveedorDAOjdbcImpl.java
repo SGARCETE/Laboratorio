@@ -48,6 +48,11 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 		return Arreglo;
 	}
 
+	/**
+	 * Devuelve todos los proveedores pertenecientes a la categoria seleccionada
+	 * @param categoria_MP Es el nombre de la categoria
+	 * @return Devuelve un arreglo con todos los proveedores obtenidos, en aso de que no haya proveedores en esa categoria devolvera un arreglo vacio
+	 */
 	public ArrayList<Proveedor> get_Proveedor_Categoria(String categoria_MP) {
 		ArrayList<Proveedor> Arreglo = new ArrayList<Proveedor>();
 		try {
@@ -66,7 +71,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 				p.setNombre(Fila.getString("PV_nombre"));
 				p.setDireccion(Fila.getString("PV_direccion"));
 				p.setTelefono(Fila.getString("PV_telefono"));
-				p.setCategoria(Fila.getInt("PV_categoria"));
+				//p.setCategoria(Fila.getInt("PV_categoria")); TODO
 				Arreglo.add(p);
 			}
 
