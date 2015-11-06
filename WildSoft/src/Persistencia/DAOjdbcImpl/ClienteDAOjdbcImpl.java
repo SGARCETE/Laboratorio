@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Cliente;
-import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ClienteDAO;
 
@@ -105,7 +104,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Cliente");
+			st.executeQuery("SELECT * FROM Cliente where CL_id>1");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Cliente C = new Cliente();
