@@ -589,7 +589,7 @@ public class Interfaz_Principal {
 		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(11, 410, 97, 91);
+		btnCancelar.setBounds(11, 324, 97, 91);
 		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panel.add(btnCancelar);
@@ -623,21 +623,8 @@ public class Interfaz_Principal {
 		btnCobrado.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnCobrado.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCobrado.setBackground(Color.WHITE);
-		btnCobrado.setBounds(11, 312, 97, 91);
+		btnCobrado.setBounds(11, 215, 97, 91);
 		panel.add(btnCobrado);
-		
-		JButton btnEnViaje = new JButton("Enviado");
-		btnEnViaje.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/envidao64.png")));
-		btnEnViaje.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Setear_como_Enviado();
-			}
-		});
-		btnEnViaje.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnEnViaje.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnEnViaje.setBackground(Color.WHITE);
-		btnEnViaje.setBounds(11, 210, 97, 91);
-		panel.add(btnEnViaje);
 		
 		JButton btnPreparado = new JButton("Preparado");
 		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
@@ -1401,21 +1388,6 @@ public class Interfaz_Principal {
 
 //		sv_pedidos.eliminar_pedido(P_cancelar);
 
-	}
-	// CAMBIA ESTADO DEL PEDIDO //
-	private void Setear_como_Enviado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-		String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
-		Pedido pedido = new Pedido();
-		pedido.setNumero_Pedido(Numero_pedido);
-		System.out.println(pedido.getESTADO());
-		
-		
-		if(Estado_pedido.equals("Preparado")){
-			sv_pedidos.modificar_estado(pedido, 3);
-			Actualizar_Lista_pedidos();
-			ACTUALIZAR_MONITOR();	
-		}
 	}
 	
 	// CAMBIA ESTADO DEL PEDIDO //
