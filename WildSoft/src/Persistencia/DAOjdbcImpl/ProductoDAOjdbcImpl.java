@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Producto;
+import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ProductoDAO;
 
@@ -17,9 +18,9 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 
 	public boolean AGREGAR_PRODUCTO(Producto p) {
 		    String SentenciaSQL = " INSERT INTO Producto (PR_Nombre, PR_precio, PR_tipo_producto )VALUES ("+
-				"'"+	p.getPR_nombre()			+"',"
-				   +	p.getPR_precio()			+"',"
-				   +    p.getPR_tipo_producto()			+"')";
+				   "'"+  	p.getPR_nombre()			+"',"
+				   +	p.getPR_precio()			    +","
+				   +    p.getPR_tipo_producto()			+")";
 		    
 		   
 			return conex.Insertar(SentenciaSQL);
@@ -73,7 +74,7 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 	
 	
 	public boolean ELIMINAR_PRODUCTO(Producto p) {
-		String SentenciaSQL = "DELETE * FROM Producto WHERE PR_id="
+		String SentenciaSQL = "DELETE FROM Producto WHERE PR_ID="
 				+ p.getPR_id();
 		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
 	}
@@ -93,6 +94,53 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
+	}
+	
+	public ArrayList<String> getTipo_Producto_STRING(Integer id) {
+		ArrayList<String> Arreglo = new ArrayList<String>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			st.executeQuery("SELECT * FROM Tipo_producto TP where TP.TP_ID=" + id );
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Arreglo.add(Fila.getString("TP_nombre"));
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		
+		return Arreglo;
+	}
+	
+	public ArrayList<Integer> getTipo_Producto_INTEGER (String nombre) {
+		ArrayList<Integer> Arreglo = new ArrayList<Integer>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			st.executeQuery("SELECT * FROM Tipo_producto TP where TP.TP_nombre = '" + nombre + "'" );
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Arreglo.add(Fila.getInt("TP_id"));
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		
+		return Arreglo;
+	}
+	
+	
+	
+	
+	public boolean Modificar_Producto(Producto P) {
+		String SentenciaSQL = "UPDATE Producto SET PR_nombre = '" + P.getPR_nombre() + "', PR_Observacion = '" + P.getPR_Observacion()+ 
+							  "', PR_precio = '" + P.getPR_precio()+ "', PR_tipo_producto = '" + P.getPR_tipo_producto() + "' WHERE PR_id=" + P.getPR_id();
+		return conex.Insertar(SentenciaSQL);
 	}
 
 }// --> FIN

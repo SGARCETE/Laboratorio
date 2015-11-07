@@ -43,6 +43,10 @@ public class Servicio_Productos {
 	}
 
 	
+	public ArrayList<String> getTipo_Producto_STRING(Integer id){
+		return productoDAO.getTipo_Producto_STRING(id);
+	}
+	
 	public boolean guardar_nuevo_producto(Producto p){
 		return productoDAO.AGREGAR_PRODUCTO(p);
 	}
@@ -60,4 +64,15 @@ public class Servicio_Productos {
 	public boolean eliminar_un_producto(Producto p){
 		return productoDAO.ELIMINAR_PRODUCTO(p);
 	}
+	
+	public boolean Modificar_Producto(Producto P){
+		return productoDAO.Modificar_Producto(P);
+		}
+	
+	public ArrayList<Integer> getTipo_Producto_INTEGER (String nombre){
+		return productoDAO.getTipo_Producto_INTEGER(nombre);
+		
+		
+	}
+	
 }// FIN CLASE

@@ -16,4 +16,10 @@ public interface ProductoDAO {
 	
 	ArrayList<Producto> GET_PRODUCTOS();
 	
+	ArrayList<String> getTipo_Producto_STRING(Integer id);
+	
+	boolean Modificar_Producto(Producto P);
+	
+	ArrayList<Integer> getTipo_Producto_INTEGER (String nombre);
+	
 }

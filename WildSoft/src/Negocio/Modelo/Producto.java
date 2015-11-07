@@ -22,6 +22,22 @@ public class Producto {
 		cantidad = Cantidad;
 	}
 	
+	public Producto(Integer id, String Tipo_Producto, String Nombre, Integer Tipo_producto_ID, String Observacion, Double Precio, Integer Cantidad){
+		PR_TIPO_PRODUCTO_STRING = Tipo_Producto;
+		PR_tipo_producto = Tipo_producto_ID;
+		PR_precio = Precio;
+		PR_nombre = Nombre;
+		PR_Observacion = Observacion;
+		cantidad = Cantidad;
+		PR_id= id;
+	}
+	
+	
+	public Producto(int id){
+		PR_id=id;
+		
+	}
+	
 	public int getCantidad() {
 		return cantidad;
 	}
