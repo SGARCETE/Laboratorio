@@ -21,10 +21,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
-import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 

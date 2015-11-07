@@ -54,6 +54,7 @@ import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
+import Interfaz.JDialogs.Interfaz_Proveedores;
 import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
@@ -152,6 +153,7 @@ public class Interfaz_Principal {
         	
 	}
 	
+	@SuppressWarnings("serial")
 	private void initialize() {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
@@ -739,9 +741,11 @@ public class Interfaz_Principal {
 				"", "Pedido N\u00B0", "Cliente", "Direccion", "Telefono", "Precio"
 			}
 		) {
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, String.class, String.class, String.class, String.class
 			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -972,10 +976,18 @@ public class Interfaz_Principal {
 		JMenuItem mnCompraMP = new JMenuItem("Compra de materias primas");
 		mnCompraMP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Abrir_Interfaz_Solicitud_Compra();
+				abrirInterfazBoton("sc");
 			}
 		});
 		mnMateriasPrimas.add(mnCompraMP);
+		
+		JMenuItem mnABMProveedores = new JMenuItem("Adm. Proveedores");
+		mnABMProveedores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				abrirInterfazBoton("pr");
+			}
+		});
+		mnProveedores.add(mnABMProveedores);
 
 		JMenu mnReporteContabilidad = new JMenu("Reporte Contabilidad");
 		menuBar.add(mnReporteContabilidad);
@@ -1266,10 +1278,21 @@ public class Interfaz_Principal {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Abrir_Interfaz_Solicitud_Compra() {
-		Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
-		frame.setModal(true);
-		frame.setVisible(true);
+	/**
+	 * Abre la interfaz del boton seleccionado
+	 * @param nombre Es el identificador de la interfaz que se desea abrir. "sc" --> Abre la interfaz de {@link Interfaz_Solicitud_Compra}.  "pr" --> Abre la interfaz de {@link Interfaz_Proveedores}. 
+	 */
+	private void abrirInterfazBoton(String nombre) {
+		if(nombre.equals("sc")){
+			Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
+			frame.setModal(true);
+			frame.setVisible(true);
+		}else if (nombre.equals("pr")){
+			Interfaz_Proveedores frame = new Interfaz_Proveedores(Principal_neg_int);
+			frame.setModal(true);
+			frame.setVisible(true);
+		}
+		
 	}
 	
 
@@ -1507,61 +1530,4 @@ public class Interfaz_Principal {
 		ri.Generar_Itinerario(id);
 		
 	}
-	
-	// Métodos para backup.
-	
-	/*
-	private static void backup() {
-		   try {
-		      Process p = Runtime
-		            .getRuntime()
-		            .exec("C:/Aplicaciones/wamp/bin/mysql/mysql5.1.36/bin/mysqldump -u root -ppassword database");
-		 
-		      InputStream is = p.getInputStream();
-		      FileOutputStream fos = new FileOutputStream("wildsoft.sql");
-		      byte[] buffer = new byte[1000];
-		 
-		      int leido = is.read(buffer);
-		      while (leido > 0) {
-		         fos.write(buffer, 0, leido);
-		         leido = is.read(buffer);
-		      }
-		 
-		      fos.close();
-		 
-		   } catch (Exception e) {
-		      e.printStackTrace();
-		   }
-		} */
-	
-	/*
-	 private static void restore() {
-   try {
-      Process p = Runtime
-            .getRuntime()
-            .exec("C:/Aplicaciones/wamp/bin/mysql/mysql5.1.36/bin/mysql -u root -ppassword database");
- 
-      OutputStream os = p.getOutputStream();
-      FileInputStream fis = new FileInputStream("backup_pruebas.sql");
-      byte[] buffer = new byte[1000];
- 
-      int leido = fis.read(buffer);
-      while (leido > 0) {
-         os.write(buffer, 0, leido);
-         leido = fis.read(buffer);
-      }
- 
-      os.flush();
-      os.close();
-      fis.close();
- 
-   } catch (Exception e) {
-      e.printStackTrace();
-   }
-}
-*/
-	 
-	
-	
-	
 }// ---> FIN CLASE
