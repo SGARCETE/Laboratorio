@@ -23,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
-import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 
 @SuppressWarnings("serial")
@@ -31,9 +30,7 @@ public class Interfaz_Proveedores extends JDialog {
 
 	private JPanel contentPanel = new JPanel();
 
-	private Principal_Negocio_Interfaz Principal;
-	private Servicio_Proveedores SvCliente;
-	private Servicio_Materia_Prima SvMateriaPrima;
+	private Servicio_Proveedores SvProveedores;
 	private JTextField textNombre;
 	private JTable table;
 	private JTextField textDireccion;
@@ -54,9 +51,7 @@ public class Interfaz_Proveedores extends JDialog {
 
 	public Interfaz_Proveedores(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Proveedores");
-		Principal = instancia_negocio;
-		SvCliente = Principal.getSvProveedores();
-		SvMateriaPrima = Principal.getSvMateriaPrima();
+		SvProveedores = instancia_negocio.getSvProveedores();
 
 		table = new JTable();
 		iniciarlizarTablaProveedor();
@@ -162,7 +157,26 @@ public class Interfaz_Proveedores extends JDialog {
 		panel_1.add(scrollPane_1);
 
 		tablaCategorias = new JTable();
-		tablaCategorias.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Categorias" }));
+		tablaCategorias.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null},
+			},
+			new String[] {
+				"ID", "Categorias"
+			}
+		) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+				String.class, String.class
+			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		tablaCategorias.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tablaCategorias.getColumnModel().getColumn(0).setMinWidth(0);
+		tablaCategorias.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane_1.setViewportView(tablaCategorias);
 
 		JPanel panel_2 = new JPanel();
@@ -233,9 +247,9 @@ public class Interfaz_Proveedores extends JDialog {
 						Proveedor p = new Proveedor(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textMail.getText());
 						ArrayList<Integer> categorias = new ArrayList<Integer>();
 						for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
-					//		SvMateriaPrima.get TODO
+							categorias.add(Integer.parseInt((String)tablaCategorias.getValueAt(i, 0)));
 						}
-						SvCliente.AGREGAR_PROVEEDOR(p);
+						SvProveedores.AGREGAR_PROVEEDOR(p);
 						textNombre.setText("");
 						textDireccion.setText("");
 						textTelefono.setText("");
@@ -286,16 +300,16 @@ public class Interfaz_Proveedores extends JDialog {
 	}
 
 	private void llenar_tabla() {
-//		for (Cliente cliente : SvCliente.get_Lista_Clientes()) { TODO
-//			String[] fila = new String[5];
-//			fila[0] = cliente.getID_Cliente().toString();
-//			fila[1] = cliente.getNombre();
-//			fila[2] = cliente.getDomicilio();
-//			fila[3] = cliente.getTelefono_Fijo();
-//			fila[4] = cliente.getDetalle();
-//
-//			((DefaultTableModel) this.table.getModel()).addRow(fila);
-//		}
+		for (Proveedor proveedor : SvProveedores.getProveedores()) {
+			String[] fila = new String[5];
+			fila[0] = proveedor.getId().toString();
+			fila[1] = proveedor.getNombre();
+			fila[2] = proveedor.getDireccion();
+			fila[3] = proveedor.getTelefono();
+			fila[4] = proveedor.getMail();
+
+			((DefaultTableModel) this.table.getModel()).addRow(fila);
+		}
 	}
 
 	protected void eliminarProveedor() {

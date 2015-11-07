@@ -16,14 +16,8 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 	private ConectorMySQL conex = new ConectorMySQL();
 
 	public boolean AGREGAR_PROVEEDOR(Proveedor p) {
-		String SentenciaSQL = " INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono ) VALUES ("
-				+ "'"
-				+ p.getNombre()
-				+ "',"
-				+ p.getDireccion()
-				+ "',"
-				+ p.getTelefono() + "',";
-
+		String SentenciaSQL = " INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail )"
+				+ "VALUES ('" + p.getNombre() + "'," + p.getDireccion() + "'," + p.getTelefono() + "'," + p.getMail() + "';";
 		return conex.Insertar(SentenciaSQL);
 	}
 
@@ -99,6 +93,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 				p.setNombre(Fila.getString("PV_nombre"));
 				p.setDireccion(Fila.getString("PV_direccion"));
 				p.setTelefono(Fila.getString("PV_telefono"));
+				p.setMail(Fila.getString("PV_mail"));
 
 				Arreglo.add(p);
 			}
