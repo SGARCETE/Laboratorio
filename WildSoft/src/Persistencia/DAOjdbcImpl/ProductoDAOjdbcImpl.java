@@ -47,6 +47,29 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		return Arreglo;
 	}
 	
+	
+	public ArrayList<Producto> getLISTA_PRODUCTOS() {
+		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("SELECT * FROM Producto, Tipo_producto WHERE producto.PR_tipo_producto = Tipo_producto.TP_id");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Producto p = new Producto();				
+				p.setPR_id(Fila.getInt("PR_id"));
+				p.setPR_nombre(Fila.getString("PR_nombre"));
+				p.setPR_precio(Fila.getDouble("PR_precio"));
+				p.setPR_tipo_producto(Fila.getInt("PR_tipo_producto"));
+				Arreglo.add(p);
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
+	}
+	
 	public boolean ELIMINAR_PRODUCTO(Producto p) {
 		String SentenciaSQL = "DELETE * FROM Producto WHERE PR_id="
 				+ p.getPR_id();

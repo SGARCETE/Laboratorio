@@ -53,6 +53,7 @@ import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
+import Interfaz.JDialogs.Interfaz_ABM_Producto;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Proveedores;
@@ -967,6 +968,14 @@ public class Interfaz_Principal {
 
 		JMenu mnProductos = new JMenu("Productos");
 		menuBar.add(mnProductos);
+		
+		JMenuItem mntmAbmProductos = new JMenuItem("ABM Productos");
+		mntmAbmProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Abrir_Interfaz_ABM_Producto();
+			}
+		});
+		mnProductos.add(mntmAbmProductos);
 
 		JMenu mnProveedores = new JMenu("Proveedores");
 		menuBar.add(mnProveedores);
@@ -1203,6 +1212,17 @@ public class Interfaz_Principal {
 		frame.setVisible(true);
 		
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			//				ABM Client
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		private void Abrir_Interfaz_ABM_Producto() {
+			Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(Principal_neg_int);
+			frame.setModal(true);
+			frame.setVisible(true);
+			
+		}
+	
 	//---------------- Metodo que llama a la interfaz Materia Prima
 		private void Abrir_Interfaz_Materia() {
 			ADM_Materia_Prima frame = new ADM_Materia_Prima(Principal_neg_int);
