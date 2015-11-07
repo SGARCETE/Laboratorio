@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,13 +41,13 @@ public class Interfaz_Proveedores extends JDialog {
 	private JButton btnModificar;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
-	private JButton btnAgregar;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> comboCategorias;
 	private JButton btnAgregar_1;
 	private JButton btnQuitar;
 	private JScrollPane scrollPane_1;
 	private JTable tablaCategorias;
 	private JLabel lblAviso;
+	private HashMap<Integer, String> categorias;
 
 	public Interfaz_Proveedores(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Proveedores");
@@ -71,44 +71,35 @@ public class Interfaz_Proveedores extends JDialog {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 11, 299, 402);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
+		JPanel panelAltaModificacion = new JPanel();
+		panelAltaModificacion.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelAltaModificacion.setBounds(10, 11, 299, 402);
+		panel.add(panelAltaModificacion);
+		panelAltaModificacion.setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(16, 35, 63, 14);
-		panel_1.add(lblNombre);
+		panelAltaModificacion.add(lblNombre);
 
 		textNombre = new JTextField();
 		textNombre.setBounds(79, 28, 210, 28);
-		panel_1.add(textNombre);
+		panelAltaModificacion.add(textNombre);
 		textNombre.setColumns(10);
-
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				agregarProveedor();
-			}
-		});
-		btnAgregar.setBounds(100, 351, 103, 28);
-		panel_1.add(btnAgregar);
 
 		textDireccion = new JTextField();
 		textDireccion.setColumns(10);
 		textDireccion.setBounds(79, 68, 210, 28);
-		panel_1.add(textDireccion);
+		panelAltaModificacion.add(textDireccion);
 
 		textTelefono = new JTextField();
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(79, 108, 210, 28);
-		panel_1.add(textTelefono);
+		panelAltaModificacion.add(textTelefono);
 
 		textMail = new JTextField();
 		textMail.setColumns(10);
 		textMail.setBounds(79, 148, 210, 28);
-		panel_1.add(textMail);
+		panelAltaModificacion.add(textMail);
 
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
@@ -117,7 +108,7 @@ public class Interfaz_Proveedores extends JDialog {
 			}
 		});
 		btnAceptar.setBounds(16, 351, 96, 28);
-		panel_1.add(btnAceptar);
+		panelAltaModificacion.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -126,40 +117,67 @@ public class Interfaz_Proveedores extends JDialog {
 			}
 		});
 		btnCancelar.setBounds(193, 351, 96, 28);
-		panel_1.add(btnCancelar);
+		panelAltaModificacion.add(btnCancelar);
 
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
 		lblDireccin.setBounds(16, 75, 63, 14);
-		panel_1.add(lblDireccin);
+		panelAltaModificacion.add(lblDireccin);
 
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setBounds(16, 115, 63, 14);
-		panel_1.add(lblTelefono);
+		panelAltaModificacion.add(lblTelefono);
 
 		JLabel lblMail = new JLabel("Mail");
 		lblMail.setBounds(16, 155, 63, 14);
-		panel_1.add(lblMail);
+		panelAltaModificacion.add(lblMail);
 
-		comboBox = new JComboBox<String>();
-		comboBox.setBounds(16, 181, 273, 26);
-		panel_1.add(comboBox);
+		comboCategorias = new JComboBox<String>();
+		comboCategorias.setBounds(16, 181, 273, 26);
+		panelAltaModificacion.add(comboCategorias);
 
 		btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Recorro el mapa buscando la id del elemento seleccionado del combo
+				Integer id = -1;
+				for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+					String value = entry.getValue();
+					if(comboCategorias.getSelectedItem().equals(value)){
+						id = entry.getKey();;
+					}			    
+				}
+				
+				// Al encontrarlo recorro l tabla de proveedores para comprobar que ya lo haya agregado
+				boolean estaAgregado = false;
+				for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
+					if(tablaCategorias.getValueAt(i, 0).equals(id)){
+						estaAgregado = true;
+					}
+				}
+				
+				// Por ultimo si no esta en la tabla, agrego la id en la columna oculta y el nombre de la 
+				if(!estaAgregado){
+					DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
+					String[] arreglo = {String.valueOf(id), (String) comboCategorias.getSelectedItem()};
+					modelo.addRow(arreglo);
+					tablaCategorias.setModel(modelo);
+				}
+			}
+		});
 		btnAgregar_1.setBounds(16, 212, 90, 28);
-		panel_1.add(btnAgregar_1);
+		panelAltaModificacion.add(btnAgregar_1);
 
 		btnQuitar = new JButton("Quitar");
 		btnQuitar.setBounds(199, 212, 90, 28);
-		panel_1.add(btnQuitar);
+		panelAltaModificacion.add(btnQuitar);
 
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(16, 252, 265, 87);
-		panel_1.add(scrollPane_1);
+		panelAltaModificacion.add(scrollPane_1);
 
 		tablaCategorias = new JTable();
 		tablaCategorias.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
 			},
 			new String[] {
 				"ID", "Categorias"
@@ -232,48 +250,19 @@ public class Interfaz_Proveedores extends JDialog {
 
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
+		
+		iniciarDatos();
 	}
-	
+
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>       METODOS       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>			
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>       METODOS       >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>			
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-	private void agregarProveedor() {
-
-		if (!textNombre.getText().equals("")) {
-			if (!textDireccion.getText().equals("")) {
-				if (!textTelefono.getText().equals("")) {
-					if (!textMail.getText().equals("")) {
-						Proveedor p = new Proveedor(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textMail.getText());
-						ArrayList<Integer> categorias = new ArrayList<Integer>();
-						for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
-							categorias.add(Integer.parseInt((String)tablaCategorias.getValueAt(i, 0)));
-						}
-						SvProveedores.AGREGAR_PROVEEDOR(p);
-						textNombre.setText("");
-						textDireccion.setText("");
-						textTelefono.setText("");
-						textMail.setText("");
-						lblAviso.setVisible(false);
-
-						iniciarlizarTablaProveedor();
-						llenar_tabla();
-						JOptionPane.showMessageDialog(null, "Proveedor agregado con éxito");
-					} else {
-						lblAviso.setText("Debes completar el campo 'Mail' para continuar");
-						lblAviso.setVisible(true);
-					}
-				} else {
-					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
-					lblAviso.setVisible(true);
-				}
-			} else {
-				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
-				lblAviso.setVisible(true);
-			}
-		} else {
-			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
-			lblAviso.setVisible(true);
+	private void iniciarDatos() {
+		categorias = SvProveedores.getCategorias();
+		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+		    String value = entry.getValue();
+		    comboCategorias.addItem(value);
 		}
 	}
 
@@ -344,7 +333,6 @@ public class Interfaz_Proveedores extends JDialog {
 
 		btnModificar.setVisible(false);
 		btnEliminar.setVisible(false);
-		btnAgregar.setVisible(false);
 		btnAceptar.setVisible(true);
 		btnCancelar.setVisible(true);
 
@@ -357,7 +345,6 @@ public class Interfaz_Proveedores extends JDialog {
 		textMail.setText("");
 
 		btnAceptar.setVisible(false);
-		btnAgregar.setVisible(true);
 		btnCancelar.setVisible(false);
 		lblAviso.setVisible(false);
 		btnModificar.setVisible(true);
@@ -382,7 +369,6 @@ public class Interfaz_Proveedores extends JDialog {
 						llenar_tabla();
 						lblAviso.setVisible(false);
 						btnAceptar.setVisible(false);
-						btnAgregar.setVisible(true);
 						btnCancelar.setVisible(false);
 						btnModificar.setVisible(true);
 						btnEliminar.setVisible(true);

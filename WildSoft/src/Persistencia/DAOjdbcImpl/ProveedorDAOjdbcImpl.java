@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
@@ -15,17 +16,25 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 
 	private ConectorMySQL conex = new ConectorMySQL();
 
-	public boolean AGREGAR_PROVEEDOR(Proveedor p) {
-		String SentenciaSQL = " INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail )"
-				+ "VALUES ('" + p.getNombre() + "'," + p.getDireccion() + "'," + p.getTelefono() + "'," + p.getMail() + "';";
-		return conex.Insertar(SentenciaSQL);
+	public void AGREGAR_PROVEEDOR(Proveedor p) {
+		String SentenciaSQL = "INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail )"
+				+ "VALUES ('" + p.getNombre() + "','" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getMail() + "';";
+		int id = conex.insert(SentenciaSQL);
+		for (int i = 0; i < p.getCategoria().size(); i++) {
+			insertarCategorias(id, p.getCategoria().get(i));
+		}
+	}
+
+	private void insertarCategorias(int idProveedor, int idCategoria) {
+		String SentenciaSQL = "INSERT INTO proveedor_categoria VALUES (" + idProveedor + "," + idCategoria + ");";
+		conex.insert(SentenciaSQL);
 	}
 
 	public ArrayList<String> getCategoriasProveedor(String nombreProveedor) {
 		ArrayList<String> Arreglo = new ArrayList<String>();
 		try {
 
-			conex.connectToMySQL();// Conectar base
+			conex.connectToMySQL();
 
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("select CA_nombre from Categoria_MP CA, Proveedor PV , proveedor_categoria PC where PC.PC_categoria_id=CA.CA_id"
@@ -140,4 +149,23 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 		return p;
 	}
 
+	public HashMap<Integer, String> obtenerCategorias(){
+		
+		HashMap<Integer, String> mapa = new HashMap<Integer, String>();
+		try {
+
+			conex.connectToMySQL();
+
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("select * from categoria_mp;");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				mapa.put(Fila.getInt("CA_id"), Fila.getString("CA_nombre"));
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return mapa;
+	}
 }

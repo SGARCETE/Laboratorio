@@ -1,6 +1,7 @@
 package Negocio.Servicios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Negocio.Modelo.Proveedor;
 import Persistencia.DAO.ProveedorDAO;
@@ -37,8 +38,8 @@ public class Servicio_Proveedores {
 			return proveedorDAO.ELIMINAR_Proveedor(p);
 		}
 		
-		public boolean AGREGAR_PROVEEDOR(Proveedor p){
-			return proveedorDAO.AGREGAR_PROVEEDOR(p);
+		public void AGREGAR_PROVEEDOR(Proveedor p){
+			proveedorDAO.AGREGAR_PROVEEDOR(p);
 		}
 		
 		/**
@@ -48,6 +49,10 @@ public class Servicio_Proveedores {
 		 */
 		public Proveedor getProveedor(String nobreProveedor){
 			return proveedorDAO.obtenerProveedor(nobreProveedor);
+		}
+
+		public HashMap<Integer, String> getCategorias() {
+			return proveedorDAO.obtenerCategorias();
 		}
 }
 
