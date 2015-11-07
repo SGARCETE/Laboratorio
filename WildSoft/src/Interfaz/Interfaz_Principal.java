@@ -50,6 +50,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import Interfaz.JDialogs.ADM_Cliente;
+import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
@@ -981,6 +982,15 @@ public class Interfaz_Principal {
 		});
 		mnMateriasPrimas.add(mnCompraMP);
 		
+		JMenuItem mntmADMMateriaPrima = new JMenuItem("ADM Materia Prima");
+		mntmADMMateriaPrima.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Abrir_Interfaz_Materia();
+			}
+		});
+		mnMateriasPrimas.add(mntmADMMateriaPrima);
+	
+		
 		JMenuItem mnABMProveedores = new JMenuItem("Adm. Proveedores");
 		mnABMProveedores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1193,6 +1203,13 @@ public class Interfaz_Principal {
 		frame.setVisible(true);
 		
 	}
+	//---------------- Metodo que llama a la interfaz Materia Prima
+		private void Abrir_Interfaz_Materia() {
+			ADM_Materia_Prima frame = new ADM_Materia_Prima(Principal_neg_int);
+			frame.setModal(true);
+			frame.setVisible(true);
+			
+		}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/*** ALTA DE PEDIDO */
@@ -1530,4 +1547,7 @@ public class Interfaz_Principal {
 		ri.Generar_Itinerario(id);
 		
 	}
+	
+	
+	
 }// ---> FIN CLASE
