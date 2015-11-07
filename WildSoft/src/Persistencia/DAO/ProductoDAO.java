@@ -14,6 +14,6 @@ public interface ProductoDAO {
 
 	public ArrayList<String> getTipos_Producto();
 	
-	
+	ArrayList<Producto> GET_PRODUCTOS();
 	
 }

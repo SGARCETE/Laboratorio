@@ -47,8 +47,8 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		return Arreglo;
 	}
 	
-	
-	public ArrayList<Producto> getLISTA_PRODUCTOS() {
+	// Retorna todos los productos
+	public ArrayList<Producto> GET_PRODUCTOS() {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 		try {
 			conex.connectToMySQL();// Conectar base
@@ -69,6 +69,8 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		}
 		return Arreglo;
 	}
+	
+	
 	
 	public boolean ELIMINAR_PRODUCTO(Producto p) {
 		String SentenciaSQL = "DELETE * FROM Producto WHERE PR_id="

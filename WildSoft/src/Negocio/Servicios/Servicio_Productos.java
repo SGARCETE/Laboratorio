@@ -37,6 +37,10 @@ public class Servicio_Productos {
 		
 	}
 	
+	public ArrayList<Producto> GET_PRODUCTOS() {
+		return productoDAO.GET_PRODUCTOS();
+		
+	}
 
 	
 	public boolean guardar_nuevo_producto(Producto p){
