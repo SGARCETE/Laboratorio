@@ -43,6 +43,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			
 			String Query = "select * from Solicitud_compra SD join Solicitud_estado SEST join Proveedor PV on " +
 		    "SD.SD_Proveedor= PV.PV_id and SD.SD_estado= SEST.SEST_id ORDER BY SD_id DESC;" ;
+			
 			System.out.println("getLISTA_MATERIA_SOLICITUDES "+Query);
 			st.executeQuery(Query);
 			
@@ -124,9 +125,12 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			ResultSet Fila = st.getResultSet();
 			Fila.first();
 			//Proveedor.setCategoria(Fila.getInt("PV_categoria")); TODO
+			Proveedor.setId(Fila.getInt("PV_ID"));
 			Proveedor.setDireccion(Fila.getString("PV_direccion"));
 			Proveedor.setNombre(Fila.getString("PV_nombre"));
 			Proveedor.setTelefono(Fila.getString("PV_telefono"));
+			Proveedor.setMail(Fila.getString("PV_Mail"));
+			
 			
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -188,10 +192,8 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	}
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
-    public Integer obtenerUltimaSolicitud()
-    {
-    	try
-    	{
+    public Integer obtenerUltimaSolicitud(){
+    	try	{
     		conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
@@ -202,12 +204,18 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			conex.cerrarConexion();
 			return ID;
     	}
-    	catch (SQLException SQLE)
-    	{
+    	catch (SQLException SQLE){
     		JOptionPane.showMessageDialog(null,"No se puede dar la fila solicitada! \n ERROR : " + SQLE.getMessage());
     	}
     	return 0;
     }
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	@Override
+	public boolean Registrar_envio_solicitud(Integer id) {
+		// TODO Auto-generated method stub
+		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n NO ESTOY IMPLEMENTADO! :( tengo que guardar si la solicitud fue enviada o no!");
+		return false;
+	}
     
 }

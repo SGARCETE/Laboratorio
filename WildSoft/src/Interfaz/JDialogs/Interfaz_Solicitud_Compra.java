@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -119,7 +120,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				dispose();
 			}
 		});
-		btnGenerarSolicitud.setBounds(424, 341, 218, 25);
+		btnGenerarSolicitud.setBounds(424, 339, 218, 28);
 		contentPanel.add(btnGenerarSolicitud);
 		
 		JButton btnNewButton = new JButton("Pagar");
@@ -142,6 +143,15 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	
 		btnNewButton.setBounds(322, 339, 90, 28);
 		contentPanel.add(btnNewButton);
+		
+		JButton btnEnviarSolicitud = new JButton("Enviar Solicitud");
+		btnEnviarSolicitud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Enviar_solicitud_al_proveedor();
+			}
+		});
+		btnEnviarSolicitud.setBounds(653, 339, 154, 28);
+		contentPanel.add(btnEnviarSolicitud);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -161,11 +171,32 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		inicializar();
 	}
 
+	private void Enviar_solicitud_al_proveedor() {
+		if(table.getSelectedRow()!=-1){
+			// SOLICITUD SELECCIONADA
+			Solicitud_compra solicitud = sv_solicitudCompra.obtenerSolicitud(Integer.valueOf((String)table.getValueAt(table.getSelectedRow(), 0)));
+			
+			// Obtiene Adjunto que es la solicitud de compra en PDF
+			ReporteSolicitud RS = new ReporteSolicitud();
+			Integer NUMERO_SOLICITUD =  Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
+			RS.Generar_Solicitud(NUMERO_SOLICITUD);
+			
+			// GENERO UN FILE PARA OBTENER SU UBICACION EN EL DIRECTORIO
+			String Nombre = "SOLICITUD COMPRA Nº"+solicitud.getId();
+			File Archivo = new File("\\"+Nombre);
+			
+			// GENERA LA SOLICITUD EN PDF
+			RS.EXPORT_TO_PDF(Archivo.getAbsolutePath(), Nombre);
+			
+			Principal_neg_int.getEmail_manager().ENVIAR_SOLICITUD_DE_COMPRA(solicitud.getProveedor().getMail(), solicitud);
+			// ELIMINO EL ARCHIVO PDF DEL DISCO
+			Archivo.delete();
+		}
+	}
+
 	private void inicializar() {
-		
 		sv_solicitudCompra = Principal_neg_int.getSvSolicitudCompra();
 		llenarTabla();
-		
 	}
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METODOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -197,6 +228,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				ReporteSolicitud RS = new ReporteSolicitud();
 				Integer NUMERO_SOLICITUD =  Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
 				RS.Generar_Solicitud(NUMERO_SOLICITUD);
+				RS.MOSTRAR_REPORTE();
 			}
 		}
 }

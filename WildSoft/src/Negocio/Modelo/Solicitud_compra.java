@@ -1,5 +1,6 @@
 package Negocio.Modelo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,8 +11,9 @@ public class Solicitud_compra {
 	private Proveedor proveedor;
 	private Date fecha;
 	private Integer precio;
-
-	ArrayList<Materia_Prima> lista_materia_prima;
+	private File solicitudPDF;
+	
+	private ArrayList<Materia_Prima> lista_materia_prima;
 
 	public Solicitud_compra(int id) {
 		this.id = id;
@@ -81,5 +83,13 @@ public class Solicitud_compra {
 		} else {
 			return false;
 		}
+	}
+
+	public File getSolicitudPDF() {
+		return solicitudPDF;
+	}
+
+	public void setSolicitudPDF(File solicitudPDF) {
+		this.solicitudPDF = solicitudPDF;
 	}
 }
