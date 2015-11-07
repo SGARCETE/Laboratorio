@@ -28,4 +28,8 @@ public class Servicio_Materia_Prima {
 	public Integer obtenerIdCategoria(String nombreCategoria){
 		return MateriaPrimaDAO.obtenerIdCategoria(nombreCategoria);
 	}
+	public boolean AgregarMAteriaPrima(Materia_Prima m)
+	{
+		return MateriaPrimaDAO.AGREGAR_Materia_Prima(m);
+	}
 }

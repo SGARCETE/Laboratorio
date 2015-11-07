@@ -1,6 +1,6 @@
 package Negocio.Modelo;
+import java.util.Date;
 
-import java.sql.Date;
 
 public class Materia_Prima {
 
@@ -11,6 +11,14 @@ public class Materia_Prima {
 	private String categoria_string = "";
 	private int cantidad=0;
 	
+	public Materia_Prima(String nombre_,Date fecha,int categoria_ ) {
+		this.nombre=nombre_;
+		this.fecha_vencimiento= fecha;
+		this.categoria=categoria_;
+	}
+	public Materia_Prima(){
+		
+	}
 	
 	public int getCantidad() {
 		return cantidad;
