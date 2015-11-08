@@ -6,7 +6,9 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.JOptionPane;
+
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
@@ -18,11 +20,56 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	@Override
+	public Solicitud_compra getSOLICITUD_COMPRA(Integer iD_SC) {
+		Solicitud_compra SOLICITUD_OBTENIDA = null;
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			String Query = "SELECT * FROM Solicitud_compra SD, Solicitud_estado SE, Proveedor PV "
+					+ "WHERE "
+					+ "SD.SD_proveedor = PV.PV_id AND "
+					+ "SD.SD_estado = SE.SEST_id AND "
+				    + "SD.SD_id ="+ iD_SC ;
+			
+			st.executeQuery(Query);
+			
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				Proveedor PV = new Proveedor();
+				PV.setNombre(Fila.getString("PV_nombre"));
+				PV.setId(Fila.getInt("PV_id"));
+				PV.setDireccion(Fila.getString("PV_direccion"));
+				PV.setTelefono(Fila.getString("PV_telefono"));
+				PV.setMail(Fila.getString("PV_mail"));
+				PV.setVigente(Fila.getBoolean("PV_vigente"));
+				
+				SOLICITUD_OBTENIDA = new Solicitud_compra();
+				SOLICITUD_OBTENIDA.setId(Fila.getInt("SD_id"));
+				SOLICITUD_OBTENIDA.setEstado(Fila.getString("SEST_nombre"));
+				SOLICITUD_OBTENIDA.setFecha(Fila.getDate("SD_fecha"));
+				SOLICITUD_OBTENIDA.setPrecio(Fila.getInt("SD_precio"));
+				SOLICITUD_OBTENIDA.setProveedor(PV);
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return SOLICITUD_OBTENIDA;
+	}
+    
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
 		String PROVEEDOR = "NULL";
 		if(solicitud.getProveedor()!=null && solicitud.getProveedor().getId()!=0)
 			PROVEEDOR = solicitud.getProveedor().getId().toString();
 		
+		//		ESTADO 1: ('Pendiente');
+		//		ESTADO 2: ('Enviada');
+		//		ESTADO 3: ('Pagada');
+		//		ESTADO 4: ('Cancelada');
 		String SentenciaSQL_Solicitud = "INSERT INTO Solicitud_compra ( SD_fecha, SD_estado, SD_proveedor) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(new Date())                 +"',"+
 				""+		1											        +","+
@@ -32,8 +79,53 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		
 		return Exito_al_Ingresar_Solicitud;
 	}
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public void ELIMINAD_SOLICITUD(Solicitud_compra sc){
+    	String SentenciaSQL = "delete from solicitud_compra where solicitud_compra.SD_id = " +sc.getId() ;
+		conex.Insertar(SentenciaSQL);
+    }
+    
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public boolean MODIFICAR_Solicitud(Solicitud_compra sd) {
+		int estado = obtener_ID_Estado_Solicitud(sd.getEstado());
+		int Proveedor = sd.getProveedor().getId();
+		
+		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_fecha = '" + formato_yyyyMMdd.format(sd.getFecha()) + "', "
+				+ "SD_estado = " + estado + ", " + "SD_proveedor =" + Proveedor + ", " + "SD_precio =" + sd.getPrecio() + " WHERE Solicitud_compra.SD_id=" + sd.getId() + ";";
+		return conex.Insertar(SentenciaSQL);
+	}
+    
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public boolean MODIFICAR_ESTADO(Integer ID_SOLICITUD, Integer ID_ESTADO_SOLICITUD) {
+		//		ESTADO 1: ('Pendiente');
+		//		ESTADO 2: ('Enviada');
+		//		ESTADO 3: ('Pagada');
+		//		ESTADO 4: ('Cancelada');
+		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_estado = "+ ID_ESTADO_SOLICITUD+ " WHERE SD_id= " + ID_SOLICITUD ;
+		return conex.Insertar(SentenciaSQL);
+	}
+	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public int obtener_ID_Estado_Solicitud(String estado){
+		int resultado = 1;
+		conex.connectToMySQL();
+		Statement st;
+		try {
+			st = conex.conexion.createStatement();
+			String SentenciaSQL = "select SEST_id from Solicitud_estado where SEST_nombre='"+ estado    +"'";
+			ResultSet Fila = st.executeQuery(SentenciaSQL);
+			
+			while (Fila.next()){	
+				resultado = Fila.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+    
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES() {
 		
 		ArrayList<Solicitud_compra> Arreglo = new ArrayList<Solicitud_compra>();
@@ -50,7 +142,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Solicitud_compra sd = new Solicitud_compra();
-				sd.setId(Integer.parseInt(Fila.getString("SD_id")));
+				sd.setId(Fila.getInt("SD_id"));
 				sd.setEstado(Fila.getString("SEST_nombre"));
 				sd.setFecha(Fila.getDate("SD_fecha"));
 				sd.setProveedor(new Proveedor (Fila.getString("PV_nombre")));
@@ -64,11 +156,11 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		}
 		return Arreglo;
 	}
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd) {
 		
-		ArrayList<Materia_Prima> Arreglo = new ArrayList<Materia_Prima>();
+		ArrayList<Materia_Prima> Lista_MateriasPrimas = new ArrayList<Materia_Prima>();
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
@@ -88,33 +180,17 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				mp.setCantidad(Fila.getInt("CM_cantidad_mp"));
 				mp.setFecha_vencimiento(Fila.getDate("MP_fecha_vencimiento"));
 				
-				Arreglo.add(mp);
+				Lista_MateriasPrimas.add(mp);
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
-		return Arreglo;
+		return Lista_MateriasPrimas;
 	}
-	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
-	public boolean MODIFICAR_ESTADO(Solicitud_compra sd, Integer numero) {
-		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_estado = "+ numero+ " where SD_id= " + sd.getId() ;
-		return conex.Insertar(SentenciaSQL);
-	}
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-    public boolean MODIFICAR_Solicitud(Solicitud_compra sd) {
-		
-		int estado = obtenerEstado(sd.getEstado());
-		int Proveedor = sd.getProveedor().getId();
-		
-		String SentenciaSQL = "UPDATE Solicitud_compra SET SD_fecha = '" + formato_yyyyMMdd.format(sd.getFecha()) + "', "
-				+ "SD_estado = " + estado + ", " + "SD_proveedor =" + Proveedor + ", " + "SD_precio =" + sd.getPrecio() + " WHERE Solicitud_compra.SD_id=" + sd.getId() + ";";
-		return conex.Insertar(SentenciaSQL);
-	}
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    
     public Proveedor getProveedor(Integer ID_Proveedor) {
 		Proveedor Proveedor= new Proveedor();
 		try {
@@ -129,8 +205,8 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			Proveedor.setDireccion(Fila.getString("PV_direccion"));
 			Proveedor.setNombre(Fila.getString("PV_nombre"));
 			Proveedor.setTelefono(Fila.getString("PV_telefono"));
-			Proveedor.setMail(Fila.getString("PV_Mail"));
-			
+			Proveedor.setMail(Fila.getString("PV_mail"));
+			Proveedor.setVigente(Fila.getBoolean("PV_vigente"));
 			
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -138,32 +214,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 		}
 		return Proveedor;
 	}
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    public int obtenerEstado(String estado){
-		int resultado = 1;
-		conex.connectToMySQL();
-		Statement st;
-		try {
-			st = conex.conexion.createStatement();
-			String SentenciaSQL = "select SEST_id from Solicitud_estado where SEST_nombre='"+ estado    +"'";
-			ResultSet Fila = st.executeQuery(SentenciaSQL);
-			
-			while (Fila.next()){	
-				resultado = Fila.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return resultado;
-	}
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    
-    public void eliminarSolicitud(Solicitud_compra sc){
-    	String SentenciaSQL = "delete from solicitud_compra where solicitud_compra.SD_id = " +sc.getId() ;
-		conex.Insertar(SentenciaSQL);
-    }
-    
     public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd) {
 		String SentenciaSQL = "delete from Compra_MateriaPrima where Compra_MateriaPrima.CM_compra = " +sd.getId() ;
 		return conex.Insertar(SentenciaSQL);
@@ -212,10 +263,13 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	@Override
-	public boolean Registrar_envio_solicitud(Integer id) {
-		// TODO Auto-generated method stub
-		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n NO ESTOY IMPLEMENTADO! :( tengo que guardar que la solicitud fue enviada!");
-		return false;
+	public boolean Registrar_envio_solicitud(Integer ID_SOLICITUD) {
+		//		ESTADO 2: ('Enviada');
+		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n GUARDE QUE LA SOLICITUD FUE ENVIADA!");
+		return MODIFICAR_ESTADO(ID_SOLICITUD, 2);
 	}
-    
-}
+
+	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	
+}//--> FIN

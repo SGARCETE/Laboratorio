@@ -1,5 +1,6 @@
 package mail_sender;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -7,6 +8,7 @@ import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -26,6 +28,11 @@ public class EnvioMail {
 	private ArrayList<String> Destinatarios, arrayAdjuntos;
 	private String asunto;
 	private String mensaje;
+//  SERVIDOR ejemplo: para cuentas de google "smtp.gmail.com", otro ejemplo para otro servidor "wo06.wiroos.com" (Depende de lo que dice despues del arroba --> @DEESTODEPENDE.com) 
+//  PUERTO   ejemplo "587". Depende del servidor que se elija
+	private String SERVIDOR = "smtp.gmail.com"; 
+	private String PUERTO = "587";
+	
 	private InformeDeEnvio Informe = new InformeDeEnvio();
     
     public EnvioMail(String usuarioCorreo, String password, String rutaArchivo, String nombreArchivo, ArrayList<String> destinatarios, String asunto,String mensaje) {
@@ -76,9 +83,9 @@ public class EnvioMail {
     	try{
     		Informe.SetPreparando();
     		Properties props = new Properties();         
-            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.host", SERVIDOR);
             props.setProperty("mail.smtp.starttls.enable", "true");
-            props.setProperty("mail.smtp.port", "587");
+            props.setProperty("mail.smtp.port", PUERTO);
             props.setProperty("mail.smtp.user", usuarioCorreo);
             props.setProperty("mail.smtp.auth", "true");
 
@@ -94,7 +101,6 @@ public class EnvioMail {
 
             MimeMultipart multiParte = new MimeMultipart();
             multiParte.addBodyPart(texto);
-
             if (!rutaArchivo.equals("")){
                 multiParte.addBodyPart(adjunto);
             }
@@ -109,8 +115,9 @@ public class EnvioMail {
 			    new InternetAddress(Destinatarios.get(i)));
 			    message.setSubject(asunto);
 			}
-         	message.setContent(multiParte);
 			
+         	message.setContent(multiParte);
+
             Transport t = session.getTransport("smtp");
 			Informe.SetConectando();
             t.connect(usuarioCorreo, password);
@@ -118,6 +125,7 @@ public class EnvioMail {
             t.sendMessage(message, message.getAllRecipients());
             t.close();
 			Informe.SetEnviado(true);
+            System.out.println("ENVIADO.");
             return true;
         }
         catch (Exception e){
@@ -126,42 +134,26 @@ public class EnvioMail {
             return false;
         }        
     }
-    
+
     /**
      * @param MostrarInforme Abre una ventana con el informe del email
-     * @param SERVIDOR ejemplo: para cuentas de google "smtp.gmail.com", otro ejemplo para otro servidor "wo06.wiroos.com" (Depende de lo que dice despues del arroba --> @DEESTODEPENDE.com) 
-     * @param PUERTO   ejemplo "587". Depende del servidor que se elija
      */
-    public boolean sendMailHTML(boolean MostrarInforme,String SERVIDOR, String PUERTO){
+    public boolean sendMailHTML(boolean MostrarInforme){
+    	boolean envioExitoso = true;
     	if(MostrarInforme){
 	    	Informe.setVisible(true);
     	}
     	try{
-    		Informe.setTitulo("Destino: "+Destinatarios.get(0));
+    			Informe.setTitulo("Destino: "+Destinatarios.get(0));
     		Properties props = new Properties();
             props.put("mail.smtp.host", SERVIDOR);//"wo06.wiroos.com" o "smtp.gmail.com"
             props.setProperty("mail.smtp.starttls.enable", "true");
-//          props.setProperty("mail.smtp.port", "587");
             props.setProperty("mail.smtp.port", PUERTO);//"587");
             props.setProperty("mail.smtp.user", usuarioCorreo);
             props.setProperty("mail.smtp.auth", "true");
 
             Session session = Session.getDefaultInstance(props, null);
-            BodyPart texto = new MimeBodyPart();
-            texto.setText(mensaje);
-
-            BodyPart adjunto = new MimeBodyPart();
-            if (!rutaArchivo.equals("")){
-                 adjunto.setDataHandler(new DataHandler(new FileDataSource(rutaArchivo)));
-                 adjunto.setFileName(nombreArchivo);                
-            }
-
-            MimeMultipart multiParte = new MimeMultipart();
-            multiParte.addBodyPart(texto);
-            if (!rutaArchivo.equals("")){
-                multiParte.addBodyPart(adjunto);
-            }
-
+   
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(usuarioCorreo));
           
@@ -170,24 +162,57 @@ public class EnvioMail {
 				message.addRecipient(
 			    Message.RecipientType.TO,
 			    new InternetAddress(Destinatarios.get(i)));
-			    message.setSubject(asunto);
 			}
-			message.setContent(mensaje,"text/html");
-			Informe.SetConectando();
+			message.setSubject(asunto);
+			
+		 
+		    MimeBodyPart messageBodyPart = new MimeBodyPart();
+		    messageBodyPart.setContent(mensaje,"text/html");
+		            
+		    Multipart multiParte = new MimeMultipart();
+		    multiParte.addBodyPart(messageBodyPart);
+		    
+            BodyPart adjunto = new MimeBodyPart();
+            if (!rutaArchivo.equals("")){
+                 adjunto.setDataHandler(new DataHandler(new FileDataSource(rutaArchivo)));
+                 adjunto.setFileName(nombreArchivo);                
+            }
+
+            if (!rutaArchivo.equals("")){
+                multiParte.addBodyPart(adjunto);
+            }
+
+            message.setContent(multiParte);
+			
+		
             Transport t = session.getTransport("smtp");
+            	Informe.SetConectando();
             t.connect(usuarioCorreo, password);
-            Informe.SetEnviando();
+            	Informe.SetEnviando();
             t.sendMessage(message, message.getAllRecipients());
             t.close();
             Informe.SetEnviado(true);
-            return true;
+            System.out.println("ENVIADO.");
+
         }
         catch (Exception e){
             e.printStackTrace();
-            Informe.SetEnviado(false);
-            return false;
-        }        
+            	Informe.SetEnviado(false);
+            envioExitoso = false;
+        }     
+    	finally{
+			//Se eliminan del servidor los archivos adjuntos
+			if( rutaArchivo!=null && !rutaArchivo.isEmpty() ){
+				try{
+					File arch = new File(rutaArchivo);
+					arch.delete();
+				}
+				catch (Exception e) {}
+				}
+			}
+		return envioExitoso;
     }
+
   
     /**	TEST	ESTO ES SOLO PARA PROBAR!	**/
     public static void main(String[] args){

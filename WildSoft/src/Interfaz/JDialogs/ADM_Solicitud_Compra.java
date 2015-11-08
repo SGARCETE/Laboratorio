@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -32,10 +33,13 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 import Negocio.Servicios.Servicio_Solicitud_compra;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 
 @SuppressWarnings("serial")
-public class AM_Solicitud_Compra extends JDialog {
+public class ADM_Solicitud_Compra extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox<String> comboProveedor;
@@ -58,23 +62,27 @@ public class AM_Solicitud_Compra extends JDialog {
 	private JButton btnAgregar;
 	private JButton okButton;
 	private JButton cancelButton;
+	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
 
-	public AM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+	public ADM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+		setTitle("Solicitud de compra");
 		setResizable(false);
 		
 		sv_proveedor = principal_neg_int.getSvProveedores();
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
 		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		Principal_neg_int = principal_neg_int;
-		setBounds(100, 100, 963, 466);
+		setBounds(100, 100, 690, 466);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(10, 11, 927, 37);
+		panel.setBounds(10, 11, 661, 37);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
@@ -84,15 +92,15 @@ public class AM_Solicitud_Compra extends JDialog {
 				Seleccion_Proveedor();
 			}
 		});
-		comboProveedor.setBounds(617, 6, 304, 25);
+		comboProveedor.setBounds(191, 6, 304, 25);
 		panel.add(comboProveedor);
 		
 		JLabel lblProveedor = new JLabel("Proveedor:");
-		lblProveedor.setBounds(541, 6, 64, 25);
+		lblProveedor.setBounds(115, 6, 64, 25);
 		panel.add(lblProveedor);
 		
 		JLabel lblCategoria = new JLabel("Categoria:");
-		lblCategoria.setBounds(10, 61, 64, 22);
+		lblCategoria.setBounds(10, 62, 81, 28);
 		contentPanel.add(lblCategoria);
 		
 		comboCategorias = new JComboBox<String>();
@@ -101,31 +109,30 @@ public class AM_Solicitud_Compra extends JDialog {
 				Seleccion_Categoria();
 			}
 		});
-		comboCategorias.setBounds(117, 60, 304, 25);
+		comboCategorias.setBounds(92, 62, 304, 28);
 		contentPanel.add(comboCategorias);
 		
 		JLabel lblProducto = new JLabel("Materia Primas:");
-		lblProducto.setBounds(10, 93, 92, 28);
+		lblProducto.setBounds(10, 96, 81, 28);
 		contentPanel.add(lblProducto);
 		
 		comboMateriaPrima = new JComboBox<String>();
-		comboMateriaPrima.setBounds(117, 94, 304, 25);
+		comboMateriaPrima.setBounds(92, 96, 304, 28);
 		contentPanel.add(comboMateriaPrima);
 		
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		spinnerCantidad.setBackground(new Color(240, 255, 255));
-		spinnerCantidad.setBounds(497, 77, 57, 25);
+		spinnerCantidad.setBounds(469, 96, 57, 28);
 		contentPanel.add(spinnerCantidad);
 		
 		
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(432, 78, 67, 25);
+		lblCantidad.setBounds(404, 96, 67, 28);
 		contentPanel.add(lblCantidad);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setEnabled(false);
-		scrollPane.setBounds(10, 130, 931, 218);
+		scrollPane.setBounds(10, 130, 661, 218);
 		contentPanel.add(scrollPane);
 		
 		tablaMateriasPrimas = new JTable();
@@ -135,102 +142,141 @@ public class AM_Solicitud_Compra extends JDialog {
 			new String[] {
 				"N\u00B0", "Categoria" , "Materia Prima", "Cantidad"
 			}
-		));
+				) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+				Integer.class, String.class, String.class, Integer.class
+			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			@Override
+			public boolean isCellEditable(int row, int col){
+				return false;
+			}
+		});
+
+//		tablaMateriasPrimas.getColumnModel().getColumn(0).setResizable(false);
+//		tablaMateriasPrimas.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tablaMateriasPrimas.getColumnModel().getColumn(0).setMinWidth(60);
+		tablaMateriasPrimas.getColumnModel().getColumn(0).setMaxWidth(60);
+		tablaMateriasPrimas.getColumnModel().getColumn(3).setMinWidth(60);
+		tablaMateriasPrimas.getColumnModel().getColumn(3).setMaxWidth(60);
+//		tablaMateriasPrimas.getColumnModel().getColumn(1).setResizable(false);
+//		tablaMateriasPrimas.getColumnModel().getColumn(2).setResizable(false);
+//		tablaMateriasPrimas.getColumnModel().getColumn(3).setResizable(false);
+//		tablaMateriasPrimas.getColumnModel().getColumn(4).setResizable(false);
+		tablaMateriasPrimas.setRowHeight(18);
+		
+		
+		
 		scrollPane.setViewportView(tablaMateriasPrimas);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
-				if(posicionMateriaPrimaActual == null){
-					String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1), comboCategorias.getSelectedItem().toString(),
-							comboMateriaPrima.getSelectedItem().toString(), String.valueOf(spinnerCantidad.getValue())};
-					DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
-					modelo.addRow(arreglo);
-					tablaMateriasPrimas.setModel(modelo);
-					ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
-					spinnerCantidad.setValue(1);
-				}else{
-					int cantidadSpinner = (int) spinnerCantidad.getValue();
-					int cantidadTabla = Integer.parseInt((String) tablaMateriasPrimas.getValueAt(posicionMateriaPrimaActual, 3));
-					int cantidadNueva = cantidadTabla + cantidadSpinner;
-					tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
-					spinnerCantidad.setValue(1);
-				}
+				Agregar_Materia_prima();
 			}});
-		btnAgregar.setBounds(579, 73, 92, 32);
+		btnAgregar.setBounds(536, 96, 135, 32);
 		contentPanel.add(btnAgregar);
 		
-		lblTotal = new JLabel("TOTAL     $");
+		lblTotal = new JLabel("TOTAL");
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotal.setFont(new Font("SansSerif", Font.BOLD, 16));
 		lblTotal.setVisible(false);
-		lblTotal.setBounds(782, 359, 59, 25);
+		lblTotal.setBounds(502, 359, 73, 25);
 		contentPanel.add(lblTotal);
 		
 		textTotal = new JTextField();
+		textTotal.setEditable(false);
 		textTotal.setVisible(false);
-		textTotal.setBounds(851, 359, 86, 28);
+		textTotal.setBounds(585, 359, 86, 28);
 		contentPanel.add(textTotal);
 		textTotal.setColumns(10);
 		
 		btnQuitar = new JButton("Quitar");
+		btnQuitar.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
-				if(!(filaSeleccionada == -1)){
-					
-					ListaMateriaPrima.remove(tablaMateriasPrimas.getValueAt(filaSeleccionada, 2));
-					
-					DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
-					modelo.removeRow(filaSeleccionada);
-					tablaMateriasPrimas.setModel(modelo);
-					
-					for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
-						tablaMateriasPrimas.setValueAt(i+1, i, 0);
-					}
-				}
+				Quitar_Materia_prima();
 			}
 		});
-		btnQuitar.setBounds(675, 73, 97, 32);
+		btnQuitar.setBounds(10, 351, 135, 32);
 		contentPanel.add(btnQuitar);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				okButton = new JButton("Agregar");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						if(tablaMateriasPrimas.getRowCount()>0){
-							sv_SolicitudCompra.agregarSolicitudCompra(obtenerSolicitud());
-							dispose();
-							Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
-							frame.setModal(true);
-							frame.setVisible(true);
-						}
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+		
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		buttonPane.setBackground(new Color(60, 179, 113));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+		
+		okButton = new JButton("Guardar");
+		okButton.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/Save-icon24.png")));
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Guardar_solicitud_compra();
 			}
-			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						dispose();
-						Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
-						frame.setModal(true);
-						frame.setVisible(true);
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+		});
+		okButton.setActionCommand("OK");
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+
+		cancelButton = new JButton("Salir");
+		cancelButton.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
 			}
-		}
+		});
+		cancelButton.setActionCommand("Cancel");
+		buttonPane.add(cancelButton);
 		
 		inicializar();
 	}
 	
+	private void Guardar_solicitud_compra() {
+		if(tablaMateriasPrimas.getRowCount()>0){
+			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerSolicitud());
+			dispose();
+		}
+	}
+
+	private void Quitar_Materia_prima() {
+		int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
+		if(!(filaSeleccionada == -1)){
+			
+			ListaMateriaPrima.remove(tablaMateriasPrimas.getValueAt(filaSeleccionada, 2));
+			
+			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			modelo.removeRow(filaSeleccionada);
+			tablaMateriasPrimas.setModel(modelo);
+			
+			for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
+				tablaMateriasPrimas.setValueAt(i+1, i, 0);
+			}
+		}
+	}
+
+	private void Agregar_Materia_prima() {
+		Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
+		if(posicionMateriaPrimaActual == null){
+			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1), comboCategorias.getSelectedItem().toString(),
+					comboMateriaPrima.getSelectedItem().toString(), String.valueOf(spinnerCantidad.getValue())};
+			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			modelo.addRow(arreglo);
+			tablaMateriasPrimas.setModel(modelo);
+			ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
+			spinnerCantidad.setValue(1);
+		}else{
+			int cantidadSpinner = (int) spinnerCantidad.getValue();
+			int cantidadTabla = Integer.parseInt((String) tablaMateriasPrimas.getValueAt(posicionMateriaPrimaActual, 3));
+			int cantidadNueva = cantidadTabla + cantidadSpinner;
+			tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
+			spinnerCantidad.setValue(1);
+		}
+	}
+
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	private void inicializar(){
@@ -316,8 +362,14 @@ public class AM_Solicitud_Compra extends JDialog {
 			modelo.addRow(arreglo);
 			tablaMateriasPrimas.setModel(modelo);
 		}
-//		lblTotal.setVisible(true);
-//		textTotal.setVisible(true);
+		Double PRECIO = 0.0;
+		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
+			PRECIO = sc.getPrecio().doubleValue();
+		}
+		lblTotal.setVisible(true);
+		textTotal.setVisible(true);
+		
+		textTotal.setText(formatoImporte.format(PRECIO));
 		okButton.setVisible(false);
 		cancelButton.setText("Salir");
 		spinnerCantidad.setEnabled(false);

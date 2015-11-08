@@ -164,7 +164,6 @@ public class Interfaz_Principal {
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-//		frmWildsoft.setBounds(100, 100, 1522, 920);
 		frmWildsoft.setBounds(100, 100, 1133, 780);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -172,7 +171,7 @@ public class Interfaz_Principal {
 		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBackground(SystemColor.menu);
+		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(frmWildsoft.getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -192,14 +191,12 @@ public class Interfaz_Principal {
 
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(Color.WHITE);
-		panelProductos.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Pedido",
-				TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblIngreseLosProductos = new JLabel(
-				"Ingrese los productos que componen su pedido");
+				"Ingrese los productos que componen el pedido");
 		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
 
@@ -328,6 +325,10 @@ public class Interfaz_Principal {
 		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 
 		scrollPane_Pedido_Completo = new JScrollPane();
+		
+		JLabel lblProductosQueComponen = new JLabel("Productos que componen el pedido");
+		lblProductosQueComponen.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProductosQueComponen.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(
 				panel_Resumen_Pedido);
 		gl_panel_Resumen_Pedido.setHorizontalGroup(
@@ -335,15 +336,21 @@ public class Interfaz_Principal {
 				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
 					.addGap(8)
 					.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 1499, Short.MAX_VALUE)
+						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
 						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 					.addGap(8))
+				.addGroup(Alignment.TRAILING, gl_panel_Resumen_Pedido.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblProductosQueComponen, GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel_Resumen_Pedido.setVerticalGroup(
 			gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup()
-					.addGap(50)
-					.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+					.addGap(14)
+					.addComponent(lblProductosQueComponen, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
 					.addGap(14)
 					.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(1))
@@ -425,6 +432,7 @@ public class Interfaz_Principal {
 		panelDelibery.setLayout(null);
 
 		chckbxDelivery = new JCheckBox("Con delivery");
+		chckbxDelivery.setOpaque(false);
 		chckbxDelivery.setBackground(SystemColor.menu);
 		chckbxDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -550,7 +558,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JPanel panel_Lista_de_pedidos = new JPanel();
-		panel_Lista_de_pedidos.setBackground(SystemColor.menu);
+		panel_Lista_de_pedidos.setBackground(Color.WHITE);
 		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos,
 				null);
 
@@ -563,7 +571,7 @@ public class Interfaz_Principal {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
-		panel.setBackground(SystemColor.menu);
+		panel.setBackground(Color.WHITE);
 
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
@@ -714,7 +722,7 @@ public class Interfaz_Principal {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JPanel panel_Itinerario = new JPanel();
-		panel_Itinerario.setBackground(SystemColor.menu);
+		panel_Itinerario.setBackground(Color.WHITE);
 		tabbedPane.addTab("Itinerario de Entrega", null, panel_Itinerario, null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -748,58 +756,61 @@ public class Interfaz_Principal {
 		tabla_Itinerario_con_pedidos.setModel(obtenerModel());
 		scrollPane_1.setViewportView(tabla_Itinerario_con_pedidos);
 		
-		JLabel label = new JLabel("Lista De Pedidos");
-		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblListaDePedidos = new JLabel("Lista de Pedidos");
+		lblListaDePedidos.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblListaDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel label_1 = new JLabel("Itinerario De Entrega");
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblItinerarioDeEntrega = new JLabel("Itinerario de Entrega");
+		lblItinerarioDeEntrega.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblItinerarioDeEntrega.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setLayout(null);
 		
 		JButton btnAgregar_1 = new JButton("Agregar");
-		btnAgregar_1.setBounds(64, 11, 109, 35);
+		btnAgregar_1.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnAgregar_1.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Arrow-Next-4-icon32.png")));
+		btnAgregar_1.setBounds(36, 11, 109, 35);
 		panel_1.add(btnAgregar_1);
 		
 		JButton button_1 = new JButton("Quitar");
-		button_1.setBounds(64, 57, 109, 35);
+		button_1.setHorizontalTextPosition(SwingConstants.RIGHT);
+		button_1.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Arrow-Back-4-icon32.png")));
+		button_1.setBounds(36, 57, 109, 35);
 		panel_1.add(button_1);
 		
-		JButton btnVaciar = new JButton("Vaciar");
-		btnVaciar.setBounds(64, 103, 109, 35);
+		JButton btnVaciar = new JButton("Vaciar Itinerario");
+		btnVaciar.setBounds(36, 103, 109, 35);
 		panel_1.add(btnVaciar);
 		
 		JLabel lblRepartidor = new JLabel("Repartidor:");
-		lblRepartidor.setBounds(64, 168, 109, 14);
+		lblRepartidor.setBounds(10, 168, 163, 14);
 		panel_1.add(lblRepartidor);
 		lblRepartidor.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		comboRepartidores = new JComboBox<String>();
-		comboRepartidores.setBounds(38, 193, 163, 27);
+		comboRepartidores.setBounds(10, 193, 163, 27);
 		panel_1.add(comboRepartidores);
 		
 		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
-		btnGenerarnItinerario.setBounds(10, 231, 217, 45);
+		btnGenerarnItinerario.setBounds(10, 231, 163, 45);
 		panel_1.add(btnGenerarnItinerario);
 		GroupLayout gl_panel_Itinerario = new GroupLayout(panel_Itinerario);
 		gl_panel_Itinerario.setHorizontalGroup(
 			gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Itinerario.createSequentialGroup()
 					.addGap(10)
-					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_Itinerario.createSequentialGroup()
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-							.addGap(260)
-							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 464, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_Itinerario.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-							.addGap(10)
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
-							.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)))
+					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblListaDePedidos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblItinerarioDeEntrega, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
 					.addGap(10))
 		);
 		gl_panel_Itinerario.setVerticalGroup(
@@ -807,14 +818,18 @@ public class Interfaz_Principal {
 				.addGroup(gl_panel_Itinerario.createSequentialGroup()
 					.addGap(18)
 					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addGap(4)
+						.addComponent(lblItinerarioDeEntrega, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblListaDePedidos, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
-						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE))
-					.addGap(11))
+						.addGroup(gl_panel_Itinerario.createSequentialGroup()
+							.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_panel_Itinerario.createSequentialGroup()
+							.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+								.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE))
+							.addGap(11))))
 		);
 		panel_Itinerario.setLayout(gl_panel_Itinerario);
 		btnGenerarnItinerario.addActionListener(new ActionListener() {
@@ -1277,11 +1292,11 @@ public class Interfaz_Principal {
 	private void abrirInterfazBoton(String nombre) {
 		if(nombre.equals("sc")){
 			Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
-			frame.setModal(true);
+//			frame.setModal(true);
 			frame.setVisible(true);
 		}else if (nombre.equals("pr")){
 			Interfaz_Proveedores frame = new Interfaz_Proveedores(Principal_neg_int);
-			frame.setModal(true);
+//			frame.setModal(true);
 			frame.setVisible(true);
 		}
 		

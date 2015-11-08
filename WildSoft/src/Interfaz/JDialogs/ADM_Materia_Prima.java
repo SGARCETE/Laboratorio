@@ -27,9 +27,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 
 
-
-
-
 public class ADM_Materia_Prima extends JDialog{
 
 	private static final long serialVersionUID = 1L;

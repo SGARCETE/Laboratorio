@@ -3,52 +3,41 @@ package mail_sender;
 import java.util.ArrayList;
 
 import Negocio.Modelo.Solicitud_compra;
-import Negocio.Servicios.Principal_Negocio_Interfaz;
 
 public class Email_Manager {
 
-	private String Correo = "wildsoft1234";
-	private String Password = "server.wildosft@gmail.com";
-	private String SERVIDOR = "smtp.gmail.com";
-	private String PUERTO = "587";
+	private String Correo = "server.wildsoft@gmail.com";
+	private String Password = "wildsoft1234";
 	
 	private String ASUNTO_MENSAJE = "";
 	private String MENSAJE_HTML = "";
-
+	private String RUTA_ADJUNTO = "";
 	private Solicitud_compra solicitud_compra;
 	private boolean EXITO = false;
-	private ArrayList<String> Destinatarios;
-	private Principal_Negocio_Interfaz PNI;
+	private ArrayList<String> Destinatarios = new ArrayList<String>();
 
-	public Email_Manager(Principal_Negocio_Interfaz pni){
-		PNI = pni;
-	}
-
-	public void ENVIAR_SOLICITUD_DE_COMPRA(String destinatarios, Solicitud_compra Solicitud) {
-		
-		Destinatarios.add(destinatarios);
-		
+	public boolean ENVIAR_SOLICITUD_DE_COMPRA(Solicitud_compra Solicitud) {
 		solicitud_compra = Solicitud;
-		//		Destinatarios = destinatarios;
 		
-		// armar correo con informacion adicional	
-		Mensaje_HTML(Solicitud);
+		//	Destinatarios = destinatarios;
+
 		
-		// enviar datos del viaje al cliente
-        Thread t = new Thread(){  
-            public void run(){  
-            	EnvioMail e = new EnvioMail(Correo, Password, solicitud_compra.getSolicitudPDF().getAbsolutePath(), solicitud_compra.getSolicitudPDF().getName(), Destinatarios, ASUNTO_MENSAJE, MENSAJE_HTML);
-            	EXITO = e.sendMailHTML(true,SERVIDOR,PUERTO);
-            	if(EXITO){
-            		// paso 6: guardar que se envio
-            		PNI.getSvSolicitudCompra().Registrar_Envio_Solicitud(solicitud_compra.getId());
-            	}
-            }  
-        };  
-        t.start();
+		Destinatarios.add(Solicitud.getProveedor().getMail());
+		
+		// Armar correo con informacion adicional	
+		Mensaje_HTML(solicitud_compra);
+		RUTA_ADJUNTO = solicitud_compra.getSolicitudPDF().getAbsolutePath();
+		System.out.println("ENVIAR_SOLICITUD_DE_COMPRA:\nADJUNTO RUTA: "+RUTA_ADJUNTO);
+		// Enviar datos del viaje al cliente (lo envia en otro hilo para que el programa no se cuelgue)
+//        Thread t = new Thread(){  
+//            public void run(){  
+            	EnvioMail e = new EnvioMail(Correo, Password, RUTA_ADJUNTO, solicitud_compra.getSolicitudPDF().getName(), Destinatarios, ASUNTO_MENSAJE, MENSAJE_HTML);
+            	EXITO = e.sendMailHTML(true);
+//            }  
+//        };  
+//        t.start();
+        return EXITO;
 	}
-	
-	
 	
 	private void Mensaje_HTML(Solicitud_compra solicitud_compra){
 		ASUNTO_MENSAJE = "Solicitud de Compra Nº"+solicitud_compra.getId()+" - Pizzeria WILDSOFT";

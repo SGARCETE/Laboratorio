@@ -24,7 +24,7 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Materia_Prima  	SvMateria_Prima = new Servicio_Materia_Prima();
 	private Servicio_Solicitud_compra	SvSolicitudCompra = new Servicio_Solicitud_compra();
 	private Servicio_entrega			svEntrega = new Servicio_entrega();
-	private Email_Manager 				email_manager = new Email_Manager(this);
+//	private Email_Manager 				email_manager = new Email_Manager(this);
 	
 	/**############################################################################**/
 	/**############################################################################**/
@@ -88,9 +88,9 @@ public class Principal_Negocio_Interfaz {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	public Email_Manager getEmail_manager() {
-		return email_manager;
-	}
+//	public Email_Manager getEmail_manager() {
+//		return email_manager;
+//	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

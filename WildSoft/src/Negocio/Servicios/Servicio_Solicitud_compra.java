@@ -1,5 +1,6 @@
 package Negocio.Servicios;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import Negocio.Modelo.Materia_Prima;
@@ -8,14 +9,45 @@ import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.Solicitud_compraDAO;
 import Persistencia.DAOjdbcImpl.Solicitud_compraDAOjdbc;
+import Reportes.ReporteSolicitud;
+import mail_sender.Email_Manager;
 
 public class Servicio_Solicitud_compra {
 	private Solicitud_compraDAO scDAO = new Solicitud_compraDAOjdbc();
 	
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void agregarSolicitudCompra(Solicitud_compra sc){
+	/**			ARREGLAR ESTO QUE ESTA PIDIENDO UAN LISTA PARA OBTENER SOLO UNA SOLICITUD  -TODO	***/
+	public Solicitud_compra OBTENER_SOLICITUD(int ID_SOLICITUD){
+		Solicitud_compra sc = scDAO.getSOLICITUD_COMPRA(ID_SOLICITUD);
+		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
+		return sc;
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void AGREGAR_SOLICITUD_COMPRA(Solicitud_compra sc){
 		scDAO.AGREGAR_SOLICITUD(sc);
 		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
+	}
+		
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void ELIMINAD_SOLICITUD_COMPRA(Solicitud_compra sc){
+		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
+		scDAO.ELIMINAD_SOLICITUD(sc);
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public boolean MODIFICAR_SOLICITUD_COMPRA(Solicitud_compra sc){
+		if(sc!=null && sc.getId()!=0){
+			scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
+			return scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
+		}
+		return false;
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public boolean MODIFICAR_ESTADO(Integer ID_SOLICITUD, Integer ID_ESTADO){
+		return scDAO.MODIFICAR_ESTADO(ID_SOLICITUD, ID_ESTADO);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -34,51 +66,75 @@ public class Servicio_Solicitud_compra {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public boolean MODIFICAR_ESTADO(Solicitud_compra sd, Integer numero){
-		return scDAO.MODIFICAR_ESTADO(sd, numero);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void MODIFICAR_Solicitud(Solicitud_compra sc){
-		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
-		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public Proveedor getProveedor(Integer ID_Proveedor){
-		return scDAO.getProveedor(ID_Proveedor);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Materia_Prima> getLISTA_Materia_Prima(Solicitud_compra sd){
 		return scDAO.getLISTA_Materia_Prima(sd);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public int obtenerEstado(String estado) {
-		return scDAO.obtenerEstado(estado);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**			ARREGLAR ESTO QUE ESTA PIDIENDO UAN LISTA PARA OBTENER SOLO UNA SOLICITUD  -TODO	***/
-	public Solicitud_compra obtenerSolicitud(int id){
-		int index = scDAO.getLISTA_SOLICITUDES().indexOf(new Solicitud_compra(id));
-		Solicitud_compra sc = scDAO.getLISTA_SOLICITUDES().get(index);
-		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
-		//sc.setProveedor(scDAO.getProveedor());
-		return sc;
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void eliminarSolicitudCompra(Solicitud_compra sc){
-		scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
-		scDAO.eliminarSolicitud(sc);
-	}
+	public boolean Enviar_solicitud_a_proveedor(Integer iD_SOLICITUD) {
+		boolean Exito = false;
+		Email_Manager EM = new Email_Manager();
+		Solicitud_compra Solicitud = OBTENER_SOLICITUD(iD_SOLICITUD);
+		
+		// Genera archivo adjunto
+		ReporteSolicitud RS = new ReporteSolicitud();
+		RS.Generar_Solicitud(iD_SOLICITUD);
+		RS.EXPORT_TO_PDF("", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
+//		RS.EXPORT_TO_PDF(System.getProperty("user.home") + "\\Desktop", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
+		
+		File PDF_SOLICITUD = new File("\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
+		
+//		File PDF_SOLICITUD = new File(System.getProperty("user.home") + "\\Desktop\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
+		Solicitud.setSolicitudPDF(PDF_SOLICITUD);
+		
+		if(Solicitud!=null){
+			Exito =  EM.ENVIAR_SOLICITUD_DE_COMPRA(Solicitud);
+			if(Exito)
+				scDAO.Registrar_envio_solicitud(iD_SOLICITUD);
+		}
+		
+//		PDF_SOLICITUD.delete();
+		return Exito;
+		
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public boolean Registrar_Envio_Solicitud(Integer id) {
-		return scDAO.Registrar_envio_solicitud(id);
+		
+		
+
+		
+		
+	
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	public void Ver_Reporte_solicitud_compra(Integer NUMERO_SOLICITUD) {
+		ReporteSolicitud RS = new ReporteSolicitud();
+		RS.Generar_Solicitud(NUMERO_SOLICITUD);
+		RS.MOSTRAR_REPORTE();
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+//	public void solicitud_compra_PDF(Integer NUMERO_SOLICITUD) {
+//		ReporteSolicitud RS = new ReporteSolicitud();
+//		RS.Generar_Solicitud(NUMERO_SOLICITUD);
+//		RS.EXPORT_TO_PDF(RUTA, NOMBRE_ARCHIVO);
+//	}
+	
+	
+	
+	
+	// REVISAR SI REALMENTE ES NECESARIO
+	public Proveedor getProveedor(Integer ID_Proveedor){
+		return scDAO.getProveedor(ID_Proveedor);
+	}
+	
+
+	// REVISAR SI REALMENTE ES NECESARIO
+	public int obtenerEstado(String estado) {
+		return scDAO.obtener_ID_Estado_Solicitud(estado);
+	}
+	
 	
 	//TODO
 	/**
@@ -92,7 +148,10 @@ public class Servicio_Solicitud_compra {
 		
 	}
 
-
 	
+
+
+
+
 
 }//---> FIN CLASE

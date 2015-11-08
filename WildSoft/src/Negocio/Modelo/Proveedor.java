@@ -10,6 +10,7 @@ public class Proveedor {
 	private String telefono = "";
 	private ArrayList<Integer> categoria;
 	private String mail = "";
+	private boolean Vigente = true;// Si un proveedor se "elimino" de la lista de proveedores. se lo pone como false, porque no se pueden ELIMINAR proveedores, causaria problemas
 	
 	public Proveedor(){}
 	
@@ -70,6 +71,14 @@ public class Proveedor {
 	
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public boolean isVigente() {
+		return Vigente;
+	}
+
+	public void setVigente(boolean vigente) {
+		Vigente = vigente;
 	}
 	
 	
