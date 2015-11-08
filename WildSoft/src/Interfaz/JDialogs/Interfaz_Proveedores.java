@@ -38,7 +38,7 @@ public class Interfaz_Proveedores extends JDialog {
 
 	private Servicio_Proveedores SvProveedores;
 	
-	private JTable table;
+	private JTable tableProveedores;
 	private JTable tablaCategorias;
 	
 	private JTextField textNombre;
@@ -61,18 +61,20 @@ public class Interfaz_Proveedores extends JDialog {
 	private JScrollPane scrollPane_1;
 	
 	private JLabel lblAviso;
+	private JLabel ID;
 	
 	private HashMap<Integer, String> categorias;
 	
 	private ArrayList<String> categoriasTabla;
-
 	private boolean esModificacion;
+
+	
 
 	public Interfaz_Proveedores(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Proveedores");
 		SvProveedores = instancia_negocio.getSvProveedores();
 
-		table = new JTable();
+		tableProveedores = new JTable();
 		iniciarlizarTablaProveedor();
 
 		completarTablaProveedores();
@@ -140,28 +142,28 @@ public class Interfaz_Proveedores extends JDialog {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comprobarDatos()){
+					
+					Proveedor p = new Proveedor();
+					p.setNombre(textNombre.getText());
+					p.setDireccion(textDireccion.getText());
+					p.setMail(textMail.getText());
+					p.setTelefono(textTelefono.getText());
+					ArrayList<Integer> lista = new ArrayList<Integer>();
+					for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
+						lista.add(Integer.parseInt((String) tablaCategorias.getValueAt(i, 0)));
+					}
+					p.setCategoria(lista);
+					
 					if (esModificacion){
-						
+						p.setId(Integer.parseInt(ID.getText()));
+						SvProveedores.modificarProveedor(p);					
 					}else{
-						Proveedor p = new Proveedor();
-						p.setNombre(textNombre.getText());
-						System.out.println(textNombre.getText());
-						p.setDireccion(textDireccion.getText());
-						System.out.println(textDireccion.getText());
-						p.setMail(textMail.getText());
-						System.out.println(textMail.getText());
-						p.setTelefono(textTelefono.getText());
-						System.out.println(textTelefono.getText());
-						ArrayList<Integer> lista = new ArrayList<Integer>();
-						for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
-							lista.add(Integer.parseInt((String) tablaCategorias.getValueAt(i, 0)));
-						}
-						p.setCategoria(lista);
-						System.out.println(lista.size());
 						SvProveedores.AGREGAR_PROVEEDOR(p);
 					}
 					camposHabilitados(false);
 					resetearCampos();
+					iniciarlizarTablaProveedor();
+					completarTablaProveedores();
 				}
 			}
 		});
@@ -275,6 +277,10 @@ public class Interfaz_Proveedores extends JDialog {
 		});
 		btnNuevoProveedor.setBounds(16, 351, 265, 28);
 		panelAltaModificacion.add(btnNuevoProveedor);
+		
+		ID = new JLabel("");
+		ID.setBounds(16, 6, 55, 16);
+		panelAltaModificacion.add(ID);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Lista de Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, null));
@@ -286,12 +292,12 @@ public class Interfaz_Proveedores extends JDialog {
 		scrollPane.setBounds(10, 21, 679, 318);
 		panel_2.add(scrollPane);
 
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tableProveedores);
 
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
+				if (tableProveedores.getSelectedRow() != -1) {
 					eliminarProveedor();
 				}
 
@@ -304,7 +310,7 @@ public class Interfaz_Proveedores extends JDialog {
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
+				if (tableProveedores.getSelectedRow() != -1) {
 					modificarProveedor();
 				}
 			}
@@ -341,9 +347,9 @@ public class Interfaz_Proveedores extends JDialog {
 		    String value = entry.getValue();
 		    comboCategorias.addItem(value);
 		}
-		categoriasTabla = new ArrayList<String>();
 		camposHabilitados(false);
-		esModificacion = false;
+		ID.setVisible(false);
+		resetearLogica();
 	}
 	
 	private void camposHabilitados(boolean condicion){
@@ -362,23 +368,23 @@ public class Interfaz_Proveedores extends JDialog {
 
 	private void iniciarlizarTablaProveedor() {
 
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
+		tableProveedores.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
 				"N\u00B0", "Nombre", "Direcci\u00F3n", "Telefono", "Mail" }));
-		table.getColumnModel().getColumn(0).setPreferredWidth(0);
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
-		table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(200);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.getColumnModel().getColumn(2).setMinWidth(100);
-		table.getColumnModel().getColumn(2).setMaxWidth(200);
-		table.getColumnModel().getColumn(3).setPreferredWidth(100);
-		table.getColumnModel().getColumn(3).setMinWidth(100);
-		table.getColumnModel().getColumn(3).setMaxWidth(200);
-		table.getColumnModel().getColumn(4).setPreferredWidth(100);
-		table.getColumnModel().getColumn(4).setMinWidth(100);
-		table.getColumnModel().getColumn(4).setMaxWidth(200);
+		tableProveedores.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tableProveedores.getColumnModel().getColumn(0).setMinWidth(0);
+		tableProveedores.getColumnModel().getColumn(0).setMaxWidth(0);
+		tableProveedores.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tableProveedores.getColumnModel().getColumn(1).setMinWidth(100);
+		tableProveedores.getColumnModel().getColumn(1).setMaxWidth(200);
+		tableProveedores.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tableProveedores.getColumnModel().getColumn(2).setMinWidth(100);
+		tableProveedores.getColumnModel().getColumn(2).setMaxWidth(200);
+		tableProveedores.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tableProveedores.getColumnModel().getColumn(3).setMinWidth(100);
+		tableProveedores.getColumnModel().getColumn(3).setMaxWidth(200);
+		tableProveedores.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tableProveedores.getColumnModel().getColumn(4).setMinWidth(100);
+		tableProveedores.getColumnModel().getColumn(4).setMaxWidth(200);
 
 	}
 
@@ -391,48 +397,54 @@ public class Interfaz_Proveedores extends JDialog {
 			fila[3] = proveedor.getTelefono();
 			fila[4] = proveedor.getMail();
 
-			((DefaultTableModel) this.table.getModel()).addRow(fila);
+			((DefaultTableModel) this.tableProveedores.getModel()).addRow(fila);
 		}
 	}
 
+	private String[] obtenerSeleccion() {
+		int indice = tableProveedores.getSelectedRow();
+		String id = (String) tableProveedores.getModel().getValueAt(indice, 0);
+		String nombre = (String) tableProveedores.getModel().getValueAt(indice, 1);
+		String direccion = (String) tableProveedores.getModel().getValueAt(indice, 2);
+		String telefono = (String) tableProveedores.getModel().getValueAt(indice, 3);
+		String mail = (String) tableProveedores.getModel().getValueAt(indice, 4);
+
+		String[] dato = { String.valueOf(indice), id, nombre, direccion, telefono, mail };
+		return dato;
+	}
+
+	//TODO
 	private void eliminarProveedor() {
-		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog( null, "¿Seguro que desea eliminar este Proveedor?\nEstos cambios no se pueden deshacer!", "CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
-			//SvCliente.Eliminar_cliente(new Cliente(Integer.parseInt(datoTabla[1]), datoTabla[2], datoTabla[3], datoTabla[4], datoTabla[5])); TODO
+			SvProveedores.eliminarProveedor(Integer.parseInt((String) tableProveedores.getValueAt(tableProveedores.getSelectedRow(), 0)));
 			iniciarlizarTablaProveedor();
 			completarTablaProveedores();
 		}
 	}
 
-	private String[] obtenerSeleccion() {
-		int indice = table.getSelectedRow();
-		String id = (String) table.getModel().getValueAt(indice, 0);
-		String nombre = (String) table.getModel().getValueAt(indice, 1);
-		String direccion = (String) table.getModel().getValueAt(indice, 2);
-		String telefono = (String) table.getModel().getValueAt(indice, 3);
-		String detalle = (String) table.getModel().getValueAt(indice, 4);
-
-		String[] dato = { String.valueOf(indice), id, nombre, direccion, telefono, detalle };
-		return dato;
-	}
-
-	protected void modificarProveedor() {
-		lblAviso.setVisible(false);
+	//TODO
+	private void modificarProveedor() {
+		camposHabilitados(true);
 		datoTabla = obtenerSeleccion();
+		ID.setText(datoTabla[1]);
 		textNombre.setText(datoTabla[2]);
 		textDireccion.setText(datoTabla[3]);
 		textTelefono.setText(datoTabla[4]);
 		textMail.setText(datoTabla[5]);
-
-		btnModificar.setVisible(false);
-		btnEliminar.setVisible(false);
-		btnAceptar.setVisible(true);
-		btnCancelar.setVisible(true);
-
+		for (int i = 0; i < SvProveedores.getCategoriasProveedor(Integer.parseInt(datoTabla[1])).size(); i++) {
+			DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
+			String[] arreglo = {
+					String.valueOf(SvProveedores.getCategoriasProveedor(Integer.parseInt(datoTabla[1])).get(i)),
+					categorias.get(SvProveedores.getCategoriasProveedor(Integer.parseInt(datoTabla[1])).get(i))};
+			modelo.addRow(arreglo);
+			tablaCategorias.setModel(modelo);
+			categoriasTabla.add(categorias.get(SvProveedores.getCategoriasProveedor(Integer.parseInt(datoTabla[1])).get(i)));
+		}
+		esModificacion = true;
 	}
 
-	protected void resetearCampos() {
+	private void resetearCampos() {
 		textNombre.setText("");
 		textDireccion.setText("");
 		textTelefono.setText("");
@@ -441,11 +453,11 @@ public class Interfaz_Proveedores extends JDialog {
 		DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
 		modelo.setRowCount(0);
 		tablaCategorias.setModel(modelo);
-		categoriasTabla.clear();
 		
 		lblAviso.setText("");
+		ID.setText("");
 		
-		esModificacion = false;
+		resetearLogica();
 	}
 	
 	private boolean comprobarDatos() {
@@ -481,7 +493,8 @@ public class Interfaz_Proveedores extends JDialog {
 	private boolean esEmail(String correo) {
 		Pattern pat = null;
         Matcher mat = null;        
-        pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        //pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        pat = Pattern.compile("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$");
         mat = pat.matcher(correo);
         if (mat.find()) {
         	return true;
@@ -490,4 +503,8 @@ public class Interfaz_Proveedores extends JDialog {
         }        
     }
 	
+	private void resetearLogica(){
+		categoriasTabla = new ArrayList<String>();
+		esModificacion = false;
+	}
 }

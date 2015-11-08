@@ -34,8 +34,8 @@ public class Servicio_Proveedores {
 			
 		}
 		
-		public boolean ELIMINAR_Proveedor(Proveedor p){
-			return proveedorDAO.ELIMINAR_Proveedor(p);
+		public boolean eliminarProveedor(Integer id){
+			return proveedorDAO.ELIMINAR_Proveedor(id);
 		}
 		
 		public void AGREGAR_PROVEEDOR(Proveedor p){
@@ -53,6 +53,14 @@ public class Servicio_Proveedores {
 
 		public HashMap<Integer, String> getCategorias() {
 			return proveedorDAO.obtenerCategorias();
+		}
+
+		public ArrayList<Integer> getCategoriasProveedor(int ID) {
+			return proveedorDAO.getCategoriasProveedor(ID);	
+		}
+
+		public void modificarProveedor(Proveedor p) {
+			proveedorDAO.modificarProveedor(p);
 		}
 }
 

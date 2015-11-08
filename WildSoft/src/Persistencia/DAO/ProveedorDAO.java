@@ -11,7 +11,7 @@ public interface ProveedorDAO {
 	
 	void AGREGAR_PROVEEDOR(Proveedor p);
 	
-	boolean ELIMINAR_Proveedor(Proveedor p);
+	boolean ELIMINAR_Proveedor(Integer id);
 	
 	ArrayList<Proveedor> get_Proveedores();
 	
@@ -20,4 +20,8 @@ public interface ProveedorDAO {
 	Proveedor obtenerProveedor(String nombre);
 
 	public HashMap<Integer, String> obtenerCategorias();
+
+	ArrayList<Integer> getCategoriasProveedor(int iD);
+
+	void modificarProveedor(Proveedor p);
 }

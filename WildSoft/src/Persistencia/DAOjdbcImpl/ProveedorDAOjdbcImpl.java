@@ -17,8 +17,8 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 	private ConectorMySQL conex = new ConectorMySQL();
 
 	public void AGREGAR_PROVEEDOR(Proveedor p) {
-		String SentenciaSQL = "INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail ) "
-				+ "VALUES ('" + p.getNombre() + "','" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getMail() + "');";
+		String SentenciaSQL = "INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail, PV_vigente ) "
+				+ "VALUES ('" + p.getNombre() + "','" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getMail() + "', true);";
 		int id = conex.insert(SentenciaSQL);
 		for (int i = 0; i < p.getCategorias().size(); i++) {
 			insertarCategorias(id, p.getCategorias().get(i));
@@ -93,7 +93,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 			conex.connectToMySQL();// Conectar base
 
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Proveedor");
+			st.executeQuery("SELECT * FROM Proveedor WHERE PV_vigente=1");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 
@@ -115,10 +115,9 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 		return Arreglo;
 	}
 
-	public boolean ELIMINAR_Proveedor(Proveedor p) {
-		String SentenciaSQL = "DELETE * FROM Proveedor WHERE MP_id="
-				+ p.getId();
-		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
+	public boolean ELIMINAR_Proveedor(Integer ID) {
+		String SentenciaSQL = "UPDATE proveedor SET PV_vigente=0 WHERE PV_id=" + ID + ";";
+		return conex.Insertar(SentenciaSQL);
 	}
 
 	@Override
@@ -167,5 +166,43 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 					"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return mapa;
+	}
+
+	@Override
+	public ArrayList<Integer> getCategoriasProveedor(int iD) {
+		ArrayList<Integer> arreglo = new ArrayList<Integer>();
+		try {
+			conex.connectToMySQL();
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("SELECT PC_categoria_id FROM proveedor_categoria WHERE PC_proveedor_id=" + iD + ";");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				arreglo.add(Fila.getInt("PC_categoria_id"));
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return arreglo;
+	}
+
+	@Override
+	public void modificarProveedor(Proveedor p) {
+		actualizarProveedor(p);
+		eliminarCategoriasProveedor(p);
+		for (int i = 0; i < p.getCategorias().size(); i++) {
+			insertarCategorias(p.getId(), p.getCategorias().get(i));
+		}
+	}
+	
+	private void eliminarCategoriasProveedor(Proveedor p) {
+		String SentenciaSQL = "DELETE FROM proveedor_categoria WHERE PC_proveedor_id=" + p.getId() + ";";
+		conex.Insertar(SentenciaSQL);
+	}
+
+	private void actualizarProveedor(Proveedor p){
+		String SentenciaSQL = "UPDATE proveedor SET PV_nombre='" + p.getNombre() + "', PV_direccion='" + p.getDireccion()
+				+ "', PV_mail='" + p.getMail() + "', PV_telefono='" + p.getTelefono() + "' WHERE PV_id=" + p.getId() + ";";
+		conex.Insertar(SentenciaSQL);
 	}
 }
