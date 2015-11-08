@@ -3,8 +3,6 @@ package Interfaz.JDialogs;
 import javax.swing.JDialog;
 import java.util.Date;
 import java.util.HashMap;
-
-import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
@@ -21,13 +19,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Button;
+import java.awt.Font;
+
 
 
 
@@ -42,7 +40,6 @@ public class ADM_Materia_Prima extends JDialog{
 	private JTextField textNombre;
 	private JTable table;
 	private JComboBox<String> comboBoxCategoria;
-	private ArrayList<String> listaCategorias; 
 	private JScrollPane scrollPane;
 	private JDateChooser dateChooser;
 	private JDateChooser dateChooserNuevo;
@@ -56,6 +53,7 @@ public class ADM_Materia_Prima extends JDialog{
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnAgregar ;
+	private JLabel label;
 	
 	private HashMap<Integer, String> categorias;
 	
@@ -204,6 +202,18 @@ public class ADM_Materia_Prima extends JDialog{
 		btnEliminar.setBounds(713, 345, 89, 68);
 		panel.add(btnEliminar);
 		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setBorder(new TitledBorder(null, "Descripci\u00F3n", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_3.setBounds(10, 280, 987, 60);
+		panel.add(panel_3);
+		
+		label = new JLabel("");
+		label.setForeground(Color.RED);
+		label.setFont(new Font("SansSerif", Font.BOLD, 15));
+		label.setBounds(283, 23, 492, 30);
+		panel_3.add(label);
+		
 		Inicializar();
 		
 	}
@@ -215,7 +225,8 @@ public class ADM_Materia_Prima extends JDialog{
 		dateChooserNuevo.setVisible(false);
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
-		
+		label.setVisible(false);
+		comboBoxCategoria.addItem("Seleccione Categoria");
 		
 		categorias = SvMateria.getCategorias();
 		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
@@ -252,12 +263,29 @@ public class ADM_Materia_Prima extends JDialog{
 		{
 			if(comboBoxCategoria.getSelectedIndex()!=-1)
 			{
-				SvMateria.AgregarMAteriaPrima(new Materia_Prima(textNombre.getText(),fecha,id));
-				inicializarTabla();
-				llenar_tabla();
-				JOptionPane.showMessageDialog(null, "Materia Prima agregada");	
+				if(dateChooser.getDate()!=null){
+					label.setVisible(false);
+					SvMateria.AgregarMAteriaPrima(new Materia_Prima(textNombre.getText(),fecha,id));
+					inicializarTabla();
+					llenar_tabla();
+					JOptionPane.showMessageDialog(null, "Materia Prima agregada");	
+					
+					textNombre.setText("");
+					dateChooser.setDate(null);
+					
+				}
+				else {
+					label.setText("Debes completar el 'Vencimiento' para continuar");
+					label.setVisible(true);}
+				
 			}
+			else {
+				label.setText("Debes completar el combo 'Categoria' para continuar");
+				label.setVisible(true);}
 		}
+		else {
+			label.setText("Debes completar el campo 'Nombre' para continuar");
+			label.setVisible(true);}
 	}
 	public void inicializarTabla(){
 		
@@ -369,12 +397,20 @@ public class ADM_Materia_Prima extends JDialog{
 		{
 			if(comboBoxCategoria.getSelectedIndex()!=-1)
 			{
-				guardarCambios(textNombre.getText(), fecha, id);
-				SvMateria.modificarMateria(new Materia_Prima(Integer.parseInt(datoTabla[1]),textNombre.getText(), fecha, id)); 
-			
-				inicializarTabla();
-				llenar_tabla();
-				JOptionPane.showMessageDialog(null, "Materia Prima Modificada");	
+				if(dateChooserNuevo.getDate()!=null)
+				{
+					guardarCambios(textNombre.getText(), fecha, id);
+					SvMateria.modificarMateria(new Materia_Prima(Integer.parseInt(datoTabla[1]),textNombre.getText(), fecha, id)); 
+				
+					inicializarTabla();
+					llenar_tabla();
+					JOptionPane.showMessageDialog(null, "Materia Prima Modificada");	
+				}
+				if(dateChooserNuevo.getDate()==null){
+					JOptionPane.showMessageDialog(null, "Selecccione el nuevo Vencimiento");
+					
+				}
+				
 			}
 		}
 		textNombre.setText("");
@@ -395,8 +431,4 @@ public class ADM_Materia_Prima extends JDialog{
 	protected void guardarCambios(String nombre, Date fecha, Integer categoria) {
 		SvMateria.modificarMateria(new Materia_Prima(Integer.parseInt(datoTabla[1]),nombre, fecha, categoria));
 	}
-	
-	
-	
-	
 }
