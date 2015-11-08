@@ -7,8 +7,9 @@ public class Materia_Prima {
 	private Integer id;
 	private String nombre="";
 	private Date fecha_vencimiento = null;
-	private int categoria = 1;
+	private Integer categoria = 1;
 	private String categoria_string = "";
+	private String nombreCategoria;
 	private int cantidad=0;
 	
 	public Materia_Prima(String nombre_,Date fecha,int categoria_ ) {
@@ -19,6 +20,24 @@ public class Materia_Prima {
 	public Materia_Prima(){
 		
 	}
+	
+	public Materia_Prima(Integer id_, String nombre_)
+	{
+		this.id= id_;
+		this.nombre= nombre_;
+	}
+	public Materia_Prima(String nombre_,Date fecha,String categoria_ ) {
+		this.nombre=nombre_;
+		this.fecha_vencimiento= fecha;
+		this.categoria_string=categoria_;
+	}
+	public Materia_Prima(Integer id_,String nombre_,Date fecha,Integer categoria_ ) {
+		this.id=id_;
+		this.nombre=nombre_;
+		this.fecha_vencimiento= fecha;
+		this.categoria=categoria_;
+	}
+	
 	
 	public int getCantidad() {
 		return cantidad;
@@ -59,10 +78,15 @@ public class Materia_Prima {
 		this.categoria = categoria;
 	}
 	
-	public int getCategoria() {
+	public Integer getCategoria() {
 		return categoria;
 	}
 	
+	public String dameCagoria(Materia_Prima m)
+	{
+		
+		return m.getCategoria_string();
+	}
 	
 	
 }

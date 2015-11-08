@@ -1,6 +1,7 @@
 package Negocio.Servicios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Negocio.Modelo.Materia_Prima;
 import Persistencia.DAOjdbcImpl.MateriaPrimaDAOjdbcImpl;
@@ -20,6 +21,10 @@ public class Servicio_Materia_Prima {
 	public ArrayList<String> getCategoria_MP(){
 		return MateriaPrimaDAO.getCategoria_MP();
 	}
+	public ArrayList<Materia_Prima> getCategoria(){
+		return MateriaPrimaDAO.getCategoria();
+	}
+	
 	
 	public Integer obtenerId(String nombreMP){
 		return MateriaPrimaDAO.obtenerId(nombreMP);
@@ -31,5 +36,16 @@ public class Servicio_Materia_Prima {
 	public boolean AgregarMAteriaPrima(Materia_Prima m)
 	{
 		return MateriaPrimaDAO.AGREGAR_Materia_Prima(m);
+	}
+	public String dameNombreCategoria(Integer id)
+	{
+		return MateriaPrimaDAO.dameNombreCategoria(id);
+	}
+	public HashMap<Integer, String> getCategorias() {
+		return MateriaPrimaDAO.obtenerCategorias();
+	}
+	public boolean modificarMateria(Materia_Prima m)
+	{
+		return MateriaPrimaDAO.modificarMateria(m);
 	}
 }
