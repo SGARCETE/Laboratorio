@@ -56,7 +56,7 @@ public class Proveedor {
 		this.telefono = telefono;
 	}
 	
-	public ArrayList<Integer> getCategoria() {
+	public ArrayList<Integer> getCategorias() {
 		return categoria;
 	}
 	

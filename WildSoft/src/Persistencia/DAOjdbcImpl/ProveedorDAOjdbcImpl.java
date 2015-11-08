@@ -17,11 +17,11 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 	private ConectorMySQL conex = new ConectorMySQL();
 
 	public void AGREGAR_PROVEEDOR(Proveedor p) {
-		String SentenciaSQL = "INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail )"
-				+ "VALUES ('" + p.getNombre() + "','" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getMail() + "';";
+		String SentenciaSQL = "INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_telefono, PV_mail ) "
+				+ "VALUES ('" + p.getNombre() + "','" + p.getDireccion() + "','" + p.getTelefono() + "','" + p.getMail() + "');";
 		int id = conex.insert(SentenciaSQL);
-		for (int i = 0; i < p.getCategoria().size(); i++) {
-			insertarCategorias(id, p.getCategoria().get(i));
+		for (int i = 0; i < p.getCategorias().size(); i++) {
+			insertarCategorias(id, p.getCategorias().get(i));
 		}
 	}
 

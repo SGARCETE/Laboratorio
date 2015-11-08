@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,29 +28,45 @@ import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Proveedores;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 @SuppressWarnings("serial")
 public class Interfaz_Proveedores extends JDialog {
 
 	private JPanel contentPanel = new JPanel();
 
 	private Servicio_Proveedores SvProveedores;
-	private JTextField textNombre;
+	
 	private JTable table;
+	private JTable tablaCategorias;
+	
+	private JTextField textNombre;
 	private JTextField textDireccion;
 	private JTextField textTelefono;
 	private JTextField textMail;
+	
 	private String[] datoTabla;
+	
 	private JButton btnEliminar;
 	private JButton btnModificar;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
-	private JComboBox<String> comboCategorias;
-	private JButton btnAgregar_1;
+	private JButton btnNuevoProveedor;
+	private JButton btnAgregar;
 	private JButton btnQuitar;
+	
+	private JComboBox<String> comboCategorias;
+	
 	private JScrollPane scrollPane_1;
-	private JTable tablaCategorias;
+	
 	private JLabel lblAviso;
+	
 	private HashMap<Integer, String> categorias;
+	
+	private ArrayList<String> categoriasTabla;
+
+	private boolean esModificacion;
 
 	public Interfaz_Proveedores(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Proveedores");
@@ -56,7 +75,7 @@ public class Interfaz_Proveedores extends JDialog {
 		table = new JTable();
 		iniciarlizarTablaProveedor();
 
-		llenar_tabla();
+		completarTablaProveedores();
 
 		setResizable(false);
 		setBounds(100, 100, 1023, 453);
@@ -92,6 +111,22 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(textDireccion);
 
 		textTelefono = new JTextField();
+		textTelefono.addKeyListener(new KeyAdapter(){
+		   public void keyTyped(KeyEvent e){
+		      char caracter = e.getKeyChar();
+		      if(((caracter < '0') || (caracter > '9'))
+		    		  && (caracter != KeyEvent.VK_BACK_SPACE)
+		    		  && (caracter != '(')
+		    		  && (caracter != ')')
+		    		  && (caracter != '+')
+		    		  && (caracter != KeyEvent.VK_MINUS)
+		    		  && (caracter != KeyEvent.VK_SPACE)
+		    		  && (caracter != KeyEvent.VK_LEFT)
+		    		  && (caracter != KeyEvent.VK_RIGHT)) {
+		         e.consume();
+		      }
+		   }
+		});
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(79, 108, 210, 28);
 		panelAltaModificacion.add(textTelefono);
@@ -104,7 +139,30 @@ public class Interfaz_Proveedores extends JDialog {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				aceptarModificacion();
+				if(comprobarDatos()){
+					if (esModificacion){
+						
+					}else{
+						Proveedor p = new Proveedor();
+						p.setNombre(textNombre.getText());
+						System.out.println(textNombre.getText());
+						p.setDireccion(textDireccion.getText());
+						System.out.println(textDireccion.getText());
+						p.setMail(textMail.getText());
+						System.out.println(textMail.getText());
+						p.setTelefono(textTelefono.getText());
+						System.out.println(textTelefono.getText());
+						ArrayList<Integer> lista = new ArrayList<Integer>();
+						for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
+							lista.add(Integer.parseInt((String) tablaCategorias.getValueAt(i, 0)));
+						}
+						p.setCategoria(lista);
+						System.out.println(lista.size());
+						SvProveedores.AGREGAR_PROVEEDOR(p);
+					}
+					camposHabilitados(false);
+					resetearCampos();
+				}
 			}
 		});
 		btnAceptar.setBounds(16, 351, 96, 28);
@@ -113,7 +171,8 @@ public class Interfaz_Proveedores extends JDialog {
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cancelarModificar();
+				camposHabilitados(false);
+				resetearCampos();
 			}
 		});
 		btnCancelar.setBounds(193, 351, 96, 28);
@@ -135,8 +194,8 @@ public class Interfaz_Proveedores extends JDialog {
 		comboCategorias.setBounds(16, 181, 273, 26);
 		panelAltaModificacion.add(comboCategorias);
 
-		btnAgregar_1 = new JButton("Agregar");
-		btnAgregar_1.addActionListener(new ActionListener() {
+		btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Recorro el mapa buscando la id del elemento seleccionado del combo
 				Integer id = -1;
@@ -147,16 +206,17 @@ public class Interfaz_Proveedores extends JDialog {
 					}			    
 				}
 				
-				// Al encontrarlo recorro l tabla de proveedores para comprobar que ya lo haya agregado
+				// Al encontrarlo recorro la tabla de proveedores para comprobar que ya lo haya agregado
 				boolean estaAgregado = false;
-				for (int i = 0; i < tablaCategorias.getRowCount(); i++) {
-					if(tablaCategorias.getValueAt(i, 0).equals(id)){
+				for (int i = 0; i < categoriasTabla.size(); i++) {
+					if(categoriasTabla.get(i).equals(comboCategorias.getSelectedItem())){
 						estaAgregado = true;
 					}
 				}
 				
 				// Por ultimo si no esta en la tabla, agrego la id en la columna oculta y el nombre de la 
 				if(!estaAgregado){
+					categoriasTabla.add((String) comboCategorias.getSelectedItem());
 					DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
 					String[] arreglo = {String.valueOf(id), (String) comboCategorias.getSelectedItem()};
 					modelo.addRow(arreglo);
@@ -164,10 +224,20 @@ public class Interfaz_Proveedores extends JDialog {
 				}
 			}
 		});
-		btnAgregar_1.setBounds(16, 212, 90, 28);
-		panelAltaModificacion.add(btnAgregar_1);
+		btnAgregar.setBounds(16, 212, 90, 28);
+		panelAltaModificacion.add(btnAgregar);
 
 		btnQuitar = new JButton("Quitar");
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tablaCategorias.getSelectedRow()!=-1){
+					categoriasTabla.remove((String) tablaCategorias.getValueAt(tablaCategorias.getSelectedRow(), 1));
+					DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
+					modelo.removeRow(tablaCategorias.getSelectedRow());
+					tablaCategorias.setModel(modelo);
+				}
+			}
+		});
 		btnQuitar.setBounds(199, 212, 90, 28);
 		panelAltaModificacion.add(btnQuitar);
 
@@ -196,6 +266,15 @@ public class Interfaz_Proveedores extends JDialog {
 		tablaCategorias.getColumnModel().getColumn(0).setMinWidth(0);
 		tablaCategorias.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane_1.setViewportView(tablaCategorias);
+		
+		btnNuevoProveedor = new JButton("Nuevo Proveedor");
+		btnNuevoProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				camposHabilitados(true);
+			}
+		});
+		btnNuevoProveedor.setBounds(16, 351, 265, 28);
+		panelAltaModificacion.add(btnNuevoProveedor);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Lista de Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, null));
@@ -245,11 +324,9 @@ public class Interfaz_Proveedores extends JDialog {
 		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 
 		lblAviso = new JLabel("");
+		lblAviso.setForeground(Color.RED);
 		lblAviso.setBounds(322, 378, 334, 24);
 		panel.add(lblAviso);
-
-		btnAceptar.setVisible(false);
-		btnCancelar.setVisible(false);
 		
 		iniciarDatos();
 	}
@@ -264,6 +341,23 @@ public class Interfaz_Proveedores extends JDialog {
 		    String value = entry.getValue();
 		    comboCategorias.addItem(value);
 		}
+		categoriasTabla = new ArrayList<String>();
+		camposHabilitados(false);
+		esModificacion = false;
+	}
+	
+	private void camposHabilitados(boolean condicion){
+		textNombre.setEnabled(condicion);
+		textDireccion.setEnabled(condicion);
+		textTelefono.setEnabled(condicion);
+		textMail.setEnabled(condicion);
+		comboCategorias.setEnabled(condicion);
+		btnAgregar.setEnabled(condicion);
+		btnQuitar.setEnabled(condicion);
+		
+		btnAceptar.setVisible(condicion);
+		btnCancelar.setVisible(condicion);
+		btnNuevoProveedor.setVisible(!condicion);
 	}
 
 	private void iniciarlizarTablaProveedor() {
@@ -288,7 +382,7 @@ public class Interfaz_Proveedores extends JDialog {
 
 	}
 
-	private void llenar_tabla() {
+	private void completarTablaProveedores() {
 		for (Proveedor proveedor : SvProveedores.getProveedores()) {
 			String[] fila = new String[5];
 			fila[0] = proveedor.getId().toString();
@@ -301,13 +395,13 @@ public class Interfaz_Proveedores extends JDialog {
 		}
 	}
 
-	protected void eliminarProveedor() {
+	private void eliminarProveedor() {
 		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog( null, "¿Seguro que desea eliminar este Proveedor?\nEstos cambios no se pueden deshacer!", "CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
 			//SvCliente.Eliminar_cliente(new Cliente(Integer.parseInt(datoTabla[1]), datoTabla[2], datoTabla[3], datoTabla[4], datoTabla[5])); TODO
 			iniciarlizarTablaProveedor();
-			llenar_tabla();
+			completarTablaProveedores();
 		}
 	}
 
@@ -338,55 +432,62 @@ public class Interfaz_Proveedores extends JDialog {
 
 	}
 
-	protected void cancelarModificar() {
+	protected void resetearCampos() {
 		textNombre.setText("");
 		textDireccion.setText("");
 		textTelefono.setText("");
 		textMail.setText("");
-
-		btnAceptar.setVisible(false);
-		btnCancelar.setVisible(false);
-		lblAviso.setVisible(false);
-		btnModificar.setVisible(true);
-		btnEliminar.setVisible(true);
+		
+		DefaultTableModel modelo = (DefaultTableModel) tablaCategorias.getModel();
+		modelo.setRowCount(0);
+		tablaCategorias.setModel(modelo);
+		categoriasTabla.clear();
+		
+		lblAviso.setText("");
+		
+		esModificacion = false;
 	}
-
-	protected void guardarCambios(String nombre, String direccion, String telefono, String mail) {
-		//SvCliente.Modificar_Cliente(new Cliente(Integer.parseInt(datoTabla[1]), nombre, direccion, telefono, mail)); TODO
-	}
-
-	protected void aceptarModificacion() {
-		if (!textNombre.getText().equals("")) {
-			if (!textDireccion.getText().equals("")) {
-				if (!textTelefono.getText().equals("")) {
-					if (!textMail.getText().equals("")) {
-						guardarCambios(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textMail.getText());
-						textNombre.setText("");
-						textDireccion.setText("");
-						textTelefono.setText("");
-						textMail.setText("");
-						iniciarlizarTablaProveedor();
-						llenar_tabla();
-						lblAviso.setVisible(false);
-						btnAceptar.setVisible(false);
-						btnCancelar.setVisible(false);
-						btnModificar.setVisible(true);
-						btnEliminar.setVisible(true);
-					} else {
-						lblAviso.setText("Debes completar el campo 'Mail' para continuar");
-						lblAviso.setVisible(true);
-					}
-				} else {
-					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
-					lblAviso.setVisible(true);
-				}
-			} else {
-				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
-				lblAviso.setVisible(true);
-			}
-		} else {
+	
+	private boolean comprobarDatos() {
+		if (textNombre.getText().equals("")) {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
+			return false;
+		}else if (textDireccion.getText().equals("")) {
+			lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
+			lblAviso.setVisible(true);
+			return false;
+		}else if (textTelefono.getText().equals("")) {
+			lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
+			lblAviso.setVisible(true);
+			return false;
+		}else if (textMail.getText().equals("")) {
+			lblAviso.setText("Debes completar el campo 'Mail' para continuar");
+			lblAviso.setVisible(true);
+			return false;
+		}else if (!esEmail(textMail.getText())){
+			lblAviso.setText("Debes introducir un mail válido para continuar");
+			lblAviso.setVisible(true);
+			return false;
+		}else if (!(tablaCategorias.getRowCount()>0)){
+			lblAviso.setText("Debes asignar al menos una categoria para continuar");
+			lblAviso.setVisible(true);
+			return false;
+		}else{
+			return true;
 		}
 	}
+	
+	private boolean esEmail(String correo) {
+		Pattern pat = null;
+        Matcher mat = null;        
+        pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        mat = pat.matcher(correo);
+        if (mat.find()) {
+        	return true;
+        }else{
+            return false;
+        }        
+    }
+	
 }
