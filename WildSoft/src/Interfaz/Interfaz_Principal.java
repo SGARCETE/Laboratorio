@@ -54,6 +54,7 @@ import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_ABM_Producto;
+import Interfaz.JDialogs.Interfaz_ABM_Combos;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Proveedores;
@@ -916,6 +917,11 @@ public class Interfaz_Principal {
 		menuBar.add(mnCombos);
 		
 		JMenuItem mntmAbmCombos = new JMenuItem("Administrar Combos");
+		mntmAbmCombos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Abrir_Interfaz_ABM_Combos();
+			}
+		});
 		mnCombos.add(mntmAbmCombos);
 
 		JMenu mnProductos = new JMenu("Productos");
@@ -1191,6 +1197,13 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_ABM_Producto() {
 		Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
+	}
+	
+	private void Abrir_Interfaz_ABM_Combos() {
+		Interfaz_ABM_Combos frame = new Interfaz_ABM_Combos(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
 		
@@ -1589,8 +1602,4 @@ public class Interfaz_Principal {
 			ri.Generar_Itinerario(entrega.getId());
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-	
 }// ---> FIN CLASE
