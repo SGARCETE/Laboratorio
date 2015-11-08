@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ventas" language="groovy" pageWidth="595" pageHeight="1008" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26c99d00-7a45-4e03-9a0d-868a894a8b36">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="PieChartDataset" uuid="6ebf96bb-cd0c-44f3-b918-b1d7b946c8fb"/>
+	<parameter name="PD_fecha_pedido" class="java.util.Date">
+		<defaultValueExpression><![CDATA[$P{PD_fecha_pedido}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PD_fecha_pedido2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[$P{PD_fecha_pedido}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(PP_precio) ,(select sum(PP_precio) from Producto_pedidos PP join Pedido PD
+on
+PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}) as total1, ((sum(PP_precio) / (select sum(PP_precio) from Producto_pedidos PP join Pedido PD
+on
+PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4))*100) as porcentaje,CL.CL_nombre from Pedido PD join CLiente CL join Producto PR join  Producto_pedidos PP ON
+PD.PD_id= PP.PP_pedidoid and PP.PP_productoid = PR.PR_id and PD.PD_cliente= CL.CL_id
+and CL.CL_id <> 1 and PD_estado = 4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}
+group by CL.CL_id;]]>
+	</queryString>
+	<field name="sum(PP_precio)" class="java.lang.Double"/>
+	<field name="total1" class="java.lang.Double"/>
+	<field name="porcentaje" class="java.lang.Double"/>
+	<field name="CL_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="336" y="65" width="217" height="29" uuid="3a80e27c-c00f-492c-973c-112743d4ca15"/>
+				<textElement textAlignment="Right">
+					<font size="22" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pizzería Wildsoft]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="0" width="597" height="65" forecolor="#006699" backcolor="#006699" uuid="1c37b5dc-6e72-4ee6-a319-7299be1bafce"/>
+				<staticText>
+					<reportElement style="Title" x="231" y="0" width="346" height="65" uuid="6be54167-8f45-4000-80d6-2b5dd62ec513"/>
+					<textElement textAlignment="Right">
+						<font size="54" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Ventas]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<frame>
+				<reportElement x="227" y="0" width="328" height="20" uuid="cf6fdb2e-5041-4db4-8901-d67e3ab2a382"/>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="0" y="0" width="164" height="20" forecolor="#000000" uuid="8a02f116-0e60-4ecb-8667-f4221d981590"/>
+					<textElement>
+						<font fontName="Arial" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<text><![CDATA[Porcentaje]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="164" y="0" width="164" height="20" forecolor="#000000" uuid="4b63ed1c-7f3d-42b4-aa77-46ae9f402d60"/>
+					<textElement>
+						<font fontName="Arial" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<text><![CDATA[Cliente]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="111" y="0" width="100" height="20" uuid="6f42ce00-1a9f-4f85-a8e0-82483888a2c3"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="111" y="22" width="442" height="1" uuid="f90fdcf1-510e-4936-9304-0f2fe937130f"/>
+			</line>
+			<textField pattern="###0.00">
+				<reportElement x="111" y="3" width="100" height="20" uuid="7db64014-b1ee-4702-93cf-d0f0c0f4f63f"/>
+				<textFieldExpression><![CDATA[$F{sum(PP_precio)}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="225" y="0" width="328" height="20" uuid="7027fc7c-997e-4d14-9069-e236f1ee5e1e"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" positionType="Float" x="164" y="0" width="164" height="18" uuid="5d9cec6e-85cb-4b29-9d1c-bdb2d60fb07e"/>
+					<textElement>
+						<font fontName="Arial" size="14" isBold="false" pdfFontName="Helvetica"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CL_nombre}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="0" y="2" width="100" height="16" uuid="3c92e2ff-13ec-4a36-ba13-63ff0992dd1a"/>
+					<textFieldExpression><![CDATA[$F{porcentaje}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="278" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="ac782ed5-ea68-4959-9fb4-88ca450b4050"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<pie3DChart>
+				<chart>
+					<reportElement x="2" y="0" width="555" height="277" uuid="69398dac-8007-4a2b-8861-8db12493ab98"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{CL_nombre}]]></keyExpression>
+					<valueExpression><![CDATA[$F{porcentaje}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#006699" uuid="ed95ac2f-5af0-47c0-bd9f-92108aca8bd6"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="-1" width="40" height="13" forecolor="#FFFFFF" uuid="2f978b82-933d-440b-912b-27703651c300"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="-1" width="80" height="13" forecolor="#FFFFFF" uuid="9707e601-73b8-4b1e-817c-f70f9791e804"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="c8fdd08e-6461-4a90-8c40-b9c09cd6d1db"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

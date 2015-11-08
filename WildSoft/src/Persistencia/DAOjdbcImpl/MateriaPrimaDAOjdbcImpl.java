@@ -20,7 +20,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	public boolean AGREGAR_Materia_Prima(Materia_Prima m) {
 	    String SentenciaSQL = "INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES"+
 			"'"+	m.getNombre()			+"','"
-			   +	formato_yyyyMMdd.format(m.getFecha_vencimiento())			+"',"
+			   +	formato_yyyyMMdd.format(m.getFecha_vencimiento().getTime())			+"',"
 			   +    m.getCategoria()		+")";
 	    
 	   

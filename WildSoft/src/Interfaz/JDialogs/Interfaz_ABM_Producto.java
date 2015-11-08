@@ -50,6 +50,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private JButton btnCancelar;
 	private JButton btnAgregar;
 	private JComboBox<String> comboTipo;
+	private JTextField textField;
 
 	public Interfaz_ABM_Producto(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("ABM Producto");
@@ -207,6 +208,19 @@ public class Interfaz_ABM_Producto extends JDialog {
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(133, 347, 210, 28);
+		panel.add(textField);
+		
+		JLabel lblCategora = new JLabel("Categor\u00EDa :");
+		lblCategora.setBounds(60, 354, 63, 14);
+		panel.add(lblCategora);
+		
+		JButton button = new JButton("Modificar");
+		button.setBounds(366, 347, 111, 28);
+		panel.add(button);
+		
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
 		
@@ -361,7 +375,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 	protected void Aceptar_modificar_Producto() {
 		if (!textNombre.getText().equals("")) {
 			if (!textPrecio.getText().equals("")) {
-				if(comboTipo.getSelectedIndex()>0)
+				if(!comboTipo.getSelectedItem().toString().equals(""))
 				{
 					if(!textObservación.getText().equals(""))
 					{

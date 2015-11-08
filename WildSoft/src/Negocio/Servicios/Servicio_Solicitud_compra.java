@@ -65,7 +65,7 @@ public class Servicio_Solicitud_compra {
 		int index = scDAO.getLISTA_SOLICITUDES().indexOf(new Solicitud_compra(id));
 		Solicitud_compra sc = scDAO.getLISTA_SOLICITUDES().get(index);
 		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
-		sc.setProveedor(scDAO.getProveedor());
+		//sc.setProveedor(scDAO.getProveedor());
 		return sc;
 	}
 	
