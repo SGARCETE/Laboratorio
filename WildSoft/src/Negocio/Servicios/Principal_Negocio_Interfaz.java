@@ -4,6 +4,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import Negocio.Servicios.Servicio_Clientes;
+import mail_sender.Email_Manager;
 //import mail_sender.Email_Manager;
 import Interfaz.Interfaz_Principal;
 
@@ -23,7 +24,7 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Materia_Prima  	SvMateria_Prima = new Servicio_Materia_Prima();
 	private Servicio_Solicitud_compra	SvSolicitudCompra = new Servicio_Solicitud_compra();
 	private Servicio_entrega			svEntrega = new Servicio_entrega();
-	//private Email_Manager 				email_manager = new Email_Manager(this);
+	private Email_Manager 				email_manager = new Email_Manager(this);
 	
 	/**############################################################################**/
 	/**############################################################################**/
@@ -85,13 +86,13 @@ public class Principal_Negocio_Interfaz {
 	public Servicio_entrega getSvEntrega() {
 		return svEntrega;
 	}
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-	/*public Email_Manager getEmail_manager() {
+	public Email_Manager getEmail_manager() {
 		return email_manager;
 	}
-	public void setEmail_manager(Email_Manager email_manager) {
-		this.email_manager = email_manager;
-	}
-*/
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
 }//---> FIN CLASE

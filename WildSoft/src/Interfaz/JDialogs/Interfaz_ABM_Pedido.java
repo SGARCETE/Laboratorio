@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -53,7 +54,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
 	private JTextField textDetalle;
-	private JTextField textDire;
+	private JTextField textDomicilio;
 	private JTextField textTelefono;
 	private JTextField textCliente = new JTextField();
 	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
@@ -146,11 +147,11 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		lblDireccion_1.setBounds(22, 72, 291, 25);
 		panel.add(lblDireccion_1);
 		
-		textDire = new JTextField();
-		textDire.setBackground(new Color(240, 255, 240));
-		textDire.setBounds(22, 98, 291, 25);
-		panel.add(textDire);
-		textDire.setColumns(10);
+		textDomicilio = new JTextField();
+		textDomicilio.setBackground(new Color(240, 255, 240));
+		textDomicilio.setBounds(22, 98, 291, 25);
+		panel.add(textDomicilio);
+		textDomicilio.setColumns(10);
 		
 		textTelefono = new JTextField();
 		textTelefono.setBackground(new Color(240, 255, 240));
@@ -527,83 +528,81 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
-		// traigo el pedido con el id Numero_pedido_modificar
+		// OBTIENE EL PEDIDO CON EL ID GENERAL
 		PEDIDO_ACTUAL = SvPedidos.get_pedido(Numero_pedido_modificar);
 		
 		// si el pedido no es nulo cargos los campos del pedido
 		if(PEDIDO_ACTUAL!=null){
+			// SE SETEA LOS DATOS PRINCIPALES DEL PEDIDO
 			label_NroPedido.setText(PEDIDO_ACTUAL.getID_DIARIO().toString());
 			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
 			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
 			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));		// ACTUALIZA EL TOTAL
 			
-			if (!label_ESTADO.getText().equals("Pendiente")){
+			// SOLO SE PUEDE MODIFICAR SI EL ESTADO ES PENDIENTE, DE LO CONTRARIO SE DESHABILITAN LOS CAMPOS PARA MODIFICAR
+			if (!PEDIDO_ACTUAL.getESTADO().equals("Pendiente")){
 				textCliente.setEditable(false);
-				textDire.setEditable(false);
+				textDomicilio.setEditable(false);
 				textDetalle.setEditable(false);
 				textTelefono.setEditable(false);
 				textObservaciones.setEditable(false);
 				
 				comboBoxProducto.setEnabled(false);
 				comboBoxVariedad.setEnabled(false);
-				
+			
 				spinnerCantidad.setEnabled(false);
 				spinnerCantNueva.setEnabled(false);
-				
 				btnGuardarModificacionPedido.setEnabled(false);
 				Modificar_Cantidad.setEnabled(false);
 				btnQuitar.setEnabled(false);
 				btn_Agregar.setEnabled(false);
+				tglbtnDelivery.setEnabled(false);
 			}
 		}
 		
+		// SE SETEA EL NOMBRE Y SE SELECCIONA EL TOOGLEBUTTON DEPENDIENDO SI ES DELIVERY O NO
 		tglbtnDelivery.setText(PEDIDO_ACTUAL.getEs_Delivery() ? "SI" : "NO");
 		tglbtnDelivery.setSelected(PEDIDO_ACTUAL.getEs_Delivery());
 		
+		// SE CARGAN LOS DATOS DEL CLIENTE SI ES QUE HAY UNO ASOCIADO
 		Cargar_datos_Cliente(PEDIDO_ACTUAL.getCliente());
+		
+		// SE CARGAN LOS PRODUCTOS DEL PEDIDO EN LA TABLA
 		Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
 	}
 	
 	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/*** ALTA DE PEDIDO */
-	private void Guardar_pedido() {
-		SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
+	private boolean Guardar_pedido() {
+		// SI ES CON DELIVERY, CHEQUEO QUE EL NOMBRE DEL CLIENTE Y LA DIRECCION ESTEN, SINO NO LO GUARDO
+		if(PEDIDO_ACTUAL.getEs_Delivery()){
+			if(textCliente.getText().isEmpty() || textDomicilio.getText().isEmpty()){
+				JOptionPane.showMessageDialog(this, "Un pedido con servicio de delivery debe tener \n al menos el nombre y la direccion del cliente", "Falta cliente", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
 		
-		ArrayList<Producto> lista = PEDIDO_ACTUAL.getLista_Productos();
-		
-		SvPedidos.eliminar_producto_del_pedido(PEDIDO_ACTUAL);
-		
-		PEDIDO_ACTUAL.setLista_Productos(lista);
-		
-		SvPedidos.agregar_producto_al_pedido(PEDIDO_ACTUAL);
-
-		dispose();
-		
-		
-//		
-//		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
-//		
-//			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
-//			if (chckbxDelivery.isSelected()) {
-//				// agregar datos del pedido
-//				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
-//				System.out.println(chckbxDelivery.isSelected());
-//			}
-//			if(CLIENTE_ACTUAL!=null)
-//				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
-//			// GUARDA EL PEDIDO
-//			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
-//			// ACTUALIZA EL LISTADO DE PEDIDOS
-//			Actualizar_Lista_pedidos();
-//			ACTUALIZAR_MONITOR();
-//			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
-//			Limpiar_Todo();
-//		}
+		// SI EL PEDIDO NO TIENE PRODUCTOS, NO SE PUEDE GUARDAR
+		if(PEDIDO_ACTUAL.getLista_Productos().size()>0){
+			SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
+			
+			ArrayList<Producto> lista = PEDIDO_ACTUAL.getLista_Productos();
+			
+			SvPedidos.eliminar_producto_del_pedido(PEDIDO_ACTUAL);
+			
+			PEDIDO_ACTUAL.setLista_Productos(lista);
+			
+			SvPedidos.agregar_producto_al_pedido(PEDIDO_ACTUAL);
+	
+			dispose();
+			
+		}
+		else
+			JOptionPane.showMessageDialog(this, "El pedido debe tener al menos un producto", "Faltan productos", JOptionPane.ERROR_MESSAGE);
+		return false;
 	}
 	
-
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Actualizar_Tabla_Productos_del_Pedido(Pedido P){
 		Model_Pedido_Completo model = new Model_Pedido_Completo();
@@ -623,7 +622,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
-//		Tabla_Pedido_Completo.setModel(model);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -666,13 +664,13 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		if(c!=null){
 			CLIENTE_ACTUAL = c;
 			textCliente.setText(c.getNombre());
-			textDire.setText(c.getDomicilio());
+			textDomicilio.setText(c.getDomicilio());
 			textTelefono.setText(c.getTelefono_Fijo());
 			textDetalle.setText(c.getDetalle());
 			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
 		}
 	}
-
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();

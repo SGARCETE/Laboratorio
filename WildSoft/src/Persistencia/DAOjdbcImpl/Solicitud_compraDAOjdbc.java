@@ -214,7 +214,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	@Override
 	public boolean Registrar_envio_solicitud(Integer id) {
 		// TODO Auto-generated method stub
-		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n NO ESTOY IMPLEMENTADO! :( tengo que guardar si la solicitud fue enviada o no!");
+		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n NO ESTOY IMPLEMENTADO! :( tengo que guardar que la solicitud fue enviada!");
 		return false;
 	}
     

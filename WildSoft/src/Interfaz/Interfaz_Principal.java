@@ -80,6 +80,7 @@ import Reportes.ReporteTicket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
+import java.awt.FlowLayout;
 
 public class Interfaz_Principal {
 
@@ -88,8 +89,12 @@ public class Interfaz_Principal {
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane_Lista_Pedidos;
 	private JScrollPane scrollPane_Pedido_Completo;
+	
 	private JTable_Pedido_Completo Tabla_Pedido_Completo;
 	private JTable_Listado_Pedidos Tabla_Lista_pedidos;
+	private JTable tabla_Itinerario_Pedidos;
+	private JTable tabla_Itinerario_con_pedidos;
+	
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
 	private JCheckBox chckbxDelivery;
@@ -137,8 +142,7 @@ public class Interfaz_Principal {
 	private JDateChooser dateChooser_Fecha_mostrar;
 	private JButton btn_fecha_anterior;
 	private JButton btn_fecha_siguiente;
-	private JTable tablePedidos;
-	private JTable tableItinerario;
+
 
 	/** Create the application.
 	 * @param principal_Negocio_Interfaz  */
@@ -560,23 +564,14 @@ public class Interfaz_Principal {
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panel.setBackground(SystemColor.menu);
-		
-		JButton btnCargarListaDe = new JButton("Actualizar ");
-		btnCargarListaDe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Actualizar_Lista_pedidos();
-				ACTUALIZAR_MONITOR();
-			}
-		});
-		panel.setLayout(null);
 
 		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(11, 11, 97, 91);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Modificar_Pedido_Seleccionado();
 			}
 		});
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class
 				.getResource("/Recursos/IMG/edit-icon64.png")));
 		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -584,31 +579,17 @@ public class Interfaz_Principal {
 		panel.add(btnModificar);
 		btnModificar.setBackground(Color.WHITE);
 		
-		JButton btnComandaticket = new JButton("Ticket/Comanda");
-		btnComandaticket.setBounds(11, 512, 98, 91);
-		btnComandaticket.addActionListener(new ActionListener() {
+		JButton btnPreparado = new JButton("Preparado");
+		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
+		btnPreparado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Generar_Comanda();
+				Setear_como_Preparado();
 			}
 		});
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(11, 324, 97, 91);
-		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
-		panel.add(btnCancelar);
-		btnCancelar.setBackground(Color.WHITE);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Cancelar_Pedido_seleccionado();
-			}
-		});
-		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
-		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
-		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnComandaticket.setBackground(Color.WHITE);
-		panel.add(btnComandaticket);
+		btnPreparado.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnPreparado.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnPreparado.setBackground(Color.WHITE);
+		panel.add(btnPreparado);
 		
 			
 		
@@ -627,21 +608,7 @@ public class Interfaz_Principal {
 		btnCobrado.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnCobrado.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCobrado.setBackground(Color.WHITE);
-		btnCobrado.setBounds(11, 215, 97, 91);
 		panel.add(btnCobrado);
-		
-		JButton btnPreparado = new JButton("Preparado");
-		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
-		btnPreparado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Setear_como_Preparado();
-			}
-		});
-		btnPreparado.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnPreparado.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnPreparado.setBackground(Color.WHITE);
-		btnPreparado.setBounds(11, 113, 97, 91);
-		panel.add(btnPreparado);
 		
 		btn_fecha_anterior = new JButton("");
 		btn_fecha_anterior.addActionListener(new ActionListener() {
@@ -678,24 +645,18 @@ public class Interfaz_Principal {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-											.addGap(506)
-											.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-											.addGap(755)
-											.addComponent(btnCargarListaDe))
-										.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-											.addGap(280)
-											.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
-									.addGap(10))
+									.addGap(506)
+									.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+									.addGap(280)
+									.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
 									.addGap(342)
-									.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))))))
+									.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)))))
+					.addGap(10))
 				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
 					.addGap(131)
-					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
+					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel_Lista_de_pedidos.setVerticalGroup(
@@ -704,7 +665,6 @@ public class Interfaz_Principal {
 					.addGap(7)
 					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
 						.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnCargarListaDe, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
 							.addGap(33)
@@ -721,6 +681,30 @@ public class Interfaz_Principal {
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
 					.addContainerGap())
 		);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		panel.add(btnCancelar);
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Cancelar_Pedido_seleccionado();
+			}
+		});
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
+		
+		JButton btnComandaticket = new JButton("Ticket/Comanda");
+		btnComandaticket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Generar_Comanda();
+			}
+		});
+		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
+		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnComandaticket.setBackground(Color.WHITE);
+		panel.add(btnComandaticket);
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -735,8 +719,8 @@ public class Interfaz_Principal {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		tablePedidos = new JTable();
-		tablePedidos.setModel(new DefaultTableModel(
+		tabla_Itinerario_Pedidos = new JTable();
+		tabla_Itinerario_Pedidos.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -752,18 +736,17 @@ public class Interfaz_Principal {
 				return columnTypes[columnIndex];
 			}
 		});
-		tablePedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
-		tablePedidos.getColumnModel().getColumn(0).setMinWidth(0);
-		tablePedidos.getColumnModel().getColumn(0).setMaxWidth(0);
-		scrollPane.setViewportView(tablePedidos);
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMinWidth(0);
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMaxWidth(0);
+		scrollPane.setViewportView(tabla_Itinerario_Pedidos);
 		
-		llenarTablaPedidos();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
-		tableItinerario = new JTable();
-		tableItinerario.setModel(obtenerModel());
-		scrollPane_1.setViewportView(tableItinerario);
+		tabla_Itinerario_con_pedidos = new JTable();
+		tabla_Itinerario_con_pedidos.setModel(obtenerModel());
+		scrollPane_1.setViewportView(tabla_Itinerario_con_pedidos);
 		
 		JLabel label = new JLabel("Lista De Pedidos");
 		label.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -836,64 +819,24 @@ public class Interfaz_Principal {
 		panel_Itinerario.setLayout(gl_panel_Itinerario);
 		btnGenerarnItinerario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Entrega entrega = new Entrega();
-				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
-				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
-				sv_Entrega.agregarEntrega(entrega);
-				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
-				entrega.setLista_pedidos(new ArrayList<Pedido>());
-				for (int i = 0; i < tableItinerario.getRowCount(); i++) {
-					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0))));
-					Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tableItinerario.getValueAt(i, 0)));
-					sv_pedidos.modificar_estado(pedido, 3);
-					Actualizar_Lista_pedidos();
-					ACTUALIZAR_MONITOR();
-					System.out.println("Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tableItinerario.getValueAt(i, 0)) );
-				}
-				sv_Entrega.AGREGAR_PEDIDO(entrega);
-				System.out.println(entrega.getId());
-				
-				Generar_Itinerario(entrega.getId());
-				
+				Generar_itinerario_entrega();
 			}
 		});
 		btnVaciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pedidodItinerario = new ArrayList<Integer>();
-				tableItinerario.setModel(obtenerModel());
+				Vaciar_lista_itinerario();
 			}
 		});
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(tableItinerario.getSelectedRow()>-1){
-					for (int i = 0; i < pedidodItinerario.size(); i++) {
-						if(pedidodItinerario.get(i)==Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0))){
-							pedidodItinerario.remove(i);
-						}
-					}
-					DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
-					modelo.removeRow(tableItinerario.getSelectedRow());
-					tableItinerario.setModel(modelo);
-				}
+				Quitar_del_itinerario();
 			}
 		});
 		btnAgregar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(tablePedidos.getSelectedRow()>-1){
-					if(!pedidodItinerario.contains(Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)))){
-						pedidodItinerario.add(Integer.parseInt((String)tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)));
-						DefaultTableModel modelo = (DefaultTableModel) tableItinerario.getModel();
-						String[] arreglo = {
-								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0),
-								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 1),
-								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 2),
-								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 3),
-								(String) tablePedidos.getValueAt(tablePedidos.getSelectedRow(), 0)
-								};
-						modelo.addRow(arreglo);
-						}}
-				}
-			});
+				Agregar_al_itinerario();
+			}
+		});
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -926,15 +869,6 @@ public class Interfaz_Principal {
 			}
 		});
 		mnArchivo.add(mntmSalir);
-
-		JMenu mnPedidos = new JMenu("Pedidos");
-		menuBar.add(mnPedidos);
-
-		JMenuItem mntmNuevoPedido = new JMenuItem("Nuevo Pedido");
-		mnPedidos.add(mntmNuevoPedido);
-
-		JMenuItem mntmListaDePedidos = new JMenuItem("ADM pedidos");
-		mnPedidos.add(mntmListaDePedidos);
 		
 		// Repartidores	>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -965,11 +899,14 @@ public class Interfaz_Principal {
 		
 		JMenu mnCombos = new JMenu("Combos");
 		menuBar.add(mnCombos);
+		
+		JMenuItem mntmAbmCombos = new JMenuItem("Administrar Combos");
+		mnCombos.add(mntmAbmCombos);
 
 		JMenu mnProductos = new JMenu("Productos");
 		menuBar.add(mnProductos);
 		
-		JMenuItem mntmAbmProductos = new JMenuItem("ABM Productos");
+		JMenuItem mntmAbmProductos = new JMenuItem("Administrar Productos");
 		mntmAbmProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Abrir_Interfaz_ABM_Producto();
@@ -1024,14 +961,20 @@ public class Interfaz_Principal {
 		menuBar.add(mnAyuda);
 
 		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
+		mntmAcercaDeWildsoft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Acerca_de_wildsoft();
+			}
+		});
 		mnAyuda.add(mntmAcercaDeWildsoft);
 
 	}// --> FIN INTERFAZ	
 	
-
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ	 */
 	private void iniciarParametros() {
+		
 		// Creacion de la tabla vacia de lista de pedidos
 		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
@@ -1040,19 +983,20 @@ public class Interfaz_Principal {
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		
+		// Establece la fecha de HOY para mostrar los pedidos del dia
 		dateChooser_Fecha_mostrar.setCalendar(new GregorianCalendar());
-		
-		Actualizar_Lista_pedidos();
-		
+
+		// Llena el Autocomplete de clientes para poder cargarlos
 		AutocompletarCliente();
 		
-		// Rellena el combobox de Tipos de productos
+		// LLENA EL COMBOBOX CON LOS TIPOS DE PRODUCTOS
 		ArrayList<String> ListaProductos = sv_productos.getLista_Productos();
 		comboBoxProducto.addItem("Seleccione el tipo de producto");
 		for (int i = 0; i < ListaProductos.size(); i++) {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 		
+		// LLENA EL COMBOBOX CON NOMBRE DE REPARTIDORES
 		ArrayList<Repartidor> lista = sv_Repartidores.get_Repartidores();
 		listaRepartidores = new HashMap<String, Integer>();
 		comboRepartidores.addItem("Seleccione un repartidor");
@@ -1061,8 +1005,24 @@ public class Interfaz_Principal {
 			listaRepartidores.put(lista.get(i).getNombre(), lista.get(i).getID_Repartidor());
 		}
 		
+		// INICIALIZA LA COCINA
 		Generar_Monitor_cocina();
+		
+		// ACTUALIZA LISTA DE PEDIDOS, MONITOR COCINA, LISTA DE ITINERARIO DE PEDIDOS
+		ACTUALIZAR_TODO();
 	}
+	
+	private void Acerca_de_wildsoft() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void ACTUALIZAR_TODO() {
+		Actualizar_Lista_pedidos();
+		ACTUALIZAR_MONITOR();
+		Actualizar_itinerario_pedidos();
+	}
+
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Monitor_cocina() {
@@ -1091,13 +1051,11 @@ public class Interfaz_Principal {
         frame_cocina = new Interfaz_Cocina_Pantalla(Principal_neg_int);
         frame_cocina.setBounds(R);
         frame_cocina.setVisible(true);
-        
-        ACTUALIZAR_MONITOR();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/** CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL
-	 * TOTAL DEL PEDIDO */
+	/** >>>>>>>>>>>>>  ESTE METODO DEBERIA ESTAR EN SERVICIO DE PEDIDOS, Y NO EN INTERFAZ <<<<<<<<<<<<<< 
+	 * CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES DEL MISMO PRODUCTO Y EL TOTAL DEL PEDIDO */
 	private void Calcula_totales() {
 		if (PRODUCTO_ACTUAL != null	&& PEDIDO_ACTUAL.getLista_Productos() != null) {
 
@@ -1214,14 +1172,14 @@ public class Interfaz_Principal {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			//				ABM Client
-			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		private void Abrir_Interfaz_ABM_Producto() {
-			Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(Principal_neg_int);
-			frame.setModal(true);
-			frame.setVisible(true);
-			
-		}
+	//				ABM Client
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Abrir_Interfaz_ABM_Producto() {
+		Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
+	}
 	
 	//---------------- Metodo que llama a la interfaz Materia Prima
 		private void Abrir_Interfaz_Materia() {
@@ -1247,8 +1205,7 @@ public class Interfaz_Principal {
 			// GUARDA EL PEDIDO
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// ACTUALIZA EL LISTADO DE PEDIDOS
-			Actualizar_Lista_pedidos();
-			ACTUALIZAR_MONITOR();
+			ACTUALIZAR_TODO();
 			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
@@ -1263,8 +1220,7 @@ public class Interfaz_Principal {
 			frame.setPedido_a_modificar(ID_PEDIDO_MODIFICAR);
 			frame.setModal(true);
 			frame.setVisible(true);
-			Actualizar_Lista_pedidos();
-			ACTUALIZAR_MONITOR();
+			ACTUALIZAR_TODO();
 		}
 	}
 	
@@ -1280,8 +1236,7 @@ public class Interfaz_Principal {
 			
 			if(!estado.equals("Cobrado")){
 				sv_pedidos.eliminar_pedido(P_cancelar);
-				Actualizar_Lista_pedidos();
-				ACTUALIZAR_MONITOR();
+				ACTUALIZAR_TODO();
 			}
 			
 		}
@@ -1442,8 +1397,7 @@ public class Interfaz_Principal {
 
 		if(Estado_pedido.equals("Pendiente")){
 			sv_pedidos.modificar_estado(pedido, 2);
-			Actualizar_Lista_pedidos();
-			ACTUALIZAR_MONITOR();
+			ACTUALIZAR_TODO();
 		}
 
 //		sv_pedidos.eliminar_pedido(P_cancelar);
@@ -1461,8 +1415,7 @@ public class Interfaz_Principal {
 		
 		if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
 			sv_pedidos.modificar_estado(pedido, 4);
-			Actualizar_Lista_pedidos();
-			ACTUALIZAR_MONITOR();
+			ACTUALIZAR_TODO();
 		}
 	}
 	
@@ -1503,8 +1456,7 @@ public class Interfaz_Principal {
 		Calendar c = dateChooser_Fecha_mostrar.getCalendar();
 		c.add(Calendar.DAY_OF_MONTH, 1);
 		dateChooser_Fecha_mostrar.setCalendar(c);
-		Actualizar_Lista_pedidos();
-		ACTUALIZAR_MONITOR();
+		ACTUALIZAR_TODO();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1512,8 +1464,7 @@ public class Interfaz_Principal {
 		Calendar c = dateChooser_Fecha_mostrar.getCalendar();
 		c.add(Calendar.DAY_OF_MONTH, -1);
 		dateChooser_Fecha_mostrar.setCalendar(c);
-		Actualizar_Lista_pedidos();
-		ACTUALIZAR_MONITOR();
+		ACTUALIZAR_TODO();
 	}
 	
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1540,7 +1491,8 @@ public class Interfaz_Principal {
 			};
 	}
 	
-	private void llenarTablaPedidos() {
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Actualizar_itinerario_pedidos() {
 
 		ArrayList<Pedido> lista = sv_pedidos.get_pedidos_preparados(Calendar.getInstance());
 		DefaultTableModel modelo = obtenerModel();
@@ -1558,16 +1510,72 @@ public class Interfaz_Principal {
 			}
 		}
 		
-		tablePedidos.setModel(modelo);
+		tabla_Itinerario_Pedidos.setModel(modelo);
 	}
 	
-	private void Generar_Itinerario(int id) {
-		
-		ReporteItinerario ri= new ReporteItinerario();
-		ri.Generar_Itinerario(id);
-		
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Vaciar_lista_itinerario() {
+		pedidodItinerario = new ArrayList<Integer>();
+		tabla_Itinerario_con_pedidos.setModel(obtenerModel());
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Quitar_del_itinerario() {
+		if(tabla_Itinerario_con_pedidos.getSelectedRow()>-1){
+			for (int i = 0; i < pedidodItinerario.size(); i++) {
+				if(pedidodItinerario.get(i)==Integer.parseInt((String)tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0))){
+					pedidodItinerario.remove(i);
+				}
+			}
+			DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos.getModel();
+			modelo.removeRow(tabla_Itinerario_con_pedidos.getSelectedRow());
+			tabla_Itinerario_con_pedidos.setModel(modelo);
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Agregar_al_itinerario() {
+		if(tabla_Itinerario_Pedidos.getSelectedRow()>-1){
+			if(!pedidodItinerario.contains(Integer.parseInt((String)tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0)))){
+				pedidodItinerario.add(Integer.parseInt((String)tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0)));
+				DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos.getModel();
+				String[] arreglo = {
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0),
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 1),
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 2),
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 3),
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0)
+				};
+				modelo.addRow(arreglo);
+			}
+		}
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Generar_itinerario_entrega() {
+		if(tabla_Itinerario_con_pedidos!=null && tabla_Itinerario_con_pedidos.getRowCount()>0){
+			Entrega entrega = new Entrega();
+			entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
+			entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
+			sv_Entrega.agregarEntrega(entrega);
+			entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
+			entrega.setLista_pedidos(new ArrayList<Pedido>());
+			for (int i = 0; i < tabla_Itinerario_con_pedidos.getRowCount(); i++) {
+				entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
+				Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
+				sv_pedidos.modificar_estado(pedido, 3);
+				ACTUALIZAR_TODO();
+				System.out.println("Generar_itinerario_entrega.Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)) );
+			}
+			sv_Entrega.AGREGAR_PEDIDO(entrega);
+			System.out.println("Generar_itinerario_entrega "+entrega.getId());
+			
+			ReporteItinerario ri= new ReporteItinerario();
+			ri.Generar_Itinerario(entrega.getId());
+		}
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	
 }// ---> FIN CLASE

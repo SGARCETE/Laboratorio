@@ -63,9 +63,5 @@ public class ReporteSolicitud {
 		}
 	}
 	
-/*	public static void main(String[] args) {
-		int numerodesolicitud=2;
-		ReporteSolicitud rs = new ReporteSolicitud();
-		rs.Generar_Solicitud(numerodesolicitud);
-	}  */   
-}
+
+}//----> FIN CLASE

@@ -92,11 +92,6 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 			return conex.Insertar(SentenciaSQL);
 	}
 
-	@Override
-	public boolean Nuevo_Cliente(Cliente c) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public ArrayList<Cliente> getListaCliente() {
