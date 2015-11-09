@@ -49,6 +49,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import Interfaz.JDialogs.ADM_Categorias;
 import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
@@ -978,16 +979,16 @@ public class Interfaz_Principal {
 		});
 		mnReporteContabilidad.add(mntmVerContabilidad);
 
-		JMenu mnAyuda = new JMenu("Ayuda");
-		menuBar.add(mnAyuda);
-
-		JMenuItem mntmAcercaDeWildsoft = new JMenuItem("Acerca de WildSoft");
-		mntmAcercaDeWildsoft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Acerca_de_wildsoft();
+		JMenu mnCategoria = new JMenu("Categor\u00EDa");
+		menuBar.add(mnCategoria);
+		
+		JMenuItem mntmADMCategoria = new JMenuItem("Administracion de Categoria");
+		mntmADMCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AbrirInterfazCategoria();
 			}
 		});
-		mnAyuda.add(mntmAcercaDeWildsoft);
+		mnCategoria.add(mntmADMCategoria);
 
 	}// --> FIN INTERFAZ	
 	
@@ -1031,11 +1032,6 @@ public class Interfaz_Principal {
 		
 		// ACTUALIZA LISTA DE PEDIDOS, MONITOR COCINA, LISTA DE ITINERARIO DE PEDIDOS
 		ACTUALIZAR_TODO();
-	}
-	
-	private void Acerca_de_wildsoft() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void ACTUALIZAR_TODO() {
@@ -1601,5 +1597,11 @@ public class Interfaz_Principal {
 			ReporteItinerario ri= new ReporteItinerario();
 			ri.Generar_Itinerario(entrega.getId());
 		}
+	}
+	public void AbrirInterfazCategoria(){
+		ADM_Categorias frame = new ADM_Categorias(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
 	}
 }// ---> FIN CLASE
