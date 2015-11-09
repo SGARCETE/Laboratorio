@@ -18,6 +18,7 @@ public class Principal_Negocio_Interfaz {
 	/* INICIALIZADOR DE SERVICIOS 	[NOTA: SOLO SE INICIALIZAN LOS SERVICIOS UNA Y SOLO UNA VEZ, Y ES ACA] */
 	private Servicio_Pedidos 			SvPedidos = new Servicio_Pedidos();
 	private Servicio_Productos 			SvProductos = new Servicio_Productos();
+	private Servicio_Combos 			SvCombos = new Servicio_Combos();
 	private Servicio_Clientes  			SvClientes = new Servicio_Clientes();
 	private Servicio_Repartidores 		SvRepartidores = new Servicio_Repartidores();
 	private Servicio_Proveedores 		SvProveedores = new Servicio_Proveedores();
@@ -53,9 +54,12 @@ public class Principal_Negocio_Interfaz {
 		return SvPedidos;
 	}
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Servicio_Productos getSvProductos() {
 		return SvProductos;
+	}
+	
+	public Servicio_Combos getSvCombos() {
+		return SvCombos;
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

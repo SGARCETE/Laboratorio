@@ -72,6 +72,7 @@ import Negocio.Modelo.Producto;
 import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
+import Negocio.Servicios.Servicio_Combos;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
@@ -129,6 +130,7 @@ public class Interfaz_Principal {
 	private Servicio_Pedidos sv_pedidos;
 	private Servicio_Repartidores sv_Repartidores;
 	private Servicio_entrega sv_Entrega;
+	private Servicio_Combos sv_Combos;
 	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private Pedido PEDIDO_ACTUAL = new Pedido(); 	   /* Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea */
@@ -156,6 +158,7 @@ public class Interfaz_Principal {
 		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		sv_Repartidores = Principal_neg_int.getSvRepartidores();
 		sv_Entrega = Principal_neg_int.getSvEntrega();
+		sv_Combos= Principal_neg_int.getSvCombos();
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
@@ -1321,40 +1324,84 @@ public class Interfaz_Principal {
 		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0 && comboBoxProducto.getSelectedIndex()!=0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
-			
-			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
-			String Variedad = comboBoxVariedad.getSelectedItem().toString();
-
-			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+			if (Tipo_producto!= "Combo"){
+				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+				PRODUCTO_ACTUAL.setCantidad(Cantidad);
 				
-				PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
-				PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
-
-				/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
+				String Variedad = comboBoxVariedad.getSelectedItem().toString();
+	
 				
-				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
 				
-				// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
-				boolean productoNoEsta = true;
-				for (int i = 0; i<productos.size(); i++ ) {
-					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
-						int cantidad  = productos.get(i).getCantidad();
-						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
-						productoNoEsta = false;
-					}
-				}
-				if(productoNoEsta){
-					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-				}
-
-				/** Esto va para la parte visual **/
-				Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+					if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+						
+						PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
+						PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
+		
+						/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
+						
+						ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
+						
+						// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
+						boolean productoNoEsta = true;
+						for (int i = 0; i<productos.size(); i++ ) {
+							if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+								int cantidad  = productos.get(i).getCantidad();
+								productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
+								productoNoEsta = false;
+							}
+						}
+						if(productoNoEsta){
+							PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+						}
+		
+						/** Esto va para la parte visual **/
+						Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+						
+						/** Despues que se resetee el formulario de ingreso de pedido **/
+						Limpiar_Formulario_pedido();
+						Calcula_totales();
+						}
+			}else{
+				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+				String Variedad = comboBoxVariedad.getSelectedItem().toString();
+		
+					
+					
+						if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+							ArrayList<Producto> Combo_productos = sv_Combos.getLista_Productos(Variedad);
+							for (int j=0; j<Cantidad; j++){
+								for (int k=0; k<Combo_productos.size();k++){
+									PRODUCTO_ACTUAL= Combo_productos.get(k);
+									
+					
+									/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
+									
+									ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
+									
+									// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
+									boolean productoNoEsta = true;
+									for (int i = 0; i<productos.size(); i++ ) {
+										if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+											int cantidad  = productos.get(i).getCantidad();
+											productos.get(i).setCantidad(cantidad + (PRODUCTO_ACTUAL.getCantidad()));
+											productoNoEsta = false;
+										}
+									}
+									if(productoNoEsta){
+										PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+									}
+					
+									/** Esto va para la parte visual **/
+									Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+									
+									/** Despues que se resetee el formulario de ingreso de pedido **/
+									Limpiar_Formulario_pedido();
+									Calcula_totales();
+									}
+							}
 				
-				/** Despues que se resetee el formulario de ingreso de pedido **/
-				Limpiar_Formulario_pedido();
-				Calcula_totales();
+						}
 			}
 		}
 	}

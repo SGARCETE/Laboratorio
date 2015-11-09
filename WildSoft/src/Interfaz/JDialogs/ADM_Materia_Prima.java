@@ -3,6 +3,8 @@ package Interfaz.JDialogs;
 import javax.swing.JDialog;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map.Entry;
+
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
@@ -226,7 +228,7 @@ public class ADM_Materia_Prima extends JDialog{
 		comboBoxCategoria.addItem("Seleccione Categoria");
 		
 		categorias = SvMateria.getCategorias();
-		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
 		    String value = entry.getValue();
 		    comboBoxCategoria.addItem(value);
 		    

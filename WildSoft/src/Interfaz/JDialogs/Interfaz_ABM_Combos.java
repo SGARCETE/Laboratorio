@@ -32,10 +32,12 @@ import Interfaz.Interfaz_Principal;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
 import Negocio.Modelo.Cliente;
+import Negocio.Modelo.Combo;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
+import Negocio.Servicios.Servicio_Combos;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 
@@ -52,35 +54,25 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private JTextField textValor;
 	private JTextField textObservaciones;
 	private JTextField textValorTotal;
-	private JTextField textDetalle;
-	private JTextField textDire;
-	private JTextField textTelefono;
-	private JTextField textCliente = new JTextField();
-	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(textCliente, new AutoCompleterCallback() {
-		public void callback(Object selectedItem) { // Para saber que selecciono el usuario // <HACE ALGO SI TE ELIJO> ejemplo:
-				String Nombre_Cliente_seleccionado = ((String)selectedItem);
-				Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
-				Cargar_datos_Cliente(C);
-			}
-		}
-	);
+	
 	private JButton Modificar_Cantidad; 
 	private JButton btnQuitar;
 	private JLabel label_NroPedido;
-	private JLabel label_Fecha;
-	private JLabel label_ESTADO;
 	private JLabel textTotal_Pedido;
 	private JSpinner spinnerCantNueva;
 	private JComboBox<String> comboBoxProducto;
+	private JComboBox<String> comboBoxCombos;
 	private JComboBox<String> comboBoxVariedad;
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private JSpinner spinnerCantidad;
+	
 	
 	private Producto PRODUCTO_ACTUAL = new Producto();
 	private Pedido PEDIDO_ACTUAL = new Pedido();
 	private Principal_Negocio_Interfaz Principal_neg_int;
 	private Cliente CLIENTE_ACTUAL = null; 
 	private Servicio_Productos svProductos;
+	private Servicio_Combos svCombos;
 	private Servicio_Pedidos SvPedidos;
 	private Servicio_Clientes sv_clientes;
 
@@ -88,16 +80,16 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private JButton btn_Agregar;
 	private JButton btnGuardarModificacionPedido;
-	private JToggleButton tglbtnDelivery;
 	
 	public Interfaz_ABM_Combos(Principal_Negocio_Interfaz principal_neg_int) {
 		Principal_neg_int = principal_neg_int;
 		sv_clientes = Principal_neg_int.getSvClientes();
 		SvPedidos = Principal_neg_int.getSvPedidos();
 		svProductos = Principal_neg_int.getSvProductos();
+		svCombos = Principal_neg_int.getSvCombos();
 		SvPedidos.getTodos_los_estados();
 		
-		setTitle("ABM Pedido");
+		setTitle("ABM Combo");
 		setBounds(100, 100, 987, 630);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 255, 255));
@@ -110,58 +102,11 @@ public class Interfaz_ABM_Combos extends JDialog {
 				, 108, 613, 282);
 		contentPanel.add(scrollPane_Pedido_Completo);
 		
-		JLabel lblNumeroPedido = new JLabel("N\u00BA Pedido");
-		lblNumeroPedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumeroPedido.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblNumeroPedido.setBounds(6, 10, 124, 43);
-		contentPanel.add(lblNumeroPedido);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(345, 401, 616, 135);
-		contentPanel.add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblDireccion = new JLabel("Cliente");
-		lblDireccion.setBounds(22, 16, 291, 25);
-		panel.add(lblDireccion);
-		
-		textCliente.setBackground(new Color(240, 255, 240));
-		textCliente.setBounds(22, 42, 291, 25);
-		panel.add(textCliente);
-		textCliente.setColumns(10);
-		
-		textDetalle = new JTextField();
-		textDetalle.setBackground(new Color(240, 255, 240));
-		textDetalle.setBounds(349, 42, 201, 25);
-		panel.add(textDetalle);
-		textDetalle.setColumns(10);
-		
-		JLabel lblDetalle = new JLabel("Observacion");
-		lblDetalle.setBounds(349, 16, 145, 25);
-		panel.add(lblDetalle);
-		
-		JLabel lblDireccion_1 = new JLabel("Direcci\u00F3n");
-		lblDireccion_1.setBounds(22, 72, 291, 25);
-		panel.add(lblDireccion_1);
-		
-		textDire = new JTextField();
-		textDire.setBackground(new Color(240, 255, 240));
-		textDire.setBounds(22, 98, 291, 25);
-		panel.add(textDire);
-		textDire.setColumns(10);
-		
-		textTelefono = new JTextField();
-		textTelefono.setBackground(new Color(240, 255, 240));
-		textTelefono.setBounds(349, 98, 201, 25);
-		panel.add(textTelefono);
-		textTelefono.setColumns(10);
-		
-		
-		JLabel lblTelefono = new JLabel("Tel\u00E9fono");
-		lblTelefono.setBounds(349, 72, 145, 25);
-		panel.add(lblTelefono);
+		JLabel lblNumeroCombo = new JLabel("N\u00BA Combo");
+		lblNumeroCombo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNumeroCombo.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		lblNumeroCombo.setBounds(6, 10, 124, 43);
+		contentPanel.add(lblNumeroCombo);
 		
 		label_NroPedido = new JLabel("");
 		label_NroPedido.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,15 +116,6 @@ public class Interfaz_ABM_Combos extends JDialog {
 		label_NroPedido.setFont(new Font("SansSerif", Font.BOLD, 28));
 		label_NroPedido.setBounds(142, 11, 149, 42);
 		contentPanel.add(label_NroPedido);
-		
-		label_Fecha = new JLabel("");
-		label_Fecha.setOpaque(true);
-		label_Fecha.setHorizontalAlignment(SwingConstants.CENTER);
-		label_Fecha.setForeground(new Color(60, 179, 113));
-		label_Fecha.setFont(new Font("SansSerif", Font.BOLD, 28));
-		label_Fecha.setBackground(new Color(240, 255, 240));
-		label_Fecha.setBounds(474, 11, 167, 42);
-		contentPanel.add(label_Fecha);
 		
 		JPanel panelPedido = new JPanel();
 		panelPedido.setLayout(null);
@@ -281,31 +217,10 @@ public class Interfaz_ABM_Combos extends JDialog {
 		btn_Agregar.setBounds(117, 225, 100, 30);
 		panelPedido.add(btn_Agregar);
 		
-		JLabel lblFecha = new JLabel("Fecha");
-		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblFecha.setBounds(338, 11, 124, 43);
-		contentPanel.add(lblFecha);
-		
-		JLabel lblNumero = new JLabel("Estado");
-		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumero.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblNumero.setBounds(6, 65, 124, 30);
-		contentPanel.add(lblNumero);
-		
-		label_ESTADO = new JLabel("");
-		label_ESTADO.setOpaque(true);
-		label_ESTADO.setHorizontalAlignment(SwingConstants.CENTER);
-		label_ESTADO.setForeground(new Color(60, 179, 113));
-		label_ESTADO.setFont(new Font("SansSerif", Font.BOLD, 28));
-		label_ESTADO.setBackground(new Color(240, 248, 255));
-		label_ESTADO.setBounds(142, 66, 149, 30);
-		contentPanel.add(label_ESTADO);
-		
 		JLabel lblTotal_1 = new JLabel("Total");
 		lblTotal_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal_1.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblTotal_1.setBounds(338, 65, 124, 30);
+		lblTotal_1.setBounds(16, 64, 124, 30);
 		contentPanel.add(lblTotal_1);
 		
 		textTotal_Pedido = new JLabel("");
@@ -314,7 +229,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		textTotal_Pedido.setForeground(new Color(60, 179, 113));
 		textTotal_Pedido.setFont(new Font("SansSerif", Font.BOLD, 28));
 		textTotal_Pedido.setBackground(new Color(240, 248, 255));
-		textTotal_Pedido.setBounds(474, 66, 167, 30);
+		textTotal_Pedido.setBounds(142, 64, 167, 30);
 		contentPanel.add(textTotal_Pedido);
 		
 		JPanel panelModificacionPR = new JPanel();
@@ -349,21 +264,20 @@ public class Interfaz_ABM_Combos extends JDialog {
 		spinnerCantNueva.setBounds(21, 57, 55, 25);
 		panelModificacionPR.add(spinnerCantNueva);
 		
-		tglbtnDelivery = new JToggleButton();
-		tglbtnDelivery.setBackground(Color.WHITE);
-		tglbtnDelivery.addActionListener(new ActionListener() {
+		JLabel lblCombo = new JLabel("Combo");
+		lblCombo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCombo.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		lblCombo.setBounds(651, 67, 102, 30);
+		contentPanel.add(lblCombo);
+		
+		comboBoxCombos = new JComboBox();
+		comboBoxCombos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Servicio_Delivery();				
+				
 			}
 		});
-		tglbtnDelivery.setBounds(785, 65, 83, 32);
-		contentPanel.add(tglbtnDelivery);
-		
-		JLabel lblConDelivery = new JLabel("Delivery");
-		lblConDelivery.setHorizontalAlignment(SwingConstants.CENTER);
-		lblConDelivery.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblConDelivery.setBounds(651, 65, 124, 30);
-		contentPanel.add(lblConDelivery);
+		comboBoxCombos.setBounds(766, 77, 195, 20);
+		contentPanel.add(comboBoxCombos);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -396,16 +310,12 @@ public class Interfaz_ABM_Combos extends JDialog {
 
 		iniciarParametros();
 	}
-	
-	private void Servicio_Delivery() {
-		PEDIDO_ACTUAL.setEs_Delivery(tglbtnDelivery.isSelected());
-		tglbtnDelivery.setText(PEDIDO_ACTUAL.getEs_Delivery() ? "SI" : "NO");
-	}
 
 	/** >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>**/
 	private void iniciarParametros() {
 		Cargar_ComboBox_TipoProductos();
-		AutocompletarCliente();
+		Cargar_ComboBox_Combos();
+		
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -417,6 +327,18 @@ public class Interfaz_ABM_Combos extends JDialog {
 			comboBoxProducto.addItem(ListaProductos.get(i));
 		}
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		private void Cargar_ComboBox_Combos() {
+			// Rellena el combobox de Combos
+			ArrayList<Combo> ListaCombos = svCombos.getLista_Combos();
+			comboBoxCombos.addItem("Seleccione el combo");
+			for (int i = 0; i < ListaCombos.size(); i++) {
+				comboBoxCombos.addItem(ListaCombos.get(i).getNombre());
+			}
+		}
+	
+	
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_De_Tipo_Producto() {
@@ -533,15 +455,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		// si el pedido no es nulo cargos los campos del pedido
 		if(PEDIDO_ACTUAL!=null){
 			label_NroPedido.setText(PEDIDO_ACTUAL.getID_DIARIO().toString());
-			label_ESTADO.setText(PEDIDO_ACTUAL.getESTADO());
-			label_Fecha.setText(formato_ddMMyyyy.format(PEDIDO_ACTUAL.getFecha_Hora_Pedido().getTime()));
-			textTotal_Pedido.setText(formatoImporte.format(PEDIDO_ACTUAL.getTotal()));		// ACTUALIZA EL TOTAL
 			
-			if (!label_ESTADO.getText().equals("Pendiente")){
-				textCliente.setEditable(false);
-				textDire.setEditable(false);
-				textDetalle.setEditable(false);
-				textTelefono.setEditable(false);
 				textObservaciones.setEditable(false);
 				
 				comboBoxProducto.setEnabled(false);
@@ -557,13 +471,9 @@ public class Interfaz_ABM_Combos extends JDialog {
 			}
 		}
 		
-		tglbtnDelivery.setText(PEDIDO_ACTUAL.getEs_Delivery() ? "SI" : "NO");
-		tglbtnDelivery.setSelected(PEDIDO_ACTUAL.getEs_Delivery());
 		
-		Cargar_datos_Cliente(PEDIDO_ACTUAL.getCliente());
-		Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
-	}
-	
+		
+		
 	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -660,24 +570,9 @@ public class Interfaz_ABM_Combos extends JDialog {
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
 	}
+}
+	
+	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Cargar_datos_Cliente(Cliente c) {
-		if(c!=null){
-			CLIENTE_ACTUAL = c;
-			textCliente.setText(c.getNombre());
-			textDire.setText(c.getDomicilio());
-			textTelefono.setText(c.getTelefono_Fijo());
-			textDetalle.setText(c.getDetalle());
-			PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
-		}
-	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void AutocompletarCliente() {
-		AutoCompleter_Cliente.removeAllItems();
-		AutoCompleter_Cliente.setCaseSensitive(false);
-		AutoCompleter_Cliente.setMode(0);
-		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
-	}
-}//---> FIN CLASE
+	
