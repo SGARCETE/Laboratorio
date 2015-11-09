@@ -1,6 +1,7 @@
 package Persistencia.DAO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Negocio.Modelo.Producto;
 
@@ -21,5 +22,7 @@ public interface ProductoDAO {
 	boolean Modificar_Producto(Producto P);
 	
 	ArrayList<Integer> getTipo_Producto_INTEGER (String nombre);
+
+	public HashMap<Integer, String> obtenerCategorias();
 	
 }

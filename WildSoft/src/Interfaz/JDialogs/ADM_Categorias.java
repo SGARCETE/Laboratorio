@@ -7,10 +7,11 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Negocio.Modelo.Materia_Prima;
+import Negocio.Modelo.Categoria;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Categoria;
 import Negocio.Servicios.Servicio_Materia_Prima;
-import Negocio.Servicios.Servicio_Pedidos;
+import Negocio.Servicios.Servicio_Productos;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -32,19 +34,25 @@ public class ADM_Categorias extends JDialog{
 	private JTextField textNombre;
 	private JTable tableCategoriaProducto;
 	private JTable tableCategoriaMateria;
-	private JButton btnAgregar;
-	private JButton btnCategoriaProducto ;
-	private JButton btnCategoriaMateria;
+	private JButton btnAgregarProducto;
 	private JButton button;
 	private HashMap<Integer, String> categoriasProductos;
 	private HashMap<Integer, String> categoriasMaterias;
+
 	
+	private Servicio_Productos SvProducto;
 	private Servicio_Materia_Prima SvMaterias;
+	private Servicio_Categoria SvCategorias;
+	private JButton btnCancelar;
+	private JButton btnAgregarMateria;
 	
 	public ADM_Categorias(Principal_Negocio_Interfaz instancia_negocio){
 		setTitle("Administracion de Categoria");
 		Principal = instancia_negocio;
 		SvMaterias = Principal.getSvMateriaPrima();
+		SvProducto= Principal.getSvProductos();
+		SvCategorias= Principal.getSvCategoria();
+		
 		inicializar();
 		
 		
@@ -68,43 +76,34 @@ public class ADM_Categorias extends JDialog{
 		
 		scrollPane.setViewportView(tableCategoriaProducto);
 		
-		btnCategoriaProducto = new JButton("");
-		btnCategoriaProducto.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
-		btnCategoriaProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnCategoriaProducto.setBounds(247, 83, 59, 47);
-		panel.add(btnCategoriaProducto);
-		
-		btnCategoriaMateria = new JButton("");
-		btnCategoriaMateria.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
-		btnCategoriaMateria.setBounds(329, 83, 59, 47);
-		panel.add(btnCategoriaMateria);
-		
-		JLabel lblSeleccioneTipoCategoria = new JLabel("Seleccione Tipo Categoria");
-		lblSeleccioneTipoCategoria.setBounds(237, 32, 173, 40);
+		JLabel lblSeleccioneTipoCategoria = new JLabel("Seleccione Tipo");
+		lblSeleccioneTipoCategoria.setBounds(297, 105, 97, 28);
 		panel.add(lblSeleccioneTipoCategoria);
 		
 		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
-		lblIngreseNombre.setBounds(278, 141, 91, 40);
+		lblIngreseNombre.setBounds(297, 26, 91, 40);
 		panel.add(lblIngreseNombre);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(262, 179, 126, 28);
+		textNombre.setBounds(288, 66, 126, 28);
 		panel.add(textNombre);
 		textNombre.setColumns(10);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(434, 32, 164, 259);
+		scrollPane_1.setBounds(496, 32, 164, 259);
 		panel.add(scrollPane_1);
 		
 		
 		scrollPane_1.setViewportView(tableCategoriaMateria);
 		
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(280, 236, 89, 23);
-		panel.add(btnAgregar);
+		btnAgregarProducto = new JButton("Agregar Como Tipo Producto");
+		btnAgregarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarCategoriaProducto();
+			}
+		});
+		btnAgregarProducto.setBounds(255, 145, 214, 23);
+		panel.add(btnAgregarProducto);
 		
 		button = new JButton("Salir");
 		button.addActionListener(new ActionListener() {
@@ -115,22 +114,62 @@ public class ADM_Categorias extends JDialog{
 		button.setBounds(613, 312, 97, 47);
 		panel.add(button);
 		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(284, 225, 110, 35);
+		panel.add(btnCancelar);
+		
+		btnAgregarMateria = new JButton("Agregar Como Categoria Materia");
+		btnAgregarMateria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarCategoriaMateria();
+			}
+		});
+		btnAgregarMateria.setBounds(255, 179, 214, 23);
+		panel.add(btnAgregarMateria);
+		
 		
 	}
 	public void inicializar(){
-		inicializarTablas();
+		inicializarTablaProducto();
+		inicializarTablaMateria();
+		LlenarTablaProducto();
+		LlenarTablaMaterias();
+	} 
+	
+	public void AgregarCategoriaMateria(){
+		if(!textNombre.equals(""))
+		{
+			SvCategorias.guardarCategoriaMateria(new Categoria(textNombre.getText()));
 		
+			inicializarTablaMateria();
+			LlenarTablaMaterias();
+			
+			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");	
+			
+			textNombre.setText("");
+
 		
-		
-		
-		LlenarTablas();
-		
-		
+		}
 	}
 	
-	
-	
-	public void inicializarTablas(){
+	public void AgregarCategoriaProducto()
+	{
+		if(!textNombre.equals(""))
+		{
+			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre.getText()));
+			
+			inicializarTablaProducto();
+			LlenarTablaProducto();
+			
+			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");	
+			
+			textNombre.setText("");
+
+		
+		}
+		
+	}
+	public void inicializarTablaProducto(){
 		tableCategoriaProducto = new JTable();
 		tableCategoriaProducto.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -139,7 +178,8 @@ public class ADM_Categorias extends JDialog{
 				"Nombre"
 			}
 		));
-		
+	}
+	public void inicializarTablaMateria(){
 		tableCategoriaMateria = new JTable();
 		tableCategoriaMateria.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -149,22 +189,29 @@ public class ADM_Categorias extends JDialog{
 			}
 		));
 	}
-	public void LlenarTablas(){
+	public void LlenarTablaProducto(){
 		
+		categoriasProductos = SvProducto.getCategorias();
+		
+		for (HashMap.Entry<Integer, String> entry : categoriasProductos.entrySet()) {
+			
+		    String value = entry.getValue();
+		    String[] fila= new String[1];
+		    fila[0]= value;
+		    
+			((DefaultTableModel) this.tableCategoriaProducto.getModel()).addRow(fila);
+		}
+		
+	}
+	public void LlenarTablaMaterias(){
 		categoriasMaterias = SvMaterias.getCategorias();
-		
-		System.out.println(categoriasMaterias.toString());
 		
 		for (HashMap.Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
 			
 		    String value = entry.getValue();
 		    String[] fila= new String[1];
-			fila[0]= categoriasMaterias.get(value);
-			System.out.println(value);
-			Object[] dato = {fila[0]};
-			((DefaultTableModel) this.tableCategoriaMateria.getModel()).addRow(dato);
-		    
-			tableCategoriaMateria.repaint();
+		    fila[0]= value;
+			((DefaultTableModel) this.tableCategoriaMateria.getModel()).addRow(fila);
 		}
 	}
 	

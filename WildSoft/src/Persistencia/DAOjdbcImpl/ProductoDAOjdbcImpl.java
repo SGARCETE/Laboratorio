@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 
@@ -141,6 +142,26 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		String SentenciaSQL = "UPDATE Producto SET PR_nombre = '" + P.getPR_nombre() + "', PR_Observacion = '" + P.getPR_Observacion()+ 
 							  "', PR_precio = '" + P.getPR_precio()+ "', PR_tipo_producto = '" + P.getPR_tipo_producto() + "' WHERE PR_id=" + P.getPR_id();
 		return conex.Insertar(SentenciaSQL);
+	}
+
+	@Override
+	public HashMap<Integer, String> obtenerCategorias() {
+		HashMap<Integer, String> mapa = new HashMap<Integer, String>();
+		try {
+
+			conex.connectToMySQL();
+
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("select * from tipo_producto;");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				mapa.put(Fila.getInt("TP_id"), Fila.getString("TP_nombre"));
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return mapa;
 	}
 
 }// --> FIN

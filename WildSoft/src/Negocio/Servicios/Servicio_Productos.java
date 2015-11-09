@@ -1,6 +1,7 @@
 package Negocio.Servicios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Negocio.Modelo.Producto;
 import Persistencia.DAO.ProductoDAO;
@@ -71,8 +72,9 @@ public class Servicio_Productos {
 	
 	public ArrayList<Integer> getTipo_Producto_INTEGER (String nombre){
 		return productoDAO.getTipo_Producto_INTEGER(nombre);
-		
-		
+	}
+	public HashMap<Integer, String> getCategorias() {
+		return productoDAO.obtenerCategorias();
 	}
 	
 }// FIN CLASE
