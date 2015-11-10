@@ -26,7 +26,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import MetAux.MetAux;
+import Negocio.Modelo.Combo;
 import Negocio.Modelo.Materia_Prima;
+import Negocio.Modelo.Producto;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
@@ -46,7 +48,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox<String> comboProveedor;
 	private JComboBox<String> comboCategorias;
-	private JComboBox<String> comboMateriaPrima;
+	private JComboBox<String> comboProductos;
 	private HashMap<String, Integer> ListaMateriaPrima = new HashMap<String, Integer>();
 	private Servicio_Proveedores sv_proveedor;
 	private Servicio_Combos sv_combos;
@@ -54,8 +56,8 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private Servicio_Materia_Prima sv_materiaPrima;
 	private Servicio_Solicitud_compra sv_SolicitudCompra;
 	private ArrayList<String> Lista_Categorias;
-	private ArrayList<Materia_Prima> Lista_MateriasPrimas;
-	private JTable tablaMateriasPrimas;
+	private ArrayList<Producto> Lista_productos;
+	private JTable tablaProductos;
 	private JTextField textTotal;
 	private JSpinner spinnerCantidad;
 	private JLabel lblTotal;
@@ -98,13 +100,13 @@ public class Interfaz_ABM_Combos extends JDialog {
 		comboCategorias.setBounds(92, 62, 304, 28);
 		contentPanel.add(comboCategorias);
 		
-		JLabel lblProducto = new JLabel("Materia Primas:");
+		JLabel lblProducto = new JLabel("Producto :");
 		lblProducto.setBounds(10, 96, 81, 28);
 		contentPanel.add(lblProducto);
 		
-		comboMateriaPrima = new JComboBox<String>();
-		comboMateriaPrima.setBounds(92, 96, 304, 28);
-		contentPanel.add(comboMateriaPrima);
+		comboProductos = new JComboBox<String>();
+		comboProductos.setBounds(92, 96, 304, 28);
+		contentPanel.add(comboProductos);
 		
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
@@ -121,8 +123,8 @@ public class Interfaz_ABM_Combos extends JDialog {
 		scrollPane.setBounds(10, 130, 661, 218);
 		contentPanel.add(scrollPane);
 		
-		tablaMateriasPrimas = new JTable();
-		tablaMateriasPrimas.setModel(new DefaultTableModel(
+		tablaProductos = new JTable();
+		tablaProductos.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -145,19 +147,19 @@ public class Interfaz_ABM_Combos extends JDialog {
 
 //		tablaMateriasPrimas.getColumnModel().getColumn(0).setResizable(false);
 //		tablaMateriasPrimas.getColumnModel().getColumn(0).setPreferredWidth(0);
-		tablaMateriasPrimas.getColumnModel().getColumn(0).setMinWidth(60);
-		tablaMateriasPrimas.getColumnModel().getColumn(0).setMaxWidth(60);
-		tablaMateriasPrimas.getColumnModel().getColumn(3).setMinWidth(60);
-		tablaMateriasPrimas.getColumnModel().getColumn(3).setMaxWidth(60);
+		tablaProductos.getColumnModel().getColumn(0).setMinWidth(60);
+		tablaProductos.getColumnModel().getColumn(0).setMaxWidth(60);
+		tablaProductos.getColumnModel().getColumn(3).setMinWidth(60);
+		tablaProductos.getColumnModel().getColumn(3).setMaxWidth(60);
 //		tablaMateriasPrimas.getColumnModel().getColumn(1).setResizable(false);
 //		tablaMateriasPrimas.getColumnModel().getColumn(2).setResizable(false);
 //		tablaMateriasPrimas.getColumnModel().getColumn(3).setResizable(false);
 //		tablaMateriasPrimas.getColumnModel().getColumn(4).setResizable(false);
-		tablaMateriasPrimas.setRowHeight(18);
+		tablaProductos.setRowHeight(18);
 		
 		
 		
-		scrollPane.setViewportView(tablaMateriasPrimas);
+		scrollPane.setViewportView(tablaProductos);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class.getResource("/Recursos/IMG/add-1-icon24.png")));
@@ -222,43 +224,44 @@ public class Interfaz_ABM_Combos extends JDialog {
 	}
 	
 	private void Guardar_solicitud_compra() {
-		if(tablaMateriasPrimas.getRowCount()>0){
-			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerSolicitud());
+		if(tablaProductos.getRowCount()>0){
+			
+			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerCombo());
 			dispose();
 		}
 	}
 
 	private void Quitar_Materia_prima() {
-		int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
+		int filaSeleccionada = tablaProductos.getSelectedRow();
 		if(!(filaSeleccionada == -1)){
 			
-			ListaMateriaPrima.remove(tablaMateriasPrimas.getValueAt(filaSeleccionada, 2));
+			ListaMateriaPrima.remove(tablaProductos.getValueAt(filaSeleccionada, 2));
 			
-			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
 			modelo.removeRow(filaSeleccionada);
-			tablaMateriasPrimas.setModel(modelo);
+			tablaProductos.setModel(modelo);
 			
-			for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
-				tablaMateriasPrimas.setValueAt(i+1, i, 0);
+			for (int i = 0; i < tablaProductos.getRowCount(); i++) {
+				tablaProductos.setValueAt(i+1, i, 0);
 			}
 		}
 	}
 
 	private void Agregar_Materia_prima() {
-		Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
+		Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboProductos.getSelectedItem().toString());
 		if(posicionMateriaPrimaActual == null){
-			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1), comboCategorias.getSelectedItem().toString(),
-					comboMateriaPrima.getSelectedItem().toString(), String.valueOf(spinnerCantidad.getValue())};
-			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			String[] arreglo = { String.valueOf(tablaProductos.getRowCount()+1), comboCategorias.getSelectedItem().toString(),
+					comboProductos.getSelectedItem().toString(), String.valueOf(spinnerCantidad.getValue())};
+			DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
 			modelo.addRow(arreglo);
-			tablaMateriasPrimas.setModel(modelo);
-			ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
+			tablaProductos.setModel(modelo);
+			ListaMateriaPrima.put(comboProductos.getSelectedItem().toString(), tablaProductos.getRowCount()-1);
 			spinnerCantidad.setValue(1);
 		}else{
 			int cantidadSpinner = (int) spinnerCantidad.getValue();
-			int cantidadTabla = Integer.parseInt((String) tablaMateriasPrimas.getValueAt(posicionMateriaPrimaActual, 3));
+			int cantidadTabla = Integer.parseInt((String) tablaProductos.getValueAt(posicionMateriaPrimaActual, 3));
 			int cantidadNueva = cantidadTabla + cantidadSpinner;
-			tablaMateriasPrimas.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
+			tablaProductos.setValueAt( String.valueOf(cantidadNueva), posicionMateriaPrimaActual, 3);
 			spinnerCantidad.setValue(1);
 		}
 	}
@@ -289,51 +292,50 @@ public class Interfaz_ABM_Combos extends JDialog {
 		
 	private void Seleccion_Categoria() {
 		if (comboCategorias.getSelectedIndex()!=-1) {
-			Lista_MateriasPrimas = sv_materiaPrima.getVARIEDAD_Materia_Prima(comboCategorias.getSelectedItem().toString());
-			comboMateriaPrima.removeAllItems();
-			for (int i = 0; i < Lista_MateriasPrimas.size(); i++) {
-				comboMateriaPrima.addItem(Lista_MateriasPrimas.get(i).getNombre());
+			Lista_productos= sv_productos.getVariedad_del_Producto(comboCategorias.getSelectedItem().toString());
+			comboProductos.removeAllItems();
+			for (int i = 0; i < Lista_productos.size(); i++) {
+				comboProductos.addItem(Lista_productos.get(i).getPR_nombre());
 			}
 		}
 	}
 	
-	private Solicitud_compra obtenerSolicitud() {
-		Solicitud_compra sc = new Solicitud_compra();
-		sc.setEstado("Pendiente");
-		sc.setFecha(MetAux.toDate(Calendar.getInstance()));
-		Proveedor p = sv_proveedor.getProveedor(comboProveedor.getSelectedItem().toString());
-		sc.setProveedor(p);
-		ArrayList<Materia_Prima> listaMateriaPrima = new ArrayList<Materia_Prima>();
-		for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
-			Materia_Prima mp = new Materia_Prima();
-			mp.setId(sv_materiaPrima.obtenerId((String)tablaMateriasPrimas.getValueAt(i, 2)));
+	private Combo obtenerCombo() {
+		Combo combo= new Combo();
+		combo.setPrecio(Double.parseDouble(textTotal.getText()));
+		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
+		for (int i = 0; i < tablaProductos.getRowCount(); i++) {
+			Producto pr = new Producto();
+			pr.setPR_id(tablaProductos.getValueAt(i, 2));
+			
+			mp.setId(sv_materiaPrima.obtenerId((String)tablaProductos.getValueAt(i, 2)));
 			//mp.setCategoria(1); //TODO
-			mp.setCategoria_string((String) tablaMateriasPrimas.getValueAt(i, 1));
+			mp.setCategoria_string((String) tablaProductos.getValueAt(i, 1));
 			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
-			mp.setNombre((String) tablaMateriasPrimas.getValueAt(i, 2));
-			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
-			listaMateriaPrima.add(mp);
+			mp.setNombre((String) tablaProductos.getValueAt(i, 2));
+			mp.setCantidad(Integer.parseInt((String) tablaProductos.getValueAt(i, 3))); 
+			listaProductos.add(mp);
 		}
-		sc.setLista_materia_prima(listaMateriaPrima);
-		return sc;
+		sc.setLista_materia_prima(listaProductos);
+		return combo;
 	}
 
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false);
 		comboCategorias.setEnabled(false);
-		comboMateriaPrima.setEnabled(false);
+		comboProductos.setEnabled(false);
 		btnAgregar.setEnabled(false);
 		btnQuitar.setEnabled(false);
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
-			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
+			String[] arreglo = { String.valueOf(tablaProductos.getRowCount()+1),
 					sc.getLista_materia_prima().get(i).getCategoria_string(),
 					sc.getLista_materia_prima().get(i).getNombre(),
 					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
-			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
 			modelo.addRow(arreglo);
-			tablaMateriasPrimas.setModel(modelo);
+			tablaProductos.setModel(modelo);
 		}
 		Double PRECIO = 0.0;
 		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
