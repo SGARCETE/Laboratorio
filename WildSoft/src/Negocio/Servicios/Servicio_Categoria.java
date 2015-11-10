@@ -27,5 +27,20 @@ public class Servicio_Categoria {
 		return false;
 	}
 
+	public boolean eliminarCategoriaMateria(Categoria c){
+		if(c!=null){
+			return categoriaDAO.eliminar_categoria_materia(c);
+			
+		}
+		return false;
+	}
+	
+	public boolean eliminarCategoriaProducto(Categoria c){
+		if(c!=null){
+			return categoriaDAO.eliminar_categoria_producto(c);
+			
+		}
+		return false;
+	}
 	
 }

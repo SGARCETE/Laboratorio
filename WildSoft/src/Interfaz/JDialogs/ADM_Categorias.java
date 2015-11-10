@@ -2,27 +2,27 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Categoria;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Categoria;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Productos;
+
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ADM_Categorias extends JDialog{
 
@@ -42,8 +42,10 @@ public class ADM_Categorias extends JDialog{
 	private Servicio_Productos SvProducto;
 	private Servicio_Materia_Prima SvMaterias;
 	private Servicio_Categoria SvCategorias;
-	private JButton btnCancelar;
 	private JButton btnAgregarMateria;
+	private JButton btnEliminarCategoriaMateria;
+	private String[] datoTabla;
+	private JButton btnEliminarCategoriaProducto;
 	
 	public ADM_Categorias(Principal_Negocio_Interfaz instancia_negocio){
 		setTitle("Administracion de Categoria");
@@ -69,7 +71,7 @@ public class ADM_Categorias extends JDialog{
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 32, 164, 259);
+		scrollPane.setBounds(35, 32, 164, 259);
 		panel.add(scrollPane);
 		
 		
@@ -80,7 +82,7 @@ public class ADM_Categorias extends JDialog{
 		panel.add(lblSeleccioneTipoCategoria);
 		
 		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
-		lblIngreseNombre.setBounds(297, 26, 91, 40);
+		lblIngreseNombre.setBounds(303, 26, 91, 40);
 		panel.add(lblIngreseNombre);
 		
 		textNombre = new JTextField();
@@ -113,10 +115,6 @@ public class ADM_Categorias extends JDialog{
 		button.setBounds(613, 312, 97, 47);
 		panel.add(button);
 		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(284, 225, 110, 35);
-		panel.add(btnCancelar);
-		
 		btnAgregarMateria = new JButton("Agregar Como Categoria Materia");
 		btnAgregarMateria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,6 +124,24 @@ public class ADM_Categorias extends JDialog{
 		btnAgregarMateria.setBounds(255, 179, 214, 23);
 		panel.add(btnAgregarMateria);
 		
+		btnEliminarCategoriaMateria = new JButton("Eliminar Categoria Materia");
+		btnEliminarCategoriaMateria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Eliminar_Categoria_Materia();
+			}
+		});
+		btnEliminarCategoriaMateria.setBounds(229, 271, 257, 35);
+		panel.add(btnEliminarCategoriaMateria);
+		
+		btnEliminarCategoriaProducto = new JButton("Eliminar Categoria Producto");
+		btnEliminarCategoriaProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Eliminar_Categoria_Producto();
+			}
+		});
+		btnEliminarCategoriaProducto.setBounds(229, 312, 257, 28);
+		panel.add(btnEliminarCategoriaProducto);
+		
 		
 	}
 	public void inicializar(){
@@ -133,6 +149,10 @@ public class ADM_Categorias extends JDialog{
 		inicializarTablaMateria();
 		LlenarTablaProducto();
 		LlenarTablaMaterias();
+		
+
+		
+		
 	} 
 	
 	public void AgregarCategoriaMateria(){
@@ -192,7 +212,7 @@ public class ADM_Categorias extends JDialog{
 		
 		categoriasProductos = SvProducto.getCategorias();
 		
-		for (Entry<Integer, String> entry : categoriasProductos.entrySet()) {
+		for (HashMap.Entry<Integer, String> entry : categoriasProductos.entrySet()) {
 			
 		    String value = entry.getValue();
 		    String[] fila= new String[1];
@@ -203,9 +223,10 @@ public class ADM_Categorias extends JDialog{
 		
 	}
 	public void LlenarTablaMaterias(){
+		
 		categoriasMaterias = SvMaterias.getCategorias();
 		
-		for (Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
+		for (HashMap.Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
 			
 		    String value = entry.getValue();
 		    String[] fila= new String[1];
@@ -213,5 +234,45 @@ public class ADM_Categorias extends JDialog{
 			((DefaultTableModel) this.tableCategoriaMateria.getModel()).addRow(fila);
 		}
 	}
+	protected void Eliminar_Categoria_Materia() {
+		datoTabla = obtenerSeleccionMateria();
+		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar este Tipo Producto ?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
+		if(RESPUESTA == JOptionPane.OK_OPTION ){
+			SvCategorias.eliminarCategoriaMateria((new Categoria(datoTabla[1])));
+			inicializarTablaMateria();
+			LlenarTablaMaterias();
+		}
+	}
+	private String[] obtenerSeleccionMateria() {
+		int indice = tableCategoriaMateria.getSelectedRow();
+		
+		String nombre = (String) tableCategoriaMateria.getModel().getValueAt(indice, 0);
+		
+		String[] dato = { String.valueOf(indice),nombre};
+		return dato;
+	}
+	private String[] obtenerSeleccionTipo(){
+		
+		int indice = tableCategoriaProducto.getSelectedRow();
+		
+		String nombre = (String) tableCategoriaProducto.getModel().getValueAt(indice, 0);
+		
+		String[] dato = { String.valueOf(indice),nombre};
+		return dato;
+		
+	}
+
+	
+	
+	protected void Eliminar_Categoria_Producto() {
+		datoTabla = obtenerSeleccionTipo();
+		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar esta Categoria ?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
+		if(RESPUESTA == JOptionPane.OK_OPTION ){
+			SvCategorias.eliminarCategoriaProducto((new Categoria(datoTabla[1])));
+			inicializarTablaMateria();
+			LlenarTablaMaterias();
+		}
+	}
+	
 	
 }

@@ -21,5 +21,16 @@ public class CategoriaDAOjdbcImpl implements CategoriaDAO{
 		    
 	return conex.Insertar(SentenciaSQL);
 	}
+	
+	public boolean eliminar_categoria_materia(Categoria c){
+		String SentenciaSQL = "delete from categoria_mp where CA_nombre= '"+ c.getNombre() +"';";
+		    
+		return conex.Insertar(SentenciaSQL);
+	}
 
+	public boolean eliminar_categoria_producto(Categoria c){
+		String SentenciaSQL = "delete from tipo_producto where TP_nombre= '"+ c.getNombre() +"';";
+		    
+		return conex.Insertar(SentenciaSQL);
+	}
 }
