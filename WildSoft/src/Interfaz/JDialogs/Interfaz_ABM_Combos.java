@@ -69,6 +69,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
+	private JTextField textFieldNombre;
 
 	public Interfaz_ABM_Combos(Principal_Negocio_Interfaz principal_neg_int) {
 		setTitle("Solicitud de compra");
@@ -194,6 +195,15 @@ public class Interfaz_ABM_Combos extends JDialog {
 		btnQuitar.setBounds(10, 351, 135, 32);
 		contentPanel.add(btnQuitar);
 		
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setBounds(10, 11, 46, 14);
+		contentPanel.add(lblNombre);
+		
+		textFieldNombre = new JTextField();
+		textFieldNombre.setBounds(92, 8, 304, 20);
+		contentPanel.add(textFieldNombre);
+		textFieldNombre.setColumns(10);
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -225,6 +235,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	
 	private void Guardar_solicitud_compra() {
 		if(tablaProductos.getRowCount()>0){
+			
 			
 			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerCombo());
 			dispose();
@@ -303,20 +314,19 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private Combo obtenerCombo() {
 		Combo combo= new Combo();
 		combo.setPrecio(Double.parseDouble(textTotal.getText()));
+		combo.setNombre(textFieldNombre.getText());
 		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 		for (int i = 0; i < tablaProductos.getRowCount(); i++) {
 			Producto pr = new Producto();
-			pr.setPR_id(tablaProductos.getValueAt(i, 2));
-			
-			mp.setId(sv_materiaPrima.obtenerId((String)tablaProductos.getValueAt(i, 2)));
-			//mp.setCategoria(1); //TODO
-			mp.setCategoria_string((String) tablaProductos.getValueAt(i, 1));
-			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
-			mp.setNombre((String) tablaProductos.getValueAt(i, 2));
-			mp.setCantidad(Integer.parseInt((String) tablaProductos.getValueAt(i, 3))); 
-			listaProductos.add(mp);
+			pr.setPR_id((Integer)tablaProductos.getValueAt(i, 0));
+			pr.setPR_TIPO_PRODUCTO_STRING((String) tablaProductos.getValueAt(i, 1));
+			pr.setPR_nombre((String) tablaProductos.getValueAt(i, 2));
+			pr.setCantidad(Integer.parseInt((String) tablaProductos.getValueAt(i, 3)));
+			 
+			listaProductos.add(pr);
 		}
-		sc.setLista_materia_prima(listaProductos);
+		combo.setLista_productos(listaProductos);
+		
 		return combo;
 	}
 
@@ -350,5 +360,4 @@ public class Interfaz_ABM_Combos extends JDialog {
 		spinnerCantidad.setEnabled(false);
 		esEdicion = true;
 	}
-
 }//---> FIN CLASE

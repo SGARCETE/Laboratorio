@@ -140,6 +140,7 @@ public class Interfaz_Combos extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Mostrar_solicitud() {
 		if(tabla_combos_actuales.getRowCount()>0){
+			
 			Solicitud_compra sc = sv_solicitudCompra.OBTENER_SOLICITUD((Integer)tabla_combos_actuales.getValueAt(tabla_combos_actuales.getSelectedRow(), 0));
 			Interfaz_ABM_Combos frame = new Interfaz_ABM_Combos(principal_neg_int);
 			frame.setSolicictud(sc);

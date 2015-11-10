@@ -1346,7 +1346,7 @@ public class Interfaz_Principal {
 						// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
 						boolean productoNoEsta = true;
 						for (int i = 0; i<productos.size(); i++ ) {
-							if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+							if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre()) && productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio())){
 								int cantidad  = productos.get(i).getCantidad();
 								productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
 								productoNoEsta = false;
@@ -1367,9 +1367,7 @@ public class Interfaz_Principal {
 				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 				String Variedad = comboBoxVariedad.getSelectedItem().toString();
 		
-					
-					
-						if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
+					if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
 							ArrayList<Producto> Combo_productos = sv_Combos.getLista_Productos(Variedad);
 							for (int j=0; j<Cantidad; j++){
 								for (int k=0; k<Combo_productos.size();k++){
@@ -1383,7 +1381,7 @@ public class Interfaz_Principal {
 									// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
 									boolean productoNoEsta = true;
 									for (int i = 0; i<productos.size(); i++ ) {
-										if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())){
+										if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre()) && productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio()) ){
 											int cantidad  = productos.get(i).getCantidad();
 											productos.get(i).setCantidad(cantidad + (PRODUCTO_ACTUAL.getCantidad()));
 											productoNoEsta = false;
