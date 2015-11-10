@@ -56,6 +56,7 @@ import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_ABM_Producto;
 import Interfaz.JDialogs.Interfaz_ABM_Combos;
+import Interfaz.JDialogs.Interfaz_Combos;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Proveedores;
@@ -923,7 +924,7 @@ public class Interfaz_Principal {
 		JMenuItem mntmAbmCombos = new JMenuItem("Administrar Combos");
 		mntmAbmCombos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Abrir_Interfaz_ABM_Combos();
+				Abrir_Interfaz_Combos();
 			}
 		});
 		mnCombos.add(mntmAbmCombos);
@@ -1201,8 +1202,8 @@ public class Interfaz_Principal {
 		
 	}
 	
-	private void Abrir_Interfaz_ABM_Combos() {
-		Interfaz_ABM_Combos frame = new Interfaz_ABM_Combos(Principal_neg_int);
+	private void Abrir_Interfaz_Combos() {
+		Interfaz_Combos frame = new Interfaz_Combos(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
 		

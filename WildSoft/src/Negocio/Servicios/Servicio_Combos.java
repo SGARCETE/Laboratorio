@@ -29,4 +29,10 @@ public class Servicio_Combos {
 		return comboDAO.getLista_Productos(C);
 	}
 	
+	public boolean ELIMINAR_Combo(Integer ID) {	
+		return comboDAO.ELIMINAR_Combo(ID);
+		}
+	
+
+	
 }

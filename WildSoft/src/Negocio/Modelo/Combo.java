@@ -7,7 +7,14 @@ public class Combo {
 	private Integer id;
 	private String nombre;
 	private ArrayList<Producto> Lista_productos = new ArrayList<>();
+	private Double precio;
 	
+	public Double getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
 	public Integer getId() {
 		return id;
 	}
