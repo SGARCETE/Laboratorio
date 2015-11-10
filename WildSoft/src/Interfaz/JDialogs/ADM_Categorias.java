@@ -2,28 +2,27 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Categoria;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Categoria;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Productos;
-
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class ADM_Categorias extends JDialog{
 
@@ -193,7 +192,7 @@ public class ADM_Categorias extends JDialog{
 		
 		categoriasProductos = SvProducto.getCategorias();
 		
-		for (HashMap.Entry<Integer, String> entry : categoriasProductos.entrySet()) {
+		for (Entry<Integer, String> entry : categoriasProductos.entrySet()) {
 			
 		    String value = entry.getValue();
 		    String[] fila= new String[1];
@@ -206,7 +205,7 @@ public class ADM_Categorias extends JDialog{
 	public void LlenarTablaMaterias(){
 		categoriasMaterias = SvMaterias.getCategorias();
 		
-		for (HashMap.Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
+		for (Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
 			
 		    String value = entry.getValue();
 		    String[] fila= new String[1];

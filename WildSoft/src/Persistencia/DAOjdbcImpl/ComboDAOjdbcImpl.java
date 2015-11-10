@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Combo;
-import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ComboDAO;

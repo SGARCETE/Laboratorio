@@ -27,7 +27,7 @@ public class Email_Manager {
 		// Armar correo con informacion adicional	
 		Mensaje_HTML(solicitud_compra);
 		RUTA_ADJUNTO = solicitud_compra.getSolicitudPDF().getAbsolutePath();
-		System.out.println("ENVIAR_SOLICITUD_DE_COMPRA:\nADJUNTO RUTA: "+RUTA_ADJUNTO);
+//		System.out.println("ENVIAR_SOLICITUD_DE_COMPRA:\nADJUNTO RUTA: "+RUTA_ADJUNTO);
 		// Enviar datos del viaje al cliente (lo envia en otro hilo para que el programa no se cuelgue)
 //        Thread t = new Thread(){  
 //            public void run(){  

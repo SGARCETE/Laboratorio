@@ -1510,7 +1510,7 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	private void ACTUALIZAR_MONITOR() {
 		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.get_Pedidos(new GregorianCalendar());
-		System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " + Lista_Productos_de_Hoy.size());
+//		System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " + Lista_Productos_de_Hoy.size());
 		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
 	}
 		

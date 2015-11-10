@@ -251,7 +251,7 @@ public class ADM_Materia_Prima extends JDialog{
 		
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
 		Integer id = -1;
-		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
 			String value = entry.getValue();
 			if(comboBoxCategoria.getSelectedItem().equals(value)){
 				id = entry.getKey();;
@@ -385,7 +385,7 @@ public class ADM_Materia_Prima extends JDialog{
 		
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
 		Integer id = -1;
-		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
 			String value = entry.getValue();
 			if(comboBoxCategoria.getSelectedItem().equals(value)){
 				id = entry.getKey();;

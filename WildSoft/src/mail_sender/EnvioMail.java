@@ -192,7 +192,7 @@ public class EnvioMail {
             t.sendMessage(message, message.getAllRecipients());
             t.close();
             Informe.SetEnviado(true);
-            System.out.println("ENVIADO.");
+//            System.out.println("ENVIADO.");
 
         }
         catch (Exception e){

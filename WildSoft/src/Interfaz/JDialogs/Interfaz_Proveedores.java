@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -201,7 +202,7 @@ public class Interfaz_Proveedores extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				// Recorro el mapa buscando la id del elemento seleccionado del combo
 				Integer id = -1;
-				for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+				for (Entry<Integer, String> entry : categorias.entrySet()) {
 					String value = entry.getValue();
 					if(comboCategorias.getSelectedItem().equals(value)){
 						id = entry.getKey();;
@@ -343,7 +344,7 @@ public class Interfaz_Proveedores extends JDialog {
 
 	private void iniciarDatos() {
 		categorias = SvProveedores.getCategorias();
-		for (HashMap.Entry<Integer, String> entry : categorias.entrySet()) {
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
 		    String value = entry.getValue();
 		    comboCategorias.addItem(value);
 		}

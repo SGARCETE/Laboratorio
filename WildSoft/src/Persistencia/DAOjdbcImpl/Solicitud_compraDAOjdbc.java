@@ -136,7 +136,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 			String Query = "select * from Solicitud_compra SD join Solicitud_estado SEST join Proveedor PV on " +
 		    "SD.SD_Proveedor= PV.PV_id and SD.SD_estado= SEST.SEST_id ORDER BY SD_id DESC;" ;
 			
-			System.out.println("getLISTA_MATERIA_SOLICITUDES "+Query);
+//			System.out.println("getLISTA_MATERIA_SOLICITUDES "+Query);
 			st.executeQuery(Query);
 			
 			ResultSet Fila = st.getResultSet();
@@ -265,7 +265,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 	@Override
 	public boolean Registrar_envio_solicitud(Integer ID_SOLICITUD) {
 		//		ESTADO 2: ('Enviada');
-		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n GUARDE QUE LA SOLICITUD FUE ENVIADA!");
+//		System.out.println("Solicitud_compraDAOjdbc.Registrar_envio_solicitud\n GUARDE QUE LA SOLICITUD FUE ENVIADA!");
 		return MODIFICAR_ESTADO(ID_SOLICITUD, 2);
 	}
 
