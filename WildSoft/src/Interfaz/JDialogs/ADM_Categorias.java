@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 
 public class ADM_Categorias extends JDialog {
 
@@ -74,69 +75,70 @@ public class ADM_Categorias extends JDialog {
 
 		scrollPane.setViewportView(tableCategoriaProducto);
 
-		JLabel lblSeleccioneTipoCategoria = new JLabel("Seleccione Tipo");
-		lblSeleccioneTipoCategoria.setBounds(297, 105, 97, 28);
-		panel.add(lblSeleccioneTipoCategoria);
-
 		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
-		lblIngreseNombre.setBounds(303, 26, 91, 40);
+		lblIngreseNombre.setBounds(249, 97, 91, 40);
 		panel.add(lblIngreseNombre);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(288, 66, 126, 28);
+		textNombre.setBounds(233, 148, 126, 28);
 		panel.add(textNombre);
 		textNombre.setColumns(10);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(496, 32, 164, 259);
+		scrollPane_1.setBounds(387, 38, 164, 259);
 		panel.add(scrollPane_1);
 
 		scrollPane_1.setViewportView(tableCategoriaMateria);
 
-		btnAgregarProducto = new JButton("Agregar Como Tipo Producto");
+		btnAgregarProducto = new JButton("Agregar Producto");
+		btnAgregarProducto.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/add-1-icon16.png")));
 		btnAgregarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarCategoriaProducto();
 			}
 		});
-		btnAgregarProducto.setBounds(255, 145, 214, 23);
+		btnAgregarProducto.setBounds(35, 302, 164, 23);
 		panel.add(btnAgregarProducto);
 
 		button = new JButton("Salir");
+		button.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		button.setBounds(613, 312, 97, 47);
+		button.setBounds(613, 320, 97, 47);
 		panel.add(button);
 
-		btnAgregarMateria = new JButton("Agregar Como Categoria Materia");
+		btnAgregarMateria = new JButton("Agregar Materia");
+		btnAgregarMateria.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/add-1-icon16.png")));
 		btnAgregarMateria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarCategoriaMateria();
 			}
 		});
-		btnAgregarMateria.setBounds(255, 179, 214, 23);
+		btnAgregarMateria.setBounds(387, 302, 164, 23);
 		panel.add(btnAgregarMateria);
 
-		btnEliminarCategoriaMateria = new JButton("Eliminar Categoria Materia");
+		btnEliminarCategoriaMateria = new JButton("Eliminar Materia");
+		btnEliminarCategoriaMateria.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/delete-1-icon16.png")));
 		btnEliminarCategoriaMateria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Eliminar_Categoria_Materia();
 			}
 		});
-		btnEliminarCategoriaMateria.setBounds(229, 271, 257, 35);
+		btnEliminarCategoriaMateria.setBounds(387, 328, 164, 31);
 		panel.add(btnEliminarCategoriaMateria);
 
 		btnEliminarCategoriaProducto = new JButton(
-				"Eliminar Categoria Producto");
+				"Eliminar Producto");
+		btnEliminarCategoriaProducto.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/delete-1-icon16.png")));
 		btnEliminarCategoriaProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Eliminar_Categoria_Producto();
 			}
 		});
-		btnEliminarCategoriaProducto.setBounds(229, 312, 257, 28);
+		btnEliminarCategoriaProducto.setBounds(33, 331, 164, 28);
 		panel.add(btnEliminarCategoriaProducto);
 
 	}
@@ -147,7 +149,7 @@ public class ADM_Categorias extends JDialog {
 		tableCategoriaMateria = new JTable();
 		LlenarTablaProducto();
 		LlenarTablaMaterias();
-
+		
 	}
 
 	public void AgregarCategoriaMateria() {
@@ -157,7 +159,7 @@ public class ADM_Categorias extends JDialog {
 
 			LlenarTablaMaterias();
 
-			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");
+			JOptionPane.showMessageDialog(null, "Categoria Materia agregada");
 
 			textNombre.setText("");
 
@@ -220,7 +222,7 @@ public class ADM_Categorias extends JDialog {
 		int RESPUESTA = JOptionPane
 				.showConfirmDialog(
 						null,
-						"¿Seguro que desea eliminar este Tipo Producto ?\nEstos cambios no se pueden deshacer!",
+						"¿Seguro que desea eliminar esta Categoria Materia?\nEstos cambios no se pueden deshacer!",
 						"CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
 			SvCategorias
@@ -239,7 +241,7 @@ public class ADM_Categorias extends JDialog {
 		return dato;
 	}
 
-	private String[] obtenerSeleccionTipo() {
+	private String[] obtenerSeleccionProducto() {
 
 		int indice = tableCategoriaProducto.getSelectedRow();
 
@@ -250,18 +252,20 @@ public class ADM_Categorias extends JDialog {
 		return dato;
 
 	}
+	
 
 	protected void Eliminar_Categoria_Producto() {
-		datoTabla = obtenerSeleccionTipo();
+		
+		datoTabla = obtenerSeleccionProducto();
 		int RESPUESTA = JOptionPane
 				.showConfirmDialog(
 						null,
-						"¿Seguro que desea eliminar esta Categoria ?\nEstos cambios no se pueden deshacer!",
+						"¿Seguro que desea eliminar esta Categoria Producto ?\nEstos cambios no se pueden deshacer!",
 						"CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
 			SvCategorias
 					.eliminarCategoriaProducto((new Categoria(datoTabla[1])));
-			LlenarTablaMaterias();
+			LlenarTablaProducto();
 		}
 	}
 	
@@ -269,5 +273,4 @@ public class ADM_Categorias extends JDialog {
 		jtable.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre" }));
 	}
-
 }
