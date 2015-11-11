@@ -6,7 +6,6 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
@@ -22,19 +21,19 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
 
-	@SuppressWarnings("deprecation")
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		
 		int idDiaria = 1;
 		
 		Pedido pedidoAnterior = OBTENER_PEDIDO(ObtenerUltimoPedido());
 		
-		Date fecha = new Date();
-		if( pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && 
-			pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && 
-			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
-			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
-		}
+//		Date fecha = new Date();
+//		if( pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && 
+//			pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && 
+//			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
+//			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
+//		}
+		
 		// TEST
 		Calendar Fecha_HOY = new GregorianCalendar();
 		
@@ -43,7 +42,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 
 		if(MetAux.isSameDay(Pedido_Anterior,Fecha_HOY)){
 			System.out.println("Es true");
-//			idDiaria = pedidoAnterior.getIdDiaria() + 1;
+			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
 		}
 		// FIN TEST
 
@@ -106,7 +105,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private Integer ObtenerUltimoPedido() {
+	public Integer ObtenerUltimoPedido() {
 		try {
 			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -122,7 +121,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		public ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar) {
+	public ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar) {
 			if(Fecha_mostrar==null)
 				return null;
 			ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
@@ -163,11 +162,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			}
 			return Arreglo;
 		}
-		
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-	
-	
+
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public ArrayList<Pedido> getLISTA_PEDIDOS(Calendar Fecha_mostrar) {
 		if(Fecha_mostrar==null)

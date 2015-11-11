@@ -1,7 +1,7 @@
 package Interfaz.Swing_Extends;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.SystemColor;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -13,13 +13,15 @@ public class JTable_Cocina_vista_pedido extends JTable{
 		setModel(model);
 	    
 		// Color del fondo de la tabla
-		this.setBackground(SystemColor.menu);
+		this.setBackground(Color.white);
+		this.setOpaque(true);
 		
 		// Fuente
-		this.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		this.setFont(new Font("SansSerif", Font.PLAIN, 18));
 		
 		// Altura de cada fila
 		this.setRowHeight(25);
+		
 		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}

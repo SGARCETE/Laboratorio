@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -14,21 +13,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Interfaz.Swing_Extends.JTable_Cocina_Detalles_Pedido;
 import Interfaz.Swing_Extends.JTable_Cocina_Resumen_Productos_Pendientes;
 import Interfaz.Swing_Extends.JTable_Cocina_vista_pedido;
-import Interfaz.Swing_Extends.Model_Cocina_Detalles_Pedido;
 import Interfaz.Swing_Extends.Model_Cocina_Resumen_Productos_Pendientes;
 import Interfaz.Swing_Extends.Model_Cocina_vista_pedido;
 import MetAux.MetAux;
@@ -40,31 +34,22 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	private static final long serialVersionUID = 4440791632042457639L;
 	
 	private final JPanel contentPanel = new JPanel();
-
-	private JLabel lblDetalle_Pedido;
 	private JScrollPane scrollPane_prioridad1;
 	private JScrollPane scrollPane_prioridad2;
 	private JScrollPane scrollPane_prioridad3;
 	private JScrollPane scrollPane_prioridad4;
-	private JScrollPane scrollPane_prioridad5;
 	private JTable_Cocina_vista_pedido table_prioridad1;
 	private JTable_Cocina_vista_pedido table_prioridad2;
 	private JTable_Cocina_vista_pedido table_prioridad3;
 	private JTable_Cocina_vista_pedido table_prioridad4;
-	private JTable_Cocina_vista_pedido table_prioridad5;
 	private JTable[] Lista_Tablas = null; 
-	
 	private JLabel lbl_NroPedido_Prioridad1;
 	private JLabel lbl_NroPedido_Prioridad2;
 	private JLabel lbl_NroPedido_Prioridad3;
 	private JLabel lbl_NroPedido_Prioridad4;
-	private JLabel lbl_NroPedido_Prioridad5;
 	private JLabel[] Lista_Label  = null; 
-	
-	private JScrollPane scrollPane_Detalles;
 	private JScrollPane scrollPane_Resumen_Productos_Pendientes;
 	private JTable table_Resumen_Productos_Pendientes;
-	private JTable table_Detalles_Pedido;
 	
 	
 	public Interfaz_Cocina_Pantalla(Principal_Negocio_Interfaz Principal_neg_int) {
@@ -79,19 +64,13 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 //		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
 //		/*PARA SACARLE LOS BORDES:*/
 //		this.setUndecorated(true);
-		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
-		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
+//		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
+//		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
 		
 		
 		contentPanel.setBackground(Color.BLACK);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
-		JPanel panel_11 = new JPanel();
-		panel_11.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_11.setBackground(Color.WHITE);
-		
-		scrollPane_Resumen_Productos_Pendientes = new JScrollPane();
 		
 		JPanel panel_13 = new JPanel();
 		panel_13.setBackground(SystemColor.textHighlight);
@@ -109,6 +88,10 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		lbl_NroPedido_Prioridad1.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
 		scrollPane_prioridad1 = new JScrollPane();
+		scrollPane_prioridad1.setBackground(Color.white);
+		scrollPane_prioridad1.getViewport().setBackground(Color.WHITE);
+
+		
 		GroupLayout gl_panel_prioridad1 = new GroupLayout(panel_prioridad1);
 		gl_panel_prioridad1.setHorizontalGroup(
 			gl_panel_prioridad1.createParallelGroup(Alignment.LEADING)
@@ -118,7 +101,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 					.addGap(7)
 					.addComponent(lbl_NroPedido_Prioridad1, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addComponent(scrollPane_prioridad1, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+				.addComponent(scrollPane_prioridad1, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
 		);
 		gl_panel_prioridad1.setVerticalGroup(
 			gl_panel_prioridad1.createParallelGroup(Alignment.LEADING)
@@ -128,12 +111,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 						.addComponent(lblPizza, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lbl_NroPedido_Prioridad1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane_prioridad1, GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
+					.addComponent(scrollPane_prioridad1, GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE))
 		);
 		
 
 
-//		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
 		
 		panel_prioridad1.setLayout(gl_panel_prioridad1);
 		
@@ -150,6 +132,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		lbl_NroPedido_Prioridad2.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
 		scrollPane_prioridad2 = new JScrollPane();
+		scrollPane_prioridad2.setBackground(Color.white);
+		scrollPane_prioridad2.setOpaque(true);
+		scrollPane_prioridad2.getViewport().setBackground(Color.WHITE);
+		
+		
 		GroupLayout gl_panel_prioridad2 = new GroupLayout(panel_prioridad2);
 		gl_panel_prioridad2.setHorizontalGroup(
 			gl_panel_prioridad2.createParallelGroup(Alignment.LEADING)
@@ -173,7 +160,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		);
 		
 
-//		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
 		panel_prioridad2.setLayout(gl_panel_prioridad2);
 		
 		JPanel panel_prioridad3 = new JPanel();
@@ -189,6 +175,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		lbl_NroPedido_Prioridad3.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
 		scrollPane_prioridad3 = new JScrollPane();
+		scrollPane_prioridad3.setBackground(Color.white);
+		scrollPane_prioridad3.setOpaque(true);
+		scrollPane_prioridad3.getViewport().setBackground(Color.WHITE);
+		
+		
 		GroupLayout gl_panel_prioridad3 = new GroupLayout(panel_prioridad3);
 		gl_panel_prioridad3.setHorizontalGroup(
 			gl_panel_prioridad3.createParallelGroup(Alignment.LEADING)
@@ -212,7 +203,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		);
 		
 	
-//		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
 		panel_prioridad3.setLayout(gl_panel_prioridad3);
 		
 		JPanel panel_prioridad4 = new JPanel();
@@ -228,6 +218,10 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		lbl_NroPedido_Prioridad4.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
 		scrollPane_prioridad4 = new JScrollPane();
+		scrollPane_prioridad4.setBackground(Color.white); // TODO
+		scrollPane_prioridad4.setOpaque(true);
+		scrollPane_prioridad4.getViewport().setBackground(Color.WHITE);
+		
 		GroupLayout gl_panel_prioridad4 = new GroupLayout(panel_prioridad4);
 		gl_panel_prioridad4.setHorizontalGroup(
 			gl_panel_prioridad4.createParallelGroup(Alignment.LEADING)
@@ -251,182 +245,104 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		);
 		
 
-//		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
 		panel_prioridad4.setLayout(gl_panel_prioridad4);
 		
-		JPanel panel_prioridad5 = new JPanel();
-		panel_prioridad5.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_prioridad5.setBackground(Color.WHITE);
+		JPanel panel_Resumen = new JPanel();
+		panel_Resumen.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_Resumen.setBackground(Color.WHITE);
 		
-		JLabel label_44 = new JLabel("Pedido");
-		label_44.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		scrollPane_Resumen_Productos_Pendientes = new JScrollPane();
+		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
+		table_Resumen_Productos_Pendientes.setBackground(Color.white);
+		table_Resumen_Productos_Pendientes.setOpaque(true);
+		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
+
 		
-		lbl_NroPedido_Prioridad5 = new JLabel("16");
-		lbl_NroPedido_Prioridad5.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_NroPedido_Prioridad5.setForeground(new Color(30, 144, 255));
-		lbl_NroPedido_Prioridad5.setFont(new Font("Tahoma", Font.BOLD, 28));
+		scrollPane_Resumen_Productos_Pendientes.setBackground(Color.white);
+		scrollPane_Resumen_Productos_Pendientes.setOpaque(true);
+		scrollPane_Resumen_Productos_Pendientes.getViewport().setBackground(Color.WHITE);
 		
-		scrollPane_prioridad5 = new JScrollPane();
-		GroupLayout gl_panel_prioridad5 = new GroupLayout(panel_prioridad5);
-		gl_panel_prioridad5.setHorizontalGroup(
-			gl_panel_prioridad5.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_prioridad5.createSequentialGroup()
-					.addGap(11)
-					.addComponent(label_44, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					.addGap(7)
-					.addComponent(lbl_NroPedido_Prioridad5, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(11, Short.MAX_VALUE))
-				.addComponent(scrollPane_prioridad5, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+		
+		JLabel lblResumenUltimos = new JLabel("Resumen");
+		lblResumenUltimos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResumenUltimos.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		GroupLayout gl_panel_Resumen = new GroupLayout(panel_Resumen);
+		gl_panel_Resumen.setHorizontalGroup(
+			gl_panel_Resumen.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel_Resumen.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblResumenUltimos, GroupLayout.PREFERRED_SIZE, 179, Short.MAX_VALUE)
+					.addGap(5))
+				.addComponent(scrollPane_Resumen_Productos_Pendientes, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
 		);
-		gl_panel_prioridad5.setVerticalGroup(
-			gl_panel_prioridad5.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_prioridad5.createSequentialGroup()
-					.addGap(10)
-					.addGroup(gl_panel_prioridad5.createParallelGroup(Alignment.LEADING)
-						.addComponent(label_44, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbl_NroPedido_Prioridad5, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
-					.addComponent(scrollPane_prioridad5, GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
+		gl_panel_Resumen.setVerticalGroup(
+			gl_panel_Resumen.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblResumenUltimos, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane_Resumen_Productos_Pendientes, GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE))
 		);
 		
 
-//		scrollPane_prioridad5.setColumnHeaderView(table_prioridad5);
-		panel_prioridad5.setLayout(gl_panel_prioridad5);
+		panel_Resumen.setLayout(gl_panel_Resumen);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addComponent(panel_11, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
-				.addComponent(panel_13, GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
+				.addComponent(panel_13, GroupLayout.PREFERRED_SIZE, 998, Short.MAX_VALUE)
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addComponent(panel_13, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_11, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
+				.addComponent(panel_13, GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
 		);
 		GroupLayout gl_panel_13 = new GroupLayout(panel_13);
 		gl_panel_13.setHorizontalGroup(
 			gl_panel_13.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_13.createSequentialGroup()
 					.addGap(5)
-					.addComponent(panel_prioridad1, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+					.addComponent(panel_prioridad1, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 					.addGap(5)
-					.addComponent(panel_prioridad2, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+					.addComponent(panel_prioridad2, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 					.addGap(5)
-					.addComponent(panel_prioridad3, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+					.addComponent(panel_prioridad3, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 					.addGap(5)
-					.addComponent(panel_prioridad4, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+					.addComponent(panel_prioridad4, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
 					.addGap(4)
-					.addComponent(panel_prioridad5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(4))
+					.addComponent(panel_Resumen, GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+					.addGap(5))
 		);
 		gl_panel_13.setVerticalGroup(
-			gl_panel_13.createParallelGroup(Alignment.LEADING)
+			gl_panel_13.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_13.createSequentialGroup()
 					.addGap(5)
-					.addGroup(gl_panel_13.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_prioridad1, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-						.addComponent(panel_prioridad2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_prioridad3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_prioridad4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_prioridad5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_panel_13.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_Resumen, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+						.addComponent(panel_prioridad1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+						.addComponent(panel_prioridad2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+						.addComponent(panel_prioridad3, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+						.addComponent(panel_prioridad4, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
 					.addGap(6))
 		);
 		panel_13.setLayout(gl_panel_13);
-		
-		scrollPane_Detalles = new JScrollPane();
-		
-//		table_Detalles_Pedido = new JTable();
-//		table_Detalles_Pedido.setRowHeight(25);
-//		table_Detalles_Pedido.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		table_Detalles_Pedido.setModel(new DefaultTableModel(
-//			new Object[][] {
-//				{"4", "Pizza", "Napolitana", "Sin aceitunas"},
-//				{"1", "Pizza", "Muzzarella", null},
-//				{"1", "Empanada", "Hawaiana", "123456789012345678901234567890123"},
-//				{"12", "Empanada", "Humita", "1234567890123"},
-//				{"12", "Empanada", "Carne", "Sin pasas"},
-//				{"5", "Empanada", "Pollo", null},
-//			},
-//			new String[] {
-//				"Cantidad", "Tipo", "Producto", "Observacion"
-//			}
-//		));
-//		table_Detalles_Pedido.getColumnModel().getColumn(0).setPreferredWidth(55);
-//		table_Detalles_Pedido.getColumnModel().getColumn(0).setMinWidth(55);
-//		table_Detalles_Pedido.getColumnModel().getColumn(0).setMaxWidth(55);
-//		table_Detalles_Pedido.getColumnModel().getColumn(1).setPreferredWidth(280);
-//		table_Detalles_Pedido.getColumnModel().getColumn(1).setMinWidth(90);
-//		table_Detalles_Pedido.getColumnModel().getColumn(2).setPreferredWidth(90);
-//		table_Detalles_Pedido.getColumnModel().getColumn(2).setMinWidth(90);
-//		table_Detalles_Pedido.getColumnModel().getColumn(3).setPreferredWidth(500);
-//		table_Detalles_Pedido.getColumnModel().getColumn(3).setMinWidth(90);
-//		table_Detalles_Pedido.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		table_2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
-		
-		lblDetalle_Pedido = new JLabel("Pedido 12 - Detalles");
-		lblDetalle_Pedido.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDetalle_Pedido.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
-		JLabel lblResumenUltimos = new JLabel("Resumen productos pendientes");
-		lblResumenUltimos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResumenUltimos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GroupLayout gl_panel_11 = new GroupLayout(panel_11);
-		gl_panel_11.setHorizontalGroup(
-			gl_panel_11.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_11.createSequentialGroup()
-					.addGap(4)
-					.addGroup(gl_panel_11.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane_Detalles, GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
-						.addGroup(gl_panel_11.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblDetalle_Pedido, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)))
-					.addGap(12)
-					.addGroup(gl_panel_11.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblResumenUltimos, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-						.addComponent(scrollPane_Resumen_Productos_Pendientes, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
-					.addGap(43))
-		);
-		gl_panel_11.setVerticalGroup(
-			gl_panel_11.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_11.createSequentialGroup()
-					.addGap(30)
-					.addComponent(scrollPane_Detalles, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
-				.addComponent(lblDetalle_Pedido, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-				.addComponent(lblResumenUltimos, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-				.addGroup(gl_panel_11.createSequentialGroup()
-					.addGap(30)
-					.addComponent(scrollPane_Resumen_Productos_Pendientes, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
-		);
-		panel_11.setLayout(gl_panel_11);
 		contentPanel.setLayout(gl_contentPanel);
 		iniciarParametros();
 	}
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void iniciarParametros() {
-		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
-		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
-		
-		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
-		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad2 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad3 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad4 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
-		table_prioridad5 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		
 		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
 		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
 		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
 		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
-		scrollPane_prioridad5.setColumnHeaderView(table_prioridad5);
 		
-		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4,table_prioridad5};
-		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4, lbl_NroPedido_Prioridad5,};
+		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4};
+		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4};
 		
 //		Hardcodear_Tablas();
 	}
@@ -436,29 +352,30 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
 		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
 		
-		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
-		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
+//		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
+//		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad2 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad3 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad4 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
-		table_prioridad5 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
-		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
-		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
-		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
-		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
-		scrollPane_prioridad5.setColumnHeaderView(table_prioridad5);
+		
+		scrollPane_prioridad1.setViewportView(table_prioridad1);
+		scrollPane_prioridad2.setViewportView(table_prioridad2);
+		scrollPane_prioridad3.setViewportView(table_prioridad3);
+		scrollPane_prioridad4.setViewportView(table_prioridad4);
+//		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
+//		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
+//		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
+//		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
 		
 		lbl_NroPedido_Prioridad1.setText("");
 		lbl_NroPedido_Prioridad2.setText("");
 		lbl_NroPedido_Prioridad3.setText("");
 		lbl_NroPedido_Prioridad4.setText("");
-		lbl_NroPedido_Prioridad5.setText("");
 		
-		lblDetalle_Pedido.setText("");
-		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4,table_prioridad5};
-		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4, lbl_NroPedido_Prioridad5,};
+		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4};
+		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4};
 		
 	}
 	
@@ -495,34 +412,31 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		table_prioridad2 = new JTable_Cocina_vista_pedido(model);
 		table_prioridad3 = new JTable_Cocina_vista_pedido(model);
 		table_prioridad4 = new JTable_Cocina_vista_pedido(model);
-		table_prioridad5 = new JTable_Cocina_vista_pedido(model);
 		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
 		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
 		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
 		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
-		scrollPane_prioridad5.setColumnHeaderView(table_prioridad5);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void Actualizar_monitor(ArrayList<Pedido> Lista_Pedidos){
 		resetear_campos();
-		ArrayList<Pedido> Lista_5_pedidos = new ArrayList<Pedido>();
+		ArrayList<Pedido> Lista_4_pedidos = new ArrayList<Pedido>();
 
 		int cant_pedidos = 0;
 		for (int j = 0; j < Lista_Pedidos.size(); j++) {
-			if(Lista_Pedidos.get(j).getESTADO().equals("Pendiente") && cant_pedidos<5){
-				Lista_5_pedidos.add(Lista_Pedidos.get(j));
+			if(Lista_Pedidos.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
+				Lista_4_pedidos.add(Lista_Pedidos.get(j));
 				cant_pedidos++;
 			}
 		}
 //		System.out.println("Interfaz_Cocina_Pantalla_Alternativa2.Actualizar_monitor()\\nCantidad_pedidos"+ Lista_5_pedidos.size());
 		
-		if(Lista_5_pedidos!=null && Lista_5_pedidos.size()>0){
-			for (int i = 0; i < Lista_5_pedidos.size(); i++) 
-				Mostrar_pedido(Lista_5_pedidos.get(i), i);
-			if(Lista_5_pedidos.size()>0 && Lista_Pedidos.size()>0){
+		if(Lista_4_pedidos!=null && Lista_4_pedidos.size()>0){
+			for (int i = 0; i < Lista_4_pedidos.size(); i++) 
+				Mostrar_pedido(Lista_4_pedidos.get(i), i);
+			if(Lista_4_pedidos.size()>0 && Lista_Pedidos.size()>0){
 //				System.out.println("Interfaz_Cocina_Pantalla_Alternativa2.Actualizar_monitor()\\nTamaño de lista de productos del pedido 0 es de: "+Lista_5_pedidos.get(0).getLista_Productos().size());
-				setPedido_para_hacer(Lista_5_pedidos.get(0));
 				setResumen_Productos_Pendientes(Lista_Pedidos);
 			}
 		}
@@ -558,11 +472,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
 			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
 			
-			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA
+			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA (ID Producto bebida = 3)
 				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
 				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
 			}
-			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA
+			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA  (ID Producto bebida = 3)
 				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
 				if(!pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
 					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
@@ -572,21 +486,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		JT.setModel(model);
 	}
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void setPedido_para_hacer(Pedido p){
-		DefaultTableModel model = (DefaultTableModel) table_Detalles_Pedido.getModel();
-//		Model_Cocina_Detalles_Pedido model = new Model_Cocina_Detalles_Pedido();
-		
-		lblDetalle_Pedido.setText(p.getID_DIARIO()+" - Detalles");
-
-		for (int i = 0; i < p.getLista_Productos().size(); i++) {
-			Producto pr = p.getLista_Productos().get(i);
-			model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre(), pr.getPR_Observacion()});
-		}
-		table_Detalles_Pedido.setModel(model);
-//		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
-	}
-		
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	
 }//--> FIN INTERFAZ

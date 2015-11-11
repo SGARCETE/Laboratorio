@@ -65,5 +65,9 @@ public class Servicio_Pedidos {
 		return pedidoDAO.getLISTA_PEDIDOS_PREPARADOS(Fecha_mostrar);
 	}
 	
+	// OBTENER ID DEL ULTIMO PEDIDO
+	public Integer Obtener_ID_Ultimo_Pedido(){
+		return pedidoDAO.ObtenerUltimoPedido();
+	}
 
 }

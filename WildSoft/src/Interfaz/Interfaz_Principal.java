@@ -85,6 +85,7 @@ import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import com.toedter.calendar.JDateChooser;
 import java.awt.FlowLayout;
+import javax.swing.JToggleButton;
 
 public class Interfaz_Principal {
 
@@ -147,6 +148,7 @@ public class Interfaz_Principal {
 	private JDateChooser dateChooser_Fecha_mostrar;
 	private JButton btn_fecha_anterior;
 	private JButton btn_fecha_siguiente;
+	private JToggleButton tglbtnSoloPendientes;
 
 
 	/** Create the application.
@@ -193,7 +195,7 @@ public class Interfaz_Principal {
 
 		JPanel panel_Nuevo_pedido = new JPanel();
 		panel_Nuevo_pedido.setBackground(SystemColor.menu);
-		tabbedPane.addTab("Nuevo pedido", null, panel_Nuevo_pedido, null);
+		tabbedPane.addTab("Nuevo pedido", new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/pizza-slice-icon32.png")), panel_Nuevo_pedido, null);
 
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(Color.WHITE);
@@ -565,16 +567,21 @@ public class Interfaz_Principal {
 
 		JPanel panel_Lista_de_pedidos = new JPanel();
 		panel_Lista_de_pedidos.setBackground(Color.WHITE);
-		tabbedPane.addTab("Listado de pedidos", null, panel_Lista_de_pedidos,
+		tabbedPane.addTab("Listado de pedidos", new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")), panel_Lista_de_pedidos,
 				null);
 
 		scrollPane_Lista_Pedidos = new JScrollPane();
+		scrollPane_Lista_Pedidos.setBounds(131, 127, 971, 551);
 
-		JLabel lblListadoDePedidos = new JLabel("Listado de pedidos");
+		JLabel lblListadoDePedidos = new JLabel("Pedidos registrados");
+		lblListadoDePedidos.setOpaque(true);
+		lblListadoDePedidos.setBackground(SystemColor.menu);
+		lblListadoDePedidos.setBounds(131, 6, 971, 45);
 		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblListadoDePedidos.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblListadoDePedidos.setFont(new Font("SansSerif", Font.BOLD, 24));
 
 		JPanel panel = new JPanel();
+		panel.setBounds(6, 62, 119, 616);
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panel.setBackground(Color.WHITE);
@@ -613,7 +620,7 @@ public class Interfaz_Principal {
 		
 		
 		JButton btnCobrado = new JButton("Cobrado");
-		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/cobrado64.png")));
+		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Coin-us-dollar-icon64.png")));
 		btnCobrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Setear_como_cobrado();
@@ -623,78 +630,6 @@ public class Interfaz_Principal {
 		btnCobrado.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCobrado.setBackground(Color.WHITE);
 		panel.add(btnCobrado);
-		
-		btn_fecha_anterior = new JButton("");
-		btn_fecha_anterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Fecha_Anterior();
-			}
-		});
-		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
-		
-		dateChooser_Fecha_mostrar = new JDateChooser();
-		dateChooser_Fecha_mostrar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) {
-				Actualizar_Lista_pedidos();
-			}
-		});
-		
-		btn_fecha_siguiente = new JButton("");
-		btn_fecha_siguiente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Fecha_Siguiente();
-			}
-		});
-		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
-		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
-		gl_panel_Lista_de_pedidos.setHorizontalGroup(
-			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(6)
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-									.addGap(506)
-									.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-									.addGap(280)
-									.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-									.addGap(342)
-									.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)))))
-					.addGap(10))
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(131)
-					.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panel_Lista_de_pedidos.setVerticalGroup(
-			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(7)
-					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
-						.addComponent(btn_fecha_siguiente, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btn_fecha_anterior, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-							.addGap(33)
-							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)))
-					.addContainerGap())
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(7)
-					.addComponent(dateChooser_Fecha_mostrar, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(7)
-					.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
-					.addGap(40)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
-					.addContainerGap())
-		);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -719,7 +654,67 @@ public class Interfaz_Principal {
 		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnComandaticket.setBackground(Color.WHITE);
 		panel.add(btnComandaticket);
-		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
+		panel_Lista_de_pedidos.setLayout(null);
+		panel_Lista_de_pedidos.add(lblListadoDePedidos);
+		panel_Lista_de_pedidos.add(panel);
+		panel_Lista_de_pedidos.add(scrollPane_Lista_Pedidos);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(60, 179, 113));
+		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_2.setBounds(131, 62, 971, 54);
+		panel_Lista_de_pedidos.add(panel_2);
+		panel_2.setLayout(null);
+		
+		btn_fecha_anterior = new JButton("");
+		btn_fecha_anterior.setBounds(257, 11, 50, 35);
+		panel_2.add(btn_fecha_anterior);
+		btn_fecha_anterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Fecha_Anterior();
+			}
+		});
+		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
+		
+		dateChooser_Fecha_mostrar = new JDateChooser();
+		dateChooser_Fecha_mostrar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		dateChooser_Fecha_mostrar.getCalendarButton().setFont(new Font("Tahoma", Font.PLAIN, 16));
+		dateChooser_Fecha_mostrar.setBounds(307, 11, 164, 35);
+		panel_2.add(dateChooser_Fecha_mostrar);
+		dateChooser_Fecha_mostrar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		
+		btn_fecha_siguiente = new JButton("");
+		btn_fecha_siguiente.setBounds(471, 11, 50, 35);
+		panel_2.add(btn_fecha_siguiente);
+		btn_fecha_siguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Fecha_Siguiente();
+			}
+		});
+		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
+		
+		tglbtnSoloPendientes = new JToggleButton("Solo pendientes");
+		tglbtnSoloPendientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Actualizar_Lista_pedidos();
+			}
+		});
+		tglbtnSoloPendientes.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
+		tglbtnSoloPendientes.setBounds(531, 11, 142, 35);
+		panel_2.add(tglbtnSoloPendientes);
+		
+		JLabel label = new JLabel("20/25");
+		label.setBackground(SystemColor.menu);
+		label.setOpaque(true);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		label.setBounds(6, 6, 119, 45);
+		panel_Lista_de_pedidos.add(label);
+		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				Actualizar_Lista_pedidos();
+			}
+		});
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -729,7 +724,7 @@ public class Interfaz_Principal {
 
 		JPanel panel_Itinerario = new JPanel();
 		panel_Itinerario.setBackground(Color.WHITE);
-		tabbedPane.addTab("Itinerario de Entrega", null, panel_Itinerario, null);
+		tabbedPane.addTab("Itinerario de Entrega", new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Delivery-32.png")), panel_Itinerario, null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -787,7 +782,8 @@ public class Interfaz_Principal {
 		button_1.setBounds(36, 57, 109, 35);
 		panel_1.add(button_1);
 		
-		JButton btnVaciar = new JButton("Vaciar Itinerario");
+		JButton btnVaciar = new JButton("Vaciar");
+		btnVaciar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/trash-icon32.png")));
 		btnVaciar.setBounds(36, 103, 109, 35);
 		panel_1.add(btnVaciar);
 		
@@ -801,6 +797,7 @@ public class Interfaz_Principal {
 		panel_1.add(comboRepartidores);
 		
 		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
+		btnGenerarnItinerario.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
 		btnGenerarnItinerario.setBounds(10, 231, 163, 45);
 		panel_1.add(btnGenerarnItinerario);
 		GroupLayout gl_panel_Itinerario = new GroupLayout(panel_Itinerario);
@@ -878,9 +875,11 @@ public class Interfaz_Principal {
 		menuBar.add(mnArchivo);
 
 		JMenuItem mntmRealizarBackup = new JMenuItem("Realizar Backup");
+		mntmRealizarBackup.setEnabled(false);
 		mnArchivo.add(mntmRealizarBackup);
 
 		JMenuItem mntmRestaurarBackup = new JMenuItem("Restaurar Backup");
+		mntmRestaurarBackup.setEnabled(false);
 		mnArchivo.add(mntmRestaurarBackup);
 
 		JMenuItem mntmSalir = new JMenuItem("Salir");
@@ -995,8 +994,7 @@ public class Interfaz_Principal {
 		mnCategoria.add(mntmADMCategoria);
 
 	}// --> FIN INTERFAZ	
-	
-	
+
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ	 */
 	private void iniciarParametros() {
@@ -1276,6 +1274,19 @@ public class Interfaz_Principal {
 			ArrayList<Pedido> Lista_Pedidos =  sv_pedidos.get_Pedidos(dateChooser_Fecha_mostrar.getCalendar());
 			Model_Listado_Pedidos model = new Model_Listado_Pedidos();
 			
+			ArrayList<Pedido> Lista_Pedidos_Aux = new ArrayList<Pedido>();
+			// Filtra los que no son pendientes, los borra de la lista para mostrar
+			if(tglbtnSoloPendientes.isSelected()){
+				for (int i = 0; i < Lista_Pedidos.size(); i++) {
+					if(Lista_Pedidos.get(i).getESTADO().equals("Pendiente")){
+						Lista_Pedidos_Aux.add(Lista_Pedidos.get(i));
+					}
+				}
+				Lista_Pedidos = Lista_Pedidos_Aux;
+			}
+
+			
+			// Llena la tabla para mostrar los pedidos
 			for (int i = 0; i < Lista_Pedidos.size(); i++) {
 				Pedido PE = Lista_Pedidos.get(i);
 				String Nombre_Cliente = "";
@@ -1612,4 +1623,9 @@ public class Interfaz_Principal {
 		frame.setVisible(true);
 		
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }// ---> FIN CLASE

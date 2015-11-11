@@ -25,5 +25,7 @@ public interface PedidoDAO {
 
 	public boolean AGREGAR_PRODUCTO_PEDIDO(Pedido p);
 	
-	ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar);
+	public ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar);
+	
+	public Integer ObtenerUltimoPedido();
 }

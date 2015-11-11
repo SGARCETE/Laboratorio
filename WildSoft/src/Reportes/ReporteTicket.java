@@ -42,9 +42,9 @@ public class ReporteTicket {
 				con.connectToMySQL();
 				jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.conexion);
 				
-				//* OPCIONAL: GENERA UN ARCHIVO PDF EN EL ESCRITORIO *//
-				File home = FileSystemView.getFileSystemView().getHomeDirectory(); 
-				JasperExportManager.exportReportToPdfFile(jasperPrint, home.getAbsolutePath()+"\\TICKET PEDIDO NUMERO "+NUMERO_PEDIDO+".pdf");
+//				//* OPCIONAL: GENERA UN ARCHIVO PDF EN EL ESCRITORIO *//
+//				File home = FileSystemView.getFileSystemView().getHomeDirectory(); 
+//				JasperExportManager.exportReportToPdfFile(jasperPrint, home.getAbsolutePath()+"\\TICKET PEDIDO NUMERO "+NUMERO_PEDIDO+".pdf");
 					
 				con.cerrarConexion();
 				
