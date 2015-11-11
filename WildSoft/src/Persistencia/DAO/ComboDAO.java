@@ -17,5 +17,7 @@ public interface ComboDAO {
 	
 	boolean ELIMINAR_Combo(Integer ID);
 	
+	Combo get_combo (Integer id_combo);
+	
 
 }
