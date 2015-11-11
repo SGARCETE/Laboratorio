@@ -480,7 +480,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
-			if (Tipo_producto!= "Combo"){
+			
 				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 				PRODUCTO_ACTUAL.setCantidad(Cantidad);
 				
@@ -517,47 +517,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 						Limpiar_Formulario_pedido();
 						Calcula_totales();
 						}
-			}else{
-				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-				String Variedad = comboBoxVariedad.getSelectedItem().toString();
-		
-					
-					
-						if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
-							ArrayList<Producto> Combo_productos = sv_Combos.getLista_Productos(Variedad);
-							for (int j=0; j<Cantidad; j++){
-								for (int k=0; k<Combo_productos.size();k++){
-									PRODUCTO_ACTUAL= Combo_productos.get(k);
-									
-					
-									/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
-									
-									ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
-									
-									// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
-									boolean productoNoEsta = true;
-									for (int i = 0; i<productos.size(); i++ ) {
-										if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre()) && productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio())){
-											int cantidad  = productos.get(i).getCantidad();
-											productos.get(i).setCantidad(cantidad + (PRODUCTO_ACTUAL.getCantidad()));
-											productoNoEsta = false;
-										}
-									}
-									if(productoNoEsta){
-										PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-									}
-					
-									/** Esto va para la parte visual **/
-									Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
-									
-									/** Despues que se resetee el formulario de ingreso de pedido **/
-									Limpiar_Formulario_pedido();
-									Calcula_totales();
-									}
-							}
-				
-						}
-			}
+			
 		}
 	}
 	
