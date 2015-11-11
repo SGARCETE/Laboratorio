@@ -156,7 +156,7 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 			conex.connectToMySQL();
 
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select * from categoria_mp;");
+			st.executeQuery("select * from categoria_mp");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				mapa.put(Fila.getInt("CA_id"), Fila.getString("CA_nombre"));

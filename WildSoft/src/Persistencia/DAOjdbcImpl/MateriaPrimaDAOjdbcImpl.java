@@ -165,6 +165,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		return "";
 	}
 
+	
 	public HashMap<Integer, String> obtenerCategorias(){
 		
 		HashMap<Integer, String> mapa = new HashMap<Integer, String>();
@@ -173,7 +174,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 			conex.connectToMySQL();
 
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select * from categoria_mp;");
+			st.executeQuery("select * from categoria_mp where CA_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				mapa.put(Fila.getInt("CA_id"), Fila.getString("CA_nombre"));

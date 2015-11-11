@@ -23,13 +23,13 @@ public class CategoriaDAOjdbcImpl implements CategoriaDAO{
 	}
 	
 	public boolean eliminar_categoria_materia(Categoria c){
-		String SentenciaSQL = "delete from categoria_mp where CA_nombre= '"+ c.getNombre() +"';";
+		String SentenciaSQL = "UPDATE Categoria_mp SET CA_vigente=1 WHERE CA_nombre= '"+ c.getNombre() +"';";
 		    
 		return conex.Insertar(SentenciaSQL);
 	}
 
 	public boolean eliminar_categoria_producto(Categoria c){
-		String SentenciaSQL = "delete from tipo_producto where TP_nombre= '"+ c.getNombre() +"';";
+		String SentenciaSQL = "UPDATE Tipo_producto SET TP_vigente=0 WHERE TP_nombre= '"+ c.getNombre() +"';";
 		    
 		return conex.Insertar(SentenciaSQL);
 	}
