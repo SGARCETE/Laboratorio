@@ -1232,11 +1232,14 @@ public class Interfaz_Principal {
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// ACTUALIZA EL LISTADO DE PEDIDOS
 			ACTUALIZAR_TODO();
+			
+			// GENERA TICKET Y COMANDA DE ESTE PRODUCTO
+			Ticket_Comanda_nuevo_pedido();
 			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
 	}
-	
+
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** MODIFICACION DE PEDIDO */
 	private void Modificar_Pedido_Seleccionado() {
@@ -1338,50 +1341,46 @@ public class Interfaz_Principal {
 			// la tabla de pedidos LISTO
 			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
 			
-				Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
-				PRODUCTO_ACTUAL.setCantidad(Cantidad);
+			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
+			PRODUCTO_ACTUAL.setCantidad(Cantidad);
+			
+			String Variedad = comboBoxVariedad.getSelectedItem().toString();
+
+			if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
 				
-				String Variedad = comboBoxVariedad.getSelectedItem().toString();
-	
+				PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
+				PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
+
+				/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
 				
+				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
 				
-					if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
-						
-						PRODUCTO_ACTUAL.setPR_Observacion(textObservaciones.getText());
-						PRODUCTO_ACTUAL.setPR_TIPO_PRODUCTO_STRING(Tipo_producto);
-		
-						/** Esto va a un objeto pedido, el cual se usara para guardar en la base de datos **/
-						
-						ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
-						
-						// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
-						boolean productoNoEsta = true;
-						for (int i = 0; i<productos.size(); i++ ) {
-							if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre()) && productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio())){
-								int cantidad  = productos.get(i).getCantidad();
-								productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
-								productoNoEsta = false;
-							}
-						}
-						if(productoNoEsta){
-							PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
-						}
-		
-						/** Esto va para la parte visual **/
-						Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
-						
-						/** Despues que se resetee el formulario de ingreso de pedido **/
-						Limpiar_Formulario_pedido();
-						Calcula_totales();
-						}
+				// Si se agrega el mismo producto otra vez, agrega la cantidad al que ya estaba
+				boolean productoNoEsta = true;
+				for (int i = 0; i<productos.size(); i++ ) {
+					if(productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre()) && productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio())){
+						int cantidad  = productos.get(i).getCantidad();
+						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
+						productoNoEsta = false;
+					}
+				}
+				if(productoNoEsta){
+					PEDIDO_ACTUAL.agregar_un_producto(PRODUCTO_ACTUAL);
+				}
+
+				/** Esto va para la parte visual **/
+				Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
+				
+				/** Despues que se resetee el formulario de ingreso de pedido **/
+				Limpiar_Formulario_pedido();
+				Calcula_totales();
+			}
 			
 		}
 	}
 	
 	private void Actualizar_Tabla_Productos_del_Pedido(Pedido P){
 		Model_Pedido_Completo model = new Model_Pedido_Completo();
-//		DefaultTableModel model = new Model_Pedido_Completo();
-//		DefaultTableModel model = (DefaultTableModel) Tabla_Pedido_Completo.getModel();	
 		for (int i = 0; i < P.getLista_Productos().size(); i++) {
 			Object[] datos = new Object[7];
 			String ValorU = formatoImporte.format(P.getLista_Productos().get(i).getPR_precio());
@@ -1397,7 +1396,6 @@ public class Interfaz_Principal {
 		}
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(model);
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
-//		Tabla_Pedido_Completo.setModel(model);
 	}
 	
 	
@@ -1431,34 +1429,35 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Preparado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-		String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
-		Pedido pedido = new Pedido();
-		pedido.setNumero_Pedido(Numero_pedido);
-		System.out.println(pedido.getESTADO());
-
-
-		if(Estado_pedido.equals("Pendiente")){
-			sv_pedidos.modificar_estado(pedido, 2);
-			ACTUALIZAR_TODO();
+		if(Tabla_Lista_pedidos.getSelectedRow()>0){
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
+			Pedido pedido = new Pedido();
+			pedido.setNumero_Pedido(Numero_pedido);
+			System.out.println(pedido.getESTADO());
+	
+	
+			if(Estado_pedido.equals("Pendiente")){
+				sv_pedidos.modificar_estado(pedido, 2);
+				ACTUALIZAR_TODO();
+			}
 		}
-
-//		sv_pedidos.eliminar_pedido(P_cancelar);
-
 	}
 	
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_cobrado() {
-		Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-		String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
-		Pedido pedido = new Pedido();
-		pedido.setNumero_Pedido(Numero_pedido);
-		System.out.println(pedido.getESTADO());
-		
-		
-		if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
-			sv_pedidos.modificar_estado(pedido, 4);
-			ACTUALIZAR_TODO();
+		if(Tabla_Lista_pedidos.getSelectedRow()>0){
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
+			Pedido pedido = new Pedido();
+			pedido.setNumero_Pedido(Numero_pedido);
+			System.out.println(pedido.getESTADO());
+			
+			
+			if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
+				sv_pedidos.modificar_estado(pedido, 4);
+				ACTUALIZAR_TODO();
+			}
 		}
 	}
 	
@@ -1608,15 +1607,17 @@ public class Interfaz_Principal {
 				Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
 				sv_pedidos.modificar_estado(pedido, 3);
 				ACTUALIZAR_TODO();
-				System.out.println("Generar_itinerario_entrega.Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)) );
+//				System.out.println("Generar_itinerario_entrega.Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)) );
 			}
 			sv_Entrega.AGREGAR_PEDIDO(entrega);
-			System.out.println("Generar_itinerario_entrega "+entrega.getId());
+//			System.out.println("Generar_itinerario_entrega "+entrega.getId());
 			
 			ReporteItinerario ri= new ReporteItinerario();
 			ri.Generar_Itinerario(entrega.getId());
 		}
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void AbrirInterfazCategoria(){
 		ADM_Categorias frame = new ADM_Categorias(Principal_neg_int);
 		frame.setModal(true);
@@ -1625,7 +1626,33 @@ public class Interfaz_Principal {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+	
+	private void Ticket_Comanda_nuevo_pedido() {
+		Integer ID = sv_pedidos.Obtener_ID_Ultimo_Pedido();
+		Pedido P = sv_pedidos.get_pedido(ID);
+		
+		
+		Integer indice = 0;
+		// Busca en la tabla el indice que se modifico, Todo esto para que seleccione el nuevo viaje en la tabla y se mueva el scroll
+//		int CodigoViajeModificado = VIAJE_MODIFICADO.getID();	// Obtiene codigo de reserva
+		for (int i = 0; i < Tabla_Lista_pedidos.getRowCount(); i++) {		/* Lo busca en la tabla*/
+			if((Integer)Tabla_Lista_pedidos.getValueAt(i, 0) == ID)
+				indice = i;												// Obtiene el indice del viaje
+		}
+//		ActualizarTablaPrincipal();
+		
+		// Selecciona el registro modificado
+		scrollPane_Lista_Pedidos.getVerticalScrollBar().setValue(scrollPane_Lista_Pedidos.getVerticalScrollBar().getMinimum());	// Mueve el Scrollpane al inicio
+		Tabla_Lista_pedidos.getSelectionModel().setSelectionInterval(indice,indice);	// Selecciona la ultima orden ingresada,
+		Rectangle r = Tabla_Lista_pedidos.getCellRect(indice, 0, false); 			// Mueve el scroll para visualizarlo
+		scrollPane_Lista_Pedidos.getViewport().scrollRectToVisible (r);		// Mueve el scroll para visualizarlo	
+		
+		
+		// Primero hay que seleccionar el ultimo pedido
+		Generar_Comanda();
+		
+		
+	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }// ---> FIN CLASE

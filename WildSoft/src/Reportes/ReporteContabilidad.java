@@ -49,10 +49,10 @@ public class ReporteContabilidad {
 			JOptionPane.showMessageDialog(null, "Error al leer el fichero de carga jasper report "+e.getMessage());
 		}	
 				
-				// MOSTRAR REPORTE
-				JasperViewer view = new JasperViewer(jasperPrint,false); 
-				view.setTitle("Contabilidad");
-				view.setVisible(true);
+			// MOSTRAR REPORTE
+			JasperViewer view = new JasperViewer(jasperPrint,false); 
+			view.setTitle("Contabilidad");
+			view.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
