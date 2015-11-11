@@ -13,11 +13,16 @@ import javax.swing.SpinnerNumberModel;
 
 import Reportes.ReporteCompras;
 import Reportes.ReportePedidos;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Label;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 public class Interfaz_Contabilidad {
 
 	private JDialog frame;
-	JSpinner spinner = new JSpinner();
 
 	public Interfaz_Contabilidad() {
 		initialize();
@@ -25,29 +30,21 @@ public class Interfaz_Contabilidad {
 
 	private void initialize() {
 		frame = new JDialog();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 767, 396);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblSeleccioneElMes = new JLabel("Seleccione el mes");
-		lblSeleccioneElMes.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblSeleccioneElMes.setBounds(27, 74, 151, 27);
-		frame.getContentPane().add(lblSeleccioneElMes);
-		
 		JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
+		btnGenerarContabilidad.setHorizontalAlignment(SwingConstants.LEADING);
+		btnGenerarContabilidad.setIcon(new ImageIcon(Interfaz_Contabilidad.class.getResource("/Recursos/IMG/Product-sale-report-icon24.png")));
 		btnGenerarContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GenerarContabilidadCompras();
 				GenerarContabilidadPedidos();
-			}
+		}
 		});
-		btnGenerarContabilidad.setBounds(203, 74, 175, 68);
+		btnGenerarContabilidad.setBounds(434, 111, 178, 42);
 		frame.getContentPane().add(btnGenerarContabilidad);
-		
-		
-		spinner.setBounds(69, 112, 51, 32);
-		frame.getContentPane().add(spinner);
-		spinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -55,13 +52,42 @@ public class Interfaz_Contabilidad {
 				frame.dispose();
 			}
 		});
-		btnSalir.setBounds(356, 208, 68, 42);
+		btnSalir.setBounds(673, 304, 68, 42);
 		frame.getContentPane().add(btnSalir);
 		
-		JLabel lblContabilidad = new JLabel("CONTABILIDAD");
-		lblContabilidad.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblContabilidad.setBounds(130, 11, 168, 36);
-		frame.getContentPane().add(lblContabilidad);
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Selecciona Contabilidad", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel.setBounds(10, 22, 406, 252);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(102, 69, 130, 27);
+		panel.add(dateChooser);
+		
+		Label labelPorDia = new Label("Por D\u00EDa :");
+		labelPorDia.setBounds(10, 69, 78, 27);
+		panel.add(labelPorDia);
+		
+		Label labelPorMes = new Label("Por Fechas :");
+		labelPorMes.setBounds(10, 160, 86, 22);
+		panel.add(labelPorMes);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(254, 155, 130, 27);
+		panel.add(dateChooser_1);
+		
+		JDateChooser dateChooser_2 = new JDateChooser();
+		dateChooser_2.setBounds(102, 155, 130, 27);
+		panel.add(dateChooser_2);
+		
+		Label labelHasta = new Label("Hasta");
+		labelHasta.setBounds(296, 188, 62, 22);
+		panel.add(labelHasta);
+		
+		Label labelDesde = new Label("Desde");
+		labelDesde.setBounds(135, 188, 78, 27);
+		panel.add(labelDesde);
 	}
 	private void GenerarContabilidadCompras() {
 		ReporteCompras rc = new ReporteCompras();
@@ -79,6 +105,5 @@ public class Interfaz_Contabilidad {
 	public JDialog getDialog(){
 		return frame;
 	}
-	
 }
 
