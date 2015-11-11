@@ -32,7 +32,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("select * from Categoria_MP CM JOIN Materia_Prima MP where MP.MP_categoria= CA_id and CM.CA_nombre = '" + Categoria_mp + "'");
+			st.executeQuery("select * from Categoria_MP CM JOIN Materia_Prima MP where MP.MP_categoria= CA_id and MP_vigente is null and CM.CA_nombre = '" + Categoria_mp + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Materia_Prima m = new Materia_Prima();				
@@ -51,7 +51,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	}
 	
 	public boolean ELIMINAR__Materia_Prima(Materia_Prima m) {
-		String SentenciaSQL = "DELETE  FROM Materia_Prima WHERE MP_id="
+		String SentenciaSQL = "UPDATE Materia_Prima SET MP_vigente=0 WHERE MP_id= "
 				+ m.getId();
 		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
 	}
@@ -94,7 +94,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Materia_prima");
+			st.executeQuery("SELECT * FROM Materia_prima where MP_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Materia_Prima m = new Materia_Prima();

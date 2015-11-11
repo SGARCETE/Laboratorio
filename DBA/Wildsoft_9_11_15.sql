@@ -1,4 +1,4 @@
- drop database  if exists wildsoft;
+drop database  if exists wildsoft;
 
 create database wildsoft;
 use wildsoft;
@@ -234,12 +234,14 @@ Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_client
 CREATE TABLE Combo (
 						CO_id int AUTO_INCREMENT,
 						CO_nombre varchar (200),
+						CO_precio double,
+						CO_vigente boolean,
 						primary key (CO_id),
 						UNIQUE (CO_nombre)
 );
 
-INSERT INTO Combo (CO_nombre) values ('1 Muzza, 1 Coca');
-INSERT INTO Combo (CO_nombre) values ('12 Empanadas, 1 Muzza');
+INSERT INTO Combo (CO_nombre, CO_precio) values ('1 Muzza, 1 Coca', 150);
+INSERT INTO Combo (CO_nombre, CO_precio) values ('12 Empanadas, 1 Muzza', 160);
 
 
 

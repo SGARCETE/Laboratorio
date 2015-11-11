@@ -25,7 +25,7 @@ public class RepartidorDAOjdbcImpl implements RepartidorDAO{
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean Eliminar_Repartidor(Repartidor R) {
-		String SentenciaSQL = "DELETE FROM Repartidor WHERE RE_id =" + R.getID_Repartidor();
+		String SentenciaSQL = "UPDATE Repartidor SET PR_vigente=1 WHERE PR_id=1" + R.getID_Repartidor();
 		return conex.Insertar(SentenciaSQL);
 	}
 	

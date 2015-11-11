@@ -32,7 +32,7 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Producto, Tipo_producto WHERE producto.PR_tipo_producto = Tipo_producto.TP_id AND Tipo_producto.TP_nombre = '"+ Tipo_Producto + "'");
+			st.executeQuery("SELECT * FROM Producto, Tipo_producto WHERE producto.PR_vigente is null and producto.PR_tipo_producto = Tipo_producto.TP_id AND Tipo_producto.TP_nombre = '"+ Tipo_Producto + "'");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Producto p = new Producto();				
@@ -55,7 +55,7 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Producto, Tipo_producto WHERE producto.PR_tipo_producto = Tipo_producto.TP_id");
+			st.executeQuery("SELECT * FROM Producto, Tipo_producto WHERE producto.PR_tipo_producto = Tipo_producto.TP_id and producto.PR_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Producto p = new Producto();				
@@ -75,7 +75,7 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 	
 	
 	public boolean ELIMINAR_PRODUCTO(Producto p) {
-		String SentenciaSQL = "DELETE FROM Producto WHERE PR_ID="
+		String SentenciaSQL = "UPDATE producto SET PR_vigente=0 WHERE PR_id="
 				+ p.getPR_id();
 		return conex.Insertar(SentenciaSQL); // Insert devuelve un boolean
 	}

@@ -153,7 +153,8 @@ INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('7UP', 40,
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('Sprite', 40,3);
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('1 muzza, 1 coca', 150,4);
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('12 empanadas, 1 muzza', 160,4);
-INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('Cumpleaños', 1200,4);
+
+
 
 
 create table Cliente (
@@ -235,7 +236,7 @@ CREATE TABLE Combo (
 
 INSERT INTO Combo (CO_nombre) values ('1 Muzza, 1 Coca');
 INSERT INTO Combo (CO_nombre) values ('12 Empanadas, 1 Muzza');
-INSERT INTO Combo (CO_nombre) values ('Cumpleaños');
+
 
 
 
@@ -263,6 +264,8 @@ INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, 
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,6,3,2);
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,5,4,5);
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,4,2,1);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,4,2,1);
+
 
 CREATE TABLE Combo_productos(
 					COPRO_combo_id int,
@@ -277,8 +280,7 @@ INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) 
 INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (1,9,1);
 INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (2,1,12);
 INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (2,5,1);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (3,7,12);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (3,14,4);
+
 
 create table Compra_MateriaPrima(
 						CM_compra int,
@@ -317,7 +319,7 @@ create table Entrega_pedido(
 							EP_entrega_id int,
 							EP_pedido_id int,
 							foreign key (EP_entrega_id) references Entrega (ENT_ID),
-							foreign key (EP_pedido_id) references Entrega (ENT_ID)
+							foreign key (EP_pedido_id) references Pedido (PD_id)
 
 
 );
@@ -326,4 +328,6 @@ insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (1,1);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (2,2);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (2,3);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (3,4);
+
+delete from Pedido  where Pedido.PD_numero=6;
 

@@ -1,4 +1,4 @@
- drop database  if exists wildsoft;
+drop database  if exists wildsoft;
 
 create database wildsoft;
 use wildsoft;
@@ -9,6 +9,7 @@ use wildsoft;
 CREATE  TABLE Tipo_producto ( 
 						 TP_id int  not null AUTO_INCREMENT ,  
 						 TP_nombre varchar(30) , 
+                         TP_vigente boolean,
 						 unique (TP_nombre),
 						 primary key(TP_id)
 );
@@ -24,6 +25,7 @@ INSERT INTO Tipo_producto(TP_nombre) VALUES ('Combo');
 create table Categoria_MP(
 					     CA_id int AUTO_INCREMENT ,  
 						 CA_nombre varchar(50) , 
+						 CA_vigente boolean,
 						 unique (CA_nombre),
 						 primary key(CA_id)
 );
@@ -40,10 +42,10 @@ create table PE_estado (
 						primary key (PEST_id)
 );
 
-INSERT INTO PE_estado (PEST_nombre) VALUES  ('Pendiente');
-INSERT INTO PE_estado (PEST_nombre) VALUES  ('Preparado');
+INSERT INTO PE_estado (PEST_nombre) VALUES ('Pendiente');
+INSERT INTO PE_estado (PEST_nombre) VALUES ('Preparado');
 INSERT INTO PE_estado (PEST_nombre) VALUES ('Enviado');
-INSERT INTO PE_estado (PEST_nombre) VALUES   ('Cobrado');
+INSERT INTO PE_estado (PEST_nombre) VALUES ('Cobrado');
 INSERT INTO PE_estado (PEST_nombre) VALUES ('Cancelado');
 
 
@@ -53,29 +55,30 @@ create table Materia_Prima (
 							MP_nombre varchar(50), 
 							MP_fecha_vencimiento date, 
 							MP_categoria int,
+							MP_vigente boolean,
 							FOREIGN KEY (MP_categoria) REFERENCES Categoria_MP(CA_id),
 							PRIMARY KEY (MP_id),
 							unique (MP_nombre)
 );
 
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Harina",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Queso",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Tomates",'2015-10-10',1);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Harina",'2016-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Queso",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Tomates",'2015-10-10',1);
 INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Tomate en lata",'2015-10-10',1);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Cebolla",'2015-10-10',1);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Morrones",'2015-10-10',1);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("especias",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Huevos",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Anchoas",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Albahaca",'2015-10-10',1);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Levadura",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Aceituna",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Tapas de empanada",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Carne",'2015-10-10',2);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Pollo",'2015-10-10',2);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Salsa",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Choclos en lata",'2015-10-10',3);
-INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria)  VALUES ("Jamón",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Cebolla",'2015-10-10',1);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Morrones",'2015-10-10',1);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("especias",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Huevos",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Anchoas",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Albahaca",'2015-10-10',1);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Levadura",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Aceituna",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Tapas de empanada",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Carne",'2015-10-10',2);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Pollo",'2015-10-10',2);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Salsa",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Choclos en lata",'2015-10-10',3);
+INSERT INTO Materia_Prima (MP_nombre, MP_fecha_vencimiento, MP_categoria) VALUES ("Jamón",'2015-10-10',3);
 
 
 
@@ -85,16 +88,15 @@ create table Proveedor(
 						PV_direccion varchar (50),
 						PV_mail varchar(30),
 						PV_telefono varchar (30),
-						
-						
+						PV_vigente boolean,
 						UNIQUE (PV_nombre),
 						PRIMARY KEY (PV_id)		
 );		
 
 
-INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Las cañuelas","Rosa 2356- CABA",null, "2453-6798");
-INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los amigos","Roca 2743- CABA",null, "9750-6799");
-INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los pollos hermanos","Roca 25643- CABA",null, "9750-6799");
+INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Las cañuelas","Rosa 2356- CABA","santi101093@hotmail.com.ar", "2453-6798");
+INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los amigos","Roca 2743- CABA","santi101093@hotmail.com.ar", "9750-6799");
+INSERT INTO Proveedor (PV_nombre, PV_direccion, PV_mail, PV_telefono) VALUES ("Los pollos hermanos","Roca 25643- CABA","santi101093@hotmail.com.ar", "9750-6799");
 
 /*drop table solicitud_estado; */
 create table Solicitud_estado (
@@ -123,9 +125,9 @@ create table Solicitud_compra (
 						primary key (SD_id)
 );
 
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,3,"2015-10-10");
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,1,"2015-10-10");
-INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha) VALUES (4,2,"2015-10-10");
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,3,"2015-10-10",100);
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,1,"2015-10-10",80);
+INSERT INTO Solicitud_compra (SD_estado, SD_proveedor, SD_fecha, SD_precio) VALUES (3,2,"2015-10-10",300);
 
 CREATE  TABLE Producto ( 
 						 PR_id int AUTO_INCREMENT ,  
@@ -133,6 +135,7 @@ CREATE  TABLE Producto (
 						 PR_precio double, 
 						 PR_observacion varchar (300),
 						 PR_tipo_producto int,
+						 PR_vigente boolean	,
 						 FOREIGN KEY (PR_tipo_producto) REFERENCES Tipo_producto(TP_ID) , 
 						 unique (PR_nombre),
 						 primary key (PR_id) 
@@ -153,7 +156,8 @@ INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('7UP', 40,
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('Sprite', 40,3);
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('1 muzza, 1 coca', 150,4);
 INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('12 empanadas, 1 muzza', 160,4);
-INSERT INTO Producto (PR_nombre, PR_precio, PR_tipo_producto) VALUES ('Cumpleaños', 1200,4);
+
+
 
 
 create table Cliente (
@@ -162,15 +166,17 @@ create table Cliente (
 					   CL_telefono varchar (50),
 					   CL_nombre varchar (50),
                        CL_detalle varchar (100),
+					   CL_vigente boolean,
 					   UNIQUE (CL_direccion, CL_telefono),
 					   PRIMARY KEY (CL_id)
 );
 
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle) VALUES (null, null, "","");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Belgrano 100', "4459-0748", "Santiago Garcete","No anda timbre, golpeear");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Dell Eva 2211', "4555-2680", "Nicolás Cabral","Timbre de arriba");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Zapiola 1454', "4555-2356", "Federico Vara","Cuidado con el perro");
-INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Villegas 1454', "4555-5456", "Lucas Tolosa","Timbre de abajo");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES (null, null, "","");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Belgrano 100', "4888-0748", "Santiago Garcete","No anda timbre, golpear");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Dell Eva 2211', "4777-2680", "Nicolás Cabral","Timbre de arriba, 2do piso");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Zapiola 1454', "4666-2356", "Federico Vara","Timbre A1 planta baja");
+INSERT INTO Cliente (CL_direccion, CL_telefono, CL_nombre, CL_detalle)VALUES ('Villegas 1454', "4999-5456", "Lucas Tolosa","Es una empresa, dejar en recepcion");
+
 
 create table Repartidor (
 							RE_id int AUTO_INCREMENT , 
@@ -218,19 +224,25 @@ create table Pedido (
 
 
 Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (1,"2015-10-10",1,null, null,false);
-Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado,PD_entrega, PD_cliente, PD_Delivery) values (2,"2015-10-10",1,null,1,true);
-Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado,PD_entrega, PD_cliente, PD_Delivery) values (3,"2015-10-10",1,null, 3,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (2,"2015-10-10",1,null,1,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (3,"2015-10-10",1,null, 3,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (4,"2015-10-10",1,null, 2,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (5,"2015-10-10",1,null, 5,false);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (6,"2015-10-10",1,null, 3,true);
+Insert into Pedido (PD_numero, PD_fecha_pedido, PD_estado, PD_entrega, PD_cliente, PD_Delivery) values (1,"2015-10-30",1,null, 4,false);
 
 CREATE TABLE Combo (
 						CO_id int AUTO_INCREMENT,
 						CO_nombre varchar (200),
+						CO_precio double,
+						CO_vigente boolean,
 						primary key (CO_id),
 						UNIQUE (CO_nombre)
 );
 
-INSERT INTO Combo (CO_nombre) values ('1 muzza, 1 coca');
-INSERT INTO Combo (CO_nombre) values ('12 empanadas, 1 muzza');
-INSERT INTO Combo (CO_nombre) values ('Cumpleaños');
+INSERT INTO Combo (CO_nombre, CO_precio) values ('1 Muzza, 1 Coca', 150);
+INSERT INTO Combo (CO_nombre, CO_precio) values ('12 Empanadas, 1 Muzza', 160);
+
 
 
 
@@ -250,22 +262,33 @@ INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, 
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (1,2,6,2);
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (2,2,6,5);
 INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (2,2,15,1);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (3,1,3,10);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (3,3,7,2);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (4,4,5,5);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (4,6,12,1);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (5,1,9,10);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,6,3,2);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,5,4,5);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,4,2,1);
+INSERT INTO Producto_Pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_precio) values (6,4,2,1);
+
 
 CREATE TABLE Combo_productos(
 					COPRO_combo_id int,
 					COPRO_producto_id int,
                     COPRO_cantidad int,
+					COPRO_Precio double,
+					COPRO_observacion varchar (30),
 					foreign key (COPRO_combo_id) references Combo(CO_id),
 					foreign key (COPRO_producto_id) references Producto(PR_id)
 					
 );
 
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (1,5,1);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (1,9,1);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (2,1,12);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (2,5,1);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (3,7,12);
-INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) VALUES (3,14,4);
+INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad, COPRO_Precio, COPRO_observacion ) VALUES (1,5,1,40,"");
+INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad, COPRO_Precio, COPRO_observacion) VALUES (1,9,1,40,"");
+INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad, COPRO_Precio, COPRO_observacion) VALUES (2,1,12,40,"");
+INSERT INTO Combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad, COPRO_Precio, COPRO_observacion) VALUES (2,5,1,40,"");
+
 
 create table Compra_MateriaPrima(
 						CM_compra int,
@@ -278,7 +301,11 @@ create table Compra_MateriaPrima(
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (1, 3, 2);
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (1, 4, 3);
 INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 14, 1);
-INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 15, 2);	
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (2, 15, 2);
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (3, 14, 2);
+INSERT INTO Compra_MateriaPrima (CM_compra, CM_materia_prima, CM_cantidad_mp) VALUES (3, 15, 5);
+
+	
 
 create table Proveedor_categoria (
 								PC_proveedor_id int,
@@ -294,12 +321,13 @@ Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (1,1);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (1,3);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (2,2);
 Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (2,3);
+Insert into Proveedor_categoria (PC_proveedor_id, PC_categoria_id) values (3,2);
 
 create table Entrega_pedido(
 							EP_entrega_id int,
 							EP_pedido_id int,
 							foreign key (EP_entrega_id) references Entrega (ENT_ID),
-							foreign key (EP_pedido_id) references Entrega (ENT_ID)
+							foreign key (EP_pedido_id) references Pedido (PD_id)
 
 
 );
@@ -308,7 +336,5 @@ insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (1,1);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (2,2);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (2,3);
 insert into Entrega_Pedido (EP_entrega_id, EP_pedido_id ) values (3,4);
-
-
 
 

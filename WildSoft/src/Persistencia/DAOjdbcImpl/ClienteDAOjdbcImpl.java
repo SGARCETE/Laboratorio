@@ -59,7 +59,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 	
 	/*------------------------------------------------------------------------------*/	
 	public boolean Eliminar_Cliente(Cliente c) {
-		String SentenciaSQL = "DELETE from Cliente where CL_id =" + c.getID_Cliente();
+		String SentenciaSQL = "UPDATE Cliente SET CL_vigente=0 WHERE CL_id=" + c.getID_Cliente();
 		return conex.Insertar(SentenciaSQL);
 	}
 	
@@ -70,7 +70,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Cliente");
+			st.executeQuery("SELECT * FROM Cliente where CL_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){	
 				Arreglo.add(Fila.getString("CL_nombre"));
@@ -99,7 +99,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Cliente where CL_id>1");
+			st.executeQuery("SELECT * FROM Cliente where CL_id>1 and CL_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Cliente C = new Cliente();
