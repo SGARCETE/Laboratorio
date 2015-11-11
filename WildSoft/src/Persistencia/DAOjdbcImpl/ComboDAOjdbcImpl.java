@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Combo;
 import Negocio.Modelo.Producto;
+import Negocio.Modelo.Proveedor;
+import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ComboDAO;
 
@@ -121,6 +123,30 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			JOptionPane.showMessageDialog(null,"No se puede dar la fila solicitada! \n ERROR : " + SQLE.getMessage());
 		}
 		return 0;
+	}
+	
+	public Combo get_combo (Integer id_combo){
+		Combo combo = null;
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			String Query = "select * from combo where CO_id ="+ id_combo ;
+			
+			st.executeQuery(Query);
+			
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				combo.setId(Fila.getInt("CO_id"));
+				combo.setNombre(Fila.getString("CO_nombre"));
+				combo.setPrecio(Fila.getDouble("CO_precio"));
+				combo.setLista_productos(getLista_Productos(Fila.getString("CO_nombre")));
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return combo;
 	}
 	
 	public boolean AGREGAR_COMBO_PRODUCTO(Combo C){
