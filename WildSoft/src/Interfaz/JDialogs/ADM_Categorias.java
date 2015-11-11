@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -187,8 +188,7 @@ public class ADM_Categorias extends JDialog {
 		
 		categoriasProductos = SvProducto.getCategorias();
 
-		for (HashMap.Entry<Integer, String> entry : categoriasProductos
-				.entrySet()) {
+		for (Entry<Integer, String> entry : categoriasProductos.entrySet()) {
 
 			String value = entry.getValue();
 			String[] fila = new String[1];
@@ -206,8 +206,7 @@ public class ADM_Categorias extends JDialog {
 		
 		categoriasMaterias = SvMaterias.getCategorias();
 
-		for (HashMap.Entry<Integer, String> entry : categoriasMaterias
-				.entrySet()) {
+		for (Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
 
 			String value = entry.getValue();
 			String[] fila = new String[1];
