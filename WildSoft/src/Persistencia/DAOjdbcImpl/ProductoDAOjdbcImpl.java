@@ -85,7 +85,7 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		try {
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Tipo_producto");
+			st.executeQuery("SELECT * FROM Tipo_producto where Tipo_producto.TP_vigente is null");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Arreglo.add(Fila.getString("TP_nombre"));

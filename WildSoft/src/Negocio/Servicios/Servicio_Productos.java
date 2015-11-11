@@ -18,14 +18,14 @@ public class Servicio_Productos {
 		// Consulta los tipos de producto solo la primera vez a la BD
 //		Lista_Variedades = productoDAO.getVARIEDAD_DEL_PRODUCTO("Pizza");
 		// Consulta las variedades de producto solo la primera vez a la BD
-//		Lista_Productos = productoDAO.getTipos_Producto();
+		Lista_Productos = productoDAO.getTipos_Producto();
 		
 		//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
-		String[] Productos =  new String[] {"Pizza", "Empanada", "Bebida", "Combo"};
-		Lista_Productos.add(Productos[0]);
-		Lista_Productos.add(Productos[1]);
-		Lista_Productos.add(Productos[2]);
-		Lista_Productos.add(Productos[3]);
+		//String[] Productos =  new String[] {"Pizza", "Empanada", "Bebida", "Combo"};
+		//Lista_Productos.add(Productos[0]);
+		//Lista_Productos.add(Productos[1]);
+		//Lista_Productos.add(Productos[2]);
+		//Lista_Productos.add(Productos[3]);
 		
 		String[] Variedades = new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"};
 		for (int i = 0; i < Variedades.length; i++) {
