@@ -3,6 +3,7 @@ package Reportes;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,19 +23,20 @@ import net.sf.jasperreports.view.JasperViewer;
 public class ReporteContabilidad {
 	
 	
-	public void Generar_Contabilidad(Integer NUMERO_SOLICITUD)
-	{
+	public void Generar_Contabilidad(Date Fecha_1, Date Fecha_2){
 		String JXML = "src\\Reportes\\Mini_contabilidad.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;
 		
 		parametros = new HashMap<String, Object>();
-		parametros.put("pd_id", NUMERO_SOLICITUD);
+		parametros.put("SD_fecha_1", Fecha_1);
+		parametros.put("SD_fecha_2", Fecha_2);
+		parametros.put("PD_fecha_pedido1", Fecha_1);
+		parametros.put("PD_fecha_pedido2", Fecha_2);
 		
 		
-		try
-		{
+		try	{
 			inputStream= new FileInputStream(JXML);
 			JasperDesign jasperDesing = JRXmlLoader.load(inputStream);
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesing);
@@ -51,14 +53,18 @@ public class ReporteContabilidad {
 				
 			// MOSTRAR REPORTE
 			JasperViewer view = new JasperViewer(jasperPrint,false); 
-			view.setTitle("Contabilidad");
+			view.setTitle("Mini Contabilidad");
 			view.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		Integer NUMERO_SOLICITUD=10;
-		ReporteContabilidad rc = new ReporteContabilidad();
-		rc.Generar_Contabilidad(NUMERO_SOLICITUD);
-		
-	}   
+//	public static void main(String[] args) {
+//		Calendar F1 = new GregorianCalendar();
+//		Calendar F2 = new GregorianCalendar();
+//		
+//		F1.add(Calendar.DAY_OF_MONTH, 1);
+//		
+//		ReporteContabilidad rc = new ReporteContabilidad();
+//		rc.Generar_Contabilidad(F1.getTime(),F2.getTime());
+//		
+//	}   
 }

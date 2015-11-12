@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -977,7 +978,7 @@ public class Interfaz_Principal {
 		mntmVerContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Interfaz_Contabilidad frame = new Interfaz_Contabilidad();
-				frame.getDialog().setVisible(true);
+				frame.setVisible(true);
 			}
 		});
 		mnReporteContabilidad.add(mntmVerContabilidad);
@@ -1187,6 +1188,7 @@ public class Interfaz_Principal {
 		ADM_Cliente frame = new ADM_Cliente(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
+		AutocompletarCliente();
 		
 	}
 	
@@ -1217,17 +1219,23 @@ public class Interfaz_Principal {
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/*** ALTA DE PEDIDO */
-	private void Guardar_pedido() {
+	private boolean Guardar_pedido() {
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
 		
 			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta fecha y hora actual
-			if (chckbxDelivery.isSelected()) {
-				// agregar datos del pedido
-				PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
-				System.out.println(chckbxDelivery.isSelected());
+			
+			if (chckbxDelivery.isSelected()){
+				if(CLIENTE_ACTUAL!=null && !CLIENTE_ACTUAL.getNombre().isEmpty() && !CLIENTE_ACTUAL.getDomicilio().isEmpty()){
+					// agregar datos del pedido
+					PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
+					PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Para realizar un Delivery, debe seleccionar un cliente", "Falta cliente", JOptionPane.WARNING_MESSAGE);
+					return false;
+				}
 			}
-			if(CLIENTE_ACTUAL!=null)
-				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+
 			// GUARDA EL PEDIDO
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			// ACTUALIZA EL LISTADO DE PEDIDOS
@@ -1235,9 +1243,11 @@ public class Interfaz_Principal {
 			
 			// GENERA TICKET Y COMANDA DE ESTE PRODUCTO
 			Ticket_Comanda_nuevo_pedido();
+			
 			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
+		return true;
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

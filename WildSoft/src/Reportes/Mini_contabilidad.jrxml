@@ -2,58 +2,43 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mini_contabilidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8348bc9-b139-4edc-84fe-69daaa9ff43e">
 	<property name="ireport.zoom" value="1.100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="21"/>
+	<property name="ireport.y" value="0"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Intel\\Desktop\\Labo\\trunk\\WildSoft\\src\\Reportes\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["src\\Reportes\\"]]></defaultValueExpression>
 	</parameter>
-	<queryString language="SQL">
+	<parameter name="Fecha_1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Fecha_2" class="java.util.Date"/>
+	<parameter name="SD_fecha_1" class="java.util.Date"/>
+	<parameter name="SD_fecha_2" class="java.util.Date"/>
+	<parameter name="PD_fecha_pedido1" class="java.util.Date"/>
+	<parameter name="PD_fecha_pedido2" class="java.util.Date"/>
+	<queryString>
 		<![CDATA[select * from Pedido join Solicitud_compra]]>
 	</queryString>
-	<field name="PD_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_numero" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_fecha_pedido" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_estado" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_cliente" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_entrega" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_Delivery" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PD_precio" class="java.lang.Double">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SD_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SD_estado" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SD_proveedor" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SD_fecha" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="PD_id" class="java.lang.Integer"/>
+	<field name="PD_numero" class="java.lang.Integer"/>
+	<field name="PD_fecha_pedido" class="java.sql.Timestamp"/>
+	<field name="PD_estado" class="java.lang.Integer"/>
+	<field name="Pd_entrega" class="java.lang.Integer"/>
+	<field name="PD_cliente" class="java.lang.Integer"/>
+	<field name="PD_Delivery" class="java.lang.Boolean"/>
+	<field name="PD_precio" class="java.lang.Double"/>
+	<field name="SD_id" class="java.lang.Integer"/>
+	<field name="SD_estado" class="java.lang.Integer"/>
+	<field name="SD_proveedor" class="java.lang.Integer"/>
+	<field name="SD_fecha" class="java.sql.Timestamp"/>
+	<field name="SD_precio" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="70" uuid="6f68f637-a32d-4d3c-9213-503d14483415"/>
+				<reportElement uuid="6f68f637-a32d-4d3c-9213-503d14483415" x="0" y="0" width="555" height="70"/>
 				<textElement textAlignment="Justified">
 					<font size="24" isBold="true"/>
 				</textElement>
@@ -67,17 +52,29 @@
 	<columnHeader>
 		<band height="308" splitType="Stretch">
 			<line>
-				<reportElement x="269" y="0" width="1" height="306" uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9"/>
+				<reportElement uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9" x="269" y="0" width="1" height="306"/>
 			</line>
 			<subreport>
-				<reportElement x="0" y="0" width="259" height="306" uuid="c80f84a2-0cfd-4d7a-b2d7-44293eed5935"/>
+				<reportElement uuid="c80f84a2-0cfd-4d7a-b2d7-44293eed5935" x="0" y="0" width="259" height="306"/>
+				<subreportParameter name="PD_fecha_pedido2">
+					<subreportParameterExpression><![CDATA[$P{PD_fecha_pedido2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PD_fecha_pedido1">
+					<subreportParameterExpression><![CDATA[$P{PD_fecha_pedido1}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "pEDIDOS.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"pEDIDOS.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="282" y="17" width="271" height="277" uuid="0742fa76-81ec-4b71-884e-3a25b12cca25"/>
+				<reportElement uuid="0742fa76-81ec-4b71-884e-3a25b12cca25" x="282" y="0" width="271" height="306"/>
+				<subreportParameter name="SD_fecha_2">
+					<subreportParameterExpression><![CDATA[$P{SD_fecha_2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SD_fecha_1">
+					<subreportParameterExpression><![CDATA[$P{SD_fecha_1}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Compras.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"Compras.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</columnHeader>
@@ -90,21 +87,21 @@
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="7d34f521-f546-4f6a-9bab-4225d000ad10"/>
+				<reportElement uuid="7d34f521-f546-4f6a-9bab-4225d000ad10" style="Column header" x="433" y="0" width="80" height="20"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="6016c100-0454-4fe0-ab3e-177561918470"/>
+				<reportElement uuid="6016c100-0454-4fe0-ab3e-177561918470" style="Column header" x="513" y="0" width="40" height="20"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="188373c7-4e2b-412c-8271-d2aa003bd180"/>
+				<reportElement uuid="188373c7-4e2b-412c-8271-d2aa003bd180" style="Column header" x="0" y="0" width="197" height="20"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
