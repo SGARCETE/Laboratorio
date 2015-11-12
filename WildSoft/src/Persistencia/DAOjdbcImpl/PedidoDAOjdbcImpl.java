@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import MetAux.MetAux;
 import Negocio.Modelo.Cliente;
+import Negocio.Modelo.Combo;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
@@ -20,7 +21,7 @@ import Persistencia.DAO.PedidoDAO;
 public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
-
+    ComboDAOjdbcImpl svCombo= new ComboDAOjdbcImpl();
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		
 		int idDiaria = 1;
@@ -239,6 +240,90 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 		return Arreglo;
 	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		public ArrayList<Producto> getLista_Productos_Cocina(Pedido P) {
+			ArrayList<Producto> Arreglo = new ArrayList<Producto>();
+			try {
+				conex.connectToMySQL();// Conectar base
+				Statement st = conex.conexion.createStatement();
+				
+				String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_Observacion, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
+				"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
+				"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
+				        P.getNumero_Pedido();
+
+//				System.out.println("getLista_Productos:\n"+Query);
+				st.executeQuery(Query);
+				ResultSet Fila = st.getResultSet();
+				while (Fila.next()) {
+					if (Fila.getInt("TP_id")!= 4){
+						Producto Prod = new Producto();
+						Prod.setPR_id(Fila.getInt("PR_id"));
+						Prod.setPR_nombre(Fila.getString("PR_nombre"));
+						Prod.setPR_precio(Fila.getDouble("PP_precio"));
+						Prod.setPR_Observacion(Fila.getString("PP_Observacion"));
+						Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
+						Prod.setCantidad(Fila.getInt("PP_producto_cantidad"));
+						Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
+						Arreglo.add(Prod);
+					}else{
+						ArrayList<Producto> combo_producto =  svCombo.getLista_Productos(Fila.getString("PR_nombre"));
+						Arreglo.addAll(combo_producto);
+					}	
+
+				}
+				conex.cerrarConexion();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			}
+			return Arreglo;
+		}
+	
+		
+		
+		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		public ArrayList<Pedido> getLISTA_PEDIDOS_COCINA(Calendar Fecha_mostrar) {
+			if(Fecha_mostrar==null)
+				return null;
+			ArrayList<Pedido> Arreglo = new ArrayList<Pedido>();
+			try {
+				conex.connectToMySQL();// Conectar base
+				Statement st = conex.conexion.createStatement();
+				String FECHA_FILTRO = formato_yyyyMMdd.format(Fecha_mostrar.getTime());
+				String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre, C.CL_direccion, C.CL_telefono,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
+						+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
+						 +"  group by P.PD_id";
+//				System.out.println("getLISTA_PEDIDOS "+Query);
+				st.executeQuery(Query);
+				
+				
+				ResultSet Fila = st.getResultSet();
+				while (Fila.next()) {
+					Pedido P = new Pedido();
+					P.setID_DIARIO(Fila.getInt("PD_numero"));
+					P.setNumero_Pedido(Fila.getInt("PD_ID"));
+					P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
+					P.setESTADO(Fila.getString("PEST_nombre"));
+					P.setCliente(new Cliente (Fila.getString("CL_nombre")));
+					P.getCliente().setDomicilio(Fila.getString("CL_direccion"));
+					P.getCliente().setTelefono_Fijo(Fila.getString("CL_telefono"));
+					P.setTotal(Fila.getDouble("Precio"));
+					Boolean delivery = false;
+					if(Fila.getInt("PD_Delivery")==1){
+						delivery = true;
+					}
+					P.setEs_Delivery(delivery);
+					P.setLista_Productos(getLista_Productos(P));
+					Arreglo.add(P);
+
+				}
+				conex.cerrarConexion();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			}
+			return Arreglo;
+		}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean ELIMINAR_PEDIDO(Pedido P) {

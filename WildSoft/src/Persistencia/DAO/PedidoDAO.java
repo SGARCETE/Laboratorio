@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import Negocio.Modelo.Pedido;
+import Negocio.Modelo.Producto;
 
 public interface PedidoDAO {
 
@@ -28,4 +29,8 @@ public interface PedidoDAO {
 	public ArrayList<Pedido> getLISTA_PEDIDOS_PREPARADOS(Calendar Fecha_mostrar);
 	
 	public Integer ObtenerUltimoPedido();
+	
+	public ArrayList<Pedido> getLISTA_PEDIDOS_COCINA(Calendar Fecha_mostrar);
+	
+	public ArrayList<Producto> getLista_Productos_Cocina(Pedido P);
 }
