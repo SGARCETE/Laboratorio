@@ -359,7 +359,8 @@ public class Interfaz_ABM_Combos extends JDialog {
 		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 		for (int i = 0; i < tablaProductosCombo.getRowCount(); i++) {
 			Producto pr = new Producto();
-			pr.setPR_id(Integer.parseInt((String) tablaProductosCombo.getValueAt(i, 0)));
+			
+			pr.setPR_id(svProductos.getIdProducto((String) tablaProductosCombo.getValueAt(i, 2)));
 			pr.setPR_TIPO_PRODUCTO_STRING((String) tablaProductosCombo.getValueAt(i,1));
 			pr.setPR_nombre((String) tablaProductosCombo.getValueAt(i, 2));
 			pr.setCantidad(Integer.parseInt((String) tablaProductosCombo.getValueAt(i, 3)));

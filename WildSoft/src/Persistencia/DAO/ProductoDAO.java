@@ -24,5 +24,7 @@ public interface ProductoDAO {
 	ArrayList<Integer> getTipo_Producto_INTEGER (String nombre);
 
 	public HashMap<Integer, String> obtenerCategorias();
+
+	public Integer getIdProducto(String nombreProducto);
 	
 }

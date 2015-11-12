@@ -1,5 +1,6 @@
 package Persistencia.DAOjdbcImpl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,13 +10,11 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Producto;
-import Negocio.Modelo.Repartidor;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ProductoDAO;
 
 public class ProductoDAOjdbcImpl implements ProductoDAO {
-	private ConectorMySQL conex = new ConectorMySQL();
-	
+	private ConectorMySQL conex = new ConectorMySQL();	
 
 	public boolean AGREGAR_PRODUCTO(Producto p) {
 		    String SentenciaSQL = " INSERT INTO Producto (PR_Nombre, PR_precio, PR_tipo_producto )VALUES ("+
@@ -158,10 +157,27 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 				mapa.put(Fila.getInt("TP_id"), Fila.getString("TP_nombre"));
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,
-					"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return mapa;
+	}
+
+	@Override
+	public Integer getIdProducto(String nombreProducto) {
+		Integer id = 0;
+		try {
+			conex.connectToMySQL();
+			PreparedStatement statement = conex.conexion.prepareStatement("select PR_id from producto where PR_nombre=?");
+            statement.setString(1, nombreProducto);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+            	id = rs.getInt("PR_id");
+            }
+            conex.cerrarConexion();
+        } catch (SQLException e) {
+        	JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+        }
+		return id;
 	}
 
 }// --> FIN
