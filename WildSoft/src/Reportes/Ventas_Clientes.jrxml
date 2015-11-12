@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ventas" language="groovy" pageWidth="595" pageHeight="1008" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26c99d00-7a45-4e03-9a0d-868a894a8b36">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="144"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -21,16 +21,16 @@
 		<defaultValueExpression><![CDATA[$P{PD_fecha_pedido}]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select sum(PP_precio) ,(select sum(PP_precio) from Producto_pedidos PP join Pedido PD
+		<![CDATA[select sum(PP_precio* PP_producto_cantidad) ,(select sum(PP_precio* PP_producto_cantidad) from Producto_pedidos PP join Pedido PD
 on
-PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}) as total1, ((sum(PP_precio) / (select sum(PP_precio) from Producto_pedidos PP join Pedido PD
+PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}) as total1, ((sum(PP_precio* PP_producto_cantidad) / (select sum(PP_precio* PP_producto_cantidad) from Producto_pedidos PP join Pedido PD
 on
 PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4))*100) as porcentaje,CL.CL_nombre from Pedido PD join CLiente CL join Producto PR join  Producto_pedidos PP ON
 PD.PD_id= PP.PP_pedidoid and PP.PP_productoid = PR.PR_id and PD.PD_cliente= CL.CL_id
 and CL.CL_id <> 1 and PD_estado = 4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}
 group by CL.CL_id;]]>
 	</queryString>
-	<field name="sum(PP_precio)" class="java.lang.Double"/>
+	<field name="sum(PP_precio* PP_producto_cantidad)" class="java.lang.Double"/>
 	<field name="total1" class="java.lang.Double"/>
 	<field name="porcentaje" class="java.lang.Double"/>
 	<field name="CL_nombre" class="java.lang.String">
@@ -105,8 +105,8 @@ group by CL.CL_id;]]>
 				</textField>
 			</frame>
 			<textField>
-				<reportElement x="111" y="3" width="100" height="20" uuid="de0523fc-8264-4baa-935b-b31f7a1b13b1"/>
-				<textFieldExpression><![CDATA[$F{total1}]]></textFieldExpression>
+				<reportElement x="111" y="2" width="100" height="20" uuid="80f0504b-7180-4b5c-b81e-46e8a100023f"/>
+				<textFieldExpression><![CDATA[$F{sum(PP_precio* PP_producto_cantidad)}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
