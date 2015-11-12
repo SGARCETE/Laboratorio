@@ -110,7 +110,7 @@ public class ADM_Repartidor extends JDialog {
 		textVehiculo.setColumns(10);
 		
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(21, 133, 89, 30);
+		btnAceptar.setBounds(21, 133, 95, 30);
 		panel_1.add(btnAceptar);
 		btnAceptar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
 		

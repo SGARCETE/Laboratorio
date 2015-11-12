@@ -63,11 +63,13 @@ public class ADM_Cliente extends JDialog {
 		contentPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 300, 213);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Nuevo Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBounds(10, 11, 299, 255);
 		panel.add(panel_1);
@@ -95,12 +97,13 @@ public class ADM_Cliente extends JDialog {
 		panel_1.add(lblDetalle);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregar_cliente();
 			}
 		});
-		btnAgregar.setBounds(108, 195, 89, 45);
+		btnAgregar.setBounds(108, 193, 89, 49);
 		panel_1.add(btnAgregar);
 		
 		textDireccion = new JTextField();
@@ -119,6 +122,7 @@ public class ADM_Cliente extends JDialog {
 		panel_1.add(textDetalle);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBackground(Color.WHITE);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Aceptar_modificar_Cliente();
@@ -128,6 +132,7 @@ public class ADM_Cliente extends JDialog {
 		panel_1.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(Color.WHITE);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cancelar_modificar_Cliente();
@@ -137,6 +142,7 @@ public class ADM_Cliente extends JDialog {
 		panel_1.add(btnCancelar);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new TitledBorder(null, "Lista de Clientes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_2.setBounds(312, 11, 695, 255);
 		panel.add(panel_2);
@@ -150,6 +156,7 @@ public class ADM_Cliente extends JDialog {
 		scrollPane.setViewportView(table);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBackground(Color.WHITE);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow()!=-1){
@@ -164,6 +171,7 @@ public class ADM_Cliente extends JDialog {
 		
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.setBackground(Color.WHITE);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow()!=-1)
@@ -178,6 +186,7 @@ public class ADM_Cliente extends JDialog {
 		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBackground(Color.WHITE);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -188,6 +197,7 @@ public class ADM_Cliente extends JDialog {
 		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
 		panel_3.setBorder(new TitledBorder(null, "Descripci\u00F3n", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_3.setBounds(20, 272, 987, 64);
 		panel.add(panel_3);

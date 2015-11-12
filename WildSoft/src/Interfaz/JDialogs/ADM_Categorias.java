@@ -2,6 +2,7 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -25,6 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
 
 public class ADM_Categorias extends JDialog {
 
@@ -36,7 +40,7 @@ public class ADM_Categorias extends JDialog {
 	private JTable tableCategoriaProducto;
 	private JTable tableCategoriaMateria;
 	private JButton btnAgregarProducto;
-	private JButton button;
+	private JButton btnSalir;
 	private HashMap<Integer, String> categoriasProductos;
 	private HashMap<Integer, String> categoriasMaterias;
 
@@ -58,7 +62,7 @@ public class ADM_Categorias extends JDialog {
 		inicializar();
 
 		setResizable(false);
-		setBounds(100, 100, 726, 399);
+		setBounds(100, 100, 548, 485);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,82 +70,96 @@ public class ADM_Categorias extends JDialog {
 		contentPanel.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 300, 213);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(35, 32, 164, 259);
-		panel.add(scrollPane);
+		JScrollPane scrollPaneProducto = new JScrollPane();
+		scrollPaneProducto.setBounds(19, 46, 164, 259);
+		panel.add(scrollPaneProducto);
 
-		scrollPane.setViewportView(tableCategoriaProducto);
+		scrollPaneProducto.setViewportView(tableCategoriaProducto);
 
 		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
-		lblIngreseNombre.setBounds(249, 97, 91, 40);
+		lblIngreseNombre.setFont(new Font("SansSerif", Font.PLAIN, 11));
+		lblIngreseNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseNombre.setBounds(195, 46, 158, 28);
 		panel.add(lblIngreseNombre);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(233, 148, 126, 28);
+		textNombre.setBounds(195, 85, 158, 28);
 		panel.add(textNombre);
 		textNombre.setColumns(10);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(387, 38, 164, 259);
-		panel.add(scrollPane_1);
+		JScrollPane scrollPane_Materia = new JScrollPane();
+		scrollPane_Materia.setBounds(365, 43, 164, 259);
+		panel.add(scrollPane_Materia);
 
-		scrollPane_1.setViewportView(tableCategoriaMateria);
+		scrollPane_Materia.setViewportView(tableCategoriaMateria);
 
 		btnAgregarProducto = new JButton("Agregar Producto");
+		btnAgregarProducto.setBackground(Color.WHITE);
 		btnAgregarProducto.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/add-1-icon16.png")));
 		btnAgregarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarCategoriaProducto();
 			}
 		});
-		btnAgregarProducto.setBounds(35, 302, 164, 23);
+		btnAgregarProducto.setBounds(19, 312, 164, 28);
 		panel.add(btnAgregarProducto);
 
-		button = new JButton("Salir");
-		button.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		button.setBounds(613, 320, 97, 47);
-		panel.add(button);
-
 		btnAgregarMateria = new JButton("Agregar Materia");
+		btnAgregarMateria.setBackground(Color.WHITE);
 		btnAgregarMateria.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/add-1-icon16.png")));
 		btnAgregarMateria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarCategoriaMateria();
 			}
 		});
-		btnAgregarMateria.setBounds(387, 302, 164, 23);
+		btnAgregarMateria.setBounds(365, 309, 164, 28);
 		panel.add(btnAgregarMateria);
 
 		btnEliminarCategoriaMateria = new JButton("Eliminar Materia");
+		btnEliminarCategoriaMateria.setBackground(Color.WHITE);
 		btnEliminarCategoriaMateria.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/delete-1-icon16.png")));
 		btnEliminarCategoriaMateria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Eliminar_Categoria_Materia();
 			}
 		});
-		btnEliminarCategoriaMateria.setBounds(387, 328, 164, 31);
+		btnEliminarCategoriaMateria.setBounds(365, 342, 164, 31);
 		panel.add(btnEliminarCategoriaMateria);
 
 		btnEliminarCategoriaProducto = new JButton(
 				"Eliminar Producto");
+		btnEliminarCategoriaProducto.setBackground(Color.WHITE);
 		btnEliminarCategoriaProducto.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/delete-1-icon16.png")));
 		btnEliminarCategoriaProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Eliminar_Categoria_Producto();
 			}
 		});
-		btnEliminarCategoriaProducto.setBounds(33, 331, 164, 28);
+		btnEliminarCategoriaProducto.setBounds(19, 345, 164, 28);
 		panel.add(btnEliminarCategoriaProducto);
-
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(60, 179, 113));
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		
+		btnSalir = new JButton("    Salir     ");
+		btnSalir.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSalir.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setIcon(new ImageIcon(ADM_Categorias.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		panel_1.add(btnSalir);
 	}
 
 	public void inicializar() {

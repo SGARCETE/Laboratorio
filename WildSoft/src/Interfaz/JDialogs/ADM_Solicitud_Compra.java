@@ -72,7 +72,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
 		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		Principal_neg_int = principal_neg_int;
-		setBounds(100, 100, 690, 466);
+		setBounds(100, 100, 690, 495);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,7 +100,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		panel.add(lblProveedor);
 		
 		JLabel lblCategoria = new JLabel("Categoria:");
-		lblCategoria.setBounds(10, 62, 81, 28);
+		lblCategoria.setBounds(20, 62, 86, 28);
 		contentPanel.add(lblCategoria);
 		
 		comboCategorias = new JComboBox<String>();
@@ -109,15 +109,15 @@ public class ADM_Solicitud_Compra extends JDialog {
 				Seleccion_Categoria();
 			}
 		});
-		comboCategorias.setBounds(92, 62, 304, 28);
+		comboCategorias.setBounds(111, 62, 285, 28);
 		contentPanel.add(comboCategorias);
 		
 		JLabel lblProducto = new JLabel("Materia Primas:");
-		lblProducto.setBounds(10, 96, 81, 28);
+		lblProducto.setBounds(20, 96, 86, 28);
 		contentPanel.add(lblProducto);
 		
 		comboMateriaPrima = new JComboBox<String>();
-		comboMateriaPrima.setBounds(92, 96, 304, 28);
+		comboMateriaPrima.setBounds(111, 96, 285, 28);
 		contentPanel.add(comboMateriaPrima);
 		
 		spinnerCantidad = new JSpinner();
@@ -174,6 +174,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		scrollPane.setViewportView(tablaMateriasPrimas);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -197,6 +198,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		textTotal.setColumns(10);
 		
 		btnQuitar = new JButton("Quitar");
+		btnQuitar.setBackground(Color.WHITE);
 		btnQuitar.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -211,7 +213,10 @@ public class ADM_Solicitud_Compra extends JDialog {
 		buttonPane.setBackground(new Color(60, 179, 113));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		
-		okButton = new JButton("Guardar");
+		okButton = new JButton(" Guardar ");
+		okButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		okButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		okButton.setBackground(Color.WHITE);
 		okButton.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/Save-icon24.png")));
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -222,7 +227,10 @@ public class ADM_Solicitud_Compra extends JDialog {
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 
-		cancelButton = new JButton("Salir");
+		cancelButton = new JButton("    Salir     ");
+		cancelButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		cancelButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		cancelButton.setBackground(Color.WHITE);
 		cancelButton.setIcon(new ImageIcon(ADM_Solicitud_Compra.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
