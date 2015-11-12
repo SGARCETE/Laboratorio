@@ -3,23 +3,18 @@ package Persistencia.DAOjdbcImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Combo;
 import Negocio.Modelo.Producto;
-import Negocio.Modelo.Proveedor;
-import Negocio.Modelo.Solicitud_compra;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ComboDAO;
 
 public class ComboDAOjdbcImpl implements ComboDAO{
 	
 	private ConectorMySQL conex = new ConectorMySQL();
-	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
-
 	public ArrayList<Producto> getLista_Productos(Combo C) {
 		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 		try {
@@ -124,18 +119,19 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 		}
 		return 0;
 	}
-	
+
 	public Combo get_combo (Integer id_combo){
 		Combo combo = null;
 		try {
+			
+			combo = new Combo();
+			
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
-			
 			String Query = "select * from combo where CO_id ="+ id_combo ;
-			
 			st.executeQuery(Query);
-			
 			ResultSet Fila = st.getResultSet();
+			
 			while (Fila.next()) {
 				combo.setId(Fila.getInt("CO_id"));
 				combo.setNombre(Fila.getString("CO_nombre"));
@@ -143,6 +139,7 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 				combo.setLista_productos(getLista_Productos(Fila.getString("CO_nombre")));
 			}
 			conex.cerrarConexion();
+			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}

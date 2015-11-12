@@ -21,19 +21,17 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Combo;
-import Negocio.Modelo.Solicitud_compra;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Combos;
-import Negocio.Servicios.Servicio_Solicitud_compra;
 
 @SuppressWarnings("serial")
 public class Interfaz_Combos extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTable tabla_combos_actuales;
-	private Servicio_Solicitud_compra sv_solicitudCompra;
-	private Servicio_Combos sv_combos;
+	private JTable tablaCombos;
+	private Servicio_Combos svCombos;
 	private Principal_Negocio_Interfaz principal_neg_int;
+	
 	public Interfaz_Combos(final Principal_Negocio_Interfaz prin_neg_int) {
 		setTitle("Combos");
 		setResizable(false);
@@ -50,8 +48,8 @@ public class Interfaz_Combos extends JDialog {
 		scrollPane.setBounds(10, 44, 933, 284);
 		contentPanel.add(scrollPane);
 
-		tabla_combos_actuales = new JTable();
-		tabla_combos_actuales.setModel(new DefaultTableModel(
+		tablaCombos = new JTable();
+		tablaCombos.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
@@ -67,17 +65,17 @@ public class Interfaz_Combos extends JDialog {
 				return columnTypes[columnIndex];
 			}
 		});
-		tabla_combos_actuales.getColumnModel().getColumn(0).setPreferredWidth(0);
-		tabla_combos_actuales.getColumnModel().getColumn(0).setMinWidth(0);
-		tabla_combos_actuales.getColumnModel().getColumn(0).setMaxWidth(0);
-		tabla_combos_actuales.getColumnModel().getColumn(1).setResizable(false);
-		tabla_combos_actuales.getColumnModel().getColumn(2).setResizable(false);
-		tabla_combos_actuales.getColumnModel().getColumn(2).setPreferredWidth(200);
-		tabla_combos_actuales.getColumnModel().getColumn(2).setMinWidth(200);
-		tabla_combos_actuales.getColumnModel().getColumn(2).setMaxWidth(200);
-		tabla_combos_actuales.setRowHeight(18); 
+		tablaCombos.getColumnModel().getColumn(0).setPreferredWidth(0);
+		tablaCombos.getColumnModel().getColumn(0).setMinWidth(0);
+		tablaCombos.getColumnModel().getColumn(0).setMaxWidth(0);
+		tablaCombos.getColumnModel().getColumn(1).setResizable(false);
+		tablaCombos.getColumnModel().getColumn(2).setResizable(false);
+		tablaCombos.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tablaCombos.getColumnModel().getColumn(2).setMinWidth(200);
+		tablaCombos.getColumnModel().getColumn(2).setMaxWidth(200);
+		tablaCombos.setRowHeight(18); 
 		
-		scrollPane.setViewportView(tabla_combos_actuales);
+		scrollPane.setViewportView(tablaCombos);
 
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setIcon(new ImageIcon(Interfaz_Combos.class.getResource("/Recursos/IMG/add-1-icon24.png")));
@@ -103,7 +101,7 @@ public class Interfaz_Combos extends JDialog {
 		btnEditar.setIcon(new ImageIcon(Interfaz_Combos.class.getResource("/Recursos/IMG/search-icon24.png")));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Mostrar_solicitud();
+				ConsultarCombo();
 			}
 		});
 		btnEditar.setBounds(220, 333, 110, 39);
@@ -135,19 +133,17 @@ public class Interfaz_Combos extends JDialog {
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void inicializar() {
-		sv_solicitudCompra = principal_neg_int.getSvSolicitudCompra();
-		sv_combos = principal_neg_int.getSvCombos();
+		svCombos = principal_neg_int.getSvCombos();
 		llenarTabla();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Mostrar_solicitud() {
-		if (tabla_combos_actuales.getRowCount() > 0) {
-
-			Integer id = (Integer) tabla_combos_actuales.getValueAt(tabla_combos_actuales.getSelectedRow(),0);
-			Solicitud_compra sc = sv_solicitudCompra.OBTENER_SOLICITUD(id);
+	private void ConsultarCombo() {
+		if (tablaCombos.getSelectedRow() != -1) {
+			Integer id = Integer.parseInt((String) tablaCombos.getValueAt(tablaCombos.getSelectedRow(),0));
+			Combo combo = svCombos.getCombo(id);
 			Interfaz_ABM_Combos frame = new Interfaz_ABM_Combos(principal_neg_int);
-			frame.setSolicictud(sc);
+			frame.setCombo(combo);
 			frame.setModal(true);
 			frame.setVisible(true);
 		}
@@ -157,10 +153,9 @@ public class Interfaz_Combos extends JDialog {
 	private void Eliminar_solicitud() {
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Esta seguro que desea eliminar?", "Eliminar combo",JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
-			if (tabla_combos_actuales.getRowCount() > 0) {
-				Integer id = (Integer) tabla_combos_actuales.getValueAt(tabla_combos_actuales.getSelectedRow(), 0);
-				sv_combos.ELIMINAR_Combo(id);
-				sv_solicitudCompra.ELIMINAD_SOLICITUD_COMPRA(sv_solicitudCompra.OBTENER_SOLICITUD(id));
+			if (tablaCombos.getRowCount() > 0) {
+				Integer id = (Integer) tablaCombos.getValueAt(tablaCombos.getSelectedRow(), 0);
+				svCombos.ELIMINAR_Combo(id);
 				llenarTabla();
 			}
 		}
@@ -175,14 +170,14 @@ public class Interfaz_Combos extends JDialog {
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METODOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void llenarTabla() {
-		DefaultTableModel modelo = (DefaultTableModel) tabla_combos_actuales.getModel();
+		DefaultTableModel modelo = (DefaultTableModel) tablaCombos.getModel();
 		modelo.setRowCount(0);
-		ArrayList<Combo> lista = sv_combos.getLista_Combos();
+		ArrayList<Combo> lista = svCombos.getLista_Combos();
 		for (int i = 0; i < lista.size(); i++) {
 			String[] fila = { String.valueOf(lista.get(i).getId()), lista.get(i).getNombre(), String.valueOf(lista.get(i).getPrecio()) };
 			modelo.addRow(fila);
 		}
-		tabla_combos_actuales.setModel(modelo);
+		tablaCombos.setModel(modelo);
 	}
 
 }// --> FIN

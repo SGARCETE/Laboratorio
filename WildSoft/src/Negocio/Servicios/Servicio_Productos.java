@@ -18,7 +18,7 @@ public class Servicio_Productos {
 		// Consulta los tipos de producto solo la primera vez a la BD
 //		Lista_Variedades = productoDAO.getVARIEDAD_DEL_PRODUCTO("Pizza");
 		// Consulta las variedades de producto solo la primera vez a la BD
-		Lista_Productos = productoDAO.getTipos_Producto();
+		
 		
 		//** HARDCODEADO PARA QUE NO TRAIGA LOS DATOS DE LA BASE DE DATOS**//
 		//String[] Productos =  new String[] {"Pizza", "Empanada", "Bebida", "Combo"};
@@ -54,6 +54,7 @@ public class Servicio_Productos {
 	
 
 	public ArrayList<String> getLista_Productos(){
+		Lista_Productos = productoDAO.getTipos_Producto();
 		return Lista_Productos;
 	}
 	

@@ -32,6 +32,11 @@ public class Servicio_Combos {
 	public boolean ELIMINAR_Combo(Integer ID) {	
 		return comboDAO.ELIMINAR_Combo(ID);
 		}
+
+
+	public Combo getCombo(Integer id) {
+		return comboDAO.get_combo(id);
+	}
 	
 
 	
