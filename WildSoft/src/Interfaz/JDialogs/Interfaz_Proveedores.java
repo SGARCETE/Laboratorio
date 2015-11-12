@@ -2,6 +2,7 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import Negocio.Servicios.Servicio_Proveedores;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Interfaz_Proveedores extends JDialog {
@@ -68,6 +70,7 @@ public class Interfaz_Proveedores extends JDialog {
 	
 	private ArrayList<String> categoriasTabla;
 	private boolean esModificacion;
+	private JPanel panel_1;
 
 	
 
@@ -81,26 +84,75 @@ public class Interfaz_Proveedores extends JDialog {
 		completarTablaProveedores();
 
 		setResizable(false);
-		setBounds(100, 100, 1023, 453);
+		setBounds(100, 100, 1023, 513);
 		getContentPane().setLayout(new BorderLayout());
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(60, 179, 113));
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT));
+						
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnEliminar.setHorizontalTextPosition(SwingConstants.CENTER);
+		panel_1.add(btnEliminar);
+		btnEliminar.setBackground(Color.WHITE);
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableProveedores.getSelectedRow() != -1) {
+					eliminarProveedor();
+				}
+
+			}
+		});
+		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class .getResource("/Recursos/IMG/delete-1-icon24.png")));
+
+		btnModificar = new JButton("Modificar");
+		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
+		panel_1.add(btnModificar);
+		btnModificar.setBackground(Color.WHITE);
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableProveedores.getSelectedRow() != -1) {
+					modificarProveedor();
+				}
+			}
+		});
+		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
+		
+		JButton btnSalir = new JButton("    Salir    ");
+		btnSalir.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnSalir.setHorizontalTextPosition(SwingConstants.CENTER);
+		panel_1.add(btnSalir);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
+		
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 300, 213);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
 		JPanel panelAltaModificacion = new JPanel();
+		panelAltaModificacion.setBackground(Color.WHITE);
 		panelAltaModificacion.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelAltaModificacion.setBounds(10, 11, 299, 402);
 		panel.add(panelAltaModificacion);
 		panelAltaModificacion.setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(16, 35, 63, 14);
+		lblNombre.setBounds(16, 28, 63, 28);
 		panelAltaModificacion.add(lblNombre);
 
 		textNombre = new JTextField();
@@ -140,6 +192,7 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(textMail);
 
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBackground(Color.WHITE);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comprobarDatos()){
@@ -172,6 +225,7 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(btnAceptar);
 
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(Color.WHITE);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				camposHabilitados(false);
@@ -182,15 +236,15 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(btnCancelar);
 
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
-		lblDireccin.setBounds(16, 75, 63, 14);
+		lblDireccin.setBounds(16, 68, 63, 28);
 		panelAltaModificacion.add(lblDireccin);
 
 		JLabel lblTelefono = new JLabel("Telefono");
-		lblTelefono.setBounds(16, 115, 63, 14);
+		lblTelefono.setBounds(16, 108, 63, 28);
 		panelAltaModificacion.add(lblTelefono);
 
 		JLabel lblMail = new JLabel("Mail");
-		lblMail.setBounds(16, 155, 63, 14);
+		lblMail.setBounds(16, 148, 63, 28);
 		panelAltaModificacion.add(lblMail);
 
 		comboCategorias = new JComboBox<String>();
@@ -198,6 +252,8 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(comboCategorias);
 
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setIcon(new ImageIcon(Interfaz_Proveedores.class.getResource("/Recursos/IMG/add-1-icon16.png")));
+		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Recorro el mapa buscando la id del elemento seleccionado del combo
@@ -227,10 +283,12 @@ public class Interfaz_Proveedores extends JDialog {
 				}
 			}
 		});
-		btnAgregar.setBounds(16, 212, 90, 28);
+		btnAgregar.setBounds(16, 212, 96, 28);
 		panelAltaModificacion.add(btnAgregar);
 
 		btnQuitar = new JButton("Quitar");
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Proveedores.class.getResource("/Recursos/IMG/subtract-1-icon16.png")));
+		btnQuitar.setBackground(Color.WHITE);
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tablaCategorias.getSelectedRow()!=-1){
@@ -241,7 +299,7 @@ public class Interfaz_Proveedores extends JDialog {
 				}
 			}
 		});
-		btnQuitar.setBounds(199, 212, 90, 28);
+		btnQuitar.setBounds(181, 212, 108, 28);
 		panelAltaModificacion.add(btnQuitar);
 
 		scrollPane_1 = new JScrollPane();
@@ -271,6 +329,7 @@ public class Interfaz_Proveedores extends JDialog {
 		scrollPane_1.setViewportView(tablaCategorias);
 		
 		btnNuevoProveedor = new JButton("Nuevo Proveedor");
+		btnNuevoProveedor.setBackground(Color.WHITE);
 		btnNuevoProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				camposHabilitados(true);
@@ -284,6 +343,7 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(ID);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new TitledBorder(null, "Lista de Proveedores", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_2.setBounds(312, 11, 695, 345);
 		panel.add(panel_2);
@@ -294,41 +354,6 @@ public class Interfaz_Proveedores extends JDialog {
 		panel_2.add(scrollPane);
 
 		scrollPane.setViewportView(tableProveedores);
-
-		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tableProveedores.getSelectedRow() != -1) {
-					eliminarProveedor();
-				}
-
-			}
-		});
-		btnEliminar.setBounds(668, 368, 111, 45);
-		panel.add(btnEliminar);
-		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class .getResource("/Recursos/IMG/delete-1-icon24.png")));
-
-		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (tableProveedores.getSelectedRow() != -1) {
-					modificarProveedor();
-				}
-			}
-		});
-		btnModificar.setBounds(789, 368, 111, 45);
-		panel.add(btnModificar);
-		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
-
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnSalir.setBounds(910, 368, 97, 45);
-		panel.add(btnSalir);
-		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 
 		lblAviso = new JLabel("");
 		lblAviso.setForeground(Color.RED);
@@ -369,8 +394,20 @@ public class Interfaz_Proveedores extends JDialog {
 
 	private void iniciarlizarTablaProveedor() {
 
-		tableProveedores.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
-				"N\u00B0", "Nombre", "Direcci\u00F3n", "Telefono", "Mail" }));
+		tableProveedores.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"N\u00B0", "Nombre", "Direcci\u00F3n", "Telefono", "Mail"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				true, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		tableProveedores.getColumnModel().getColumn(0).setPreferredWidth(0);
 		tableProveedores.getColumnModel().getColumn(0).setMinWidth(0);
 		tableProveedores.getColumnModel().getColumn(0).setMaxWidth(0);

@@ -26,6 +26,15 @@ public class MetAux {
     	}
     }
 	
+	public static boolean isNumericDouble(String cadena){
+    	try {
+    		Double.parseDouble(cadena);
+    		return true;
+    	} catch (NumberFormatException nfe){
+    		return false;
+    	}
+    }
+	
 	/*------------------------------------------------------------------------------*/
 	public static boolean isSameDay(Calendar cal1, Calendar cal2) {
 	    if (cal1 == null || cal2 == null)
