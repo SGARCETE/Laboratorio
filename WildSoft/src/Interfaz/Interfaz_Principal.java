@@ -705,13 +705,12 @@ public class Interfaz_Principal {
 		tglbtnSoloPendientes.setBounds(531, 11, 142, 35);
 		panel_2.add(tglbtnSoloPendientes);
 		
-		JLabel label = new JLabel("20/25");
-		label.setBackground(SystemColor.menu);
-		label.setOpaque(true);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		label.setBounds(6, 6, 119, 45);
-		panel_Lista_de_pedidos.add(label);
+		JLabel lbl_contador = new JLabel("");
+		lbl_contador.setBackground(SystemColor.menu);
+		lbl_contador.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_contador.setFont(new Font("SansSerif", Font.PLAIN, 24));
+		lbl_contador.setBounds(6, 6, 119, 45);
+		panel_Lista_de_pedidos.add(lbl_contador);
 		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0) {
 				Actualizar_Lista_pedidos();
@@ -1500,7 +1499,7 @@ public class Interfaz_Principal {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	private void ACTUALIZAR_MONITOR() {
-		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.get_Pedidos(new GregorianCalendar());
+		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.getLISTA_PEDIDOS_COCINA(new GregorianCalendar());
 //		System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " + Lista_Productos_de_Hoy.size());
 		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
 	}
