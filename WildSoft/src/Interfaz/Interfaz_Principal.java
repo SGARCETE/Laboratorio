@@ -62,6 +62,7 @@ import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Proveedores;
 import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
+import Interfaz.JDialogs.Interfaz_Venta;
 import Interfaz.Swing_Extends.JTable_Listado_Pedidos;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Listado_Pedidos;
@@ -984,6 +985,13 @@ public class Interfaz_Principal {
 		mnReporteContabilidad.add(mntmVerContabilidad);
 		
 		JMenuItem mntmReporteVentas = new JMenuItem("Ventas");
+		mntmReporteVentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Interfaz_Venta frame = new Interfaz_Venta(Principal_neg_int);
+				frame.setVisible(true);
+				frame.setModal(true);
+			}
+		});
 		mnReporteContabilidad.add(mntmReporteVentas);
 
 		JMenu mnCategoria = new JMenu("Categor\u00EDa");
