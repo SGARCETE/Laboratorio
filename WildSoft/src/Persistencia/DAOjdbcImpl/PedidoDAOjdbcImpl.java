@@ -269,7 +269,11 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 						Arreglo.add(Prod);
 					}else{
 						ArrayList<Producto> combo_producto =  svCombo.getLista_Productos(Fila.getString("PR_nombre"));
-						Arreglo.addAll(combo_producto);
+						for (int i =0;i<combo_producto.size(); i++){ 
+							Producto actual = combo_producto.get(i);
+							actual.setCantidad(actual.getCantidad()*Fila.getInt("PP_producto_cantidad"));
+							Arreglo.add(actual);
+						}
 					}	
 
 				}
