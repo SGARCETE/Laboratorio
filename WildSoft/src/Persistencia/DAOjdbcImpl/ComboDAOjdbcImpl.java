@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Combo;
-import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ComboDAO;
@@ -153,24 +152,19 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 		for (int i = 0; i < C.getLista_productos().size(); i++) {
 			
 			Integer PRODUCTO_ID = C.getLista_productos().get(i).getPR_id();
-			Double PRECIO_ACTUAL = C.getLista_productos().get(i).getPR_precio();
-			String OBSERVACION =  C.getLista_productos().get(i).getPR_Observacion();
-			String SentenciaSQL_producto_pedidos = "INSERT INTO producto_pedidos (PP_pedidoid, PP_productoid, PP_producto_cantidad, PP_Observacion, PP_precio)"
+			String SentenciaSQL_producto_pedidos = "INSERT INTO combo_productos (COPRO_combo_id, COPRO_producto_id, COPRO_cantidad) "
 					+ "VALUES ("+
 					""+	 COMBO_ID									+","+	// INTEGER
 					""+	 PRODUCTO_ID								+","+	// INTEGER
-					""+	 C.getLista_productos().get(i).getCantidad()+","+	// INTEGER
-					"'"+ OBSERVACION								+" ',"+	// STRING
-					""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
+					""+	 C.getLista_productos().get(i).getCantidad()+");";	// INTEGER
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
-//			System.out.println(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
 		
 	}
 	
-	public boolean ELIMINAR_PRODUCTOS_DEL_COMBO(Combo C) {
-		String SentenciaSQL = "delete from Combo_productos where COPRO_combo_id = " + C.getId() ;
+	public boolean ELIMINAR_PRODUCTOS_DEL_COMBO(Integer id) {
+		String SentenciaSQL = "delete from Combo_productos where COPRO_combo_id = " + id ;
 		return conex.Insertar(SentenciaSQL);
 	}
 	
@@ -190,7 +184,7 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 	    String SentenciaSQL = " INSERT INTO Producto (PR_Nombre, PR_precio, PR_tipo_producto )VALUES ("+
 			   "'"+  	c.getNombre()			+"',"
 			   +	c.getPrecio()			    +","
-			   +    1			+")";
+			   +    4			+")";
 	    
 	   
 		return conex.Insertar(SentenciaSQL);

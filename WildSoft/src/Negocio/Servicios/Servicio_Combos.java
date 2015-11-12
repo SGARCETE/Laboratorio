@@ -37,11 +37,23 @@ public class Servicio_Combos {
 	public Combo getCombo(Integer id) {
 		return comboDAO.get_combo(id);
 	}
+
+	public Integer obtenerIdCombo(String nombreCombo){
+		return comboDAO.get_id_combo(nombreCombo);
+	}
+
+	public void guardarProductosCombo(Combo combo) {
+		comboDAO.AGREGAR_COMBO_PRODUCTO(combo);
+	}
+
+
+	public void eliminarProductosCombo(Integer id) {
+		comboDAO.ELIMINAR_PRODUCTOS_DEL_COMBO(id);
+	}
 	
-	void AGREGAR_COMBO_TABLA_COMBOS(Combo c){
+	public void agregarCombo(Combo c){
 		 comboDAO.AGREGAR_COMBO_TABLA_COMBOS(c);
 		 comboDAO.AGREGAR_COMBO_TABLA_PRODUCTOS(c);
-		
 	}
 
 	

@@ -187,8 +187,7 @@ public class ADM_Categorias extends JDialog {
 
 	public void AgregarCategoriaProducto() {
 		if (!textNombre.equals("")) {
-			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre
-					.getText()));
+			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre.getText()));
 
 			LlenarTablaProducto();
 
