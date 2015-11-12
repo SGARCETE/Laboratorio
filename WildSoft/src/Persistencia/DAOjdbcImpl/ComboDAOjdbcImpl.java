@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Negocio.Modelo.Combo;
+import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.ComboDAO;
@@ -177,6 +178,25 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 		String SentenciaSQL = "UPDATE Combo SET CO_vigente=0 WHERE CO_id=" + ID + ";";
 		return conex.Insertar(SentenciaSQL);
 	}
+	
+	public boolean AGREGAR_COMBO_TABLA_COMBOS(Combo c) {
+	    String SentenciaSQL = " INSERT INTO Combo (CO_Nombre, CO_precio)VALUES ("+
+			   "'"+ c.getNombre()			+"',"
+			   +	c.getPrecio()			    +")";
+	    return conex.Insertar(SentenciaSQL);
+	}
+	
+	public boolean AGREGAR_COMBO_TABLA_PRODUCTOS(Combo c) {
+	    String SentenciaSQL = " INSERT INTO Producto (PR_Nombre, PR_precio, PR_tipo_producto )VALUES ("+
+			   "'"+  	c.getNombre()			+"',"
+			   +	c.getPrecio()			    +","
+			   +    1			+")";
+	    
+	   
+		return conex.Insertar(SentenciaSQL);
+	}
+
+	
 	
 	
 }
