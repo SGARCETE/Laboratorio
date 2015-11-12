@@ -28,7 +28,7 @@ public class ClienteDAOjdbcImpl implements ClienteDAO{
 				cliente.setNombre(Fila.getString("CL_nombre"));
 				cliente.setDomicilio(Fila.getString("CL_direccion"));
 				cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
-	//			cliente.setDetalle(Fila.getString("CL_Detalle"));
+				cliente.setDetalle(Fila.getString("CL_Detalle"));
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {

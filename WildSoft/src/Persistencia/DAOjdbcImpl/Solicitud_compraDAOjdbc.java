@@ -50,7 +50,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				SOLICITUD_OBTENIDA.setId(Fila.getInt("SD_id"));
 				SOLICITUD_OBTENIDA.setEstado(Fila.getString("SEST_nombre"));
 				SOLICITUD_OBTENIDA.setFecha(Fila.getDate("SD_fecha"));
-				SOLICITUD_OBTENIDA.setPrecio(Fila.getInt("SD_precio"));
+				SOLICITUD_OBTENIDA.setPrecio(Fila.getDouble("SD_precio"));
 				SOLICITUD_OBTENIDA.setProveedor(PV);
 			}
 			conex.cerrarConexion();
@@ -146,7 +146,7 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO{
 				sd.setEstado(Fila.getString("SEST_nombre"));
 				sd.setFecha(Fila.getDate("SD_fecha"));
 				sd.setProveedor(new Proveedor (Fila.getString("PV_nombre")));
-				sd.setPrecio(Fila.getInt("SD_precio"));
+				sd.setPrecio(Fila.getDouble("SD_precio"));
 				
 				Arreglo.add(sd);
 			}

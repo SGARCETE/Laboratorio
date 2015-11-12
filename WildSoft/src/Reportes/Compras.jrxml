@@ -23,7 +23,7 @@ SD_fecha between $P{SD_fecha_1} and $P{SD_fecha_2} GROUP BY SD_id ;]]>
 	<field name="SD_fecha" class="java.sql.Timestamp"/>
 	<field name="PV_nombre" class="java.lang.String"/>
 	<field name="CA_nombre" class="java.lang.String"/>
-	<field name="SD_precio" class="java.lang.Integer"/>
+	<field name="SD_precio" class="java.lang.Double"/>
 	<variable name="SD_precio_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{SD_precio}]]></variableExpression>
 	</variable>

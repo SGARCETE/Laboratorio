@@ -10,7 +10,7 @@ public class Solicitud_compra {
 	private String estado;
 	private Proveedor proveedor;
 	private Date fecha;
-	private Integer precio;
+	private Double precio;
 	private File solicitudPDF;
 	
 	private ArrayList<Materia_Prima> lista_materia_prima;
@@ -22,11 +22,11 @@ public class Solicitud_compra {
 	public Solicitud_compra() {
 	}
 
-	public Integer getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(Integer precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 
