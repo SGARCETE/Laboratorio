@@ -971,10 +971,10 @@ public class Interfaz_Principal {
 		});
 		mnProveedores.add(mnABMProveedores);
 
-		JMenu mnReporteContabilidad = new JMenu("Reporte Contabilidad");
+		JMenu mnReporteContabilidad = new JMenu("Reportes");
 		menuBar.add(mnReporteContabilidad);
 		
-		JMenuItem mntmVerContabilidad = new JMenuItem("Ver Mini-Contabilidad");
+		JMenuItem mntmVerContabilidad = new JMenuItem("Mini-Contabilidad");
 		mntmVerContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Interfaz_Contabilidad frame = new Interfaz_Contabilidad();
@@ -982,6 +982,9 @@ public class Interfaz_Principal {
 			}
 		});
 		mnReporteContabilidad.add(mntmVerContabilidad);
+		
+		JMenuItem mntmReporteVentas = new JMenuItem("Ventas");
+		mnReporteContabilidad.add(mntmReporteVentas);
 
 		JMenu mnCategoria = new JMenu("Categor\u00EDa");
 		menuBar.add(mnCategoria);
