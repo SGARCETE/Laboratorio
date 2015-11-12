@@ -38,6 +38,11 @@ public class Servicio_Combos {
 		return comboDAO.get_combo(id);
 	}
 	
+	void AGREGAR_COMBO_TABLA_COMBOS(Combo c){
+		 comboDAO.AGREGAR_COMBO_TABLA_COMBOS(c);
+		 comboDAO.AGREGAR_COMBO_TABLA_PRODUCTOS(c);
+		
+	}
 
 	
 }

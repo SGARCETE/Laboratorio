@@ -19,5 +19,10 @@ public interface ComboDAO {
 	
 	Combo get_combo (Integer id_combo);
 	
+	boolean AGREGAR_COMBO_TABLA_PRODUCTOS(Combo c);
+	
+	boolean AGREGAR_COMBO_TABLA_COMBOS(Combo c);
+	
+	
 
 }
