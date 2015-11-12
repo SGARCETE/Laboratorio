@@ -24,8 +24,8 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select count(PP_producto_cantidad) as cantidad,PR.PR_nombre as producto, TP.TP_nombre as categoria, PR.PR_tipo_producto as IDcategoria,
-((count(PP_producto_cantidad) /(select count(PP_producto_cantidad) from Producto_pedidos PP join Pedido PD join Producto PR on PD.PD_id= PP.PP_pedidoid
+		<![CDATA[select sum(PP_producto_cantidad) as cantidad,PR.PR_nombre as producto, TP.TP_nombre as categoria, PR.PR_tipo_producto as IDcategoria,
+((sum(PP_producto_cantidad) /(select sum(PP_producto_cantidad) from Producto_pedidos PP join Pedido PD join Producto PR on PD.PD_id= PP.PP_pedidoid
 and PD.PD_estado= 4 and PR.PR_id= PP_productoid and
 PD.PD_fecha_pedido between $P{Fecha_pedido1} and $P{Fecha_pedido2}
 and
@@ -40,7 +40,7 @@ and PD.PD_fecha_pedido between $P{Fecha_pedido1} and $P{Fecha_pedido2}
 group by
 PR.PR_nombre;]]>
 	</queryString>
-	<field name="cantidad" class="java.lang.Long"/>
+	<field name="cantidad" class="java.math.BigDecimal"/>
 	<field name="producto" class="java.lang.String"/>
 	<field name="categoria" class="java.lang.String"/>
 	<field name="IDcategoria" class="java.lang.Integer"/>
