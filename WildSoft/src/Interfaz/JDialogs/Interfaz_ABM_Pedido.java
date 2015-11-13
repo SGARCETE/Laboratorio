@@ -452,15 +452,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private void Quitar_al_Pedido() {
 		//		 LO QUITA DE LA LISTA DE PEDIDO
 		if(!PEDIDO_ACTUAL.getLista_Productos().isEmpty()){
-			 Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
-			 String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
-			 Integer removidos = 0;
-			 for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad)
+			Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),1);
+			String Variedad = (String) Tabla_Pedido_Completo.getValueAt((Integer)Tabla_Pedido_Completo.getSelectedRow(),3);
+			Integer removidos = 0;
+			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
+				 if(PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos<cantidad){
 					PEDIDO_ACTUAL.getLista_Productos().remove(i);
 				 	removidos++;
-				 } 
-			 }
+				 }
+			} 
+			
 			// LO QUITA DE LA LISTA VISUAL
 			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
 				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
@@ -469,6 +470,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				modelo.removeRow(indice_Seleccionado);
 				Calcula_totales();
 			}
+		}
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

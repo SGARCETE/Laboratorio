@@ -218,7 +218,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		lbl_NroPedido_Prioridad4.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
 		scrollPane_prioridad4 = new JScrollPane();
-		scrollPane_prioridad4.setBackground(Color.white); // TODO
+		scrollPane_prioridad4.setBackground(Color.white);
 		scrollPane_prioridad4.setOpaque(true);
 		scrollPane_prioridad4.getViewport().setBackground(Color.WHITE);
 		
@@ -378,7 +378,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		// De todos los pedidos del dia, solo me quedo con los ultimos 4
 		int cant_pedidos = 0;
 		for (int j = 0; j < Lista_Todos_los_Pedidos_del_dia.size(); j++) {
-			if(Lista_Todos_los_Pedidos_del_dia.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
+			if(Lista_Todos_los_Pedidos_del_dia.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4 && !tieneSoloBebidas(Lista_Todos_los_Pedidos_del_dia.get(j))){
 				Lista_4_pedidos.add(Lista_Todos_los_Pedidos_del_dia.get(j));
 				cant_pedidos++;
 			}
@@ -394,8 +394,17 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		}
 	}
 
+	/** si el pedido tiene solo bebidas, entonces devuelve true*/
+	private boolean tieneSoloBebidas(Pedido pedido) {
+		ArrayList<Producto> LP =pedido.getLista_Productos();
+		for (int i = 0; i < LP.size(); i++) {
+			if(LP.get(i).getPR_tipo_producto()!=3)
+				return false; // si entra es porque encontro un producto que NO es bebida
+		}
+		return true;
+	}
+
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
-	// TODO BUG, AGREGA EL MISMO PRODUCTO EN OTRA FILA SI ESTA PERTENECE A OTRO PEDIDO 
 	private void setResumen_Productos_Pendientes(ArrayList<Pedido> Lista_Pedidos){
 		DefaultTableModel model = (DefaultTableModel) table_Resumen_Productos_Pendientes.getModel();
 		for (int i = 0; i < Lista_Pedidos.size(); i++) {
@@ -420,15 +429,9 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		String TIPO_PR = "";
 		String TIPO_PR_ACTUAL = ""; 
 		
-		
 		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
 			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
-			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
-			System.out.println("\n\nNOMBRE: " + pr.getPR_nombre());
-			System.out.println("ID: " + pr.getPR_id());
-			System.out.println("TIPO PRODUCTO: " + pr.getPR_tipo_producto());
-			System.out.println("CANTIDAD: " + pr.getCantidad());
-			
+			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();			
 			
 			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA (ID Producto bebida = 3)
 				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
@@ -445,76 +448,5 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
-	
-	
-//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//	public void Actualizar_monitor(ArrayList<Pedido> Lista_Pedidos){
-//		resetear_campos();
-//		ArrayList<Pedido> Lista_4_pedidos = new ArrayList<Pedido>();
-//
-//		int cant_pedidos = 0;
-//		for (int j = 0; j < Lista_Pedidos.size(); j++) {
-//			if(Lista_Pedidos.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
-//				Lista_4_pedidos.add(Lista_Pedidos.get(j));
-//				cant_pedidos++;
-//			}
-//		}
-//		
-//		if(Lista_4_pedidos!=null && Lista_4_pedidos.size()>0){
-//			for (int i = 0; i < Lista_4_pedidos.size(); i++) 
-//				Mostrar_pedido(Lista_4_pedidos.get(i), i);
-//			if(Lista_4_pedidos.size()>0 && Lista_Pedidos.size()>0){
-//				setResumen_Productos_Pendientes(Lista_Pedidos);
-//			}
-//		}
-//	}
-//
-//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
-//	// TODO BUG, AGREGA EL MISMO PRODUCTO EN OTRA FILA SI ESTA PERTENECE A OTRO PEDIDO 
-//	private void setResumen_Productos_Pendientes(ArrayList<Pedido> Lista_Pedidos){
-//		DefaultTableModel model = (DefaultTableModel) table_Resumen_Productos_Pendientes.getModel();
-//		for (int i = 0; i < Lista_Pedidos.size(); i++) {
-//			Pedido p = Lista_Pedidos.get(i);
-//			for (int j = 0; j < Lista_Pedidos.get(i).getLista_Productos().size(); j++) {
-//				Producto pr = p.getLista_Productos().get(j);
-//				if(pr.getPR_tipo_producto()!=3 )// SI NO ES UNA BEBIDA
-//					model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre()});	
-//			}
-//		}
-//		table_Resumen_Productos_Pendientes.setModel(model);
-//	}
-//	
-//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//	private void Mostrar_pedido(Pedido p, Integer Index){
-//		JTable JT = Lista_Tablas[Index];
-//		JLabel JL = Lista_Label[Index];
-//		DefaultTableModel model = (DefaultTableModel) JT.getModel();
-//		JL.setText(p.getID_DIARIO().toString());
-//		
-//		ArrayList<Producto> LISTA_PRODUCTOS_ORDENADA = MetAux.mergeSort(p.getLista_Productos());
-//		String TIPO_PR = "";
-//		String TIPO_PR_ACTUAL = ""; 
-//		
-//		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
-//			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
-//			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
-//			
-//			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA (ID Producto bebida = 3)
-//				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
-//				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
-//			}
-//			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA  (ID Producto bebida = 3)
-//				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
-//				if(!pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
-//					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
-//			}
-//			
-//		}
-//		JT.setModel(model);
-//	}
-//
-//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
 	
 }//--> FIN INTERFAZ
