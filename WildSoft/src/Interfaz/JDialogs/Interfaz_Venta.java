@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Productos;
+import Reportes.ReporteMejoresClientes;
+import java.util.Date;
 import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
@@ -144,25 +146,7 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnReporteDia = new JRadioButton("Del D\u00EDa");
 		rdbtnReporteDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				monthChooser.setEnabled(false);
-			//	dateChooserMes.setEnabled(false);
-				dateChooserDesde.setEnabled(false);
-				dateChooserHasta.setEnabled(false);
-				dateChooserDia.setEnabled(true);
-				
-				dateChooserDia.setDate(null);
-				monthChooser.setMonth(0);
-			//	dateChooserMes.setDate(null);
-				dateChooserDesde.setDate(null);
-				dateChooserHasta.setDate(null);
-				
-				rdbtnProducto.setEnabled(true);
-				rdbtnCliente.setEnabled(true);
-				
-				
-				
-				
+				DejarDia();
 			}
 		});
 		rdbtnReporteDia.setBounds(53, 19, 135, 23);
@@ -171,20 +155,7 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnReporteMes = new JRadioButton("Del Mes");
 		rdbtnReporteMes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dateChooserDia.setEnabled(false);
-				dateChooserDesde.setEnabled(false);
-				dateChooserHasta.setEnabled(false);
-				monthChooser.setEnabled(true);
-			//	dateChooserMes.setEnabled(true);
-				
-				dateChooserDia.setDate(null);
-				monthChooser.setMonth(0);
-			//	dateChooserMes.setDate(null);
-				dateChooserDesde.setDate(null);
-				dateChooserHasta.setDate(null);
-				
-				rdbtnProducto.setEnabled(true);
-				rdbtnCliente.setEnabled(true);
+				DejarMes();
 			}
 		});
 		rdbtnReporteMes.setBounds(53, 45, 135, 23);
@@ -193,21 +164,7 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnReporteEntreFechas = new JRadioButton("Entre Fechas");
 		rdbtnReporteEntreFechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dateChooserDia.setEnabled(false);
-				monthChooser.setEnabled(false);
-				
-		//		dateChooserMes.setEnabled(false);
-				dateChooserDesde.setEnabled(true);
-				dateChooserHasta.setEnabled(true);
-				
-				dateChooserDia.setDate(null);
-				monthChooser.setMonth(0);
-		//		dateChooserMes.setDate(null);
-				dateChooserDesde.setDate(null);
-				dateChooserHasta.setDate(null);
-				
-				rdbtnProducto.setEnabled(true);
-				rdbtnCliente.setEnabled(true);
+				DejarSoloEntreFechas();
 			}
 		});
 		rdbtnReporteEntreFechas.setBounds(53, 71, 148, 23);
@@ -259,6 +216,8 @@ public class Interfaz_Venta extends JDialog{
 		
 		inicializar();
 	}
+	
+
 	private void inicializar() {
 		ComboProdutos();
 		comboBox.setEnabled(false);
@@ -270,6 +229,56 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnCliente.setEnabled(false);
 	}
 	
+//-------------------------------------------------------------	
+//---------------- Metodos que manejan las fechas  ------------
+//-------------------------------------------------------------	
+	private void DejarDia()
+	{
+		monthChooser.setEnabled(false);
+		dateChooserDesde.setEnabled(false);
+		dateChooserHasta.setEnabled(false);
+		dateChooserDia.setEnabled(true);
+		dateChooserDia.setDate(null);
+		monthChooser.setMonth(0);
+		dateChooserDesde.setDate(null);
+		dateChooserHasta.setDate(null);
+		rdbtnProducto.setEnabled(true);
+		rdbtnCliente.setEnabled(true);
+	}
+	private void DejarSoloEntreFechas()
+	{
+		dateChooserDia.setEnabled(false);
+		monthChooser.setEnabled(false);
+		dateChooserDesde.setEnabled(true);
+		dateChooserHasta.setEnabled(true);
+		dateChooserDia.setDate(null);
+		monthChooser.setMonth(0);
+		dateChooserDesde.setDate(null);
+		dateChooserHasta.setDate(null);
+		
+		rdbtnProducto.setEnabled(true);
+		rdbtnCliente.setEnabled(true);
+	}
+	public void DejarMes()
+	{
+		dateChooserDia.setEnabled(false);
+		dateChooserDesde.setEnabled(false);
+		dateChooserHasta.setEnabled(false);
+		monthChooser.setEnabled(true);
+		dateChooserDia.setDate(null);
+		monthChooser.setMonth(0);
+		dateChooserDesde.setDate(null);
+		dateChooserHasta.setDate(null);
+		rdbtnProducto.setEnabled(true);
+		rdbtnCliente.setEnabled(true);
+	}
+//---------------- FIN!  -------------------------------------
+
+	
+	//-------------------------------------------------------------	
+	//---------------- LLena el combo box con los tipos productos  
+	//-------------------------------------------------------------		
+			
 	public void ComboProdutos()
 	{
 		for (int j = 0; j < SvProductos.getLista_Productos().size(); j++) {
@@ -277,7 +286,24 @@ public class Interfaz_Venta extends JDialog{
 			SvProductos.getLista_Productos();
 		}
 	}
-	public void GenerarReporte(){
+	
+	
+//-------------------------------------------------------------	
+//---------------- Generar Reporte! ---------------------------
+//-------------------------------------------------------------		
 		
+	
+	public void GenerarReporte(){
+		if(rdbtnCliente.getText().equals("Cliente"))
+		{
+			Date f1 = dateChooserDesde.getCalendar().getTime();
+			Date f2= dateChooserDesde.getCalendar().getTime();
+			
+			ReporteMejoresClientes rc= new ReporteMejoresClientes(f1, f2);
+			rc.MOSTRAR_REPORTE();
+		}
 	}
+//----------------------- FIN! ------------------------------		
+		
+	
 }
