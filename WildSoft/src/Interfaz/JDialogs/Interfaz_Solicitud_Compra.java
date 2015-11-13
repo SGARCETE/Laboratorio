@@ -222,8 +222,9 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Eliminar_solicitud() {
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Esta seguro que desea eliminar?","Eliminar solicitud",JOptionPane.OK_CANCEL_OPTION);
-		if(RESPUESTA == JOptionPane.OK_OPTION){		
-			if(tabla_solicitudes_actuales.getRowCount()>0){
+		if(RESPUESTA == JOptionPane.OK_OPTION){	
+			String estado = (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0);
+			if(tabla_solicitudes_actuales.getRowCount()>0 && estado!= "Pagada"){
 				Integer id = (Integer) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0);
 				sv_solicitudCompra.ELIMINAD_SOLICITUD_COMPRA(sv_solicitudCompra.OBTENER_SOLICITUD(id));
 				llenarTabla();
