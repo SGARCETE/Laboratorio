@@ -283,12 +283,13 @@ public class Interfaz_ABM_Producto extends JDialog {
 			}
 		));
 		
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
 		
-		table.getColumnModel().getColumn(1).setPreferredWidth(102);
-		table.getColumnModel().getColumn(2).setPreferredWidth(112);
-		table.getColumnModel().getColumn(3).setPreferredWidth(50);
-		table.getColumnModel().getColumn(4).setPreferredWidth(175);
+		table.getColumnModel().getColumn(4).setMaxWidth(0);
+		table.getColumnModel().getColumn(4).setMinWidth(0);
+		table.getColumnModel().getColumn(4).setPreferredWidth(0);
 		
 		
 	}

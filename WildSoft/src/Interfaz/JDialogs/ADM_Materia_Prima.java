@@ -346,6 +346,10 @@ public class ADM_Materia_Prima extends JDialog{
 			fila[3]= SvMateria.dameNombreCategoria(materia.getId());
 			
 			((DefaultTableModel) this.tableMateriasPrimas.getModel()).addRow(fila);
+			
+			tableMateriasPrimas.getColumnModel().getColumn(0).setMaxWidth(0);
+			tableMateriasPrimas.getColumnModel().getColumn(0).setMinWidth(0);
+			tableMateriasPrimas.getColumnModel().getColumn(0).setPreferredWidth(0);
 		}
 	}
 
