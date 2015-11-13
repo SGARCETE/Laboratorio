@@ -1,5 +1,6 @@
 package Persistencia.DAOjdbcImpl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -188,6 +189,20 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 	    
 	   
 		return conex.Insertar(SentenciaSQL);
+	}
+
+	public void modificarCombo(Combo combo) {
+            try {
+            	conex.connectToMySQL();
+    			PreparedStatement statement = conex.conexion.prepareStatement("UPDATE combo SET CO_nombre=?, CO_precio=? WHERE CO_id=?;");
+				statement.setString(1, combo.getNombre());
+				statement.setDouble(2, combo.getPrecio());
+				statement.setInt(3, combo.getId());
+	            statement.executeUpdate();
+	            conex.cerrarConexion();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 
 	

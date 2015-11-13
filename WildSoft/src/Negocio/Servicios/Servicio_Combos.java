@@ -56,5 +56,10 @@ public class Servicio_Combos {
 		 comboDAO.AGREGAR_COMBO_TABLA_PRODUCTOS(c);
 	}
 
+
+	public void modificarCombo(Combo combo) {
+		comboDAO.modificarCombo(combo);
+	}
+
 	
 }

@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Combo;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
@@ -58,10 +58,10 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private JButton btnAgregar;
 	private JButton okButton;
 	private JButton cancelButton;
-	
-	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
 
 	private boolean esModificacion = false;
+
+	private JLabel lblID;
 
 	public Interfaz_ABM_Combos(Principal_Negocio_Interfaz principal_neg_int) {
 		setTitle("Administracion de Combos");
@@ -141,8 +141,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		PanelCombos.setViewportView(tablaProductosCombo);
 
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class
-				.getResource("/Recursos/IMG/add-1-icon24.png")));
+		btnAgregar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				agregarProducto();
@@ -163,8 +162,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		textTotal.setColumns(10);
 
 		btnQuitar = new JButton("Quitar");
-		btnQuitar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class
-				.getResource("/Recursos/IMG/subtract-1-icon24.png")));
+		btnQuitar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				quitarProducto();
@@ -186,6 +184,12 @@ public class Interfaz_ABM_Combos extends JDialog {
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setBounds(155, 351, 340, 32);
 		contentPanel.add(lblAviso);
+		
+		lblID = new JLabel("");
+		lblID.setVisible(false);
+		lblID.setEnabled(false);
+		lblID.setBounds(607, 54, 46, 14);
+		contentPanel.add(lblID);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -259,6 +263,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	
 	private void inicializar() {
 		llenar_categorias();
+		MetAux.SoloNumerosDecimales(textTotal);
 	}
 	
 	public void setCombo(Combo combo) {
@@ -277,10 +282,10 @@ public class Interfaz_ABM_Combos extends JDialog {
 		if (combo.getPrecio() != null && combo.getPrecio() > 0) {
 			PRECIO = combo.getPrecio().doubleValue();
 		}
-		
+		lblID.setText(String.valueOf(combo.getId()));
 		textNombre.setText(combo.getNombre());
 		esModificacion = true;
-		textTotal.setText(formatoImporte.format(PRECIO));
+		textTotal.setText(String.valueOf(PRECIO));
 	}
 	
 	private void llenar_categorias() {
@@ -308,7 +313,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		if(comprobarCampos()){
 			if(esModificacion){
 				svCombos.eliminarProductosCombo(obtenerCombo().getId());
-				//svCombos.modificarCombo(obtenerCombo()); TODO
+				svCombos.modificarCombo(obtenerCombo());
 				svCombos.guardarProductosCombo(obtenerCombo());
 				dispose();
 			}else{
@@ -354,6 +359,9 @@ public class Interfaz_ABM_Combos extends JDialog {
 	
 	private Combo obtenerCombo() {
 		Combo combo = new Combo();
+		if(!lblID.getText().isEmpty()){
+			combo.setId(Integer.parseInt(lblID.getText()));
+		}
 		combo.setPrecio(Double.parseDouble(textTotal.getText()));
 		combo.setNombre(textNombre.getText());
 		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
