@@ -30,7 +30,7 @@ public class Backup {
 			fw.close();
 			irs.close();
 			br.close();
-			JOptionPane.showMessageDialog(null, "Archivo generado",
+			JOptionPane.showMessageDialog(null, "Se ha generado un respaldo de la base de datos",
 					"Verificar", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
@@ -63,6 +63,8 @@ public class Backup {
 			}
 			os.close();
 			fis.close();
+			JOptionPane.showMessageDialog(null, "Se ha actualizado la base de datos",
+					"Verificar", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

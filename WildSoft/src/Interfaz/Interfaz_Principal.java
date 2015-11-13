@@ -133,9 +133,6 @@ public class Interfaz_Principal {
 	private Servicio_Pedidos sv_pedidos;
 	private Servicio_Repartidores sv_Repartidores;
 	private Servicio_entrega sv_Entrega;
-	private Backup backup;
-//	private Servicio_Combos sv_Combos;
-	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private Pedido PEDIDO_ACTUAL = new Pedido(); 	   /* Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea */
 	private Producto PRODUCTO_ACTUAL = new Producto(); /* Cuando selecciono el producto, este va a saber la variedad, observacion, cantidad, total, cuando lo agrego a la tabla se resetea para ingresar otro*/
@@ -163,8 +160,7 @@ public class Interfaz_Principal {
 		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		sv_Repartidores = Principal_neg_int.getSvRepartidores();
 		sv_Entrega = Principal_neg_int.getSvEntrega();
-//		sv_Combos= Principal_neg_int.getSvCombos();
-		backup= new Backup();
+new Backup();
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
@@ -879,7 +875,7 @@ public class Interfaz_Principal {
 		JMenuItem mntmRealizarBackup = new JMenuItem("Realizar Backup");
 		mntmRealizarBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			  backup.backup();
+			  Backup.backup();
 			}
 		});
 		mnArchivo.add(mntmRealizarBackup);
@@ -887,7 +883,8 @@ public class Interfaz_Principal {
 		JMenuItem mntmRestaurarBackup = new JMenuItem("Restaurar Backup");
 		mntmRestaurarBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				backup.restore();
+				ACTUALIZAR_TODO();
+				Backup.restore();
 			}
 		});
 		mnArchivo.add(mntmRestaurarBackup);
