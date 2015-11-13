@@ -34,8 +34,7 @@ public class ReporteMejoresClientes {
 
 		try {
 			inputStream= new FileInputStream(JXML);
-	
-	
+
 			JasperDesign jasperDesing = JRXmlLoader.load(inputStream);
 			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesing);
 			
@@ -53,7 +52,7 @@ public class ReporteMejoresClientes {
 	public void MOSTRAR_REPORTE(){
 		// MOSTRAR REPORTE
 		JasperViewer view = new JasperViewer(jasperPrint,false); 
-		view.setTitle("Solicitud De Compra");
+		view.setTitle("Reporte Ventas Clientes");
 		view.setVisible(true);
 	}
 	
