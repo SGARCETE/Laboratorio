@@ -171,7 +171,7 @@ new Backup();
 		frmWildsoft = new JFrame();
 		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
-		frmWildsoft.setBounds(100, 100, 1133, 780);
+		frmWildsoft.setBounds(100, 100, 1133, 720);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -363,65 +363,6 @@ new Backup();
 					.addGap(1))
 		);
 		panel_Resumen_Pedido.setLayout(gl_panel_Resumen_Pedido);
-		GroupLayout gl_panelProductos = new GroupLayout(panelProductos);
-		gl_panelProductos
-				.setHorizontalGroup(gl_panelProductos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panelProductos
-										.createSequentialGroup()
-										.addGap(12)
-										.addGroup(
-												gl_panelProductos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lblIngreseLosProductos,
-																GroupLayout.PREFERRED_SIZE,
-																404,
-																GroupLayout.PREFERRED_SIZE)
-														.addGroup(
-																gl_panelProductos
-																		.createSequentialGroup()
-																		.addComponent(
-																				panelAltaPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				331,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(5)
-																		.addComponent(
-																				panel_Resumen_Pedido,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)))
-										.addGap(4)));
-		gl_panelProductos
-				.setVerticalGroup(gl_panelProductos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panelProductos
-										.createSequentialGroup()
-										.addGap(4)
-										.addComponent(lblIngreseLosProductos,
-												GroupLayout.PREFERRED_SIZE, 25,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(4)
-										.addGroup(
-												gl_panelProductos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panelAltaPedido,
-																GroupLayout.DEFAULT_SIZE,
-																266,
-																Short.MAX_VALUE)
-														.addComponent(
-																panel_Resumen_Pedido,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addGap(4)));
-		panelProductos.setLayout(gl_panelProductos);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_Pedido();
@@ -538,26 +479,49 @@ new Backup();
 			gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
 					.addGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
-						.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE)
+						.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(panelDelibery, GroupLayout.PREFERRED_SIZE, 609, GroupLayout.PREFERRED_SIZE)
 							.addGap(1)
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)))
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)))
 					.addGap(1))
 		);
 		gl_panel_Nuevo_pedido.setVerticalGroup(
 			gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
 					.addGap(6)
-					.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+					.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(2)
 					.addGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
-							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addContainerGap())
-						.addComponent(panelDelibery, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panelDelibery, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
 		);
+		GroupLayout gl_panelProductos = new GroupLayout(panelProductos);
+		gl_panelProductos.setHorizontalGroup(
+			gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup()
+					.addGap(12)
+					.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelProductos.createSequentialGroup()
+							.addComponent(panelAltaPedido, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)))
+					.addGap(4))
+		);
+		gl_panelProductos.setVerticalGroup(
+			gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup()
+					.addGap(4)
+					.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(4)
+					.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelAltaPedido, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+						.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE))
+					.addGap(4))
+		);
+		panelProductos.setLayout(gl_panelProductos);
 		panel_Nuevo_pedido.setLayout(gl_panel_Nuevo_pedido);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -570,17 +534,14 @@ new Backup();
 				null);
 
 		scrollPane_Lista_Pedidos = new JScrollPane();
-		scrollPane_Lista_Pedidos.setBounds(131, 127, 971, 551);
 
 		JLabel lblListadoDePedidos = new JLabel("Pedidos registrados");
 		lblListadoDePedidos.setOpaque(true);
 		lblListadoDePedidos.setBackground(SystemColor.menu);
-		lblListadoDePedidos.setBounds(131, 6, 971, 45);
 		lblListadoDePedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListadoDePedidos.setFont(new Font("SansSerif", Font.BOLD, 24));
 
 		JPanel panel = new JPanel();
-		panel.setBounds(6, 62, 119, 616);
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panel.setBackground(Color.WHITE);
@@ -653,16 +614,10 @@ new Backup();
 		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnComandaticket.setBackground(Color.WHITE);
 		panel.add(btnComandaticket);
-		panel_Lista_de_pedidos.setLayout(null);
-		panel_Lista_de_pedidos.add(lblListadoDePedidos);
-		panel_Lista_de_pedidos.add(panel);
-		panel_Lista_de_pedidos.add(scrollPane_Lista_Pedidos);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(60, 179, 113));
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(131, 62, 971, 54);
-		panel_Lista_de_pedidos.add(panel_2);
 		panel_2.setLayout(null);
 		
 		btn_fecha_anterior = new JButton("");
@@ -706,8 +661,41 @@ new Backup();
 		lbl_contador.setBackground(SystemColor.menu);
 		lbl_contador.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_contador.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lbl_contador.setBounds(6, 6, 119, 45);
-		panel_Lista_de_pedidos.add(lbl_contador);
+		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
+		gl_panel_Lista_de_pedidos.setHorizontalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addComponent(lbl_contador, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+							.addGap(16)
+							.addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE))
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+							.addGap(8)
+							.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
+								.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE))))
+					.addGap(15))
+		);
+		gl_panel_Lista_de_pedidos.setVerticalGroup(
+			gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addComponent(lbl_contador, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)))
+					.addGap(16))
+		);
+		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
 		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent arg0) {
 				Actualizar_Lista_pedidos();

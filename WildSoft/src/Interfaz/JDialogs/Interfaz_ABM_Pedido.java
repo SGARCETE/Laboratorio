@@ -43,6 +43,8 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 
 @SuppressWarnings("serial")
@@ -105,24 +107,16 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
 		
 		scrollPane_Pedido_Completo = new JScrollPane();
-		scrollPane_Pedido_Completo.setBounds(348
-				, 108, 613, 282);
-		contentPanel.add(scrollPane_Pedido_Completo);
 		
 		JLabel lblNumeroPedido = new JLabel("N\u00BA Pedido");
 		lblNumeroPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumeroPedido.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblNumeroPedido.setBounds(6, 10, 124, 43);
-		contentPanel.add(lblNumeroPedido);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(345, 401, 616, 135);
-		contentPanel.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblDireccion = new JLabel("Cliente");
@@ -171,8 +165,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_NroPedido.setForeground(new Color(60, 179, 113));
 		label_NroPedido.setBackground(new Color(240, 255, 240));
 		label_NroPedido.setFont(new Font("SansSerif", Font.BOLD, 28));
-		label_NroPedido.setBounds(142, 11, 149, 42);
-		contentPanel.add(label_NroPedido);
 		
 		label_Fecha = new JLabel("");
 		label_Fecha.setOpaque(true);
@@ -180,15 +172,11 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_Fecha.setForeground(new Color(60, 179, 113));
 		label_Fecha.setFont(new Font("SansSerif", Font.BOLD, 28));
 		label_Fecha.setBackground(new Color(240, 255, 240));
-		label_Fecha.setBounds(474, 11, 167, 42);
-		contentPanel.add(label_Fecha);
 		
 		JPanel panelPedido = new JPanel();
 		panelPedido.setLayout(null);
 		panelPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelPedido.setBackground(Color.WHITE);
-		panelPedido.setBounds(6, 108, 331, 282);
-		contentPanel.add(panelPedido);
 		
 		JLabel label = new JLabel("Producto");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -286,14 +274,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblFecha.setBounds(338, 11, 124, 43);
-		contentPanel.add(lblFecha);
 		
 		JLabel lblNumero = new JLabel("Estado");
 		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumero.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblNumero.setBounds(6, 65, 124, 30);
-		contentPanel.add(lblNumero);
 		
 		label_ESTADO = new JLabel("");
 		label_ESTADO.setOpaque(true);
@@ -301,14 +285,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		label_ESTADO.setForeground(new Color(60, 179, 113));
 		label_ESTADO.setFont(new Font("SansSerif", Font.BOLD, 28));
 		label_ESTADO.setBackground(new Color(240, 248, 255));
-		label_ESTADO.setBounds(142, 66, 149, 30);
-		contentPanel.add(label_ESTADO);
 		
 		JLabel lblTotal_1 = new JLabel("Total");
 		lblTotal_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotal_1.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblTotal_1.setBounds(338, 65, 124, 30);
-		contentPanel.add(lblTotal_1);
 		
 		textTotal_Pedido = new JLabel("");
 		textTotal_Pedido.setOpaque(true);
@@ -316,14 +296,10 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		textTotal_Pedido.setForeground(new Color(60, 179, 113));
 		textTotal_Pedido.setFont(new Font("SansSerif", Font.BOLD, 28));
 		textTotal_Pedido.setBackground(new Color(240, 248, 255));
-		textTotal_Pedido.setBounds(474, 66, 167, 30);
-		contentPanel.add(textTotal_Pedido);
 		
 		JPanel panelModificacionPR = new JPanel();
 		panelModificacionPR.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Producto", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelModificacionPR.setBackground(Color.WHITE);
-		panelModificacionPR.setBounds(6, 401, 331, 135);
-		contentPanel.add(panelModificacionPR);
 		panelModificacionPR.setLayout(null);
 		
 		btnQuitar = new JButton("Quitar");
@@ -358,14 +334,84 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				Servicio_Delivery();				
 			}
 		});
-		tglbtnDelivery.setBounds(785, 65, 83, 32);
-		contentPanel.add(tglbtnDelivery);
 		
 		JLabel lblConDelivery = new JLabel("Delivery");
 		lblConDelivery.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConDelivery.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		lblConDelivery.setBounds(651, 65, 124, 30);
-		contentPanel.add(lblConDelivery);
+		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(1)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(label_NroPedido, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+							.addGap(47)
+							.addComponent(lblFecha, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(label_Fecha, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(label_ESTADO, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+							.addGap(47)
+							.addComponent(lblTotal_1, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(textTotal_Pedido, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(lblConDelivery, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(tglbtnDelivery, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(panelPedido, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+							.addGap(11)
+							.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(panelModificacionPR, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+							.addGap(8)
+							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)))
+					.addGap(5))
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(label_NroPedido, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(lblFecha, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(label_Fecha, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)))
+					.addGap(11)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(label_ESTADO, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblTotal_1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(1)
+							.addComponent(textTotal_Pedido, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblConDelivery, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(tglbtnDelivery, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelPedido, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+					.addGap(11)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelModificacionPR, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
+					.addGap(7))
+		);
+		contentPanel.setLayout(gl_contentPanel);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
