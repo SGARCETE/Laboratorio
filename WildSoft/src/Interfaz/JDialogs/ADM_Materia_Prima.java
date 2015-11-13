@@ -28,6 +28,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
+
+import MetAux.MetAux;
+
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -61,7 +64,6 @@ public class ADM_Materia_Prima extends JDialog{
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private HashMap<Integer, String> categorias;
 	private JPanel panel_4;
-	
 	
 	public ADM_Materia_Prima(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Administracion de Materia Prima");
@@ -247,7 +249,7 @@ public class ADM_Materia_Prima extends JDialog{
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Inicializar() {
-		
+		MetAux.Limitar_caracteres(textNombre, 20);
 		lblVencimientoNuevo.setVisible(false);
 		lblVencimientoAnterior.setVisible(false);
 		textVencimiento.setVisible(false);
@@ -256,7 +258,7 @@ public class ADM_Materia_Prima extends JDialog{
 		btnCancelar.setVisible(false);
 		label.setVisible(false);
 		comboBoxCategoria.addItem("Seleccione Categoria");
-		
+
 		categorias = SvMateria.getCategorias();
 		for (Entry<Integer, String> entry : categorias.entrySet()) {
 		    String value = entry.getValue();

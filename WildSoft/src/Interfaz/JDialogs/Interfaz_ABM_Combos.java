@@ -176,7 +176,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		contentPanel.add(lblNombre);
 
 		textNombre = new JTextField();
-		textNombre.setBounds(92, 8, 561, 28);
+		textNombre.setBounds(92, 8, 304, 28);
 		contentPanel.add(textNombre);
 		textNombre.setColumns(10);
 		
@@ -262,6 +262,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	}
 	
 	private void inicializar() {
+		MetAux.Limitar_caracteres(textNombre, 20);
 		llenar_categorias();
 		MetAux.SoloNumerosDecimales(textTotal);
 	}

@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Categoria;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Categoria;
@@ -50,6 +51,10 @@ public class ADM_Categorias extends JDialog {
 	private String[] datoTabla;
 	private JButton btnEliminarCategoriaProducto;
 
+	private JScrollPane scrollPane_Materia;
+
+	private JScrollPane scrollPaneProducto;
+
 	public ADM_Categorias(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Administracion de Categoria");
 		Principal = instancia_negocio;
@@ -57,7 +62,7 @@ public class ADM_Categorias extends JDialog {
 		SvProducto = Principal.getSvProductos();
 		SvCategorias = Principal.getSvCategoria();
 
-		inicializar();
+
 
 		setResizable(false);
 		setBounds(100, 100, 548, 485);
@@ -73,11 +78,9 @@ public class ADM_Categorias extends JDialog {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JScrollPane scrollPaneProducto = new JScrollPane();
+		scrollPaneProducto = new JScrollPane();
 		scrollPaneProducto.setBounds(19, 46, 164, 259);
 		panel.add(scrollPaneProducto);
-
-		scrollPaneProducto.setViewportView(tableCategoriaProducto);
 
 		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
 		lblIngreseNombre.setFont(new Font("SansSerif", Font.PLAIN, 11));
@@ -90,11 +93,10 @@ public class ADM_Categorias extends JDialog {
 		panel.add(textNombre);
 		textNombre.setColumns(10);
 
-		JScrollPane scrollPane_Materia = new JScrollPane();
+		scrollPane_Materia = new JScrollPane();
 		scrollPane_Materia.setBounds(365, 43, 164, 259);
 		panel.add(scrollPane_Materia);
 
-		scrollPane_Materia.setViewportView(tableCategoriaMateria);
 
 		btnAgregarProducto = new JButton("Agregar Producto");
 		btnAgregarProducto.setBackground(Color.WHITE);
@@ -158,16 +160,18 @@ public class ADM_Categorias extends JDialog {
 			}
 		});
 		panel_1.add(btnSalir);
+		inicializar();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void inicializar() {
-		
 		tableCategoriaProducto = new JTable();
 		tableCategoriaMateria = new JTable();
 		LlenarTablaProducto();
 		LlenarTablaMaterias();
-		
+		scrollPane_Materia.setViewportView(tableCategoriaMateria);
+		scrollPaneProducto.setViewportView(tableCategoriaProducto);
+		MetAux.Limitar_caracteres(textNombre,20);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

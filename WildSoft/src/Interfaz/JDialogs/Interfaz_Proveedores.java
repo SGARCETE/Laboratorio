@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Proveedor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Proveedores;
@@ -375,6 +376,11 @@ public class Interfaz_Proveedores extends JDialog {
 		}
 		camposHabilitados(false);
 		ID.setVisible(false);
+		MetAux.Limitar_caracteres(textNombre, 20);
+		MetAux.Limitar_caracteres(textDireccion, 20);
+		MetAux.Limitar_caracteres(textTelefono, 20);
+		MetAux.Limitar_caracteres(textMail, 50);
+		
 		resetearLogica();
 	}
 	

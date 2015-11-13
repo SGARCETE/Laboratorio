@@ -35,6 +35,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import Interfaz.Interfaz_Principal;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
+import MetAux.MetAux;
 import Negocio.Modelo.Cliente;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
@@ -405,6 +406,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 
 	/** >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>**/
 	private void iniciarParametros() {
+		MetAux.Limitar_caracteres(textObservaciones, 20);
 		Cargar_ComboBox_TipoProductos();
 		AutocompletarCliente();
 	}

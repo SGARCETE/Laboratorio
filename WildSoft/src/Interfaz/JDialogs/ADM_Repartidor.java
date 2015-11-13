@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
 import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Repartidores;
@@ -201,6 +202,13 @@ public class ADM_Repartidor extends JDialog {
 				}
 			}
 		});
+		iniciarParametros();
+	}
+
+	private void iniciarParametros() {
+		MetAux.Limitar_caracteres(textNombre, 20);
+		MetAux.Limitar_caracteres(textVehiculo, 20);
+		
 	}
 
 	protected void Aceptar_modificar_Repartidor() {

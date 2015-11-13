@@ -164,5 +164,16 @@ public class MetAux {
 	}
 	
 	/*------------------------------------------------------------------------------*/
+	public static void Limitar_caracteres(final JTextField JTF, final Integer cant) {
+		JTF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				if(JTF.getText().length()>=cant) 
+					evt.consume();
+			}
+		});
+	}
+	
+	/*------------------------------------------------------------------------------*/
 	
 }//---> FIN

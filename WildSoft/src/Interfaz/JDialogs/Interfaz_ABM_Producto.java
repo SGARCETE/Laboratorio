@@ -49,7 +49,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private JButton btnCancelar;
 	private JButton btnAgregar;
 	private JComboBox<String> comboTipo;
-	private JTextField textField;
 	private JPanel panel_4;
 
 	public Interfaz_ABM_Producto(Principal_Negocio_Interfaz instancia_negocio) {
@@ -65,7 +64,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		llenar_tabla();
 		
 		setResizable(false);
-		setBounds(100, 100, 1023, 490);
+		setBounds(100, 100, 1023, 446);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -201,7 +200,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
-		panel_2.setBorder(new TitledBorder(null, "Lista de Clientes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(null, "Lista de Productos", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_2.setBounds(312, 11, 695, 255);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
@@ -225,20 +224,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 		panel_3.add(lblAviso);
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(93, 349, 210, 28);
-		panel.add(textField);
-		
-		JLabel lblCategora = new JLabel("Categor\u00EDa :");
-		lblCategora.setBounds(20, 350, 63, 27);
-		panel.add(lblCategora);
-		
-		JButton button = new JButton("Modificar");
-		button.setBackground(Color.WHITE);
-		button.setBounds(326, 349, 111, 28);
-		panel.add(button);
 		
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
@@ -264,33 +249,22 @@ public class Interfaz_ABM_Producto extends JDialog {
 		if(!textNombre.getText().equals("")){
 			if(!textPrecio.getText().equals("")){
 				if(comboTipo.getSelectedIndex()>0){
-//					if(!textObservación.getText().equals("")){
-						System.out.println(comboTipo.getSelectedItem().toString());
-						Integer Tipo_producto_ID = SvProducto.getTipo_Producto_INTEGER(comboTipo.getSelectedItem().toString()).get(0);
-						System.out.println(textNombre.getText());
-						System.out.println(Tipo_producto_ID);
-						System.out.println(textObservación.getText());
-						System.out.println(Double.parseDouble(textPrecio.getText()));
-						SvProducto.guardar_nuevo_producto(new Producto(null, textNombre.getText(), Tipo_producto_ID, textObservación.getText(), Double.parseDouble(textPrecio.getText()), 0));
-						
-						
-						textNombre.setText("");
-						textPrecio.setText("");
-						textObservación.setText("");
-						lblAviso.setVisible(false);
-						
-						iniciarlizarTablaProducto();
-						llenar_tabla();
-						JOptionPane.showMessageDialog(null, "Producto agregado con éxito");	
-//					}
-//					else {
-//					lblAviso.setText("Debes completar el campo 'Observación' para continuar");
-//					lblAviso.setVisible(true);}
+					Integer Tipo_producto_ID = SvProducto.getTipo_Producto_INTEGER(comboTipo.getSelectedItem().toString()).get(0);
+					SvProducto.guardar_nuevo_producto(new Producto(null, textNombre.getText(), Tipo_producto_ID, textObservación.getText(), Double.parseDouble(textPrecio.getText()), 0));
+					
+					textNombre.setText("");
+					textPrecio.setText("");
+					textObservación.setText("");
+					lblAviso.setVisible(false);
+					
+					iniciarlizarTablaProducto();
+					llenar_tabla();
+					JOptionPane.showMessageDialog(null, "Producto agregado con éxito");	
 				}else {
-					lblAviso.setText("Debes completar el campo 'Precio' para continuar");
+					lblAviso.setText("Debes completar el campo 'Tipo producto' para continuar");
 					lblAviso.setVisible(true);}
 			}else {
-				lblAviso.setText("Debes completar el campo 'Tipo producto' para continuar");
+				lblAviso.setText("Debes completar el campo 'Precio' para continuar");
 				lblAviso.setVisible(true);}
 		}else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");

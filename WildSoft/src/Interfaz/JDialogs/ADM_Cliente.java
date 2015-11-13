@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import MetAux.MetAux;
+
 public class ADM_Cliente extends JDialog {
 
 	
@@ -174,8 +176,7 @@ public class ADM_Cliente extends JDialog {
 		btnModificar.setBackground(Color.WHITE);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow()!=-1)
-				{
+				if(table.getSelectedRow()!=-1){
 					Modificar_Cliente();
 				}
 				
@@ -211,6 +212,16 @@ public class ADM_Cliente extends JDialog {
 		
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
+		
+		iniciar_parametros();
+	}
+
+	private void iniciar_parametros() {
+		MetAux.Limitar_caracteres(textDireccion,20);
+		MetAux.Limitar_caracteres(textNombre,20);
+		MetAux.Limitar_caracteres(textTelefono,20);
+		MetAux.Limitar_caracteres(textDetalle,20);
+		
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
