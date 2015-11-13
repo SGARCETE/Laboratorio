@@ -91,7 +91,9 @@ public class Interfaz_Combos extends JDialog {
 		btnBorrar.setIcon(new ImageIcon(Interfaz_Combos.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Eliminar_solicitud();
+				if(tablaCombos.getSelectedRow()!=-1){
+					eliminarCombo();
+				}
 			}
 		});
 		btnBorrar.setBounds(115, 333, 100, 39);
@@ -150,7 +152,7 @@ public class Interfaz_Combos extends JDialog {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Eliminar_solicitud() {
+	private void eliminarCombo() {
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Esta seguro que desea eliminar?", "Eliminar combo",JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
 			if (tablaCombos.getRowCount() > 0) {

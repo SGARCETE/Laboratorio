@@ -86,7 +86,7 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
-			String Query = "select CO_id,CO_nombre, CO_precio from Combo";
+			String Query = "select CO_id,CO_nombre, CO_precio from Combo WHERE CO_vigente=null";
 
 //			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
@@ -97,7 +97,6 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 				combo.setNombre(Fila.getString("CO_nombre"));
 				combo.setPrecio(Fila.getDouble("CO_precio"));
 				Arreglo.add(combo);
-
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
@@ -161,7 +160,6 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
-		
 	}
 	
 	public boolean ELIMINAR_PRODUCTOS_DEL_COMBO(Integer id) {
@@ -186,8 +184,6 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			   "'"+  	c.getNombre()			+"',"
 			   +	c.getPrecio()			    +","
 			   +    4			+")";
-	    
-	   
 		return conex.Insertar(SentenciaSQL);
 	}
 

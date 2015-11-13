@@ -15,7 +15,6 @@ public class Servicio_Combos {
 		return comboDAO.getLista_Combos();
 	}
 	
-	
 	public ArrayList<Producto> getLista_Productos(Combo C){
 		return comboDAO.getLista_Productos(C);
 	}
@@ -24,15 +23,13 @@ public class Servicio_Combos {
 		return comboDAO.get_id_combo(nombre);
 	}
 	
-	
 	public ArrayList<Producto> getLista_Productos(String C){
 		return comboDAO.getLista_Productos(C);
 	}
 	
 	public boolean ELIMINAR_Combo(Integer ID) {	
 		return comboDAO.ELIMINAR_Combo(ID);
-		}
-
+	}
 
 	public Combo getCombo(Integer id) {
 		return comboDAO.get_combo(id);
@@ -46,7 +43,6 @@ public class Servicio_Combos {
 		comboDAO.AGREGAR_COMBO_PRODUCTO(combo);
 	}
 
-
 	public void eliminarProductosCombo(Integer id) {
 		comboDAO.ELIMINAR_PRODUCTOS_DEL_COMBO(id);
 	}
@@ -56,10 +52,8 @@ public class Servicio_Combos {
 		 comboDAO.AGREGAR_COMBO_TABLA_PRODUCTOS(c);
 	}
 
-
 	public void modificarCombo(Combo combo) {
 		comboDAO.modificarCombo(combo);
 	}
 
-	
 }
