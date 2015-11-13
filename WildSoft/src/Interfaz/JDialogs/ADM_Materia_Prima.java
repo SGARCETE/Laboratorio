@@ -244,7 +244,8 @@ public class ADM_Materia_Prima extends JDialog{
 		Inicializar();
 		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Inicializar() {
 		
 		lblVencimientoNuevo.setVisible(false);
@@ -273,7 +274,8 @@ public class ADM_Materia_Prima extends JDialog{
 		}
 		
 	} */
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void agregarMateriaPrima(){
 		Date fecha= dateChooser.getDate();
 		
@@ -309,7 +311,8 @@ public class ADM_Materia_Prima extends JDialog{
 			label.setText("Debes completar el campo 'Nombre' para continuar");
 			label.setVisible(true);}
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	@SuppressWarnings("serial")
 	public void inicializarTabla(){
 		tableMateriasPrimas.setModel(new DefaultTableModel(
@@ -329,7 +332,8 @@ public class ADM_Materia_Prima extends JDialog{
 			}
 		});
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void llenar_tabla(){
 		
 		for(Materia_Prima materia: SvMateria.getCategoria()){
@@ -342,7 +346,8 @@ public class ADM_Materia_Prima extends JDialog{
 			((DefaultTableModel) this.tableMateriasPrimas.getModel()).addRow(fila);
 		}
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private Object[] obtenerSeleccion() {
 		
 		int indice = tableMateriasPrimas.getSelectedRow();
@@ -354,7 +359,8 @@ public class ADM_Materia_Prima extends JDialog{
 		Object[] dato = { String.valueOf(indice), id, nombre,fecha , categoria};
 		return dato;
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Eliminar_MateriaPrima() {
 		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar esta Materia Prima?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
@@ -365,7 +371,8 @@ public class ADM_Materia_Prima extends JDialog{
 			llenar_tabla();
 		}
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Modificar_MateriaPrima() {
 		
 		datoTabla = obtenerSeleccion();
@@ -386,7 +393,8 @@ public class ADM_Materia_Prima extends JDialog{
 		btnEliminar.setVisible(false);
 		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Cancelar_modificar_Materia() {
 		textNombre.setText("");
 		comboBoxCategoria.setSelectedIndex(0);
@@ -403,7 +411,8 @@ public class ADM_Materia_Prima extends JDialog{
 		textVencimiento.setVisible(false);
 		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void aceptarModificarMateria(){
 		
 		Date fecha= dateChooserNuevo.getDate();
@@ -448,9 +457,11 @@ public class ADM_Materia_Prima extends JDialog{
 		textVencimiento.setVisible(false);
 		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void guardarCambios(String nombre, Date fecha, Integer categoria) {
 		SvMateria.modificarMateria(new Materia_Prima((Integer)datoTabla[1],nombre, fecha, categoria));
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }

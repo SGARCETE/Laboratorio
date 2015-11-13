@@ -230,8 +230,8 @@ public class Interfaz_Venta extends JDialog{
 		
 		inicializar();
 	}
-	
 
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void inicializar() {
 		ComboProdutos();
 		comboBox.setEnabled(false);
@@ -243,11 +243,10 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnCliente.setEnabled(false);
 	}
 	
-//-------------------------------------------------------------	
-//---------------- Metodos que manejan las fechas  ------------
-//-------------------------------------------------------------	
-	private void DejarDia()
-	{
+	//-------------------------------------------------------------	
+	//---------------- Metodos que manejan las fechas  ------------
+	//-------------------------------------------------------------	
+	private void DejarDia(){
 		monthChooser.setEnabled(false);
 		dateChooserDesde.setEnabled(false);
 		dateChooserHasta.setEnabled(false);
@@ -259,8 +258,9 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnProducto.setEnabled(true);
 		rdbtnCliente.setEnabled(true);
 	}
-	private void DejarSoloEntreFechas()
-	{
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void DejarSoloEntreFechas(){
 		dateChooserDia.setEnabled(false);
 		monthChooser.setEnabled(false);
 		dateChooserDesde.setEnabled(true);
@@ -269,12 +269,12 @@ public class Interfaz_Venta extends JDialog{
 		monthChooser.setMonth(0);
 		dateChooserDesde.setDate(null);
 		dateChooserHasta.setDate(null);
-		
 		rdbtnProducto.setEnabled(true);
 		rdbtnCliente.setEnabled(true);
 	}
-	public void DejarMes()
-	{
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void DejarMes(){
 		dateChooserDia.setEnabled(false);
 		dateChooserDesde.setEnabled(false);
 		dateChooserHasta.setEnabled(false);
@@ -286,15 +286,11 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnProducto.setEnabled(true);
 		rdbtnCliente.setEnabled(true);
 	}
-//---------------- FIN!  -------------------------------------
-
 	
-	//-------------------------------------------------------------	
-	//---------------- LLena el combo box con los tipos productos  
-	//-------------------------------------------------------------		
-			
-	public void ComboProdutos()
-	{
+	//---------------- FIN!  -------------------------------------
+
+	//---------------- LLena el combo box con los tipos productos  		
+	public void ComboProdutos(){
 		for (int j = 0; j < SvProductos.getLista_Productos().size(); j++) {
 			comboBox.addItem(SvProductos.getLista_Productos().get(j));
 			SvProductos.getLista_Productos();
@@ -302,14 +298,9 @@ public class Interfaz_Venta extends JDialog{
 	}
 	
 	
-//-------------------------------------------------------------	
-//---------------- Generar Reporte! ---------------------------
-//-------------------------------------------------------------		
-		
-	
+	//---------------- Generar Reporte! ---------------------------	
 	public void GenerarReporte(){
-		if(rdbtnCliente.getText().equals("Cliente"))
-		{
+		if(rdbtnCliente.isSelected()){	// Esto esta comprobando el nombre del radio button, no si esta seleccionado ---> rdbtnCliente.getText().equals("Cliente")){
 			Date f1 = dateChooserDesde.getCalendar().getTime();
 			Date f2= dateChooserDesde.getCalendar().getTime();
 			
@@ -317,7 +308,6 @@ public class Interfaz_Venta extends JDialog{
 			rc.MOSTRAR_REPORTE();
 		}
 	}
-//----------------------- FIN! ------------------------------		
-		
 	
+	//----------------------- FIN! ------------------------------			
 }
