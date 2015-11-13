@@ -59,11 +59,13 @@ public class Interfaz_Venta extends JDialog{
 		contentPanel.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 300, 213);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new TitledBorder(null, "Reporte Mes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_2.setBounds(10, 248, 405, 73);
 		panel.add(panel_2);
@@ -78,6 +80,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_2.add(monthChooser);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
 		panel_3.setBorder(new TitledBorder(null, "Reporte Entre Fechas", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_3.setBounds(10, 340, 405, 96);
 		panel.add(panel_3);
@@ -104,16 +107,18 @@ public class Interfaz_Venta extends JDialog{
 		panel_3.add(dateChooserDesde);
 		
 		btnGenerarReporte = new JButton("Generar Reporte");
+		btnGenerarReporte.setBackground(Color.WHITE);
 		btnGenerarReporte.setIcon(new ImageIcon(Interfaz_Venta.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
 		btnGenerarReporte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GenerarReporte();
 			}
 		});
-		btnGenerarReporte.setBounds(559, 298, 173, 56);
+		btnGenerarReporte.setBounds(538, 415, 173, 41);
 		panel.add(btnGenerarReporte);
 		
 		JButton button = new JButton("Salir");
+		button.setBackground(Color.WHITE);
 		button.setIcon(new ImageIcon(Interfaz_Venta.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -124,6 +129,7 @@ public class Interfaz_Venta extends JDialog{
 		panel.add(button);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(10, 164, 403, 73);
 		panel.add(panel_1);
 		panel_1.setBorder(new TitledBorder(null, "Reporte Dia", TitledBorder.CENTER, TitledBorder.TOP, null, null));
@@ -138,12 +144,14 @@ public class Interfaz_Venta extends JDialog{
 		panel_1.add(dateChooserDia);
 		
 		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.WHITE);
 		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione Duracion", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_4.setBounds(10, 27, 211, 113);
 		panel.add(panel_4);
 		panel_4.setLayout(null);
 		
 		rdbtnReporteDia = new JRadioButton("Del D\u00EDa");
+		rdbtnReporteDia.setOpaque(false);
 		rdbtnReporteDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DejarDia();
@@ -153,6 +161,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_4.add(rdbtnReporteDia);
 		
 		rdbtnReporteMes = new JRadioButton("Del Mes");
+		rdbtnReporteMes.setOpaque(false);
 		rdbtnReporteMes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DejarMes();
@@ -162,15 +171,17 @@ public class Interfaz_Venta extends JDialog{
 		panel_4.add(rdbtnReporteMes);
 		
 		rdbtnReporteEntreFechas = new JRadioButton("Entre Fechas");
+		rdbtnReporteEntreFechas.setOpaque(false);
 		rdbtnReporteEntreFechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DejarSoloEntreFechas();
 			}
 		});
-		rdbtnReporteEntreFechas.setBounds(53, 71, 148, 23);
+		rdbtnReporteEntreFechas.setBounds(53, 71, 135, 23);
 		panel_4.add(rdbtnReporteEntreFechas);
 		
 		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.WHITE);
 		panel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione Producto", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_5.setBounds(488, 27, 284, 86);
 		panel.add(panel_5);
@@ -186,12 +197,14 @@ public class Interfaz_Venta extends JDialog{
 		grupo1.add(rdbtnReporteEntreFechas);
 		
 		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(Color.WHITE);
 		panel_6.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione Tipo ", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_6.setBounds(243, 27, 211, 113);
 		panel.add(panel_6);
 		panel_6.setLayout(null);
 		
 		rdbtnProducto = new JRadioButton("Producto");
+		rdbtnProducto.setOpaque(false);
 		rdbtnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox.setEnabled(true);
@@ -201,6 +214,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_6.add(rdbtnProducto);
 		
 		rdbtnCliente = new JRadioButton("Cliente");
+		rdbtnCliente.setOpaque(false);
 		rdbtnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox.setEnabled(false);
