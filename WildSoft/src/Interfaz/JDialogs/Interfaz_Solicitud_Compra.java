@@ -237,6 +237,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		ADM_Solicitud_Compra frame = new ADM_Solicitud_Compra(principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
+		llenarTabla();
 	}
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METODOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

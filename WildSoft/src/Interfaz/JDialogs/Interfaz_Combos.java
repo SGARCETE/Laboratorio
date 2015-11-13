@@ -148,6 +148,7 @@ public class Interfaz_Combos extends JDialog {
 			frame.setCombo(combo);
 			frame.setModal(true);
 			frame.setVisible(true);
+			llenarTabla();
 		}
 	}
 
@@ -168,6 +169,7 @@ public class Interfaz_Combos extends JDialog {
 		Interfaz_ABM_Combos frame = new Interfaz_ABM_Combos(principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
+		llenarTabla();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METODOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
