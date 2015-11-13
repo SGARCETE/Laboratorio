@@ -26,7 +26,9 @@ public class Servicio_Productos {
 	public ArrayList<Producto> GET_PRODUCTOS() {
 		return productoDAO.GET_PRODUCTOS();
 	}
-
+	public HashMap<Integer, String> getProductoshas() {
+		return productoDAO.obtenerProductoshas();
+	}
 	public ArrayList<String> getTipo_Producto_STRING(Integer id){
 		return productoDAO.getTipo_Producto_STRING(id);
 	}
@@ -63,5 +65,6 @@ public class Servicio_Productos {
 	public Integer getIdProducto(String nombreProducto) {
 		return productoDAO.getIdProducto(nombreProducto);
 	}
+	
 	
 }// FIN CLASE

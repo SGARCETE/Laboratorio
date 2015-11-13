@@ -6,9 +6,17 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Productos;
 import Reportes.ReporteMejoresClientes;
+import Reportes.ReporteVentas;
+
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import javax.swing.JLabel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
@@ -34,22 +42,22 @@ public class Interfaz_Venta extends JDialog{
 	private JDateChooser dateChooserDia;
 	private JRadioButton rdbtnProducto ;
 	private JRadioButton rdbtnCliente ;
-	private JRadioButton rdbtnReporteDia;
-	private JRadioButton rdbtnReporteMes;
-	private JRadioButton rdbtnReporteEntreFechas;
 	private ButtonGroup grupo1 ;
 	private ButtonGroup grupo2 ;
 	private JButton btnGenerarReporte ;
 	private Servicio_Productos SvProductos;
 	private JMonthChooser monthChooser ;
-	
+	private HashMap<Integer, String> categorias;
 	private JComboBox<String> comboBox;
+	private Servicio_Productos SvProducto;
+	private JButton btnGenerarReporteProducto ;
+	private JButton btnGenerarReporteFechas ;
 	
 	public Interfaz_Venta(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("Reporte De Ventas");
 		Principal = instancia_negocio;
 		SvProductos= Principal.getSvProductos();
-		
+		SvProducto = Principal.getSvProductos();
 		setResizable(false);
 		setBounds(100, 100, 822, 496);
 		getContentPane().setLayout(new BorderLayout());
@@ -67,7 +75,7 @@ public class Interfaz_Venta extends JDialog{
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new TitledBorder(null, "Reporte Mes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 248, 405, 73);
+		panel_2.setBounds(10, 248, 586, 73);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		 
@@ -82,7 +90,7 @@ public class Interfaz_Venta extends JDialog{
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
 		panel_3.setBorder(new TitledBorder(null, "Reporte Entre Fechas", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel_3.setBounds(10, 340, 405, 96);
+		panel_3.setBounds(10, 340, 701, 96);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -106,16 +114,14 @@ public class Interfaz_Venta extends JDialog{
 		dateChooserDesde.setBounds(250, 26, 130, 27);
 		panel_3.add(dateChooserDesde);
 		
-		btnGenerarReporte = new JButton("Generar Reporte");
-		btnGenerarReporte.setBackground(Color.WHITE);
-		btnGenerarReporte.setIcon(new ImageIcon(Interfaz_Venta.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
-		btnGenerarReporte.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GenerarReporte();
+		btnGenerarReporteFechas = new JButton("Generar Reporte Fechas");
+		btnGenerarReporteFechas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GenerarReporteFechas();
 			}
 		});
-		btnGenerarReporte.setBounds(538, 415, 173, 41);
-		panel.add(btnGenerarReporte);
+		btnGenerarReporteFechas.setBounds(458, 30, 186, 23);
+		panel_3.add(btnGenerarReporteFechas);
 		
 		JButton button = new JButton("Salir");
 		button.setBackground(Color.WHITE);
@@ -130,7 +136,7 @@ public class Interfaz_Venta extends JDialog{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(10, 164, 403, 73);
+		panel_1.setBounds(10, 164, 559, 73);
 		panel.add(panel_1);
 		panel_1.setBorder(new TitledBorder(null, "Reporte Dia", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panel_1.setLayout(null);
@@ -143,42 +149,16 @@ public class Interfaz_Venta extends JDialog{
 		dateChooserDia.setBounds(162, 23, 130, 27);
 		panel_1.add(dateChooserDia);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.WHITE);
-		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seleccione Duracion", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_4.setBounds(10, 27, 211, 113);
-		panel.add(panel_4);
-		panel_4.setLayout(null);
-		
-		rdbtnReporteDia = new JRadioButton("Del D\u00EDa");
-		rdbtnReporteDia.setOpaque(false);
-		rdbtnReporteDia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DejarDia();
+		btnGenerarReporte = new JButton("Generar Reporte");
+		btnGenerarReporte.setBounds(345, 18, 173, 41);
+		panel_1.add(btnGenerarReporte);
+		btnGenerarReporte.setBackground(Color.WHITE);
+		btnGenerarReporte.setIcon(new ImageIcon(Interfaz_Venta.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
+		btnGenerarReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GenerarReporte();
 			}
 		});
-		rdbtnReporteDia.setBounds(53, 19, 135, 23);
-		panel_4.add(rdbtnReporteDia);
-		
-		rdbtnReporteMes = new JRadioButton("Del Mes");
-		rdbtnReporteMes.setOpaque(false);
-		rdbtnReporteMes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DejarMes();
-			}
-		});
-		rdbtnReporteMes.setBounds(53, 45, 135, 23);
-		panel_4.add(rdbtnReporteMes);
-		
-		rdbtnReporteEntreFechas = new JRadioButton("Entre Fechas");
-		rdbtnReporteEntreFechas.setOpaque(false);
-		rdbtnReporteEntreFechas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DejarSoloEntreFechas();
-			}
-		});
-		rdbtnReporteEntreFechas.setBounds(53, 71, 135, 23);
-		panel_4.add(rdbtnReporteEntreFechas);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Color.WHITE);
@@ -192,9 +172,6 @@ public class Interfaz_Venta extends JDialog{
 		panel_5.add(comboBox);
 		
 		grupo1 = new ButtonGroup();
-		grupo1.add(rdbtnReporteDia);
-		grupo1.add(rdbtnReporteMes);
-		grupo1.add(rdbtnReporteEntreFechas);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.WHITE);
@@ -208,6 +185,7 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox.setEnabled(true);
+				btnGenerarReporteProducto.setEnabled(true);
 			}
 		});
 		rdbtnProducto.setBounds(42, 28, 109, 23);
@@ -218,6 +196,7 @@ public class Interfaz_Venta extends JDialog{
 		rdbtnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox.setEnabled(false);
+				btnGenerarReporteProducto.setEnabled(false);
 				
 			}
 		});
@@ -228,63 +207,38 @@ public class Interfaz_Venta extends JDialog{
 		grupo2.add(rdbtnProducto);
 		grupo2.add(rdbtnCliente);
 		
+		btnGenerarReporteProducto = new JButton("Generar Reporte Producto");
+		btnGenerarReporteProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				GenerarReporteProducto();
+			}
+		});
+		btnGenerarReporteProducto.setBounds(615, 145, 173, 53);
+		panel.add(btnGenerarReporteProducto);
+		
 		inicializar();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void inicializar() {
-		ComboProdutos();
+	//	ComboProdutos();
 		comboBox.setEnabled(false);
 		monthChooser.setEnabled(false);
-		dateChooserDia.setEnabled(false);
-		dateChooserDesde.setEnabled(false);
-		dateChooserHasta.setEnabled(false);
-		rdbtnProducto.setEnabled(false);
-		rdbtnCliente.setEnabled(false);
-	}
-	
-	//-------------------------------------------------------------	
-	//---------------- Metodos que manejan las fechas  ------------
-	//-------------------------------------------------------------	
-	private void DejarDia(){
-		monthChooser.setEnabled(false);
-		dateChooserDesde.setEnabled(false);
-		dateChooserHasta.setEnabled(false);
-		dateChooserDia.setEnabled(true);
-		dateChooserDia.setDate(null);
-		monthChooser.setMonth(0);
-		dateChooserDesde.setDate(null);
-		dateChooserHasta.setDate(null);
-		rdbtnProducto.setEnabled(true);
-		rdbtnCliente.setEnabled(true);
-	}
+	//	dateChooserDesde.setEnabled(false);
+	//	dateChooserHasta.setEnabled(false);
+	//	rdbtnProducto.setEnabled(false);
+	//	rdbtnCliente.setEnabled(false);
+		
+		
+		comboBox.addItem("Seleccione Categoria");
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void DejarSoloEntreFechas(){
-		dateChooserDia.setEnabled(false);
-		monthChooser.setEnabled(false);
-		dateChooserDesde.setEnabled(true);
-		dateChooserHasta.setEnabled(true);
-		dateChooserDia.setDate(null);
-		monthChooser.setMonth(0);
-		dateChooserDesde.setDate(null);
-		dateChooserHasta.setDate(null);
-		rdbtnProducto.setEnabled(true);
-		rdbtnCliente.setEnabled(true);
-	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void DejarMes(){
-		dateChooserDia.setEnabled(false);
-		dateChooserDesde.setEnabled(false);
-		dateChooserHasta.setEnabled(false);
-		monthChooser.setEnabled(true);
-		dateChooserDia.setDate(null);
-		monthChooser.setMonth(0);
-		dateChooserDesde.setDate(null);
-		dateChooserHasta.setDate(null);
-		rdbtnProducto.setEnabled(true);
-		rdbtnCliente.setEnabled(true);
+		categorias = SvProducto.getProductoshas();
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
+		    String value = entry.getValue();
+		    comboBox.addItem(value);
+		    
+		}
 	}
 	
 	//---------------- FIN!  -------------------------------------
@@ -301,13 +255,48 @@ public class Interfaz_Venta extends JDialog{
 	//---------------- Generar Reporte! ---------------------------	
 	public void GenerarReporte(){
 		if(rdbtnCliente.isSelected()){	// Esto esta comprobando el nombre del radio button, no si esta seleccionado ---> rdbtnCliente.getText().equals("Cliente")){
-			Date f1 = dateChooserDesde.getCalendar().getTime();
-			Date f2= dateChooserDesde.getCalendar().getTime();
+			Date f1 = dateChooserDia.getCalendar().getTime();
+			Date f2= dateChooserDia.getCalendar().getTime();
 			
-			ReporteMejoresClientes rc= new ReporteMejoresClientes(f1, f2);
-			rc.MOSTRAR_REPORTE();
+			ReporteMejoresClientes rc= new ReporteMejoresClientes();
+			rc.GenerarReporteMejoresClientes(f1, f2);
 		}
 	}
+	
+	public void GenerarReporteProducto(){
+		
+		Integer id = -1;
+		for (Entry<Integer, String> entry : categorias.entrySet()) {
+			String value = entry.getValue();
+			if(comboBox.getSelectedItem().equals(value)){
+				id = entry.getKey();;
+			}			    
+		}
+		
+		Calendar C = new GregorianCalendar();
+		Date F1 = C.getTime();
+		Date F2 = C.getTime();
+		ReporteVentas rv= new ReporteVentas(id,F1,F2);
+		rv.MOSTRAR_REPORTE();
+	}
+	public void GenerarReporteFechas(){
+		if(rdbtnCliente.isSelected()){	// Esto esta comprobando el nombre del radio button, no si esta seleccionado ---> rdbtnCliente.getText().equals("Cliente")){
+			Date f1 = dateChooserDesde.getCalendar().getTime();
+			Date f2= dateChooserHasta.getCalendar().getTime();
+			
+			ReporteMejoresClientes rc= new ReporteMejoresClientes();
+			rc.GenerarReporteMejoresClientes(f2, f1);
+		}
+		if(rdbtnProducto.isSelected()){	// Esto esta comprobando el nombre del radio button, no si esta seleccionado ---> rdbtnCliente.getText().equals("Cliente")){
+			Date f1 = dateChooserDesde.getCalendar().getTime();
+			Date f2= dateChooserHasta.getCalendar().getTime();
+			
+			ReporteMejoresClientes rc= new ReporteMejoresClientes();
+			rc.GenerarReporteMejoresClientes(f2, f1);
+		}
+	}
+	
+
 	
 	//----------------------- FIN! ------------------------------			
 }

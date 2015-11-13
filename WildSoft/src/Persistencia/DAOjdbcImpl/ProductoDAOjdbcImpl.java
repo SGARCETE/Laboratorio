@@ -180,5 +180,31 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		return id;
 	}
 
+	@Override
+	public HashMap<Integer, String> obtenerProductoshas() {
+		
+		HashMap<Integer, String> mapa = new HashMap<Integer, String>();
+		try {
+
+			conex.connectToMySQL();
+
+			Statement st = conex.conexion.createStatement();
+			st.executeQuery("select * from tipo_producto where TP_vigente is null");
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				mapa.put(Fila.getInt("TP_id"), Fila.getString("TP_nombre"));
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,
+					"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return mapa;
+	}
+	
+	
+
+		
+		
+
 }// --> FIN
 
