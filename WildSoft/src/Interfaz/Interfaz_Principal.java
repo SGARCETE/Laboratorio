@@ -1162,9 +1162,10 @@ new Backup();
 		textTotal_Pedido.setText("");
 		CLIENTE_ACTUAL = null;
 		PEDIDO_ACTUAL = new Pedido();
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
-				new Model_Pedido_Completo());
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
+		chckbxDelivery.setSelected(false);
+		Servicio_Delivery();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
