@@ -3,9 +3,7 @@ package Negocio.Servicios;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import Negocio.Servicios.Servicio_Clientes;
-import mail_sender.Email_Manager;
-//import mail_sender.Email_Manager;
+
 import Interfaz.Interfaz_Principal;
 
 public class Principal_Negocio_Interfaz {
@@ -26,7 +24,6 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Solicitud_compra	SvSolicitudCompra = new Servicio_Solicitud_compra();
 	private Servicio_entrega			svEntrega = new Servicio_entrega();
 	private Servicio_Categoria			svCategoria= new Servicio_Categoria();
-//	private Email_Manager 				email_manager = new Email_Manager(this);
 	
 	/**############################################################################**/
 	/**############################################################################**/
@@ -53,11 +50,13 @@ public class Principal_Negocio_Interfaz {
 	public Servicio_Pedidos getSvPedidos() {
 		return SvPedidos;
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Servicio_Productos getSvProductos() {
 		return SvProductos;
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Servicio_Combos getSvCombos() {
 		return SvCombos;
 	}
@@ -91,15 +90,11 @@ public class Principal_Negocio_Interfaz {
 	public Servicio_entrega getSvEntrega() {
 		return svEntrega;
 	}
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	public Servicio_Categoria getSvCategoria() {
 		return svCategoria;
 	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
-//	public Email_Manager getEmail_manager() {
-//		return email_manager;
-//	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 

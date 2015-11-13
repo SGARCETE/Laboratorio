@@ -485,7 +485,8 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		}
 		JT.setModel(model);
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	
 }//--> FIN INTERFAZ

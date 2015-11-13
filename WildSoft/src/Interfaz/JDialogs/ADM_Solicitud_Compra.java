@@ -37,10 +37,9 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-
-@SuppressWarnings("serial")
 public class ADM_Solicitud_Compra extends JDialog {
-
+	
+	private static final long serialVersionUID = 5649321082689428061L;
 	private final JPanel contentPanel = new JPanel();
 	private JComboBox<String> comboProveedor;
 	private JComboBox<String> comboCategorias;
@@ -64,14 +63,15 @@ public class ADM_Solicitud_Compra extends JDialog {
 	private JButton cancelButton;
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
 
+	@SuppressWarnings("serial")
 	public ADM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setTitle("Solicitud de compra");
 		setResizable(false);
-		
-		sv_proveedor = principal_neg_int.getSvProveedores();
-		sv_materiaPrima = principal_neg_int.getSvMateriaPrima();
-		sv_SolicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		Principal_neg_int = principal_neg_int;
+		sv_proveedor = Principal_neg_int.getSvProveedores();
+		sv_materiaPrima = Principal_neg_int.getSvMateriaPrima();
+		sv_SolicitudCompra = Principal_neg_int.getSvSolicitudCompra();
+		
 		setBounds(100, 100, 690, 495);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
@@ -243,13 +243,15 @@ public class ADM_Solicitud_Compra extends JDialog {
 		inicializar();
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Guardar_solicitud_compra() {
 		if(tablaMateriasPrimas.getRowCount()>0){
 			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerSolicitud());
 			dispose();
 		}
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Quitar_Materia_prima() {
 		int filaSeleccionada = tablaMateriasPrimas.getSelectedRow();
 		if(!(filaSeleccionada == -1)){
@@ -265,7 +267,8 @@ public class ADM_Solicitud_Compra extends JDialog {
 			}
 		}
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Agregar_Materia_prima() {
 		Integer posicionMateriaPrimaActual = ListaMateriaPrima.get(comboMateriaPrima.getSelectedItem().toString());
 		if(posicionMateriaPrimaActual == null){
@@ -286,12 +289,13 @@ public class ADM_Solicitud_Compra extends JDialog {
 	}
 
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>> Metodos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void inicializar(){
 		Cargar_ComboBox_Todos_los_proveedores();
 		esEdicion = false;
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Cargar_ComboBox_Todos_los_proveedores() {
 		ArrayList<Proveedor> ListaProveedor = sv_proveedor.getProveedores();
 		comboProveedor.addItem("Seleccione el Proveedor");
@@ -299,7 +303,8 @@ public class ADM_Solicitud_Compra extends JDialog {
 			comboProveedor.addItem(ListaProveedor.get(i).getNombre());
 		}
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_Proveedor() {
 		if (!comboProveedor.getSelectedItem().toString().isEmpty()) {
 			if(tablaMateriasPrimas.getRowCount() > 0){
@@ -322,6 +327,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		}
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_Categoria() {
 		if (comboCategorias.getSelectedIndex()!=-1) {
 			Lista_MateriasPrimas = sv_materiaPrima.getVARIEDAD_Materia_Prima(comboCategorias.getSelectedItem().toString());
@@ -332,6 +338,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		}
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private Solicitud_compra obtenerSolicitud() {
 		Solicitud_compra sc = new Solicitud_compra();
 		sc.setEstado("Pendiente");
@@ -352,7 +359,8 @@ public class ADM_Solicitud_Compra extends JDialog {
 		sc.setLista_materia_prima(listaMateriaPrima);
 		return sc;
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false);
@@ -383,5 +391,6 @@ public class ADM_Solicitud_Compra extends JDialog {
 		spinnerCantidad.setEnabled(false);
 		esEdicion = true;
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }//---> FIN CLASE

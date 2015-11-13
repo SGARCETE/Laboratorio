@@ -3,6 +3,7 @@ package Interfaz;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -40,6 +41,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -50,15 +52,18 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
+import com.toedter.calendar.JDateChooser;
+
 import Interfaz.JDialogs.ADM_Categorias;
 import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_ABM_Producto;
-import Interfaz.JDialogs.Interfaz_ABM_Combos;
-import Interfaz.JDialogs.Interfaz_Combos;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
+import Interfaz.JDialogs.Interfaz_Combos;
 import Interfaz.JDialogs.Interfaz_Contabilidad;
 import Interfaz.JDialogs.Interfaz_Proveedores;
 import Interfaz.JDialogs.Interfaz_Solicitud_Compra;
@@ -75,19 +80,12 @@ import Negocio.Modelo.Producto;
 import Negocio.Modelo.Repartidor;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
-import Negocio.Servicios.Servicio_Combos;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
 import Reportes.ReporteItinerario;
 import Reportes.ReporteTicket;
-
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
-import com.toedter.calendar.JDateChooser;
-import java.awt.FlowLayout;
-import javax.swing.JToggleButton;
 
 public class Interfaz_Principal {
 
@@ -134,7 +132,7 @@ public class Interfaz_Principal {
 	private Servicio_Pedidos sv_pedidos;
 	private Servicio_Repartidores sv_Repartidores;
 	private Servicio_entrega sv_Entrega;
-	private Servicio_Combos sv_Combos;
+//	private Servicio_Combos sv_Combos;
 	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
 	private Pedido PEDIDO_ACTUAL = new Pedido(); 	   /* Cuando creo un nuevo pedido lo voy llenando aca, cuando lo termino se resetea */
@@ -163,7 +161,7 @@ public class Interfaz_Principal {
 		sv_pedidos 	 = Principal_neg_int.getSvPedidos();			/* USAMOS LA INSTANCIA DE SERVICIO YA CREADA EN PRINCIPAL */
 		sv_Repartidores = Principal_neg_int.getSvRepartidores();
 		sv_Entrega = Principal_neg_int.getSvEntrega();
-		sv_Combos= Principal_neg_int.getSvCombos();
+//		sv_Combos= Principal_neg_int.getSvCombos();
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
@@ -1220,12 +1218,12 @@ public class Interfaz_Principal {
 	}
 	
 	//---------------- Metodo que llama a la interfaz Materia Prima
-		private void Abrir_Interfaz_Materia() {
-			ADM_Materia_Prima frame = new ADM_Materia_Prima(Principal_neg_int);
-			frame.setModal(true);
-			frame.setVisible(true);
-			
-		}
+	private void Abrir_Interfaz_Materia() {
+		ADM_Materia_Prima frame = new ADM_Materia_Prima(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
+	}
 		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/*** ALTA DE PEDIDO */
@@ -1648,18 +1646,14 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	private void Ticket_Comanda_nuevo_pedido() {
-		Integer ID = sv_pedidos.Obtener_ID_Ultimo_Pedido();
-		Pedido P = sv_pedidos.get_pedido(ID);
 		
-		
+		Integer ID = sv_pedidos.Obtener_ID_Ultimo_Pedido();		
 		Integer indice = 0;
 		// Busca en la tabla el indice que se modifico, Todo esto para que seleccione el nuevo viaje en la tabla y se mueva el scroll
-//		int CodigoViajeModificado = VIAJE_MODIFICADO.getID();	// Obtiene codigo de reserva
 		for (int i = 0; i < Tabla_Lista_pedidos.getRowCount(); i++) {		/* Lo busca en la tabla*/
 			if((Integer)Tabla_Lista_pedidos.getValueAt(i, 0) == ID)
 				indice = i;												// Obtiene el indice del viaje
 		}
-//		ActualizarTablaPrincipal();
 		
 		// Selecciona el registro modificado
 		scrollPane_Lista_Pedidos.getVerticalScrollBar().setValue(scrollPane_Lista_Pedidos.getVerticalScrollBar().getMinimum());	// Mueve el Scrollpane al inicio
@@ -1667,10 +1661,8 @@ public class Interfaz_Principal {
 		Rectangle r = Tabla_Lista_pedidos.getCellRect(indice, 0, false); 			// Mueve el scroll para visualizarlo
 		scrollPane_Lista_Pedidos.getViewport().scrollRectToVisible (r);		// Mueve el scroll para visualizarlo	
 		
-		
 		// Primero hay que seleccionar el ultimo pedido
 		Generar_Comanda();
-		
 		
 	}
 	

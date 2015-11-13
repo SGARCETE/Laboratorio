@@ -3,32 +3,30 @@ package Interfaz.JDialogs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Negocio.Modelo.Categoria;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Categoria;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Productos;
-
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.border.TitledBorder;
 
 public class ADM_Categorias extends JDialog {
 
@@ -161,7 +159,8 @@ public class ADM_Categorias extends JDialog {
 		});
 		panel_1.add(btnSalir);
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void inicializar() {
 		
 		tableCategoriaProducto = new JTable();
@@ -170,7 +169,8 @@ public class ADM_Categorias extends JDialog {
 		LlenarTablaMaterias();
 		
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void AgregarCategoriaMateria() {
 		if (!textNombre.equals("")) {
 			SvCategorias.guardarCategoriaMateria(new Categoria(textNombre
@@ -184,7 +184,8 @@ public class ADM_Categorias extends JDialog {
 
 		}
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void AgregarCategoriaProducto() {
 		if (!textNombre.equals("")) {
 			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre.getText()));
@@ -198,7 +199,8 @@ public class ADM_Categorias extends JDialog {
 		}
 
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void LlenarTablaProducto() {
 
 		setModelTabla(tableCategoriaProducto);
@@ -216,7 +218,8 @@ public class ADM_Categorias extends JDialog {
 		}
 
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void LlenarTablaMaterias() {
 
 		setModelTabla(tableCategoriaMateria);
@@ -232,8 +235,9 @@ public class ADM_Categorias extends JDialog {
 					.addRow(fila);
 		}
 	}
-
-	protected void Eliminar_Categoria_Materia() {
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Eliminar_Categoria_Materia() {
 		datoTabla = obtenerSeleccionMateria();
 		int RESPUESTA = JOptionPane
 				.showConfirmDialog(
@@ -246,7 +250,8 @@ public class ADM_Categorias extends JDialog {
 			LlenarTablaMaterias();
 		}
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccionMateria() {
 		int indice = tableCategoriaMateria.getSelectedRow();
 
@@ -256,7 +261,8 @@ public class ADM_Categorias extends JDialog {
 		String[] dato = { String.valueOf(indice), nombre };
 		return dato;
 	}
-
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccionProducto() {
 
 		int indice = tableCategoriaProducto.getSelectedRow();
@@ -269,9 +275,8 @@ public class ADM_Categorias extends JDialog {
 
 	}
 	
-
-	protected void Eliminar_Categoria_Producto() {
-		
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Eliminar_Categoria_Producto() {
 		datoTabla = obtenerSeleccionProducto();
 		int RESPUESTA = JOptionPane
 				.showConfirmDialog(
@@ -285,8 +290,10 @@ public class ADM_Categorias extends JDialog {
 		}
 	}
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void setModelTabla(JTable jtable) {
 		jtable.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Nombre" }));
 	}
-}
+
+}//---> FIN CLASE

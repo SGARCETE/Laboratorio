@@ -9,7 +9,7 @@ public class Materia_Prima {
 	private Date fecha_vencimiento = null;
 	private Integer categoria = 1;
 	private String categoria_string = "";
-	private String nombreCategoria;
+	private String nombreCategoria; // SIN USO
 	private int cantidad=0;
 	
 	public Materia_Prima(String nombre_,Date fecha,int categoria_ ) {
@@ -86,6 +86,12 @@ public class Materia_Prima {
 	{
 		
 		return m.getCategoria_string();
+	}
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
 	}
 	
 	

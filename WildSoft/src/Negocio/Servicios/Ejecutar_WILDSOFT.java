@@ -3,8 +3,9 @@ package Negocio.Servicios;
 import java.awt.EventQueue;
 
 public class Ejecutar_WILDSOFT {
-
-
+	
+	//						:D
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -12,4 +13,6 @@ public class Ejecutar_WILDSOFT {
 			}
 		});
 	}
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 }//---> FIN CLASE

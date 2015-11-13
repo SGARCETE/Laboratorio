@@ -35,6 +35,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private Principal_Negocio_Interfaz principal_neg_int;
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
 	
+	@SuppressWarnings("serial")
 	public Interfaz_Solicitud_Compra(final Principal_Negocio_Interfaz prin_neg_int) {
 		setTitle("Solicitudes de compra generadas");
 		setResizable(false);

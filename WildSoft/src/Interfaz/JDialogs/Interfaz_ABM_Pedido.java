@@ -29,6 +29,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.mxrck.autocompleter.AutoCompleterCallback;
+import com.mxrck.autocompleter.TextAutoCompleter;
+
 import Interfaz.Interfaz_Principal;
 import Interfaz.Swing_Extends.JTable_Pedido_Completo;
 import Interfaz.Swing_Extends.Model_Pedido_Completo;
@@ -37,12 +40,8 @@ import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Clientes;
-import Negocio.Servicios.Servicio_Combos;
 import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
-
-import com.mxrck.autocompleter.AutoCompleterCallback;
-import com.mxrck.autocompleter.TextAutoCompleter;
 
 
 @SuppressWarnings("serial")
@@ -85,8 +84,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	private Servicio_Productos svProductos;
 	private Servicio_Pedidos SvPedidos;
 	private Servicio_Clientes sv_clientes;
-	private Servicio_Combos sv_Combos;
-
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /* Muestra un Double en formato Dinero. Ej: 50.5 => $50,50 */
 	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private JButton btn_Agregar;
@@ -99,7 +96,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		SvPedidos = Principal_neg_int.getSvPedidos();
 		svProductos = Principal_neg_int.getSvProductos();
 		SvPedidos.getTodos_los_estados();
-		sv_Combos = Principal_neg_int.getSvCombos(); 
+		Principal_neg_int.getSvCombos(); 
 		
 		setTitle("ABM Pedido");
 		setBounds(100, 100, 987, 630);
@@ -447,7 +444,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		}
 	}
 	
-
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/** SI HAY UN ELEMENTO SELECCIONADO EN LA LISTA DE PRODUCTOS, DE UN PEDIDO,
 	 * SE ELIMINARA ESE ELEMENTO DE LA LISTA */
@@ -533,7 +529,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void setPedido_a_modificar(Integer Numero_pedido_modificar) {
 		// OBTIENE EL PEDIDO CON EL ID GENERAL
 		PEDIDO_ACTUAL = SvPedidos.get_pedido(Numero_pedido_modificar);
@@ -577,8 +572,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		// SE CARGAN LOS PRODUCTOS DEL PEDIDO EN LA TABLA
 		Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
 	}
-	
-	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private boolean Guardar_pedido() {
@@ -685,4 +678,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		AutoCompleter_Cliente.setMode(0);
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }//---> FIN CLASE

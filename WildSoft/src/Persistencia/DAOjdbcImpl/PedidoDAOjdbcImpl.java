@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import MetAux.MetAux;
 import Negocio.Modelo.Cliente;
-import Negocio.Modelo.Combo;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Persistencia.Conector.ConectorMySQL;

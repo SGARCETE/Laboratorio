@@ -212,41 +212,35 @@ public class ADM_Cliente extends JDialog {
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void agregar_cliente(){
 		
 		if(!textNombre.getText().equals("")){
 			if(!textDireccion.getText().equals("")){
-				if(!textTelefono.getText().equals("")){
-					if(!textDetalle.getText().equals("")){
-						SvCliente.guardar_nuevo_cliente(new Cliente(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textDetalle.getText()));
-						textNombre.setText("");
-						textDireccion.setText("");
-						textTelefono.setText("");
-						textDetalle.setText("");
-						lblAviso.setVisible(false);
-						
-						iniciarlizarTablaCliente();
-						llenar_tabla();
-						JOptionPane.showMessageDialog(null, "Cliente agregado con éxito");	
-					}
-					else {
-					lblAviso.setText("Debes completar el campo 'Detalle' para continuar");
-					lblAviso.setVisible(true);}}
-				else {
-					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
-					lblAviso.setVisible(true);}}
+				SvCliente.guardar_nuevo_cliente(new Cliente(textNombre.getText(), textDireccion.getText(), textTelefono.getText(), textDetalle.getText()));
+				textNombre.setText("");
+				textDireccion.setText("");
+				textTelefono.setText("");
+				textDetalle.setText("");
+				lblAviso.setVisible(false);
+				
+				iniciarlizarTablaCliente();
+				llenar_tabla();
+				JOptionPane.showMessageDialog(null, "Cliente agregado con éxito");	
+			}
 			else {
 				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
-				lblAviso.setVisible(true);}}
-		else {
+				lblAviso.setVisible(true);
+			}
+		}else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
-			}}
-	
-	private void iniciarlizarTablaCliente()
-	{
-		
+		}
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void iniciarlizarTablaCliente()	{
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -261,13 +255,11 @@ public class ADM_Cliente extends JDialog {
 		table.getColumnModel().getColumn(2).setPreferredWidth(112);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50);
 		table.getColumnModel().getColumn(4).setPreferredWidth(175);
-		
-		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void llenar_tabla(){
-		for(Cliente cliente: SvCliente.get_Lista_Clientes())
-		{
+		for(Cliente cliente: SvCliente.get_Lista_Clientes()){
 			String[] fila= new String[5];
 			fila[0]= cliente.getID_Cliente().toString();
 			fila[1]= cliente.getNombre();
@@ -278,8 +270,9 @@ public class ADM_Cliente extends JDialog {
 			((DefaultTableModel) this.table.getModel()).addRow(fila);
 		}
 	}
-	
-	protected void Eliminar_cliente() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Eliminar_cliente() {
 		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar este Cliente?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
 		if(RESPUESTA == JOptionPane.OK_OPTION ){
@@ -288,6 +281,8 @@ public class ADM_Cliente extends JDialog {
 			llenar_tabla();
 		}
 	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccion() {
 		int indice = table.getSelectedRow();
 		String id = (String) table.getModel().getValueAt(indice, 0);
@@ -299,7 +294,9 @@ public class ADM_Cliente extends JDialog {
 		String[] dato = { String.valueOf(indice), id, nombre, direccion,telefono,detalle };
 		return dato;
 	}
-	protected void Modificar_Cliente() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Modificar_Cliente() {
 		lblAviso.setVisible(false);
 		datoTabla = obtenerSeleccion();
 		textNombre.setText(datoTabla[2]);
@@ -313,8 +310,10 @@ public class ADM_Cliente extends JDialog {
 		btnAceptar.setVisible(true);
 		btnCancelar.setVisible(true);
 		
-		}
-	protected void Cancelar_modificar_Cliente() {
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Cancelar_modificar_Cliente() {
 		textNombre.setText("");
 		textDireccion.setText("");
 		textTelefono.setText("");
@@ -329,10 +328,14 @@ public class ADM_Cliente extends JDialog {
 		btnEliminar.setVisible(true);
 		
 	}
-	protected void guardarCambios(String nombre, String direccion, String telefono, String detalle) {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void guardarCambios(String nombre, String direccion, String telefono, String detalle) {
 		SvCliente.Modificar_Cliente(new Cliente(Integer.parseInt(datoTabla[1]), nombre, direccion, telefono, detalle));
 	}
-	protected void Aceptar_modificar_Cliente() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Aceptar_modificar_Cliente() {
 		if (!textNombre.getText().equals("")) {
 			if (!textDireccion.getText().equals("")) {
 				if(!textTelefono.getText().equals(""))
@@ -373,5 +376,7 @@ public class ADM_Cliente extends JDialog {
 			lblAviso.setVisible(true);
 		}
 	}
-}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+}//---> FIN CLASE
 

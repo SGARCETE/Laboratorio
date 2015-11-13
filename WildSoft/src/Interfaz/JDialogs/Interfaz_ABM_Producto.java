@@ -100,8 +100,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		btnModificar.setBackground(Color.WHITE);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow()!=-1)
-				{
+				if(table.getSelectedRow()!=-1)	{
 					Modificar_Producto();
 				}
 				
@@ -249,7 +248,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		InicializarParametros();
 	}
 	
-	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void InicializarParametros(){
 		
 		comboTipo.addItem("Selecciona la categoria");
@@ -258,13 +257,14 @@ public class Interfaz_ABM_Producto extends JDialog {
 		}
 		MetAux.SoloNumerosDecimales(textPrecio);
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void agregar_producto(){
 		
 		if(!textNombre.getText().equals("")){
 			if(!textPrecio.getText().equals("")){
 				if(comboTipo.getSelectedIndex()>0){
-					if(!textObservación.getText().equals("")){
+//					if(!textObservación.getText().equals("")){
 						System.out.println(comboTipo.getSelectedItem().toString());
 						Integer Tipo_producto_ID = SvProducto.getTipo_Producto_INTEGER(comboTipo.getSelectedItem().toString()).get(0);
 						System.out.println(textNombre.getText());
@@ -282,23 +282,24 @@ public class Interfaz_ABM_Producto extends JDialog {
 						iniciarlizarTablaProducto();
 						llenar_tabla();
 						JOptionPane.showMessageDialog(null, "Producto agregado con éxito");	
-					}
-					else {
-					lblAviso.setText("Debes completar el campo 'Observación' para continuar");
-					lblAviso.setVisible(true);}}
-				else {
+//					}
+//					else {
+//					lblAviso.setText("Debes completar el campo 'Observación' para continuar");
+//					lblAviso.setVisible(true);}
+				}else {
 					lblAviso.setText("Debes completar el campo 'Precio' para continuar");
-					lblAviso.setVisible(true);}}
-			else {
+					lblAviso.setVisible(true);}
+			}else {
 				lblAviso.setText("Debes completar el campo 'Tipo producto' para continuar");
-				lblAviso.setVisible(true);}}
-		else {
+				lblAviso.setVisible(true);}
+		}else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
-			}}
-	
-	private void iniciarlizarTablaProducto()
-	{
+		}
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void iniciarlizarTablaProducto(){
 		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -317,10 +318,10 @@ public class Interfaz_ABM_Producto extends JDialog {
 		
 		
 	}
-	
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void llenar_tabla(){
-		for(Producto producto: SvProducto.GET_PRODUCTOS() )
-		{
+		for(Producto producto: SvProducto.GET_PRODUCTOS() )	{
 			String[] fila= new String[5];
 			fila[0]= producto.getPR_id().toString();
 			fila[1]= producto.getPR_nombre();
@@ -332,8 +333,9 @@ public class Interfaz_ABM_Producto extends JDialog {
 			((DefaultTableModel) this.table.getModel()).addRow(fila);
 		}
 	}
-	
-	protected void Eliminar_producto() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Eliminar_producto() {
 		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar este Producto?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
 		if(RESPUESTA == JOptionPane.OK_OPTION ){
@@ -342,6 +344,8 @@ public class Interfaz_ABM_Producto extends JDialog {
 			llenar_tabla();
 		}
 	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccion() {
 		int indice = table.getSelectedRow();
 		String id = (String) table.getModel().getValueAt(indice, 0);
@@ -353,7 +357,9 @@ public class Interfaz_ABM_Producto extends JDialog {
 		String[] dato = { String.valueOf(indice), id, nombre, direccion,telefono,detalle };
 		return dato;
 	}
-	protected void Modificar_Producto() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Modificar_Producto() {
 		lblAviso.setVisible(false);
 		datoTabla = obtenerSeleccion();
 		textNombre.setText(datoTabla[2]);
@@ -367,12 +373,13 @@ public class Interfaz_ABM_Producto extends JDialog {
 		btnAceptar.setVisible(true);
 		btnCancelar.setVisible(true);
 		
-		}
-	protected void Cancelar_modificar_Cliente() {
+	}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Cancelar_modificar_Cliente() {
 		textNombre.setText("");
 		textPrecio.setText("");
 		textObservación.setText("");
-		
 		
 		btnAceptar.setVisible(false);
 		btnAgregar.setVisible(true);
@@ -382,19 +389,16 @@ public class Interfaz_ABM_Producto extends JDialog {
 		btnEliminar.setVisible(true);
 		
 	}
-	protected void guardarCambios(String nombre, String precio, String tipo, String observacion) {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void guardarCambios(String nombre, String precio, String tipo, String observacion) {
 		Integer Tipo_producto = SvProducto.getTipo_Producto_INTEGER(tipo).get(0);
 		SvProducto.Modificar_Producto(new Producto(Integer.parseInt(datoTabla[1]), null, nombre, Tipo_producto, observacion, Double.parseDouble(precio), 0));
 		System.out.println("se modificó el producto");
 	}
-	
-	
-	
-	
-	
-	
-	
-	protected void Aceptar_modificar_Producto() {
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	private void Aceptar_modificar_Producto() {
 		if (!textNombre.getText().equals("")) {
 			if (!textPrecio.getText().equals("")) {
 				if(!comboTipo.getSelectedItem().toString().equals(""))
@@ -435,4 +439,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 			lblAviso.setVisible(true);
 		}
 	}
-}
+
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+}// ---> FIN CLASE

@@ -1,6 +1,5 @@
 package Reportes;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -8,12 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileSystemView;
 
 import Persistencia.Conector.ConectorMySQL;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -41,11 +38,7 @@ public class ReporteTicket {
 				ConectorMySQL con = new ConectorMySQL();
 				con.connectToMySQL();
 				jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, con.conexion);
-				
-//				//* OPCIONAL: GENERA UN ARCHIVO PDF EN EL ESCRITORIO *//
-//				File home = FileSystemView.getFileSystemView().getHomeDirectory(); 
-//				JasperExportManager.exportReportToPdfFile(jasperPrint, home.getAbsolutePath()+"\\TICKET PEDIDO NUMERO "+NUMERO_PEDIDO+".pdf");
-					
+									
 				con.cerrarConexion();
 				
 			} catch (JRException | FileNotFoundException e) {
