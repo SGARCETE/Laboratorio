@@ -1452,7 +1452,7 @@ public class Interfaz_Principal {
 			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
 			pedido.setNumero_Pedido(Numero_pedido);
-			System.out.println(pedido.getESTADO());
+//			System.out.println(pedido.getESTADO());
 	
 	
 			if(Estado_pedido.equals("Pendiente")){
@@ -1464,13 +1464,12 @@ public class Interfaz_Principal {
 	
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_cobrado() {
-		if(Tabla_Lista_pedidos.getSelectedRow()>0){
+		if(Tabla_Lista_pedidos.getSelectedRow()!=-1){
 			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-			String Estado_pedido = 		(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
+			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
 			pedido.setNumero_Pedido(Numero_pedido);
-			System.out.println(pedido.getESTADO());
-			
+//			System.out.println(pedido.getESTADO());
 			
 			if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
 				sv_pedidos.modificar_estado(pedido, 4);
