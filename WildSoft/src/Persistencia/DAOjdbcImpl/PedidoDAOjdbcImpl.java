@@ -274,7 +274,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 							Integer nueva_cant = Arreglo.get(index).getCantidad() + Prod.getCantidad();
 							if(!Prod.getPR_Observacion().isEmpty()){
 								String Nueva_observacion = Prod.getPR_Observacion() +" "+ Arreglo.get(index).getPR_Observacion();
-								System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
+//								System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
 								Arreglo.get(index).setPR_Observacion(Nueva_observacion);
 							}
 							Arreglo.get(index).setCantidad(nueva_cant);
@@ -296,7 +296,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 								Integer nueva_cant = Arreglo.get(index).getCantidad() + PR_Combo.getCantidad();
 								if(!PR_Combo.getPR_Observacion().isEmpty()){
 									String Nueva_observacion = Arreglo.get(index).getPR_Observacion() +" "+ PR_Combo.getPR_Observacion();
-									System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
+//									System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
 									Arreglo.get(index).setPR_Observacion(Nueva_observacion);
 								}
 								Arreglo.get(index).setCantidad(nueva_cant);
