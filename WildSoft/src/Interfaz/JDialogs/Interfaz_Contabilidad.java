@@ -26,9 +26,7 @@ import javax.swing.JRadioButton;
 
 public class Interfaz_Contabilidad extends JDialog{
 
-	private static final long serialVersionUID = 4413938744233164340L
-	
-	;
+	private static final long serialVersionUID = 4413938744233164340L;
 	private JDateChooser dateChooser_2;
 	private JDateChooser dateChooser_1;
 	private	JDateChooser dateChooser ;
