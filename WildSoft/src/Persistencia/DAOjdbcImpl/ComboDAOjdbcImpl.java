@@ -172,6 +172,11 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 		return conex.Insertar(SentenciaSQL);
 	}
 	
+	public boolean ELIMINAR_Combo_de_pedido(String nombre) {
+		String SentenciaSQL = "UPDATE Producto SET PR_vigente=0 WHERE PR_nombre= '" + nombre + "';";
+		return conex.Insertar(SentenciaSQL);
+	}
+	
 	public boolean AGREGAR_COMBO_TABLA_COMBOS(Combo c) {
 	    String SentenciaSQL = " INSERT INTO Combo (CO_Nombre, CO_precio)VALUES ("+
 			   "'"+ c.getNombre()			+"',"

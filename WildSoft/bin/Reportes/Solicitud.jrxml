@@ -84,6 +84,13 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="8cd8e693-77a6-4ca0-b002-0dfa397ebe37"/>
 				<text><![CDATA[Pizzeria Wildsoft]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="296" y="13" width="241" height="19" uuid="5950b4ab-33b6-4e7c-a4d4-cbb56c063310"/>
+				<textElement>
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<text><![CDATA[Rosa Castillo 2383- Hurlingham]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

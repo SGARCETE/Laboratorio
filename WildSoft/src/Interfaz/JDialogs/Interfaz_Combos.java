@@ -159,6 +159,7 @@ public class Interfaz_Combos extends JDialog {
 			if (tablaCombos.getRowCount() > 0) {
 				Integer id = Integer.parseInt((String) tablaCombos.getValueAt(tablaCombos.getSelectedRow(), 0));
 				svCombos.ELIMINAR_Combo(id);
+				svCombos.ELIMINAR_Combo_de_pedido((String) tablaCombos.getValueAt(tablaCombos.getSelectedRow(), 1));
 				llenarTabla();
 			}
 		}

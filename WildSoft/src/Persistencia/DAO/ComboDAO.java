@@ -23,6 +23,7 @@ public interface ComboDAO {
 	
 	boolean AGREGAR_COMBO_TABLA_COMBOS(Combo c);
 	
+	boolean ELIMINAR_Combo_de_pedido(String nombre);
 	
 
 }
