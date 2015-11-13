@@ -164,7 +164,6 @@ public class ADM_Cliente extends JDialog {
 				if(table.getSelectedRow()!=-1){
 					Eliminar_cliente();	
 				}
-				
 			}
 		});
 		btnEliminar.setBounds(668, 347, 111, 66);
@@ -259,13 +258,10 @@ public class ADM_Cliente extends JDialog {
 				"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
 			}
 		));
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
 		
-		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-		
-		table.getColumnModel().getColumn(1).setPreferredWidth(102);
-		table.getColumnModel().getColumn(2).setPreferredWidth(112);
-		table.getColumnModel().getColumn(3).setPreferredWidth(50);
-		table.getColumnModel().getColumn(4).setPreferredWidth(175);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
