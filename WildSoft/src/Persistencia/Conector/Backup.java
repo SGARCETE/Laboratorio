@@ -7,17 +7,20 @@ import java.io.OutputStream;
 
 public class Backup {
 
-	private static void backup() {
+	@SuppressWarnings("unused")
+	public static void backup() {
 		   try {
+			   System.out.println("entró?");
 		      Process p = Runtime
 		            .getRuntime()
-		            .exec("C:/Program Files/MySQL/MySQL Server 5.7/bin/mysql -u root -ppassword root");
-		 
+		            .exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump -u root -ppassword root");
+		      System.out.println(p);
 		      InputStream is = p.getInputStream();
 		      FileOutputStream fos = new FileOutputStream("Wildsoft.sql");
 		      byte[] buffer = new byte[1000];
 		 
 		      int leido = is.read(buffer);
+		      System.out.println(leido);
 		      while (leido > 0) {
 		         fos.write(buffer, 0, leido);
 		         leido = is.read(buffer);
@@ -32,7 +35,8 @@ public class Backup {
 	
 	
 	
-	private static void restore() {
+	@SuppressWarnings("unused")
+	public static void restore() {
 		   try {
 		      Process p = Runtime
 		            .getRuntime()

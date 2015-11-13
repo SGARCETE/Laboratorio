@@ -84,6 +84,7 @@ import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
+import Persistencia.Conector.Backup;
 import Reportes.ReporteItinerario;
 import Reportes.ReporteTicket;
 
@@ -132,6 +133,7 @@ public class Interfaz_Principal {
 	private Servicio_Pedidos sv_pedidos;
 	private Servicio_Repartidores sv_Repartidores;
 	private Servicio_entrega sv_Entrega;
+	private Backup backup;
 //	private Servicio_Combos sv_Combos;
 	
 	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
@@ -162,6 +164,7 @@ public class Interfaz_Principal {
 		sv_Repartidores = Principal_neg_int.getSvRepartidores();
 		sv_Entrega = Principal_neg_int.getSvEntrega();
 //		sv_Combos= Principal_neg_int.getSvCombos();
+		backup= new Backup();
 		initialize();												/* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
 		iniciarParametros();										/* INICIA LAS VARIABLES Y METODOS NECESARIOS PARA PODER EMPEZAR A OPERAR*/
         	
@@ -874,11 +877,19 @@ public class Interfaz_Principal {
 		menuBar.add(mnArchivo);
 
 		JMenuItem mntmRealizarBackup = new JMenuItem("Realizar Backup");
-		mntmRealizarBackup.setEnabled(false);
+		mntmRealizarBackup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			  backup.backup();
+			}
+		});
 		mnArchivo.add(mntmRealizarBackup);
 
 		JMenuItem mntmRestaurarBackup = new JMenuItem("Restaurar Backup");
-		mntmRestaurarBackup.setEnabled(false);
+		mntmRestaurarBackup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				backup.restore();
+			}
+		});
 		mnArchivo.add(mntmRestaurarBackup);
 
 		JMenuItem mntmSalir = new JMenuItem("Salir");
