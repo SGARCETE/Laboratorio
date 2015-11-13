@@ -21,6 +21,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
     ComboDAOjdbcImpl svCombo= new ComboDAOjdbcImpl();
+    
+    
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		
 		int idDiaria = 1;
@@ -256,7 +258,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				st.executeQuery(Query);
 				ResultSet Fila = st.getResultSet();
 				while (Fila.next()) {
-					if (Fila.getInt("TP_id")!= 4){
+					if (Fila.getInt("TP_id")!= 4){	// 4 = TIPO 'COMBO'
 						Producto Prod = new Producto();
 						Prod.setPR_id(Fila.getInt("PR_id"));
 						Prod.setPR_nombre(Fila.getString("PR_nombre"));
@@ -265,13 +267,45 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 						Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
 						Prod.setCantidad(Fila.getInt("PP_producto_cantidad"));
 						Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
-						Arreglo.add(Prod);
+						
+						boolean esta = Arreglo.contains(Prod);
+						if(esta){
+							Integer index = Arreglo.indexOf(Prod);
+							Integer nueva_cant = Arreglo.get(index).getCantidad() + Prod.getCantidad();
+							if(!Prod.getPR_Observacion().isEmpty()){
+								String Nueva_observacion = Prod.getPR_Observacion() +" Cb:"+ Arreglo.get(index).getPR_Observacion();
+								System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
+								Arreglo.get(index).setPR_Observacion(Nueva_observacion);
+							}
+							Arreglo.get(index).setCantidad(nueva_cant);
+							
+						}
+						else
+							Arreglo.add(Prod);
 					}else{
 						ArrayList<Producto> combo_producto =  svCombo.getLista_Productos(Fila.getString("PR_nombre"));
 						for (int i =0;i<combo_producto.size(); i++){ 
-							Producto actual = combo_producto.get(i);
-							actual.setCantidad(actual.getCantidad()*Fila.getInt("PP_producto_cantidad"));
-							Arreglo.add(actual);
+							// si existe el ID del productoCombo, entonces sumale prcombo.getCantidad a el ID del arreglo
+							
+							Producto PR_Combo = combo_producto.get(i);
+							
+							boolean esta = Arreglo.contains(PR_Combo);
+							if(esta){
+								Integer index = Arreglo.indexOf(PR_Combo);
+
+								Integer nueva_cant = Arreglo.get(index).getCantidad() + PR_Combo.getCantidad();
+								if(!PR_Combo.getPR_Observacion().isEmpty()){
+									String Nueva_observacion = Arreglo.get(index).getPR_Observacion() +" Cb:"+ PR_Combo.getPR_Observacion();
+									System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
+									Arreglo.get(index).setPR_Observacion(Nueva_observacion);
+								}
+								Arreglo.get(index).setCantidad(nueva_cant);
+								
+							}
+							else{
+								PR_Combo.setCantidad(PR_Combo.getCantidad()*Fila.getInt("PP_producto_cantidad"));
+								Arreglo.add(PR_Combo);
+							}
 						}
 					}	
 

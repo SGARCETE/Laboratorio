@@ -343,8 +343,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		
 		Lista_Tablas = new JTable[]{table_prioridad1,table_prioridad2,table_prioridad3,table_prioridad4};
 		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4};
-		
-//		Hardcodear_Tablas();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -371,64 +369,27 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		Lista_Label  = new JLabel[]{lbl_NroPedido_Prioridad1, lbl_NroPedido_Prioridad2, lbl_NroPedido_Prioridad3, lbl_NroPedido_Prioridad4};
 		
 	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// HARDCODEADO
-	@SuppressWarnings("unused")
-	private void Hardcodear_Tablas(){
-		Object [][] datos = new Object[][] {
-			{"   Pizza"},
-			{"2    Napolitana"},
-			{"3    Muzzarella"},
-			{"   Empanada"},
-			{"5    Humita"},
-			{"6    Carne"},
-			{"7    Pollo"},
-			{" >sin pasas de uva"},
-			{"9    "},
-			{"10   "},
-			{"11   "},
-			{"12   "},
-			{"13   "},
-			{"14   "},
-			{"15   "},
-			{"16   "},
-			{"17   "},
-			{"18   "},
-			{"19   "},
-			{"20   "}
-		};
 		
-		DefaultTableModel model =  new DefaultTableModel(datos, new String[] {""} );
-		
-		table_prioridad1 = new JTable_Cocina_vista_pedido(model);
-		table_prioridad2 = new JTable_Cocina_vista_pedido(model);
-		table_prioridad3 = new JTable_Cocina_vista_pedido(model);
-		table_prioridad4 = new JTable_Cocina_vista_pedido(model);
-		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
-		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
-		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
-		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
-	}
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void Actualizar_monitor(ArrayList<Pedido> Lista_Pedidos){
+	public void Actualizar_monitor(ArrayList<Pedido> Lista_Todos_los_Pedidos_del_dia){
 		resetear_campos();
 		ArrayList<Pedido> Lista_4_pedidos = new ArrayList<Pedido>();
 
+		// De todos los pedidos del dia, solo me quedo con los ultimos 4
 		int cant_pedidos = 0;
-		for (int j = 0; j < Lista_Pedidos.size(); j++) {
-			if(Lista_Pedidos.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
-				Lista_4_pedidos.add(Lista_Pedidos.get(j));
+		for (int j = 0; j < Lista_Todos_los_Pedidos_del_dia.size(); j++) {
+			if(Lista_Todos_los_Pedidos_del_dia.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
+				Lista_4_pedidos.add(Lista_Todos_los_Pedidos_del_dia.get(j));
 				cant_pedidos++;
 			}
 		}
 		
+		// Recorre cada pedido, toma sus productos, los muestra y tambien los agrega a la lista de RESUMEN 
 		if(Lista_4_pedidos!=null && Lista_4_pedidos.size()>0){
 			for (int i = 0; i < Lista_4_pedidos.size(); i++) 
 				Mostrar_pedido(Lista_4_pedidos.get(i), i);
-			if(Lista_4_pedidos.size()>0 && Lista_Pedidos.size()>0){
-				setResumen_Productos_Pendientes(Lista_Pedidos);
+			if(Lista_4_pedidos.size()>0 && Lista_Todos_los_Pedidos_del_dia.size()>0){
+				setResumen_Productos_Pendientes(Lista_Todos_los_Pedidos_del_dia);
 			}
 		}
 	}
@@ -459,9 +420,15 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		String TIPO_PR = "";
 		String TIPO_PR_ACTUAL = ""; 
 		
+		
 		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
 			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
 			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
+			System.out.println("\n\nNOMBRE: " + pr.getPR_nombre());
+			System.out.println("ID: " + pr.getPR_id());
+			System.out.println("TIPO PRODUCTO: " + pr.getPR_tipo_producto());
+			System.out.println("CANTIDAD: " + pr.getCantidad());
+			
 			
 			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA (ID Producto bebida = 3)
 				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();

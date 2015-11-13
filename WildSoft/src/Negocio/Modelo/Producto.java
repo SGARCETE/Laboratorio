@@ -94,5 +94,12 @@ public class Producto {
 		PR_TIPO_PRODUCTO_STRING = pR_TIPO_PRODUCTO_STRING;
 	}
 
+	@Override
+	public boolean equals(Object P) {
+		if(((Producto) P).getPR_id()==this.getPR_id())
+			return true;
+		return false;
+	}
+
 
 }
