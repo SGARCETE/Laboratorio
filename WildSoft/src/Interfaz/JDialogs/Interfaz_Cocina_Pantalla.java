@@ -351,10 +351,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	private void resetear_campos(){
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
 		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
-		
-//		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
-//		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
-		
+				
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad2 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
 		table_prioridad3 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
@@ -364,10 +361,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		scrollPane_prioridad2.setViewportView(table_prioridad2);
 		scrollPane_prioridad3.setViewportView(table_prioridad3);
 		scrollPane_prioridad4.setViewportView(table_prioridad4);
-//		scrollPane_prioridad1.setColumnHeaderView(table_prioridad1);
-//		scrollPane_prioridad2.setColumnHeaderView(table_prioridad2);
-//		scrollPane_prioridad3.setColumnHeaderView(table_prioridad3);
-//		scrollPane_prioridad4.setColumnHeaderView(table_prioridad4);
 		
 		lbl_NroPedido_Prioridad1.setText("");
 		lbl_NroPedido_Prioridad2.setText("");
@@ -430,13 +423,11 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 				cant_pedidos++;
 			}
 		}
-//		System.out.println("Interfaz_Cocina_Pantalla_Alternativa2.Actualizar_monitor()\\nCantidad_pedidos"+ Lista_5_pedidos.size());
 		
 		if(Lista_4_pedidos!=null && Lista_4_pedidos.size()>0){
 			for (int i = 0; i < Lista_4_pedidos.size(); i++) 
 				Mostrar_pedido(Lista_4_pedidos.get(i), i);
 			if(Lista_4_pedidos.size()>0 && Lista_Pedidos.size()>0){
-//				System.out.println("Interfaz_Cocina_Pantalla_Alternativa2.Actualizar_monitor()\\nTamaño de lista de productos del pedido 0 es de: "+Lista_5_pedidos.get(0).getLista_Productos().size());
 				setResumen_Productos_Pendientes(Lista_Pedidos);
 			}
 		}
@@ -487,6 +478,76 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	
+	
+//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//	public void Actualizar_monitor(ArrayList<Pedido> Lista_Pedidos){
+//		resetear_campos();
+//		ArrayList<Pedido> Lista_4_pedidos = new ArrayList<Pedido>();
+//
+//		int cant_pedidos = 0;
+//		for (int j = 0; j < Lista_Pedidos.size(); j++) {
+//			if(Lista_Pedidos.get(j).getESTADO().equals("Pendiente") && cant_pedidos<4){
+//				Lista_4_pedidos.add(Lista_Pedidos.get(j));
+//				cant_pedidos++;
+//			}
+//		}
+//		
+//		if(Lista_4_pedidos!=null && Lista_4_pedidos.size()>0){
+//			for (int i = 0; i < Lista_4_pedidos.size(); i++) 
+//				Mostrar_pedido(Lista_4_pedidos.get(i), i);
+//			if(Lista_4_pedidos.size()>0 && Lista_Pedidos.size()>0){
+//				setResumen_Productos_Pendientes(Lista_Pedidos);
+//			}
+//		}
+//	}
+//
+//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+//	// TODO BUG, AGREGA EL MISMO PRODUCTO EN OTRA FILA SI ESTA PERTENECE A OTRO PEDIDO 
+//	private void setResumen_Productos_Pendientes(ArrayList<Pedido> Lista_Pedidos){
+//		DefaultTableModel model = (DefaultTableModel) table_Resumen_Productos_Pendientes.getModel();
+//		for (int i = 0; i < Lista_Pedidos.size(); i++) {
+//			Pedido p = Lista_Pedidos.get(i);
+//			for (int j = 0; j < Lista_Pedidos.get(i).getLista_Productos().size(); j++) {
+//				Producto pr = p.getLista_Productos().get(j);
+//				if(pr.getPR_tipo_producto()!=3 )// SI NO ES UNA BEBIDA
+//					model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre()});	
+//			}
+//		}
+//		table_Resumen_Productos_Pendientes.setModel(model);
+//	}
+//	
+//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//	private void Mostrar_pedido(Pedido p, Integer Index){
+//		JTable JT = Lista_Tablas[Index];
+//		JLabel JL = Lista_Label[Index];
+//		DefaultTableModel model = (DefaultTableModel) JT.getModel();
+//		JL.setText(p.getID_DIARIO().toString());
+//		
+//		ArrayList<Producto> LISTA_PRODUCTOS_ORDENADA = MetAux.mergeSort(p.getLista_Productos());
+//		String TIPO_PR = "";
+//		String TIPO_PR_ACTUAL = ""; 
+//		
+//		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
+//			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
+//			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();
+//			
+//			if(!TIPO_PR_ACTUAL.equals(TIPO_PR) && pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA (ID Producto bebida = 3)
+//				TIPO_PR = pr.getPR_TIPO_PRODUCTO_STRING();
+//				model.addRow(new Object[]{"   "+pr.getPR_TIPO_PRODUCTO_STRING()});
+//			}
+//			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA  (ID Producto bebida = 3)
+//				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
+//				if(!pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
+//					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
+//			}
+//			
+//		}
+//		JT.setModel(model);
+//	}
+//
+//	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	
 }//--> FIN INTERFAZ

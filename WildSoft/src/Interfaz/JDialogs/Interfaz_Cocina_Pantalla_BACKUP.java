@@ -25,10 +25,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Interfaz.Swing_Extends.JTable_Cocina_Detalles_Pedido;
+//import Interfaz.Swing_Extends.JTable_Cocina_Detalles_Pedido; // Lo borre
 import Interfaz.Swing_Extends.JTable_Cocina_Resumen_Productos_Pendientes;
 import Interfaz.Swing_Extends.JTable_Cocina_vista_pedido;
-import Interfaz.Swing_Extends.Model_Cocina_Detalles_Pedido;
+//import Interfaz.Swing_Extends.Model_Cocina_Detalles_Pedido;// Lo borre
 import Interfaz.Swing_Extends.Model_Cocina_Resumen_Productos_Pendientes;
 import Interfaz.Swing_Extends.Model_Cocina_vista_pedido;
 import MetAux.MetAux;
@@ -410,7 +410,7 @@ public class Interfaz_Cocina_Pantalla_BACKUP extends JFrame {
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
 		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
 		
-		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
+//		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido()); Lo borre
 		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());
@@ -436,7 +436,7 @@ public class Interfaz_Cocina_Pantalla_BACKUP extends JFrame {
 		table_Resumen_Productos_Pendientes = new JTable_Cocina_Resumen_Productos_Pendientes(new Model_Cocina_Resumen_Productos_Pendientes());
 		scrollPane_Resumen_Productos_Pendientes.setViewportView(table_Resumen_Productos_Pendientes);
 		
-		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido());
+//		table_Detalles_Pedido = new JTable_Cocina_Detalles_Pedido(new Model_Cocina_Detalles_Pedido()); Lo borre
 		scrollPane_Detalles.setViewportView(table_Detalles_Pedido);
 		
 		table_prioridad1 = new JTable_Cocina_vista_pedido(new Model_Cocina_vista_pedido());

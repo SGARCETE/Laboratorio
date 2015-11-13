@@ -753,7 +753,7 @@ public class Interfaz_Principal {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
 		tabla_Itinerario_con_pedidos = new JTable();
-		tabla_Itinerario_con_pedidos.setModel(obtenerModel());
+		tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 		scrollPane_1.setViewportView(tabla_Itinerario_con_pedidos);
 		
 		JLabel lblListaDePedidos = new JLabel("Lista de Pedidos");
@@ -1451,9 +1451,7 @@ public class Interfaz_Principal {
 			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
-			pedido.setNumero_Pedido(Numero_pedido);
-//			System.out.println(pedido.getESTADO());
-	
+			pedido.setNumero_Pedido(Numero_pedido);	
 	
 			if(Estado_pedido.equals("Pendiente")){
 				sv_pedidos.modificar_estado(pedido, 2);
@@ -1469,7 +1467,6 @@ public class Interfaz_Principal {
 			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
 			pedido.setNumero_Pedido(Numero_pedido);
-//			System.out.println(pedido.getESTADO());
 			
 			if(Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))){
 				sv_pedidos.modificar_estado(pedido, 4);
@@ -1531,7 +1528,7 @@ public class Interfaz_Principal {
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
 	@SuppressWarnings("serial")
-	private DefaultTableModel obtenerModel(){
+	private DefaultTableModel obtener_Model_itinerario(){
 		return new DefaultTableModel(
 				new Object[][] {
 				},
@@ -1554,7 +1551,7 @@ public class Interfaz_Principal {
 	private void Actualizar_itinerario_pedidos() {
 
 		ArrayList<Pedido> lista = sv_pedidos.get_pedidos_preparados(Calendar.getInstance());
-		DefaultTableModel modelo = obtenerModel();
+		DefaultTableModel modelo = obtener_Model_itinerario();
 		
 		for (int i = 0; i < lista.size(); i++) {
 			if(!lista.get(i).getCliente().getNombre().equals("")){
@@ -1575,7 +1572,7 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Vaciar_lista_itinerario() {
 		pedidodItinerario = new ArrayList<Integer>();
-		tabla_Itinerario_con_pedidos.setModel(obtenerModel());
+		tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1613,25 +1610,31 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_itinerario_entrega() {
 		if(tabla_Itinerario_con_pedidos!=null && tabla_Itinerario_con_pedidos.getRowCount()>0){
-			Entrega entrega = new Entrega();
-			entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
-			entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
-			sv_Entrega.agregarEntrega(entrega);
-			entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
-			entrega.setLista_pedidos(new ArrayList<Pedido>());
-			for (int i = 0; i < tabla_Itinerario_con_pedidos.getRowCount(); i++) {
-				entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
-				Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
-				sv_pedidos.modificar_estado(pedido, 3);
-				ACTUALIZAR_TODO();
-//				System.out.println("Generar_itinerario_entrega.Entrega: " + entrega.getId() + " Pedido " + Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)) );
+			if(comboRepartidores.getSelectedIndex()!=0){
+				Entrega entrega = new Entrega();
+				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
+				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
+				sv_Entrega.agregarEntrega(entrega);
+				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
+				entrega.setLista_pedidos(new ArrayList<Pedido>());
+				for (int i = 0; i < tabla_Itinerario_con_pedidos.getRowCount(); i++) {
+					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
+					Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String)tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
+					sv_pedidos.modificar_estado(pedido, 3);
+					ACTUALIZAR_TODO();
+				}
+				sv_Entrega.AGREGAR_PEDIDO(entrega);
+				
+				ReporteItinerario ri= new ReporteItinerario();
+				ri.Generar_Itinerario(entrega.getId());
+				
+				tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 			}
-			sv_Entrega.AGREGAR_PEDIDO(entrega);
-//			System.out.println("Generar_itinerario_entrega "+entrega.getId());
-			
-			ReporteItinerario ri= new ReporteItinerario();
-			ri.Generar_Itinerario(entrega.getId());
+			else
+				JOptionPane.showMessageDialog(null, "Para generar el itinerario debe seleccionar un repartidor", "Falta elegir un repartidor", JOptionPane.WARNING_MESSAGE);
 		}
+		else
+			JOptionPane.showMessageDialog(null, "Aun no hay pedidos con delivery preparados", "Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
