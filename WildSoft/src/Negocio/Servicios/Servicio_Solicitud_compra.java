@@ -79,10 +79,11 @@ public class Servicio_Solicitud_compra {
 		// Genera archivo adjunto
 		ReporteSolicitud RS = new ReporteSolicitud();
 		RS.Generar_Solicitud(iD_SOLICITUD);
-		RS.EXPORT_TO_PDF("", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
-//		RS.EXPORT_TO_PDF(System.getProperty("user.home") + "\\Desktop", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
+		RS.EXPORT_TO_PDF("d:", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
+		//RS.EXPORT_TO_PDF(System.getProperty("user.home") + "\\Desktop", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
 		
-		File PDF_SOLICITUD = new File("\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
+		
+		File PDF_SOLICITUD = new File("d:\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
 		
 //		File PDF_SOLICITUD = new File(System.getProperty("user.home") + "\\Desktop\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
 		Solicitud.setSolicitudPDF(PDF_SOLICITUD);

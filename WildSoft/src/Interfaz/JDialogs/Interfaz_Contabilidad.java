@@ -33,7 +33,8 @@ public class Interfaz_Contabilidad extends JDialog{
 	private ButtonGroup grupo1;
 	private JRadioButton rdbtnReporteDia;
 	private JRadioButton rdbtnReporteFechas ;
-
+    private JButton	btnGenerarContabilidad;
+    private JButton btnReporteDia;
 	
 	public Interfaz_Contabilidad() {
 		setTitle("Mini contabilidad");
@@ -97,12 +98,12 @@ public class Interfaz_Contabilidad extends JDialog{
 		lblDelDia.setBounds(250, 81, 62, 22);
 		panel.add(lblDelDia);
 		
-		JButton btnReporteDia = new JButton("Reporte Dia");
+		final JButton btnReporteDia = new JButton("Reporte Dia");
 		btnReporteDia.setBounds(462, 71, 178, 42);
 		panel.add(btnReporteDia);
 		btnReporteDia.setIcon(new ImageIcon(Interfaz_Contabilidad.class.getResource("/Recursos/IMG/Product-sale-report-icon24.png")));
 		
-		JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
+		final JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
 		btnGenerarContabilidad.setBounds(462, 139, 178, 42);
 		panel.add(btnGenerarContabilidad);
 		btnGenerarContabilidad.setBackground(Color.WHITE);

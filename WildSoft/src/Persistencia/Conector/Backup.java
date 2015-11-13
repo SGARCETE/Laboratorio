@@ -19,7 +19,7 @@ public class Backup {
 			File backupFile = new File("BackUp.sql");
 			FileWriter fw = new FileWriter(backupFile);
 			Process child = runtime
-					.exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
+					.exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
 			InputStreamReader irs = new InputStreamReader(
 					child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
@@ -43,7 +43,7 @@ public class Backup {
 	public static void restore() {
 		try {
 			// Ejecucion del cliente mysql
-			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
+			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql -u root -proot wildsoft");
 
 			// Lectura de la salida de error y se muestra por pantalla.
 			InputStream es = p.getErrorStream();

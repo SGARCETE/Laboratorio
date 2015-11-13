@@ -57,7 +57,7 @@ public class ReporteSolicitud {
 	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	public void EXPORT_TO_PDF(String RUTA, String NOMBRE_ARCHIVO){
 		try {
-			JasperExportManager.exportReportToPdfFile(jasperPrint, RUTA + "\\"+ NOMBRE_ARCHIVO +".pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint,  "d:\\"+ NOMBRE_ARCHIVO +".pdf");
 		} catch (JRException e) {
 			e.printStackTrace();
 		}
