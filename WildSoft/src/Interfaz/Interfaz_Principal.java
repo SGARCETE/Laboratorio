@@ -1444,7 +1444,7 @@ new Backup();
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Preparado() {
-		if(Tabla_Lista_pedidos.getSelectedRow()>0){
+		if(Tabla_Lista_pedidos.getSelectedRow()>-1){
 			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			String Estado_pedido = 	(String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
