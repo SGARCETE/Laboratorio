@@ -156,7 +156,7 @@ public class Interfaz_Combos extends JDialog {
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Esta seguro que desea eliminar?", "Eliminar combo",JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
 			if (tablaCombos.getRowCount() > 0) {
-				Integer id = (Integer) tablaCombos.getValueAt(tablaCombos.getSelectedRow(), 0);
+				Integer id = Integer.parseInt((String) tablaCombos.getValueAt(tablaCombos.getSelectedRow(), 0));
 				svCombos.ELIMINAR_Combo(id);
 				llenarTabla();
 			}

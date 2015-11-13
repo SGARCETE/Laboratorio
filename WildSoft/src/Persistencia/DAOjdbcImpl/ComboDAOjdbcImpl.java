@@ -86,7 +86,7 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			conex.connectToMySQL();// Conectar base
 			Statement st = conex.conexion.createStatement();
 			
-			String Query = "select CO_id,CO_nombre, CO_precio from Combo WHERE CO_vigente=null";
+			String Query = "select CO_id,CO_nombre, CO_precio from Combo WHERE CO_vigente is null";
 
 //			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
