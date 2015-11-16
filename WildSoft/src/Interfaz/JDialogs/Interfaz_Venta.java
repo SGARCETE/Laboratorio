@@ -2,33 +2,33 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import Negocio.Servicios.Principal_Negocio_Interfaz;
-import Negocio.Servicios.Servicio_Materia_Prima;
-import Negocio.Servicios.Servicio_Productos;
-import Reportes.ReporteMejoresClientes;
-import Reportes.ReporteVentas;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import javax.swing.JLabel;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
-import javax.swing.JComboBox;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JMonthChooser;
+
+import Negocio.Servicios.Principal_Negocio_Interfaz;
+import Negocio.Servicios.Servicio_Productos;
+import Reportes.ReporteMejoresClientes;
+import Reportes.ReporteVentas;
 
 public class Interfaz_Venta extends JDialog{
 	
@@ -42,7 +42,6 @@ public class Interfaz_Venta extends JDialog{
 	private JDateChooser dateChooserDia;
 	private JRadioButton rdbtnProducto ;
 	private JRadioButton rdbtnCliente ;
-	private ButtonGroup grupo1 ;
 	private ButtonGroup grupo2 ;
 	private JButton btnGenerarReporte ;
 	private Servicio_Productos SvProductos;
@@ -171,7 +170,7 @@ public class Interfaz_Venta extends JDialog{
 		comboBox.setBounds(10, 32, 264, 27);
 		panel_5.add(comboBox);
 		
-		grupo1 = new ButtonGroup();
+		new ButtonGroup();
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.WHITE);

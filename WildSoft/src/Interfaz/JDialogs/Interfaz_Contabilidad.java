@@ -1,5 +1,6 @@
 package Interfaz.JDialogs;
 
+import java.awt.Color;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,15 +14,13 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
 
 import Reportes.ReporteContabilidad;
-import java.awt.Color;
-import java.awt.Button;
-import javax.swing.JRadioButton;
 
 
 public class Interfaz_Contabilidad extends JDialog{
@@ -33,10 +32,7 @@ public class Interfaz_Contabilidad extends JDialog{
 	private ButtonGroup grupo1;
 	private JRadioButton rdbtnReporteDia;
 	private JRadioButton rdbtnReporteFechas ;
-    private JButton	btnGenerarContabilidad;
-    private JButton btnReporteDia;
-	
-	public Interfaz_Contabilidad() {
+    public Interfaz_Contabilidad() {
 		setTitle("Mini contabilidad");
 		getContentPane().setBackground(Color.WHITE);
 		initialize();
