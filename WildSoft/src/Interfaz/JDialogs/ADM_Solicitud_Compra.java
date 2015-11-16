@@ -364,19 +364,11 @@ public class ADM_Solicitud_Compra extends JDialog {
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false);
-		comboCategorias.setEnabled(false);
-		comboMateriaPrima.setEnabled(false);
-		btnAgregar.setEnabled(false);
-		btnQuitar.setEnabled(false);
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
-			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
-			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
-					sc.getLista_materia_prima().get(i).getCategoria_string(),
-					sc.getLista_materia_prima().get(i).getNombre(),
-					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
-			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
-			modelo.addRow(arreglo);
-			tablaMateriasPrimas.setModel(modelo);
+			comboCategorias.setSelectedItem(sc.getLista_materia_prima().get(i).getNombreCategoria());
+			comboMateriaPrima.setSelectedItem(sc.getLista_materia_prima().get(i).getNombre());
+			spinnerCantidad.setValue(sc.getLista_materia_prima().get(i).getCantidad());
+			Agregar_Materia_prima();
 		}
 		Double PRECIO = 0.0;
 		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
@@ -390,6 +382,36 @@ public class ADM_Solicitud_Compra extends JDialog {
 		cancelButton.setText("Salir");
 		spinnerCantidad.setEnabled(false);
 		esEdicion = true;
+		
+		
+//		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
+//		comboProveedor.setEnabled(false);
+//		comboCategorias.setEnabled(false);
+//		comboMateriaPrima.setEnabled(false);
+//		btnAgregar.setEnabled(false);
+//		btnQuitar.setEnabled(false);
+//		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
+//			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
+//			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
+//					sc.getLista_materia_prima().get(i).getCategoria_string(),
+//					sc.getLista_materia_prima().get(i).getNombre(),
+//					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
+//			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+//			modelo.addRow(arreglo);
+//			tablaMateriasPrimas.setModel(modelo);
+//		}
+//		Double PRECIO = 0.0;
+//		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
+//			PRECIO = sc.getPrecio().doubleValue();
+//		}
+//		lblTotal.setVisible(true);
+//		textTotal.setVisible(true);
+//		
+//		textTotal.setText(formatoImporte.format(PRECIO));
+//		okButton.setVisible(false);
+//		cancelButton.setText("Salir");
+//		spinnerCantidad.setEnabled(false);
+//		esEdicion = true;
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
