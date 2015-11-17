@@ -3,13 +3,14 @@ package Interfaz.JDialogs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -21,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
@@ -33,9 +35,6 @@ import Negocio.Servicios.Principal_Negocio_Interfaz;
 import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 import Negocio.Servicios.Servicio_Solicitud_compra;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 
 public class ADM_Solicitud_Compra extends JDialog {
 	
@@ -55,13 +54,12 @@ public class ADM_Solicitud_Compra extends JDialog {
 	private JSpinner spinnerCantidad;
 	private JLabel lblTotal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
-	@SuppressWarnings("unused")
 	private boolean esEdicion; 
 	private JButton btnQuitar;
 	private JButton btnAgregar;
 	private JButton okButton;
 	private JButton cancelButton;
-	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
+	private JLabel lblID;
 
 	@SuppressWarnings("serial")
 	public ADM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
@@ -191,7 +189,6 @@ public class ADM_Solicitud_Compra extends JDialog {
 		contentPanel.add(lblTotal);
 		
 		textTotal = new JTextField();
-		textTotal.setEditable(false);
 		textTotal.setVisible(false);
 		textTotal.setBounds(585, 359, 86, 28);
 		contentPanel.add(textTotal);
@@ -207,6 +204,11 @@ public class ADM_Solicitud_Compra extends JDialog {
 		});
 		btnQuitar.setBounds(10, 351, 135, 32);
 		contentPanel.add(btnQuitar);
+		
+		lblID = new JLabel("0.0");
+		lblID.setVisible(false);
+		lblID.setBounds(406, 69, 46, 14);
+		contentPanel.add(lblID);
 		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -245,9 +247,16 @@ public class ADM_Solicitud_Compra extends JDialog {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Guardar_solicitud_compra() {
-		if(tablaMateriasPrimas.getRowCount()>0){
-			sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerSolicitud());
+		if (esEdicion) {
+			Solicitud_compra sc = obtenerSolicitud();
+			sc.setId(Integer.valueOf(lblID.getText()));
+			sv_SolicitudCompra.MODIFICAR_SOLICITUD_COMPRA(sc);
 			dispose();
+		} else {
+			if (tablaMateriasPrimas.getRowCount() > 0) {
+				sv_SolicitudCompra.AGREGAR_SOLICITUD_COMPRA(obtenerSolicitud());
+				dispose();
+			}
 		}
 	}
 	
@@ -355,6 +364,8 @@ public class ADM_Solicitud_Compra extends JDialog {
 			mp.setNombre((String) tablaMateriasPrimas.getValueAt(i, 2));
 			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
 			listaMateriaPrima.add(mp);
+			
+			sc.setPrecio(Double.parseDouble(textTotal.getText()));
 		}
 		sc.setLista_materia_prima(listaMateriaPrima);
 		return sc;
@@ -365,54 +376,26 @@ public class ADM_Solicitud_Compra extends JDialog {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false);
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
-			comboCategorias.setSelectedItem(sc.getLista_materia_prima().get(i).getNombreCategoria());
-			comboMateriaPrima.setSelectedItem(sc.getLista_materia_prima().get(i).getNombre());
-			spinnerCantidad.setValue(sc.getLista_materia_prima().get(i).getCantidad());
-			Agregar_Materia_prima();
+			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
+					sc.getLista_materia_prima().get(i).getCategoria_string(),
+					sc.getLista_materia_prima().get(i).getNombre(),
+					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
+			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
+			modelo.addRow(arreglo);
+			tablaMateriasPrimas.setModel(modelo);
+			ListaMateriaPrima.put(comboMateriaPrima.getSelectedItem().toString(), tablaMateriasPrimas.getRowCount()-1);
 		}
+
 		Double PRECIO = 0.0;
 		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
 			PRECIO = sc.getPrecio().doubleValue();
 		}
 		lblTotal.setVisible(true);
 		textTotal.setVisible(true);
-		
-		textTotal.setText(formatoImporte.format(PRECIO));
-		okButton.setVisible(false);
+		textTotal.setText(PRECIO.toString());
 		cancelButton.setText("Salir");
-		spinnerCantidad.setEnabled(false);
 		esEdicion = true;
-		
-		
-//		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
-//		comboProveedor.setEnabled(false);
-//		comboCategorias.setEnabled(false);
-//		comboMateriaPrima.setEnabled(false);
-//		btnAgregar.setEnabled(false);
-//		btnQuitar.setEnabled(false);
-//		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
-//			ListaMateriaPrima.put(sc.getLista_materia_prima().get(i).getNombre(), sc.getLista_materia_prima().get(i).getCantidad());
-//			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),
-//					sc.getLista_materia_prima().get(i).getCategoria_string(),
-//					sc.getLista_materia_prima().get(i).getNombre(),
-//					String.valueOf(sc.getLista_materia_prima().get(i).getCantidad())};
-//			DefaultTableModel modelo = (DefaultTableModel) tablaMateriasPrimas.getModel();
-//			modelo.addRow(arreglo);
-//			tablaMateriasPrimas.setModel(modelo);
-//		}
-//		Double PRECIO = 0.0;
-//		if (sc.getPrecio()!=null && sc.getPrecio()>0) {
-//			PRECIO = sc.getPrecio().doubleValue();
-//		}
-//		lblTotal.setVisible(true);
-//		textTotal.setVisible(true);
-//		
-//		textTotal.setText(formatoImporte.format(PRECIO));
-//		okButton.setVisible(false);
-//		cancelButton.setText("Salir");
-//		spinnerCantidad.setEnabled(false);
-//		esEdicion = true;
+		spinnerCantidad.setValue(1);
+		lblID.setText(sc.getId().toString());
 	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-}//---> FIN CLASE
+}

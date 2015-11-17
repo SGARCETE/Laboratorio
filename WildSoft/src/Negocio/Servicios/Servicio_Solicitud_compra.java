@@ -26,7 +26,8 @@ public class Servicio_Solicitud_compra {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void AGREGAR_SOLICITUD_COMPRA(Solicitud_compra sc){
-		scDAO.AGREGAR_SOLICITUD(sc);
+		int id = scDAO.AGREGAR_SOLICITUD(sc);
+		sc.setId(id);
 		scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
 	}
 		
@@ -37,12 +38,12 @@ public class Servicio_Solicitud_compra {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public boolean MODIFICAR_SOLICITUD_COMPRA(Solicitud_compra sc){
+	public void MODIFICAR_SOLICITUD_COMPRA(Solicitud_compra sc){
 		if(sc!=null && sc.getId()!=0){
 			scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sc);
-			return scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
+			scDAO.MODIFICAR_Solicitud(sc);
+			scDAO.AGREGAR_MATERIA_PRIMA_SOLICITUD(sc);
 		}
-		return false;
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -53,11 +54,6 @@ public class Servicio_Solicitud_compra {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd){
 		return scDAO.ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(sd);
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud){
-		return scDAO.AGREGAR_SOLICITUD(solicitud);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

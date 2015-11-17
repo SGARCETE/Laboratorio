@@ -8,7 +8,7 @@ import Negocio.Modelo.Solicitud_compra;
 
 public interface Solicitud_compraDAO {
 	
-	public boolean AGREGAR_SOLICITUD(Solicitud_compra solicitud);
+	public int AGREGAR_SOLICITUD(Solicitud_compra solicitud);
 	
 	public ArrayList<Solicitud_compra> getLISTA_SOLICITUDES();
 	
@@ -16,7 +16,7 @@ public interface Solicitud_compraDAO {
 	
 	public boolean MODIFICAR_ESTADO(Integer ID_SOLICITUD, Integer ID_ESTADO_SOLICITUD);
 	
-	public boolean MODIFICAR_Solicitud(Solicitud_compra sd);
+	public void MODIFICAR_Solicitud(Solicitud_compra sd);
 	
 	public Proveedor getProveedor(Integer ID_Proveedor);
 	
@@ -24,7 +24,7 @@ public interface Solicitud_compraDAO {
 	
 	public boolean ELIMINAR_MATERIAS_PRIMAS_DE_SOLICITUD(Solicitud_compra sd);
 	
-	public boolean AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sd);
+	public void AGREGAR_MATERIA_PRIMA_SOLICITUD(Solicitud_compra sd);
 
 	public void ELIMINAD_SOLICITUD(Solicitud_compra sc);
 

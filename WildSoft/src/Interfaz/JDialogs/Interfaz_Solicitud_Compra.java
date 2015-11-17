@@ -92,7 +92,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Agregar_nueva_solicitud();
 			}
 		});
-		btnAgregar.setBounds(10, 339, 100, 28);
+		btnAgregar.setBounds(10, 339, 100, 34);
 		contentPanel.add(btnAgregar);
 		
 		JButton btnBorrar = new JButton("Borrar");
@@ -102,7 +102,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Eliminar_solicitud();
 			}
 		});
-		btnBorrar.setBounds(115, 339, 100, 28);
+		btnBorrar.setBounds(115, 339, 100, 34);
 		contentPanel.add(btnBorrar);
 		
 		JButton btnEditar = new JButton("Consultar");
@@ -112,7 +112,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Mostrar_solicitud();
 			}
 		});
-		btnEditar.setBounds(220, 339, 110, 28);
+		btnEditar.setBounds(220, 339, 110, 34);
 		contentPanel.add(btnEditar);
 		
 		JButton btnGenerarSolicitud = new JButton("Generar Solicitud");
@@ -122,7 +122,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Generar_Solicitud();
 			}
 		});
-		btnGenerarSolicitud.setBounds(440, 339, 160, 28);
+		btnGenerarSolicitud.setBounds(440, 339, 160, 34);
 		contentPanel.add(btnGenerarSolicitud);
 		
 		JButton btnNewButton = new JButton("Pagar");
@@ -132,7 +132,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			}
 		});
 	
-		btnNewButton.setBounds(340, 339, 90, 28);
+		btnNewButton.setBounds(340, 339, 90, 34);
 		contentPanel.add(btnNewButton);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar Solicitud");
@@ -142,7 +142,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			}
 		});
 		btnEnviarSolicitud.setIcon(new ImageIcon(Interfaz_Solicitud_Compra.class.getResource("/Recursos/IMG/Mail-icon24.png")));
-		btnEnviarSolicitud.setBounds(798, 339, 145, 28);
+		btnEnviarSolicitud.setBounds(798, 339, 145, 34);
 		contentPanel.add(btnEnviarSolicitud);
 		
 		JLabel lblSolicitudesGeneradas = new JLabel("Solicitudes de compra generadas");
@@ -216,6 +216,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			frame.setSolicictud(sc);
 			frame.setModal(true);
 			frame.setVisible(true);
+			llenarTabla();
 		}
 	}
 	
