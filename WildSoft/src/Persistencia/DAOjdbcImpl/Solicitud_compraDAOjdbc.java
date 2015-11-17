@@ -86,7 +86,11 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO {
 			String SentenciaSQL = "UPDATE Solicitud_compra SET SD_fecha = ?, SD_estado = ?, SD_proveedor = ?, SD_precio = ? WHERE Solicitud_compra.SD_id = ?;";
 			PreparedStatement statement = conex.conexion.prepareStatement(SentenciaSQL);
 			statement.setString(1, formato_yyyyMMdd.format(sc.getFecha()));
-			statement.setInt(2, obtener_ID_Estado_Solicitud(sc.getEstado()));
+			if (sc.getPrecio() > 0.0) {
+				statement.setInt(2, 3);
+			} else {
+				statement.setInt(2, obtener_ID_Estado_Solicitud(sc.getEstado()));
+			}
 			statement.setInt(3, sc.getProveedor().getId());
 			statement.setDouble(4, sc.getPrecio());
 			statement.setInt(5, sc.getId());
@@ -164,7 +168,8 @@ public class Solicitud_compraDAOjdbc implements Solicitud_compraDAO {
 			Statement st = conex.conexion.createStatement();
 
 			String Query = "SELECT * FROM Solicitud_compra SD JOIN Solicitud_estado SE JOIN Proveedor PV JOIN Materia_prima MP JOIN Compra_MateriaPrima CM JOIN Categoria_MP CA  ON  SD.SD_estado= SE.SEST_id "
-					+ "AND SD.SD_proveedor= PV.PV_id AND SD.SD_id= CM.CM_compra  AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id and SD.SD_id = " + sd.getId();
+					+ "AND SD.SD_proveedor= PV.PV_id AND SD.SD_id= CM.CM_compra  AND MP.MP_id= CM.CM_materia_prima AND MP.MP_categoria= CA.CA_id and SD.SD_id = "
+					+ sd.getId();
 			st.executeQuery(Query);
 
 			ResultSet Fila = st.getResultSet();

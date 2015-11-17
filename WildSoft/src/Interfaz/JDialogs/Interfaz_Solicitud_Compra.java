@@ -122,18 +122,8 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Generar_Solicitud();
 			}
 		});
-		btnGenerarSolicitud.setBounds(440, 339, 160, 34);
+		btnGenerarSolicitud.setBounds(340, 339, 160, 34);
 		contentPanel.add(btnGenerarSolicitud);
-		
-		JButton btnNewButton = new JButton("Pagar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Marcar_como_pagada();
-			}
-		});
-	
-		btnNewButton.setBounds(340, 339, 90, 34);
-		contentPanel.add(btnNewButton);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar Solicitud");
 		btnEnviarSolicitud.addActionListener(new ActionListener() {
@@ -190,21 +180,6 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 //				JOptionPane.showMessageDialog(this, "El envio de la solicitud de compra al proveedor fallo!", "Solicitud NO enviada", JOptionPane.ERROR_MESSAGE);
 		}
 
-	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Marcar_como_pagada() {
-		// CORREGIR -TODO
-		String Estado_Solicitud= (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 4);
-		System.out.println(Estado_Solicitud);
-		if(tabla_solicitudes_actuales.getSelectedRow() > -1 ){
-			if(Estado_Solicitud.equals("Pendiente")){
-				dispose();
-				auxiliar frame = new auxiliar(principal_neg_int, (Integer) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0));
-				frame.setVisible(true);
-				frame.setAlwaysOnTop(true);
-			}
-		}
 	}
 	
 	

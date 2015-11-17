@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import Negocio.Modelo.Materia_Prima;
 import Negocio.Modelo.Proveedor;
 import Negocio.Modelo.Solicitud_compra;
-import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.Solicitud_compraDAO;
 import Persistencia.DAOjdbcImpl.Solicitud_compraDAOjdbc;
 import Reportes.ReporteSolicitud;
@@ -71,39 +70,24 @@ public class Servicio_Solicitud_compra {
 		boolean Exito = false;
 		Email_Manager EM = new Email_Manager();
 		Solicitud_compra Solicitud = OBTENER_SOLICITUD(iD_SOLICITUD);
-		
 		// Genera archivo adjunto
 		ReporteSolicitud RS = new ReporteSolicitud();
 		RS.Generar_Solicitud(iD_SOLICITUD);
 		RS.EXPORT_TO_PDF("d:", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
 		//RS.EXPORT_TO_PDF(System.getProperty("user.home") + "\\Desktop", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
-		
-		
 		File PDF_SOLICITUD = new File("d:\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
-		
 //		File PDF_SOLICITUD = new File(System.getProperty("user.home") + "\\Desktop\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
 		Solicitud.setSolicitudPDF(PDF_SOLICITUD);
-		
 		if(Solicitud!=null){
 			Exito =  EM.ENVIAR_SOLICITUD_DE_COMPRA(Solicitud);
 			if(Exito)
 				scDAO.Registrar_envio_solicitud(iD_SOLICITUD);
 		}
-		
 //		PDF_SOLICITUD.delete();
 		return Exito;
-		
-
-		
-		
-
-		
-		
-	
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
 	public void Ver_Reporte_solicitud_compra(Integer NUMERO_SOLICITUD) {
 		ReporteSolicitud RS = new ReporteSolicitud();
 		RS.Generar_Solicitud(NUMERO_SOLICITUD);
@@ -111,44 +95,20 @@ public class Servicio_Solicitud_compra {
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	
 //	public void solicitud_compra_PDF(Integer NUMERO_SOLICITUD) {
 //		ReporteSolicitud RS = new ReporteSolicitud();
 //		RS.Generar_Solicitud(NUMERO_SOLICITUD);
 //		RS.EXPORT_TO_PDF(RUTA, NOMBRE_ARCHIVO);
 //	}
 	
-	
-	
-	
 	// REVISAR SI REALMENTE ES NECESARIO
 	public Proveedor getProveedor(Integer ID_Proveedor){
 		return scDAO.getProveedor(ID_Proveedor);
 	}
 	
-
 	// REVISAR SI REALMENTE ES NECESARIO
 	public int obtenerEstado(String estado) {
 		return scDAO.obtener_ID_Estado_Solicitud(estado);
 	}
 	
-	
-	//TODO
-	/**
-	 * ESTE METODO ESTA MAL ES SOLO PARA QUE ANDE DURANTE LA ENTREGA, NO USAR!!!!!
-	 */
-	public void modificacionMAAAAAAAL(int id, int precio) {
-		
-		ConectorMySQL conex = new ConectorMySQL();
-		
-		conex.Insertar("UPDATE solicitud_compra set SD_estado=3, SD_precio=" + precio + " WHERE SD_id=" + id + ";");
-		
-	}
-
-	
-
-
-
-
-
 }//---> FIN CLASE

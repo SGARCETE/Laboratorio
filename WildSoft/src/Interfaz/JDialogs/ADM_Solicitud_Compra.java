@@ -155,16 +155,10 @@ public class ADM_Solicitud_Compra extends JDialog {
 			}
 		});
 
-//		tablaMateriasPrimas.getColumnModel().getColumn(0).setResizable(false);
-//		tablaMateriasPrimas.getColumnModel().getColumn(0).setPreferredWidth(0);
 		tablaMateriasPrimas.getColumnModel().getColumn(0).setMinWidth(60);
 		tablaMateriasPrimas.getColumnModel().getColumn(0).setMaxWidth(60);
 		tablaMateriasPrimas.getColumnModel().getColumn(3).setMinWidth(60);
 		tablaMateriasPrimas.getColumnModel().getColumn(3).setMaxWidth(60);
-//		tablaMateriasPrimas.getColumnModel().getColumn(1).setResizable(false);
-//		tablaMateriasPrimas.getColumnModel().getColumn(2).setResizable(false);
-//		tablaMateriasPrimas.getColumnModel().getColumn(3).setResizable(false);
-//		tablaMateriasPrimas.getColumnModel().getColumn(4).setResizable(false);
 		tablaMateriasPrimas.setRowHeight(18);
 		
 		
@@ -358,9 +352,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 		for (int i = 0; i < tablaMateriasPrimas.getRowCount(); i++) {
 			Materia_Prima mp = new Materia_Prima();
 			mp.setId(sv_materiaPrima.obtenerId((String)tablaMateriasPrimas.getValueAt(i, 2)));
-			//mp.setCategoria(1); //TODO
 			mp.setCategoria_string((String) tablaMateriasPrimas.getValueAt(i, 1));
-			//mp.setFecha_vencimiento(fecha_vencimiento); TODO
 			mp.setNombre((String) tablaMateriasPrimas.getValueAt(i, 2));
 			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
 			listaMateriaPrima.add(mp);
