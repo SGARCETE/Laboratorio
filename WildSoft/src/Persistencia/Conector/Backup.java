@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class Backup {
@@ -39,6 +40,7 @@ public class Backup {
 
 	public static void restore(File archivo) {
 		try {
+			JOptionPane.showMessageDialog(null, "Espere un momento, se esta llevando a cabo la restauracion","Restaurando", JOptionPane.INFORMATION_MESSAGE);
 			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
 			InputStream es = p.getErrorStream();
 			muestraSalidaDeError(es);
@@ -53,6 +55,7 @@ public class Backup {
 			}
 			os.close();
 			fis.close();
+			
 			JOptionPane.showMessageDialog(null, "Se ha actualizado la base de datos","Verificar", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
