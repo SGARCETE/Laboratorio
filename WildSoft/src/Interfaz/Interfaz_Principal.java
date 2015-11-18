@@ -1092,7 +1092,7 @@ public class Interfaz_Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				File archivo = importarDatos();
 				if(!archivo.equals(null)){
-					Backup.restore(archivo);
+					Backup.Restore(archivo);
 				}
 				ACTUALIZAR_TODO();
 			}

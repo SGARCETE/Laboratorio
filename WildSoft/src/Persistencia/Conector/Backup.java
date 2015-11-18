@@ -9,11 +9,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class Backup {
 
+	/**
+	 * Genera un archivo .sql con la base de datos del sistema
+	 * @param directorio Es el directorio donde se guardara el .sql generado
+	 */
 	public static void backup(String directorio) {
 		try {
 			Runtime runtime = Runtime.getRuntime();
@@ -29,16 +32,17 @@ public class Backup {
 			fw.close();
 			irs.close();
 			br.close();
-			JOptionPane.showMessageDialog(null, "Se ha generado un respaldo de la base de datos","Verificar", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se ha generado un respaldo de la base de datos","", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null,
-					"Error no se genero el archivo por el siguiente motivo:"
-							+ e.getMessage(), "Verificar",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,"No se pudo generar la copia de seguridad" + e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	public static void restore(File archivo) {
+	/**
+	 * Restaura la base de datos a partir de un archivo .sql
+	 * @param archivo Es el archivo .sql que contiene el backup
+	 */
+	public static void Restore(File archivo) {
 		try {
 			JOptionPane.showMessageDialog(null, "Espere un momento, se esta llevando a cabo la restauracion","Restaurando", JOptionPane.INFORMATION_MESSAGE);
 			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
