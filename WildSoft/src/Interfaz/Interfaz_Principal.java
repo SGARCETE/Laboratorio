@@ -127,8 +127,7 @@ public class Interfaz_Principal {
 			textCliente, new AutoCompleterCallback() {
 				public void callback(Object selectedItem) {
 					String Nombre_Cliente_seleccionado = ((String) selectedItem);
-					Cliente C = sv_clientes
-							.getCliente(Nombre_Cliente_seleccionado);
+					Cliente C = sv_clientes.getCliente(Nombre_Cliente_seleccionado);
 					Cargar_datos_Cliente(C);
 				}
 			});
@@ -150,8 +149,6 @@ public class Interfaz_Principal {
 	private Pedido PEDIDO_ACTUAL = new Pedido();
 	private Producto PRODUCTO_ACTUAL = new Producto();
 
-	@SuppressWarnings("unused")
-	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
 	private JFrame frame_cocina;
 
@@ -159,7 +156,7 @@ public class Interfaz_Principal {
 	private JDateChooser dateChooser_Fecha_mostrar;
 	private JButton btn_fecha_anterior;
 	private JButton btn_fecha_siguiente;
-	private JToggleButton tglbtnSoloPendientes;
+	private JToggleButton btnSoloPendientes;
 
 	/**
 	 * Create the application.
@@ -167,7 +164,6 @@ public class Interfaz_Principal {
 	 * @param principal_Negocio_Interfaz
 	 */
 	public Interfaz_Principal(Principal_Negocio_Interfaz instancia_PNI) {
-		Instancia_de_Interfaz_Principal = this;
 		Principal_neg_int = instancia_PNI;
 		sv_productos = Principal_neg_int.getSvProductos();
 		sv_clientes = Principal_neg_int.getSvClientes();
@@ -343,6 +339,9 @@ public class Interfaz_Principal {
 		lblProductosQueComponen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductosQueComponen.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(panel_Resumen_Pedido);
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		gl_panel_Resumen_Pedido.setHorizontalGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup().addGap(8)
 						.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
@@ -351,27 +350,20 @@ public class Interfaz_Principal {
 						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 						.addGap(8))
 				.addGroup(Alignment.TRAILING,
-						gl_panel_Resumen_Pedido.createSequentialGroup()	.addContainerGap()
-										.addComponent(lblProductosQueComponen,
-												GroupLayout.DEFAULT_SIZE, 723,
-												Short.MAX_VALUE)
-										.addContainerGap()));
-		gl_panel_Resumen_Pedido.setVerticalGroup(gl_panel_Resumen_Pedido
-				.createParallelGroup(Alignment.LEADING).addGroup(
-						gl_panel_Resumen_Pedido
-								.createSequentialGroup()
-								.addGap(14)
-								.addComponent(lblProductosQueComponen,
-										GroupLayout.PREFERRED_SIZE, 25,
-										GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(scrollPane_Pedido_Completo,
-										GroupLayout.DEFAULT_SIZE, 396,
-										Short.MAX_VALUE)
-								.addGap(14)
-								.addComponent(btnQuitar,
-										GroupLayout.PREFERRED_SIZE, 30,
-										GroupLayout.PREFERRED_SIZE).addGap(1)));
+						gl_panel_Resumen_Pedido.createSequentialGroup().addContainerGap()
+								.addComponent(lblProductosQueComponen, GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+								.addContainerGap()));
+		gl_panel_Resumen_Pedido.setVerticalGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup().addGap(14)
+						.addComponent(lblProductosQueComponen, GroupLayout.PREFERRED_SIZE, 25,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+						.addGap(14).addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addGap(1)));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		panel_Resumen_Pedido.setLayout(gl_panel_Resumen_Pedido);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -455,8 +447,7 @@ public class Interfaz_Principal {
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBorder(new TitledBorder(null, "Importes",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(null, "Importes",TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_3.setLayout(null);
 
 		textTotal_Pedido = new JTextField();
@@ -480,127 +471,62 @@ public class Interfaz_Principal {
 			}
 		});
 		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Save-icon48.png")));
+		btnNewButton.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Save-icon48.png")));
 		btnNewButton.setBounds(174, 30, 129, 67);
 		panel_3.add(btnNewButton);
 		GroupLayout gl_panel_Nuevo_pedido = new GroupLayout(panel_Nuevo_pedido);
-		gl_panel_Nuevo_pedido
-				.setHorizontalGroup(gl_panel_Nuevo_pedido
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Nuevo_pedido
-										.createSequentialGroup()
-										.addGroup(
-												gl_panel_Nuevo_pedido
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panelProductos,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addGroup(
-																gl_panel_Nuevo_pedido
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				panelDelibery,
-																				GroupLayout.PREFERRED_SIZE,
-																				609,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(1)
-																		.addComponent(
-																				panel_3,
-																				GroupLayout.DEFAULT_SIZE,
-																				500,
-																				Short.MAX_VALUE)))
-										.addGap(1)));
-		gl_panel_Nuevo_pedido
-				.setVerticalGroup(gl_panel_Nuevo_pedido
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Nuevo_pedido
-										.createSequentialGroup()
-										.addGap(6)
-										.addComponent(panelProductos,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addGap(2)
-										.addGroup(
-												gl_panel_Nuevo_pedido
-														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addComponent(
-																panel_3,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																panelDelibery,
-																GroupLayout.DEFAULT_SIZE,
-																125,
-																Short.MAX_VALUE))));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panel_Nuevo_pedido.setHorizontalGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup()
+						.addGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+						.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup().addContainerGap()
+								.addComponent(panelDelibery, GroupLayout.PREFERRED_SIZE, 609,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(1).addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)))
+						.addGap(1)));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panel_Nuevo_pedido.setVerticalGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Nuevo_pedido.createSequentialGroup().addGap(6)
+						.addComponent(panelProductos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)
+						.addGap(2)
+						.addGroup(gl_panel_Nuevo_pedido.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+										.addComponent(panelDelibery, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		GroupLayout gl_panelProductos = new GroupLayout(panelProductos);
-		gl_panelProductos
-				.setHorizontalGroup(gl_panelProductos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panelProductos
-										.createSequentialGroup()
-										.addGap(12)
-										.addGroup(
-												gl_panelProductos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lblIngreseLosProductos,
-																GroupLayout.PREFERRED_SIZE,
-																404,
-																GroupLayout.PREFERRED_SIZE)
-														.addGroup(
-																gl_panelProductos
-																		.createSequentialGroup()
-																		.addComponent(
-																				panelAltaPedido,
-																				GroupLayout.PREFERRED_SIZE,
-																				331,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(5)
-																		.addComponent(
-																				panel_Resumen_Pedido,
-																				GroupLayout.DEFAULT_SIZE,
-																				744,
-																				Short.MAX_VALUE)))
-										.addGap(4)));
-		gl_panelProductos
-				.setVerticalGroup(gl_panelProductos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panelProductos
-										.createSequentialGroup()
-										.addGap(4)
-										.addComponent(lblIngreseLosProductos,
-												GroupLayout.PREFERRED_SIZE, 25,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(4)
-										.addGroup(
-												gl_panelProductos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panelAltaPedido,
-																GroupLayout.DEFAULT_SIZE,
-																482,
-																Short.MAX_VALUE)
-														.addComponent(
-																panel_Resumen_Pedido,
-																GroupLayout.DEFAULT_SIZE,
-																482,
-																Short.MAX_VALUE))
-										.addGap(4)));
+		gl_panelProductos.setHorizontalGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup().addGap(12)
+						.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 404,
+										GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelProductos.createSequentialGroup()
+								.addComponent(panelAltaPedido, GroupLayout.PREFERRED_SIZE, 331,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(5)
+								.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)))
+						.addGap(4)));
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panelProductos.setVerticalGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProductos.createSequentialGroup().addGap(4)
+						.addComponent(lblIngreseLosProductos, GroupLayout.PREFERRED_SIZE, 25,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(4)
+						.addGroup(gl_panelProductos.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelAltaPedido, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+								.addComponent(panel_Resumen_Pedido, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE))
+						.addGap(4)));
 		panelProductos.setLayout(gl_panelProductos);
 		panel_Nuevo_pedido.setLayout(gl_panel_Nuevo_pedido);
 
@@ -610,12 +536,7 @@ public class Interfaz_Principal {
 
 		JPanel panel_Lista_de_pedidos = new JPanel();
 		panel_Lista_de_pedidos.setBackground(Color.WHITE);
-		tabbedPane
-				.addTab("Listado de pedidos",
-						new ImageIcon(
-								Interfaz_Principal.class
-										.getResource("/Recursos/IMG/Product-sale-report-icon32.png")),
-						panel_Lista_de_pedidos, null);
+		tabbedPane.addTab("Listado de pedidos",new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")),panel_Lista_de_pedidos, null);
 
 		scrollPane_Lista_Pedidos = new JScrollPane();
 
@@ -626,8 +547,7 @@ public class Interfaz_Principal {
 		lblListadoDePedidos.setFont(new Font("SansSerif", Font.BOLD, 24));
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,TitledBorder.TOP, null, null));
 		panel.setBackground(Color.WHITE);
 
 		JButton btnModificar = new JButton("Modificar");
@@ -637,16 +557,14 @@ public class Interfaz_Principal {
 			}
 		});
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/edit-icon64.png")));
+		btnModificar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/edit-icon64.png")));
 		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		panel.add(btnModificar);
 		btnModificar.setBackground(Color.WHITE);
 
 		JButton btnPreparado = new JButton("Preparado");
-		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/preparado64.png")));
+		btnPreparado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/preparado64.png")));
 		btnPreparado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Setear_como_Preparado();
@@ -662,8 +580,7 @@ public class Interfaz_Principal {
 		// ---------------------------
 
 		JButton btnCobrado = new JButton("Cobrado");
-		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Coin-us-dollar-icon64.png")));
+		btnCobrado.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Coin-us-dollar-icon64.png")));
 		btnCobrado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Setear_como_cobrado();
@@ -684,8 +601,7 @@ public class Interfaz_Principal {
 				Cancelar_Pedido_seleccionado();
 			}
 		});
-		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/subtract-1-icon64.png")));
+		btnCancelar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon64.png")));
 
 		JButton btnComandaticket = new JButton("Ticket/Comanda");
 		btnComandaticket.addActionListener(new ActionListener() {
@@ -693,8 +609,7 @@ public class Interfaz_Principal {
 				Generar_Comanda();
 			}
 		});
-		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
+		btnComandaticket.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon64.png")));
 		btnComandaticket.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnComandaticket.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnComandaticket.setBackground(Color.WHITE);
@@ -713,17 +628,14 @@ public class Interfaz_Principal {
 				Fecha_Anterior();
 			}
 		});
-		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
+		btn_fecha_anterior.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-previous-icon32.png")));
 
 		dateChooser_Fecha_mostrar = new JDateChooser();
 		dateChooser_Fecha_mostrar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		dateChooser_Fecha_mostrar.getCalendarButton().setFont(
-				new Font("Tahoma", Font.PLAIN, 16));
+		dateChooser_Fecha_mostrar.getCalendarButton().setFont(new Font("Tahoma", Font.PLAIN, 16));
 		dateChooser_Fecha_mostrar.setBounds(307, 11, 164, 35);
 		panel_2.add(dateChooser_Fecha_mostrar);
-		dateChooser_Fecha_mostrar.setCursor(Cursor
-				.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		dateChooser_Fecha_mostrar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 		btn_fecha_siguiente = new JButton("");
 		btn_fecha_siguiente.setBounds(471, 11, 50, 35);
@@ -733,161 +645,93 @@ public class Interfaz_Principal {
 				Fecha_Siguiente();
 			}
 		});
-		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
+		btn_fecha_siguiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Actions-go-next-icon32.png")));
 
-		tglbtnSoloPendientes = new JToggleButton("Solo pendientes");
-		tglbtnSoloPendientes.addActionListener(new ActionListener() {
+		btnSoloPendientes = new JToggleButton("Solo pendientes");
+		btnSoloPendientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Actualizar_Lista_pedidos();
 			}
 		});
-		tglbtnSoloPendientes.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Check-3-icon16.png")));
-		tglbtnSoloPendientes.setBounds(531, 11, 142, 35);
-		panel_2.add(tglbtnSoloPendientes);
+		btnSoloPendientes.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
+		btnSoloPendientes.setBounds(531, 11, 142, 35);
+		panel_2.add(btnSoloPendientes);
 
 		JLabel lbl_contador = new JLabel("");
 		lbl_contador.setBackground(SystemColor.menu);
 		lbl_contador.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_contador.setFont(new Font("SansSerif", Font.PLAIN, 24));
-		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(
-				panel_Lista_de_pedidos);
+		GroupLayout gl_panel_Lista_de_pedidos = new GroupLayout(panel_Lista_de_pedidos);
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panel_Lista_de_pedidos.setHorizontalGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup().addGap(6)
+						.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+										.addComponent(lbl_contador, GroupLayout.PREFERRED_SIZE, 119,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(16).addComponent(lblListadoDePedidos, GroupLayout.DEFAULT_SIZE, 961,
+												Short.MAX_VALUE))
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+								.addGap(8)
+								.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+										.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
+										.addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE, 961,
+												Short.MAX_VALUE))))
+						.addGap(15)));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		gl_panel_Lista_de_pedidos
-				.setHorizontalGroup(gl_panel_Lista_de_pedidos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Lista_de_pedidos
-										.createSequentialGroup()
-										.addGap(6)
-										.addGroup(
-												gl_panel_Lista_de_pedidos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_panel_Lista_de_pedidos
-																		.createSequentialGroup()
-																		.addComponent(
-																				lbl_contador,
-																				GroupLayout.PREFERRED_SIZE,
-																				119,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(16)
-																		.addComponent(
-																				lblListadoDePedidos,
-																				GroupLayout.DEFAULT_SIZE,
-																				961,
-																				Short.MAX_VALUE))
-														.addGroup(
-																gl_panel_Lista_de_pedidos
-																		.createSequentialGroup()
-																		.addComponent(
-																				panel,
-																				GroupLayout.PREFERRED_SIZE,
-																				127,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(8)
-																		.addGroup(
-																				gl_panel_Lista_de_pedidos
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								panel_2,
-																								GroupLayout.DEFAULT_SIZE,
-																								961,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								scrollPane_Lista_Pedidos,
-																								GroupLayout.DEFAULT_SIZE,
-																								961,
-																								Short.MAX_VALUE))))
-										.addGap(15)));
-		gl_panel_Lista_de_pedidos
-				.setVerticalGroup(gl_panel_Lista_de_pedidos
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Lista_de_pedidos
-										.createSequentialGroup()
-										.addGap(6)
-										.addGroup(
-												gl_panel_Lista_de_pedidos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lbl_contador,
-																GroupLayout.PREFERRED_SIZE,
-																45,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lblListadoDePedidos,
-																GroupLayout.PREFERRED_SIZE,
-																45,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(11)
-										.addGroup(
-												gl_panel_Lista_de_pedidos
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																panel,
-																GroupLayout.DEFAULT_SIZE,
-																534,
-																Short.MAX_VALUE)
-														.addGroup(
-																gl_panel_Lista_de_pedidos
-																		.createSequentialGroup()
-																		.addComponent(
-																				panel_2,
-																				GroupLayout.PREFERRED_SIZE,
-																				54,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGap(11)
-																		.addComponent(
-																				scrollPane_Lista_Pedidos,
-																				GroupLayout.DEFAULT_SIZE,
-																				469,
-																				Short.MAX_VALUE)))
-										.addGap(16)));
+				.setVerticalGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup().addGap(6)
+								.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+										.addComponent(lbl_contador, GroupLayout.PREFERRED_SIZE, 45,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblListadoDePedidos, GroupLayout.PREFERRED_SIZE, 45,
+												GroupLayout.PREFERRED_SIZE))
+						.addGap(11)
+						.addGroup(gl_panel_Lista_de_pedidos.createParallelGroup(Alignment.LEADING)
+								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+								.addGroup(gl_panel_Lista_de_pedidos.createSequentialGroup()
+										.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 54,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(11).addComponent(scrollPane_Lista_Pedidos, GroupLayout.DEFAULT_SIZE,
+												469, Short.MAX_VALUE)))
+								.addGap(16)));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		panel_Lista_de_pedidos.setLayout(gl_panel_Lista_de_pedidos);
-		dateChooser_Fecha_mostrar
-				.addPropertyChangeListener(new PropertyChangeListener() {
+		dateChooser_Fecha_mostrar.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent arg0) {
 						Actualizar_Lista_pedidos();
 					}
 				});
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-		// >>>>>>>>>>>>>>>>>>>>>>>>> PANEL ITINERARIO DE ENTREGA
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+		// PANEL ITINERARIO DE ENTREGA
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JPanel panel_Itinerario = new JPanel();
 		panel_Itinerario.setBackground(Color.WHITE);
-		tabbedPane.addTab(
-				"Itinerario de Entrega",
-				new ImageIcon(Interfaz_Principal.class
-						.getResource("/Recursos/IMG/Delivery-32.png")),
-				panel_Itinerario, null);
+		tabbedPane.addTab("Itinerario de Entrega",new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Delivery-32.png")),panel_Itinerario, null);
 
 		JScrollPane scrollPane = new JScrollPane();
 
 		tabla_Itinerario_Pedidos = new JTable();
-		tabla_Itinerario_Pedidos.setModel(new DefaultTableModel(
-				new Object[][] {}, new String[] { "", "Pedido N\u00B0",
-						"Cliente", "Direccion", "Telefono", "Precio" }) {
+		tabla_Itinerario_Pedidos.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "Pedido N\u00B0","Cliente", "Direccion", "Telefono", "Precio" }) {
 			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] { String.class, String.class,
-					String.class, String.class, String.class, String.class };
+			Class[] columnTypes = new Class[] { String.class, String.class,String.class, String.class, String.class, String.class };
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0)
-				.setPreferredWidth(0);
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
 		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMinWidth(0);
 		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMaxWidth(0);
 		scrollPane.setViewportView(tabla_Itinerario_Pedidos);
@@ -913,21 +757,18 @@ public class Interfaz_Principal {
 
 		JButton btnAgregar_1 = new JButton("Agregar");
 		btnAgregar_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnAgregar_1.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Arrow-Next-4-icon32.png")));
+		btnAgregar_1.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Arrow-Next-4-icon32.png")));
 		btnAgregar_1.setBounds(36, 11, 109, 35);
 		panel_1.add(btnAgregar_1);
 
 		JButton button_1 = new JButton("Quitar");
 		button_1.setHorizontalTextPosition(SwingConstants.RIGHT);
-		button_1.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Arrow-Back-4-icon32.png")));
+		button_1.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Arrow-Back-4-icon32.png")));
 		button_1.setBounds(36, 57, 109, 35);
 		panel_1.add(button_1);
 
 		JButton btnVaciar = new JButton("Vaciar");
-		btnVaciar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/trash-icon32.png")));
+		btnVaciar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/trash-icon32.png")));
 		btnVaciar.setBounds(36, 103, 109, 35);
 		panel_1.add(btnVaciar);
 
@@ -941,130 +782,78 @@ public class Interfaz_Principal {
 		panel_1.add(comboRepartidores);
 
 		JButton btnGenerarnItinerario = new JButton("Generar\n Itinerario");
-		btnGenerarnItinerario.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
+		btnGenerarnItinerario.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Product-sale-report-icon32.png")));
 		btnGenerarnItinerario.setBounds(10, 231, 163, 45);
 		panel_1.add(btnGenerarnItinerario);
 		GroupLayout gl_panel_Itinerario = new GroupLayout(panel_Itinerario);
-		gl_panel_Itinerario
-				.setHorizontalGroup(gl_panel_Itinerario
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Itinerario
-										.createSequentialGroup()
-										.addGap(10)
-										.addGroup(
-												gl_panel_Itinerario
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																lblListaDePedidos,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panel_Itinerario.setHorizontalGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Itinerario.createSequentialGroup().addGap(10)
+						.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblListaDePedidos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblItinerarioDeEntrega, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
+						.addGap(10)));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		gl_panel_Itinerario.setVerticalGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Itinerario.createSequentialGroup().addGap(18)
+						.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblItinerarioDeEntrega, GroupLayout.PREFERRED_SIZE, 27,
+										GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblListaDePedidos, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(
+								ComponentPlacement.RELATED)
+						.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_Itinerario.createSequentialGroup()
+										.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+										.addContainerGap())
+								.addGroup(Alignment.TRAILING,
+										gl_panel_Itinerario.createSequentialGroup()
+												.addGroup(gl_panel_Itinerario.createParallelGroup(Alignment.TRAILING)
+														.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 627,
 																Short.MAX_VALUE)
-														.addComponent(
-																scrollPane,
-																GroupLayout.DEFAULT_SIZE,
-																431,
+														.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 627,
 																Short.MAX_VALUE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(panel_1,
-												GroupLayout.PREFERRED_SIZE,
-												185, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_panel_Itinerario
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addComponent(
-																lblItinerarioDeEntrega,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																scrollPane_1,
-																GroupLayout.DEFAULT_SIZE,
-																467,
-																Short.MAX_VALUE))
-										.addGap(10)));
-		gl_panel_Itinerario
-				.setVerticalGroup(gl_panel_Itinerario
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Itinerario
-										.createSequentialGroup()
-										.addGap(18)
-										.addGroup(
-												gl_panel_Itinerario
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																lblItinerarioDeEntrega,
-																GroupLayout.PREFERRED_SIZE,
-																27,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lblListaDePedidos,
-																GroupLayout.PREFERRED_SIZE,
-																27,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_panel_Itinerario
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_panel_Itinerario
-																		.createSequentialGroup()
-																		.addComponent(
-																				panel_1,
-																				GroupLayout.DEFAULT_SIZE,
-																				627,
-																				Short.MAX_VALUE)
-																		.addContainerGap())
-														.addGroup(
-																Alignment.TRAILING,
-																gl_panel_Itinerario
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_panel_Itinerario
-																						.createParallelGroup(
-																								Alignment.TRAILING)
-																						.addComponent(
-																								scrollPane_1,
-																								GroupLayout.DEFAULT_SIZE,
-																								627,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								scrollPane,
-																								GroupLayout.DEFAULT_SIZE,
-																								627,
-																								Short.MAX_VALUE))
-																		.addGap(11)))));
+												.addGap(11)))));
+
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
 		panel_Itinerario.setLayout(gl_panel_Itinerario);
 		btnGenerarnItinerario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Generar_itinerario_entrega();
 			}
 		});
+		
 		btnVaciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Vaciar_lista_itinerario();
 			}
 		});
+		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Quitar_del_itinerario();
 			}
 		});
+		
 		btnAgregar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_al_itinerario();
 			}
 		});
+		
 		frmWildsoft.getContentPane().setLayout(groupLayout);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1107,14 +896,13 @@ public class Interfaz_Principal {
 		});
 		mnArchivo.add(mntmSalir);
 
-		// Repartidores
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		// Repartidores
 
 		JMenu mnRepartidor = new JMenu("Repartidores");
 		menuBar.add(mnRepartidor);
 
-		JMenuItem mntmADMRepartidores = new JMenuItem(
-				"Administracion de Repartidores");
+		JMenuItem mntmADMRepartidores = new JMenuItem("Administracion de Repartidores");
 		mntmADMRepartidores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Abrir_Interfaz_ABM_Repartidor();
@@ -1213,8 +1001,7 @@ public class Interfaz_Principal {
 		JMenu mnCategoria = new JMenu("Categor\u00EDa");
 		menuBar.add(mnCategoria);
 
-		JMenuItem mntmADMCategoria = new JMenuItem(
-				"Administracion de Categoria");
+		JMenuItem mntmADMCategoria = new JMenuItem("Administracion de Categoria");
 		mntmADMCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AbrirInterfazCategoria();
@@ -1224,18 +1011,17 @@ public class Interfaz_Principal {
 
 	}// --> FIN INTERFAZ
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/** CARGA TODOS LOS DATOS NECESARIOS CUANDO INICIA LA INTERFAZ */
+	/**
+	 * Inicia todos los parametros necesarios, como las tablas y los ComboBox
+	 */
 	private void iniciarParametros() {
 
 		// Creacion de la tabla vacia de lista de pedidos
-		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(
-				new Model_Listado_Pedidos());
+		Tabla_Lista_pedidos = new JTable_Listado_Pedidos(new Model_Listado_Pedidos());
 		scrollPane_Lista_Pedidos.setViewportView(Tabla_Lista_pedidos);
 
 		// Creacion de la tabla vacia con el contenido de un pedido
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
-				new Model_Pedido_Completo());
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 
 		// Establece la fecha de HOY para mostrar los pedidos del dia
@@ -1257,8 +1043,7 @@ public class Interfaz_Principal {
 		comboRepartidores.addItem("Seleccione un repartidor");
 		for (int i = 0; i < lista.size(); i++) {
 			comboRepartidores.addItem(lista.get(i).getNombre());
-			listaRepartidores.put(lista.get(i).getNombre(), lista.get(i)
-					.getID_Repartidor());
+			listaRepartidores.put(lista.get(i).getNombre(), lista.get(i).getID_Repartidor());
 		}
 
 		// INICIALIZA LA COCINA
@@ -1269,6 +1054,9 @@ public class Interfaz_Principal {
 		ACTUALIZAR_TODO();
 	}
 
+	/**
+	 * Llama a todos los metodos actualizar de cada pestaña
+	 */
 	private void ACTUALIZAR_TODO() {
 		Actualizar_Lista_pedidos();
 		ACTUALIZAR_MONITOR();
@@ -1276,10 +1064,13 @@ public class Interfaz_Principal {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	/**
+	 * Genera el monitor de la cocina
+	 */
 	private void Generar_Monitor_cocina() {
 		/** MANEJA LAS PANTALLAS **/
-		GraphicsEnvironment ge = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gs = ge.getScreenDevices();
 
 		/** INICIO TEST DETECCION DE PANTALLAS **/
@@ -1305,81 +1096,53 @@ public class Interfaz_Principal {
 		frame_cocina.setVisible(true);
 	}
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/**
-	 * >>>>>>>>>>>>> ESTE METODO DEBERIA ESTAR EN SERVICIO DE PEDIDOS, Y NO EN
-	 * INTERFAZ <<<<<<<<<<<<<< CALCULA EL TOTAL SEGUN LA CANTIDAD DE UNIDADES
-	 * DEL MISMO PRODUCTO Y EL TOTAL DEL PEDIDO
+	 * Calcula el total segun la cantidad de unidades del mismo producto y el total del pedido
 	 */
 	private void Calcula_totales() {
-		if (PRODUCTO_ACTUAL != null
-				&& PEDIDO_ACTUAL.getLista_Productos() != null) {
+		if (PRODUCTO_ACTUAL != null && PEDIDO_ACTUAL.getLista_Productos() != null) {
 
 			// CALCULA EL TOTAL POR LA CANTIDAD DE UNIDADES QUE LLEVA DEL MISMO
 			// PRODUCTO
-			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio()
-					* (Integer.parseInt(spinnerCantidad.getValue().toString()));
+			Double Total_Mismo_Producto = PRODUCTO_ACTUAL.getPR_precio() * (Integer.parseInt(spinnerCantidad.getValue().toString()));
 			textValorTotal.setText(formatoImporte.format(Total_Mismo_Producto));
 
 			// CALCULA EL TOTAL DEL PEDIDO, recorre todos los productos del
 			// pedido tomando su precio y lo acumula
 			Double TOTAL_PEDIDO = 0.0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				Double precio = PEDIDO_ACTUAL.getLista_Productos().get(i)
-						.getPR_precio();
-				int cantidad = PEDIDO_ACTUAL.getLista_Productos().get(i)
-						.getCantidad();
+				Double precio = PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_precio();
+				int cantidad = PEDIDO_ACTUAL.getLista_Productos().get(i).getCantidad();
 				TOTAL_PEDIDO += precio * cantidad;
 			}
 			PEDIDO_ACTUAL.setTotal(TOTAL_PEDIDO);
 			textTotal_Pedido.setText(formatoImporte.format(TOTAL_PEDIDO));
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	/**
-	 * CUANDO SE SELECCIONA UN TIPO DE PRODUCTO [BEBIDA, EMPANADA, PIZZA] DEL
-	 * COMBOBOX, ESTE DATO SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A
-	 * CONTINUACION SE CARGAN LAS VARIEDADES DEL TIPO DE PRODUCTO SELECCIONADO:
-	 * EJEMPLO: SI SE SELECCIONO BEBIDA, SE DEBE OBTENER LAS VARIEDADES DE
-	 * BEBIDAS: COCACOLA, SPRITE, VINO Y SETEAR EN EL COMBOBOX Y AUTOCOMPLETER
-	 * DE VARIEDADES
+	 * Se encarga de traer los productos del tipo seleccionado en el combo de Tipo de Producto
 	 */
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
-			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
-			Lista_Variedades = sv_productos
-					.getVariedad_del_Producto(comboBoxProducto
-							.getSelectedItem().toString());
+			Lista_Variedades = sv_productos.getVariedad_del_Producto(comboBoxProducto.getSelectedItem().toString());
 			comboBoxVariedad.removeAllItems();
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
-				comboBoxVariedad
-						.addItem(Lista_Variedades.get(i).getPR_nombre());
+				comboBoxVariedad.addItem(Lista_Variedades.get(i).getPR_nombre());
 			}
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
 	/**
-	 * CUANDO SE SELECCIONA UNA VARIEDAD [COCACOLA, SPRITE, VINO] DEL COMBOBOX,
-	 * ESTE DATO SE COPIA AL TEXTFIELD CORRESPONDIENTE, Y A CONTINUACION SE
-	 * CARGA EL PRECIO DE LA VARIEDAD SELECCIONADA. EJEMPLO: SE SELECCIONA LA
-	 * VARIEDAD COCACOLA [DE BEBIDAS], SE OBTIENE EL PRECIO DE DICHO PRODUCTO Y
-	 * SE SETEA EN EL TEXTFIELD DEL PRECIO Y EN "PRODUCTO_ACTUAL"
+	 * Se encarga de traer el precio de la variedad de producto seleccionada
 	 */
 	private void Seleccion_De_Variedad() {
-		if (comboBoxVariedad.getSelectedItem() != null
-				&& !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
-			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
+		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
-				if (Lista_Variedades.get(i).getPR_nombre()
-						.equals(comboBoxVariedad.getSelectedItem().toString()))
-					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL
-																// PRODUCTO
-																// SELECCIONADO
+				if (Lista_Variedades.get(i).getPR_nombre().equals(comboBoxVariedad.getSelectedItem().toString()))
+					PRODUCTO_ACTUAL = Lista_Variedades.get(i);
 			}
-			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL
-					.getPR_precio()));
+			textValor.setText(formatoImporte.format(PRODUCTO_ACTUAL.getPR_precio()));
 			Calcula_totales();
 		}
 	}
@@ -1387,9 +1150,9 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// LIMPIADOR DE CAMPOS
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 	/**
-	 * SE LIMPIAN LOS DATOS DEL FORMULARIO DE ALTA DE PRODUCTO PARA PODER
-	 * INGRESAR UNO NUEVO
+	 * Resetea los campos del alta de pedido excepto la tabla
 	 */
 	private void Limpiar_Formulario_pedido() {
 		PRODUCTO_ACTUAL = new Producto();
@@ -1401,6 +1164,9 @@ public class Interfaz_Principal {
 		textObservaciones.setText("");
 	}
 
+	/**
+	 * Resetea la logica detras del pedido, el cliente seleccionado, la tabla y llama al metodo que limpia el formulario del pedido
+	 */
 	private void Limpiar_Todo() {
 		Limpiar_Formulario_pedido();
 		textCliente.setText("");
@@ -1410,17 +1176,16 @@ public class Interfaz_Principal {
 		textTotal_Pedido.setText("");
 		CLIENTE_ACTUAL = null;
 		PEDIDO_ACTUAL = new Pedido();
-		Tabla_Pedido_Completo = new JTable_Pedido_Completo(
-				new Model_Pedido_Completo());
+		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		chckbxDelivery.setSelected(false);
 		Servicio_Delivery();
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 	/**
-	 * ACTIVA/DESACTIVA LAS OPCIONES DEL DELIVERY SI ES QUE SE SELECCIONA LA
-	 * OPCION "DELIVERY" EN LA INTERFAZ
+	 * Actida/Desactiva las opciones del delibery. Se basa en el checkbox de "Delivery"
 	 */
 	private void Servicio_Delivery() {
 		textCliente.setEnabled(chckbxDelivery.isSelected());
@@ -1446,126 +1211,100 @@ public class Interfaz_Principal {
 		frame.setModal(true);
 		frame.setVisible(true);
 		AutocompletarCliente();
-
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// ABM Client
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_ABM_Producto() {
-		Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(
-				Principal_neg_int);
+		Interfaz_ABM_Producto frame = new Interfaz_ABM_Producto(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
-
 	}
 
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// ABM Combos
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_Combos() {
 		Interfaz_Combos frame = new Interfaz_Combos(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
-
 	}
 
-	// ---------------- Metodo que llama a la interfaz Materia Prima
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// ABM Materia Prima
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Abrir_Interfaz_Materia() {
 		ADM_Materia_Prima frame = new ADM_Materia_Prima(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
-
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/*** ALTA DE PEDIDO */
+	
+	/**
+	 * Metodo que se encarga de guardar el pedido en la base de datos
+	 * @return Devuelve true si se guardo, caso contrario devuelve false
+	 */
 	private boolean Guardar_pedido() {
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
-
-			PEDIDO_ACTUAL
-					.setFecha_Hora_Pedido(Calendar.getInstance().getTime()); // inserta
-																				// fecha
-																				// y
-																				// hora
-																				// actual
-
+			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime());
 			if (chckbxDelivery.isSelected()) {
-				if (CLIENTE_ACTUAL != null
-						&& !CLIENTE_ACTUAL.getNombre().isEmpty()
-						&& !CLIENTE_ACTUAL.getDomicilio().isEmpty()) {
-					// agregar datos del pedido
+				if (CLIENTE_ACTUAL != null && !CLIENTE_ACTUAL.getNombre().isEmpty() && !CLIENTE_ACTUAL.getDomicilio().isEmpty()) {
 					PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
 					PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
 				} else {
-					JOptionPane
-							.showMessageDialog(
-									null,
-									"Para realizar un Delivery, debe seleccionar un cliente",
-									"Falta cliente",
-									JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Para realizar un Delivery, debe seleccionar un cliente","Falta cliente",JOptionPane.WARNING_MESSAGE);
 					return false;
 				}
 			}
-
-			// GUARDA EL PEDIDO
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
-			// ACTUALIZA EL LISTADO DE PEDIDOS
 			ACTUALIZAR_TODO();
-
-			// GENERA TICKET Y COMANDA DE ESTE PRODUCTO
 			Ticket_Comanda_nuevo_pedido();
-
-			// LIMPIA LOS CAMPOS PARA PERMITIR INGRESAR OTRO PEDIDO
 			Limpiar_Todo();
 		}
 		return true;
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/** MODIFICACION DE PEDIDO */
+	
+	/**
+	 * Metodo que se encarga de abrir la interfaz que permite modificar el pedido seleccionado
+	 */
 	private void Modificar_Pedido_Seleccionado() {
 		if (Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(
-					Principal_neg_int);
-			Integer ID_PEDIDO_MODIFICAR = (Integer) Tabla_Lista_pedidos
-					.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			Interfaz_ABM_Pedido frame = new Interfaz_ABM_Pedido(Principal_neg_int);
+			Integer ID_PEDIDO_MODIFICAR = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			frame.setPedido_a_modificar(ID_PEDIDO_MODIFICAR);
 			frame.setModal(true);
 			frame.setVisible(true);
 			ACTUALIZAR_TODO();
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/** BAJA DE PEDIDO (LO CANCELA, NO LO ELIMINA) */
+	
+	/**
+	 * Metodo que se encarga de dar de baja un pedido. La baja es logica
+	 */
 	private void Cancelar_Pedido_seleccionado() {
-		if (Tabla_Lista_pedidos != null
-				&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 0);
+		if (Tabla_Lista_pedidos != null && Tabla_Lista_pedidos.getSelectedRow() != -1) {
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			Pedido P_cancelar = new Pedido();
 			P_cancelar.setNumero_Pedido(Numero_pedido);
-
-			String estado = (String) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 5);
-
+			String estado = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			if (!estado.equals("Cobrado")) {
 				sv_pedidos.eliminar_pedido(P_cancelar);
 				ACTUALIZAR_TODO();
 			}
-
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	/**
+	 * Se encarga de actualizar el JTable de pedidos
+	 */
 	private void Actualizar_Lista_pedidos() {
 		if (dateChooser_Fecha_mostrar.getCalendar() != null) {
-			ArrayList<Pedido> Lista_Pedidos = sv_pedidos
-					.get_Pedidos(dateChooser_Fecha_mostrar.getCalendar());
+			ArrayList<Pedido> Lista_Pedidos = sv_pedidos.get_Pedidos(dateChooser_Fecha_mostrar.getCalendar());
 			Model_Listado_Pedidos model = new Model_Listado_Pedidos();
-
 			ArrayList<Pedido> Lista_Pedidos_Aux = new ArrayList<Pedido>();
-			// Filtra los que no son pendientes, los borra de la lista para
-			// mostrar
-			if (tglbtnSoloPendientes.isSelected()) {
+			if (btnSoloPendientes.isSelected()) {
 				for (int i = 0; i < Lista_Pedidos.size(); i++) {
 					if (Lista_Pedidos.get(i).getESTADO().equals("Pendiente")) {
 						Lista_Pedidos_Aux.add(Lista_Pedidos.get(i));
@@ -1573,20 +1312,15 @@ public class Interfaz_Principal {
 				}
 				Lista_Pedidos = Lista_Pedidos_Aux;
 			}
-
 			// Llena la tabla para mostrar los pedidos
 			for (int i = 0; i < Lista_Pedidos.size(); i++) {
 				Pedido PE = Lista_Pedidos.get(i);
 				String Nombre_Cliente = "";
-				if (PE.getCliente() != null)
+				if (PE.getCliente() != null) {
 					Nombre_Cliente = PE.getCliente().getNombre();
-				model.addRow(new Object[] { PE.getNumero_Pedido(),
-						PE.getID_DIARIO(), Nombre_Cliente,
-						formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()),
-						PE.getEs_Delivery(), PE.getESTADO(),
-						formatoImporte.format(PE.getTotal()) });
+				}
+				model.addRow(new Object[] { PE.getNumero_Pedido(),PE.getID_DIARIO(), Nombre_Cliente,formato_ddMMyyyy.format(PE.getFecha_Hora_Pedido()),PE.getEs_Delivery(), PE.getESTADO(),formatoImporte.format(PE.getTotal()) });
 			}
-
 			Tabla_Lista_pedidos = new JTable_Listado_Pedidos(model);
 			// Accion al darle doble click sobre un pedido
 			Tabla_Lista_pedidos.addMouseListener(new MouseAdapter() {
@@ -1600,28 +1334,20 @@ public class Interfaz_Principal {
 		}
 	}
 
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	/**
-	 * Abre la interfaz del boton seleccionado
-	 * 
-	 * @param nombre
-	 *            Es el identificador de la interfaz que se desea abrir. "sc"
-	 *            --> Abre la interfaz de {@link Interfaz_Solicitud_Compra}.
-	 *            "pr" --> Abre la interfaz de {@link Interfaz_Proveedores}.
+	 * Abre la interfaz del boton seleccionado: 
+	 * @param nombre Es el identificador de la interfaz que se desea abrir
 	 */
 	private void abrirInterfazBoton(String nombre) {
 		if (nombre.equals("sc")) {
-			Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(
-					Principal_neg_int);
+			Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
 			// frame.setModal(true);
 			frame.setVisible(true);
 		} else if (nombre.equals("pr")) {
-			Interfaz_Proveedores frame = new Interfaz_Proveedores(
-					Principal_neg_int);
+			Interfaz_Proveedores frame = new Interfaz_Proveedores(Principal_neg_int);
 			// frame.setModal(true);
 			frame.setVisible(true);
 		}
-
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1632,16 +1358,13 @@ public class Interfaz_Principal {
 	 * pedido general
 	 */
 	private void Agregar_al_Pedido() {
-		if (comboBoxVariedad.getItemCount() != 0
-				&& comboBoxProducto.getItemCount() != 0
+		if (comboBoxVariedad.getItemCount() != 0 && comboBoxProducto.getItemCount() != 0
 				&& comboBoxProducto.getSelectedIndex() != 0) {
 			// hacer que tome los datos del formulario de pedido y los agregue a
 			// la tabla de pedidos LISTO
-			String Tipo_producto = comboBoxProducto.getSelectedItem()
-					.toString();
+			String Tipo_producto = comboBoxProducto.getSelectedItem().toString();
 
-			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue()
-					.toString());
+			Integer Cantidad = Integer.parseInt(spinnerCantidad.getValue().toString());
 			PRODUCTO_ACTUAL.setCantidad(Cantidad);
 
 			String Variedad = comboBoxVariedad.getSelectedItem().toString();
@@ -1656,20 +1379,16 @@ public class Interfaz_Principal {
 				 * la base de datos
 				 **/
 
-				ArrayList<Producto> productos = PEDIDO_ACTUAL
-						.getLista_Productos();
+				ArrayList<Producto> productos = PEDIDO_ACTUAL.getLista_Productos();
 
 				// Si se agrega el mismo producto otra vez, agrega la cantidad
 				// al que ya estaba
 				boolean productoNoEsta = true;
 				for (int i = 0; i < productos.size(); i++) {
-					if (productos.get(i).getPR_nombre()
-							.equals(PRODUCTO_ACTUAL.getPR_nombre())
-							&& productos.get(i).getPR_precio()
-									.equals(PRODUCTO_ACTUAL.getPR_precio())) {
+					if (productos.get(i).getPR_nombre().equals(PRODUCTO_ACTUAL.getPR_nombre())
+							&& productos.get(i).getPR_precio().equals(PRODUCTO_ACTUAL.getPR_precio())) {
 						int cantidad = productos.get(i).getCantidad();
-						productos.get(i).setCantidad(
-								cantidad + PRODUCTO_ACTUAL.getCantidad());
+						productos.get(i).setCantidad(cantidad + PRODUCTO_ACTUAL.getCantidad());
 						productoNoEsta = false;
 					}
 				}
@@ -1680,7 +1399,9 @@ public class Interfaz_Principal {
 				/** Esto va para la parte visual **/
 				Actualizar_Tabla_Productos_del_Pedido(PEDIDO_ACTUAL);
 
-				/** Despues que se resetee el formulario de ingreso de pedido **/
+				/**
+				 * Despues que se resetee el formulario de ingreso de pedido
+				 **/
 				Limpiar_Formulario_pedido();
 				Calcula_totales();
 			}
@@ -1721,43 +1442,21 @@ public class Interfaz_Principal {
 	private void Quitar_al_Pedido() {
 		// LO QUITA DE LA LISTA DE PEDIDO
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
-			Integer cantidad = (Integer) Tabla_Pedido_Completo.getValueAt(
-					(Integer) Tabla_Pedido_Completo.getSelectedRow(), 1);
-			String Variedad = (String) Tabla_Pedido_Completo.getValueAt(
-					(Integer) Tabla_Pedido_Completo.getSelectedRow(), 3);
+			Integer cantidad = (Integer) Tabla_Pedido_Completo
+					.getValueAt((Integer) Tabla_Pedido_Completo.getSelectedRow(), 1);
+			String Variedad = (String) Tabla_Pedido_Completo
+					.getValueAt((Integer) Tabla_Pedido_Completo.getSelectedRow(), 3);
 			Integer removidos = 0;
 			for (int i = 0; i < PEDIDO_ACTUAL.getLista_Productos().size(); i++) {
-				if (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre()
-						.equals(Variedad)
-						&& removidos < cantidad)
+				if (PEDIDO_ACTUAL.getLista_Productos().get(i).getPR_nombre().equals(Variedad) && removidos < cantidad)
 					PEDIDO_ACTUAL.getLista_Productos().remove(i);
 				removidos++;
 			}
 		}
 		// LO QUITA DE LA LISTA VISUAL
-		if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no
-															// se selecciono
-															// nada en la tabla,
-															// si es distinto,
-															// entonces es xq
-															// selecciono algo y
-															// se puede quitar
-			int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); // indice
-																				// la
-																				// tabla,
-																				// (No
-																				// funciona
-																				// si
-																				// se
-																				// ordenan
-																				// los
-																				// datos
-																				// desde
-																				// la
-																				// tabla,
-																				// ojo)
-			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo
-					.getModel();
+		if (Tabla_Pedido_Completo.getSelectedRow() != -1) {
+			int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow();
+			DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
 			modelo.removeRow(indice_Seleccionado);
 			Calcula_totales();
 		}
@@ -1906,14 +1605,12 @@ public class Interfaz_Principal {
 	private void Quitar_del_itinerario() {
 		if (tabla_Itinerario_con_pedidos.getSelectedRow() > -1) {
 			for (int i = 0; i < pedidodItinerario.size(); i++) {
-				if (pedidodItinerario.get(i) == Integer
-						.parseInt((String) tabla_Itinerario_Pedidos.getValueAt(
-								tabla_Itinerario_Pedidos.getSelectedRow(), 0))) {
+				if (pedidodItinerario.get(i) == Integer.parseInt(
+						(String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0))) {
 					pedidodItinerario.remove(i);
 				}
 			}
-			DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos
-					.getModel();
+			DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos.getModel();
 			modelo.removeRow(tabla_Itinerario_con_pedidos.getSelectedRow());
 			tabla_Itinerario_con_pedidos.setModel(modelo);
 		}
@@ -1922,14 +1619,9 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Agregar_al_itinerario() {
 		if (tabla_Itinerario_Pedidos.getSelectedRow() > -1) {
-			if (!pedidodItinerario.contains(Integer
-					.parseInt((String) tabla_Itinerario_Pedidos.getValueAt(
-							tabla_Itinerario_Pedidos.getSelectedRow(), 0)))) {
-				pedidodItinerario.add(Integer
-						.parseInt((String) tabla_Itinerario_Pedidos.getValueAt(
-								tabla_Itinerario_Pedidos.getSelectedRow(), 0)));
-				DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos
-						.getModel();
+			if (!pedidodItinerario.contains(Integer.parseInt((String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0)))) {
+				pedidodItinerario.add(Integer.parseInt((String) tabla_Itinerario_Pedidos.getValueAt(tabla_Itinerario_Pedidos.getSelectedRow(), 0)));
+				DefaultTableModel modelo = (DefaultTableModel) tabla_Itinerario_con_pedidos.getModel();
 				String[] arreglo = {
 						(String) tabla_Itinerario_Pedidos.getValueAt(
 								tabla_Itinerario_Pedidos.getSelectedRow(), 0),
@@ -1948,25 +1640,19 @@ public class Interfaz_Principal {
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_itinerario_entrega() {
-		if (tabla_Itinerario_con_pedidos != null
-				&& tabla_Itinerario_con_pedidos.getRowCount() > 0) {
+		if (tabla_Itinerario_con_pedidos != null && tabla_Itinerario_con_pedidos.getRowCount() > 0) {
 			if (comboRepartidores.getSelectedIndex() != 0) {
 				Entrega entrega = new Entrega();
 				entrega.setFecha_salida(MetAux.toDate(Calendar.getInstance()));
-				entrega.setRepartidor(sv_Repartidores
-						.getRepartidor(comboRepartidores.getSelectedItem()
-								.toString()));
+				entrega.setRepartidor(sv_Repartidores.getRepartidor(comboRepartidores.getSelectedItem().toString()));
 				sv_Entrega.agregarEntrega(entrega);
 				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
 				entrega.setLista_pedidos(new ArrayList<Pedido>());
 				for (int i = 0; i < tabla_Itinerario_con_pedidos.getRowCount(); i++) {
-					entrega.getLista_pedidos()
-							.add(sv_pedidos.get_pedido(Integer
-									.parseInt((String) tabla_Itinerario_con_pedidos
-											.getValueAt(i, 0))));
-					Pedido pedido = sv_pedidos.get_pedido(Integer
-							.parseInt((String) tabla_Itinerario_con_pedidos
-									.getValueAt(i, 0)));
+					entrega.getLista_pedidos().add(sv_pedidos
+							.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
+					Pedido pedido = sv_pedidos
+							.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
 					sv_pedidos.modificar_estado(pedido, 3);
 					ACTUALIZAR_TODO();
 				}
@@ -1975,12 +1661,13 @@ public class Interfaz_Principal {
 				ReporteItinerario ri = new ReporteItinerario();
 				ri.Generar_Itinerario(entrega.getId());
 
-				tabla_Itinerario_con_pedidos
-						.setModel(obtener_Model_itinerario());
+				tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 			} else
-				JOptionPane.showMessageDialog(null,"Para generar el itinerario debe seleccionar un repartidor","Falta elegir un repartidor",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Para generar el itinerario debe seleccionar un repartidor",
+						"Falta elegir un repartidor", JOptionPane.WARNING_MESSAGE);
 		} else
-			JOptionPane.showMessageDialog(null,"Aun no hay pedidos con delivery preparados","Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Aun no hay pedidos con delivery preparados",
+					"Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -2008,7 +1695,6 @@ public class Interfaz_Principal {
 		Rectangle r = Tabla_Lista_pedidos.getCellRect(indice, 0, false);
 		scrollPane_Lista_Pedidos.getViewport().scrollRectToVisible(r);
 		Generar_Comanda();
-
 	}
 	
 	/**
