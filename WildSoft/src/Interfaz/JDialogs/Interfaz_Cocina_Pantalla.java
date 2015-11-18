@@ -407,13 +407,34 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 	private void setResumen_Productos_Pendientes(ArrayList<Pedido> Lista_Pedidos){
 		DefaultTableModel model = (DefaultTableModel) table_Resumen_Productos_Pendientes.getModel();
+		ArrayList<Producto> Lista_todos_productos = new ArrayList<Producto>();
+		
+		// Llena una lista con TODOS LOS PRODUCTOS DEL DIA
 		for (int i = 0; i < Lista_Pedidos.size(); i++) {
 			Pedido p = Lista_Pedidos.get(i);
-			for (int j = 0; j < Lista_Pedidos.get(i).getLista_Productos().size(); j++) {
+			for (int j = 0; j < p.getLista_Productos().size(); j++) {
 				Producto pr = p.getLista_Productos().get(j);
-				if(pr.getPR_tipo_producto()!=3 )// SI NO ES UNA BEBIDA
-					model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre()});	
+				if(pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA
+					
+					boolean esta = Lista_todos_productos.contains(pr);
+					if(esta){
+						Integer index = Lista_todos_productos.indexOf(pr);
+						Integer nueva_cant = Lista_todos_productos.get(index).getCantidad() + pr.getCantidad();
+						Lista_todos_productos.get(index).setCantidad(nueva_cant);
+						
+					}
+					else{
+						Lista_todos_productos.add(pr);
+					}
+
+				}
 			}
+		}
+		
+		// Llena la tabla
+		for (int i = 0; i < Lista_todos_productos.size(); i++) {
+			Producto pr = Lista_todos_productos.get(i);
+			model.addRow(new Object[]{pr.getCantidad(), pr.getPR_TIPO_PRODUCTO_STRING(), pr.getPR_nombre()});	
 		}
 		table_Resumen_Productos_Pendientes.setModel(model);
 	}
