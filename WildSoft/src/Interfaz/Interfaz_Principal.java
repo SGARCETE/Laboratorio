@@ -1466,10 +1466,8 @@ public class Interfaz_Principal {
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_Preparado() {
 		if (Tabla_Lista_pedidos.getSelectedRow() > -1) {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 0);
-			String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 5);
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
 			pedido.setNumero_Pedido(Numero_pedido);
 
@@ -1483,15 +1481,12 @@ public class Interfaz_Principal {
 	// CAMBIA ESTADO DEL PEDIDO //
 	private void Setear_como_cobrado() {
 		if (Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 0);
-			String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 5);
+			Integer Numero_pedido = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
+			String Estado_pedido = (String) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 5);
 			Pedido pedido = new Pedido();
 			pedido.setNumero_Pedido(Numero_pedido);
 
-			if (Estado_pedido.equals("Preparado")
-					|| (Estado_pedido.equals("Enviado"))) {
+			if (Estado_pedido.equals("Preparado") || (Estado_pedido.equals("Enviado"))) {
 				sv_pedidos.modificar_estado(pedido, 4);
 				ACTUALIZAR_TODO();
 			}
@@ -1507,31 +1502,24 @@ public class Interfaz_Principal {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void AutocompletarCliente() {
+	public void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
 		AutoCompleter_Cliente.setMode(0);
-		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes()
-				.getLISTA_CLIENTES());
+		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void ACTUALIZAR_MONITOR() {
-		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos
-				.getLISTA_PEDIDOS_COCINA(new GregorianCalendar());
-		// System.out.println("INTERFAZ_PRINCIPAL.ACTUALIZAR_MONITOR() " +
-		// Lista_Productos_de_Hoy.size());
-		((Interfaz_Cocina_Pantalla) frame_cocina)
-				.Actualizar_monitor(Lista_Productos_de_Hoy);
+		ArrayList<Pedido> Lista_Productos_de_Hoy = sv_pedidos.getLISTA_PEDIDOS_COCINA(new GregorianCalendar());
+		((Interfaz_Cocina_Pantalla) frame_cocina).Actualizar_monitor(Lista_Productos_de_Hoy);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Comanda() {
-		if (Tabla_Lista_pedidos != null
-				&& Tabla_Lista_pedidos.getSelectedRow() != -1) {
+		if (Tabla_Lista_pedidos != null && Tabla_Lista_pedidos.getSelectedRow() != -1) {
 			ReporteTicket RT = new ReporteTicket();
-			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(
-					Tabla_Lista_pedidos.getSelectedRow(), 0);
+			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
 			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
 		}
 	}
@@ -1666,8 +1654,7 @@ public class Interfaz_Principal {
 				JOptionPane.showMessageDialog(null, "Para generar el itinerario debe seleccionar un repartidor",
 						"Falta elegir un repartidor", JOptionPane.WARNING_MESSAGE);
 		} else
-			JOptionPane.showMessageDialog(null, "Aun no hay pedidos con delivery preparados",
-					"Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Aun no hay pedidos con delivery preparados","Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
