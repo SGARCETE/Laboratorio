@@ -13,15 +13,13 @@ import javax.swing.JOptionPane;
 
 public class Backup {
 
-	public static void backup() {
+	public static void backup(String directorio) {
 		try {
 			Runtime runtime = Runtime.getRuntime();
-			File backupFile = new File("BackUp.sql");
+			File backupFile = new File(directorio,"BackUp.sql");
 			FileWriter fw = new FileWriter(backupFile);
-			Process child = runtime
-					.exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
-			InputStreamReader irs = new InputStreamReader(
-					child.getInputStream());
+			Process child = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
+			InputStreamReader irs = new InputStreamReader(child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -30,8 +28,7 @@ public class Backup {
 			fw.close();
 			irs.close();
 			br.close();
-			JOptionPane.showMessageDialog(null, "Se ha generado un respaldo de la base de datos",
-					"Verificar", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se ha generado un respaldo de la base de datos","Verificar", JOptionPane.INFORMATION_MESSAGE);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
 					"Error no se genero el archivo por el siguiente motivo:"
