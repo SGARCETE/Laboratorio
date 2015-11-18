@@ -387,6 +387,12 @@ public class Interfaz_Principal {
 		chckbxDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Servicio_Delivery();
+				if(!chckbxDelivery.isSelected()){
+					textCliente.setText("");
+					textDomicilio.setText("");
+					textTelefono.setText("");
+					textDetalle.setText("");
+				}
 			}
 		});
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -1502,7 +1508,7 @@ public class Interfaz_Principal {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	public void AutocompletarCliente() {
+	private void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
 		AutoCompleter_Cliente.setMode(0);
@@ -1541,8 +1547,7 @@ public class Interfaz_Principal {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	// >>>>>>>>>>>>>>>>>>>>>>>> METODOS ITINERARIO DE ENTREGA
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// METODOS ITINERARIO DE ENTREGA
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	@SuppressWarnings("serial")
@@ -1637,10 +1642,8 @@ public class Interfaz_Principal {
 				entrega.setId(sv_Entrega.obtenerIdUltimaEntrega());
 				entrega.setLista_pedidos(new ArrayList<Pedido>());
 				for (int i = 0; i < tabla_Itinerario_con_pedidos.getRowCount(); i++) {
-					entrega.getLista_pedidos().add(sv_pedidos
-							.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
-					Pedido pedido = sv_pedidos
-							.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
+					entrega.getLista_pedidos().add(sv_pedidos.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0))));
+					Pedido pedido = sv_pedidos.get_pedido(Integer.parseInt((String) tabla_Itinerario_con_pedidos.getValueAt(i, 0)));
 					sv_pedidos.modificar_estado(pedido, 3);
 					ACTUALIZAR_TODO();
 				}
@@ -1651,8 +1654,7 @@ public class Interfaz_Principal {
 
 				tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 			} else
-				JOptionPane.showMessageDialog(null, "Para generar el itinerario debe seleccionar un repartidor",
-						"Falta elegir un repartidor", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Para generar el itinerario debe seleccionar un repartidor","Falta elegir un repartidor", JOptionPane.WARNING_MESSAGE);
 		} else
 			JOptionPane.showMessageDialog(null, "Aun no hay pedidos con delivery preparados","Sin pedidos para delivery", JOptionPane.WARNING_MESSAGE);
 	}
