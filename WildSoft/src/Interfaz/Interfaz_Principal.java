@@ -95,8 +95,9 @@ import Reportes.ReporteTicket;
 public class Interfaz_Principal {
 
 	public JFrame frmWildsoft;
-	// <COMPONENTES>
+	
 	private JTabbedPane tabbedPane;
+	
 	private JScrollPane scrollPane_Lista_Pedidos;
 	private JScrollPane scrollPane_Pedido_Completo;
 
@@ -107,8 +108,12 @@ public class Interfaz_Principal {
 
 	private JComboBox<String> comboBoxProducto;
 	private JComboBox<String> comboBoxVariedad;
+	private JComboBox<String> comboRepartidores;
+	
 	private JCheckBox chckbxDelivery;
+	
 	private JSpinner spinnerCantidad;
+	
 	private JTextField textDomicilio;
 	private JTextField textTelefono;
 	private JTextField textDetalle;
@@ -117,68 +122,34 @@ public class Interfaz_Principal {
 	private JTextField textValorTotal;
 	private JTextField textCliente = new JTextField();
 	private JTextField textTotal_Pedido;
+	
 	private TextAutoCompleter AutoCompleter_Cliente = new TextAutoCompleter(
 			textCliente, new AutoCompleterCallback() {
-				public void callback(Object selectedItem) { // Para saber que
-															// selecciono el
-															// usuario // <HACE
-															// ALGO SI TE ELIJO>
-															// ejemplo:
+				public void callback(Object selectedItem) {
 					String Nombre_Cliente_seleccionado = ((String) selectedItem);
 					Cliente C = sv_clientes
 							.getCliente(Nombre_Cliente_seleccionado);
 					Cargar_datos_Cliente(C);
 				}
 			});
+	
 	private ArrayList<Integer> pedidodItinerario = new ArrayList<Integer>();
+	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	
 	private HashMap<String, Integer> listaRepartidores;
-	JComboBox<String> comboRepartidores;
 
-	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(); /*
-																			 * Muestra
-																			 * un
-																			 * Double
-																			 * en
-																			 * formato
-																			 * Dinero
-																			 * .
-																			 * Ej
-																			 * :
-																			 * 50.5
-																			 * =
-																			 * >
-																			 * $50
-																			 * ,
-																			 * 50
-																			 */
-	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
+	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 
-	// <SERVICIOS> [solo los que voy a usar en esta clase, la instancia se le
-	// pide a Principal_Negocio_principal]
 	private Servicio_Productos sv_productos;
 	private Servicio_Clientes sv_clientes;
 	private Servicio_Pedidos sv_pedidos;
 	private Servicio_Repartidores sv_Repartidores;
 	private Servicio_entrega sv_Entrega;
-	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
-	private Pedido PEDIDO_ACTUAL = new Pedido(); /*
-												 * Cuando creo un nuevo pedido
-												 * lo voy llenando aca, cuando
-												 * lo termino se resetea
-												 */
-	private Producto PRODUCTO_ACTUAL = new Producto(); /*
-														 * Cuando selecciono el
-														 * producto, este va a
-														 * saber la variedad,
-														 * observacion,
-														 * cantidad, total,
-														 * cuando lo agrego a la
-														 * tabla se resetea para
-														 * ingresar otro
-														 */
 
-	// <INSTANCIAS DE ESTA INTERFAZ Y DE PRINCIPAL>
+	private Pedido PEDIDO_ACTUAL = new Pedido();
+	private Producto PRODUCTO_ACTUAL = new Producto();
+
 	@SuppressWarnings("unused")
 	private Interfaz_Principal Instancia_de_Interfaz_Principal;
 	private Principal_Negocio_Interfaz Principal_neg_int;
@@ -195,76 +166,35 @@ public class Interfaz_Principal {
 	 * 
 	 * @param principal_Negocio_Interfaz
 	 */
-	public Interfaz_Principal(
-			Principal_Negocio_Interfaz iNSTANCIA_principal_Negocio_Interfaz) {
-		Instancia_de_Interfaz_Principal = this; /*
-												 * Esta instancia de
-												 * Interfaz_principal sirve para
-												 * poder pasarsela a otras
-												 * ventanas externas y asi poder
-												 * comunicarse
-												 */
-		Principal_neg_int = iNSTANCIA_principal_Negocio_Interfaz; /*
-																 * ESTA CLASE ES
-																 * NECESARIA
-																 * PARA QUE TODA
-																 * INTERFAZ
-																 * PUEDA
-																 * COMUNICARSE
-																 * CON LA PARTE
-																 * DE NEGOCIO
-																 */
-		sv_productos = Principal_neg_int.getSvProductos(); /*
-															 * USAMOS LA
-															 * INSTANCIA DE
-															 * SERVICIO YA
-															 * CREADA EN
-															 * PRINCIPAL
-															 */
-		sv_clientes = Principal_neg_int.getSvClientes(); /*
-														 * USAMOS LA INSTANCIA
-														 * DE SERVICIO YA CREADA
-														 * EN PRINCIPAL
-														 */
-		sv_pedidos = Principal_neg_int.getSvPedidos(); /*
-														 * USAMOS LA INSTANCIA
-														 * DE SERVICIO YA CREADA
-														 * EN PRINCIPAL
-														 */
+	public Interfaz_Principal(Principal_Negocio_Interfaz instancia_PNI) {
+		Instancia_de_Interfaz_Principal = this;
+		Principal_neg_int = instancia_PNI;
+		sv_productos = Principal_neg_int.getSvProductos();
+		sv_clientes = Principal_neg_int.getSvClientes();
+		sv_pedidos = Principal_neg_int.getSvPedidos();
 		sv_Repartidores = Principal_neg_int.getSvRepartidores();
 		sv_Entrega = Principal_neg_int.getSvEntrega();
-		new Backup();
-		initialize(); /* GENERA EL CONTENIDO DE LA INTERFAZ, LOS COMPONENTES */
-		iniciarParametros(); /*
-							 * INICIA LAS VARIABLES Y METODOS NECESARIOS PARA
-							 * PODER EMPEZAR A OPERAR
-							 */
-
+		initialize();
+		iniciarParametros();
 	}
 
 	@SuppressWarnings("serial")
 	private void initialize() {
 		frmWildsoft = new JFrame();
-		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Interfaz_Principal.class
-						.getResource("/Recursos/Pizza-icon16.png")));
+		frmWildsoft.setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Principal.class.getResource("/Recursos/Pizza-icon16.png")));
 		frmWildsoft.setTitle("WildSoft");
 		frmWildsoft.setBounds(100, 100, 1133, 720);
 		frmWildsoft.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmWildsoft.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout groupLayout = new GroupLayout(frmWildsoft.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addComponent(tabbedPane,
-				GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addComponent(tabbedPane,
-				GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(tabbedPane,GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(tabbedPane,GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		// Panel de Nuevo Pedido
@@ -272,30 +202,22 @@ public class Interfaz_Principal {
 
 		JPanel panel_Nuevo_pedido = new JPanel();
 		panel_Nuevo_pedido.setBackground(SystemColor.menu);
-		tabbedPane.addTab(
-				"Nuevo pedido",
-				new ImageIcon(Interfaz_Principal.class
-						.getResource("/Recursos/IMG/pizza-slice-icon32.png")),
-				panel_Nuevo_pedido, null);
+		tabbedPane.addTab("Nuevo pedido",new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/pizza-slice-icon32.png")),panel_Nuevo_pedido, null);
 
 		JPanel panelProductos = new JPanel();
 		panelProductos.setBackground(Color.WHITE);
-		panelProductos.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "", TitledBorder.CENTER,
-				TitledBorder.TOP, null, null));
+		panelProductos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.CENTER,TitledBorder.TOP, null, null));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-		JLabel lblIngreseLosProductos = new JLabel(
-				"Ingrese los productos que componen el pedido");
+		JLabel lblIngreseLosProductos = new JLabel("Ingrese los productos que componen el pedido");
 		lblIngreseLosProductos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseLosProductos.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JPanel panelAltaPedido = new JPanel();
 		panelAltaPedido.setBackground(Color.WHITE);
 		panelAltaPedido.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelAltaPedido.setBorder(new TitledBorder(null, "",
-				TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panelAltaPedido.setBorder(new TitledBorder(null, "",TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelAltaPedido.setLayout(null);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -324,6 +246,7 @@ public class Interfaz_Principal {
 		});
 		comboBoxVariedad.setBounds(117, 49, 201, 25);
 		panelAltaPedido.add(comboBoxVariedad);
+		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblVariedad = new JLabel("Variedad");
@@ -400,13 +323,11 @@ public class Interfaz_Principal {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(117, 225, 100, 30);
 		panelAltaPedido.add(btnAgregar);
-		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/add-1-icon24.png")));
+		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 
 		JPanel panel_Resumen_Pedido = new JPanel();
 		panel_Resumen_Pedido.setBackground(Color.WHITE);
-		panel_Resumen_Pedido.setBorder(new TitledBorder(null, "",
-				TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_Resumen_Pedido.setBorder(new TitledBorder(null, "",TitledBorder.CENTER, TitledBorder.TOP, null, null));
 
 		JButton btnQuitar = new JButton("Quitar");
 		btnQuitar.addActionListener(new ActionListener() {
@@ -414,44 +335,23 @@ public class Interfaz_Principal {
 				Quitar_al_Pedido();
 			}
 		});
-		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class
-				.getResource("/Recursos/IMG/subtract-1-icon24.png")));
+		btnQuitar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 
 		scrollPane_Pedido_Completo = new JScrollPane();
 
-		JLabel lblProductosQueComponen = new JLabel(
-				"Productos que componen el pedido");
+		JLabel lblProductosQueComponen = new JLabel("Productos que componen el pedido");
 		lblProductosQueComponen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductosQueComponen.setFont(new Font("Tahoma", Font.BOLD, 16));
-		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(
-				panel_Resumen_Pedido);
-		gl_panel_Resumen_Pedido
-				.setHorizontalGroup(gl_panel_Resumen_Pedido
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_Resumen_Pedido
-										.createSequentialGroup()
-										.addGap(8)
-										.addGroup(
-												gl_panel_Resumen_Pedido
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																scrollPane_Pedido_Completo,
-																GroupLayout.DEFAULT_SIZE,
-																727,
-																Short.MAX_VALUE)
-														.addComponent(
-																btnQuitar,
-																GroupLayout.PREFERRED_SIZE,
-																100,
-																GroupLayout.PREFERRED_SIZE))
-										.addGap(8))
-						.addGroup(
-								Alignment.TRAILING,
-								gl_panel_Resumen_Pedido
-										.createSequentialGroup()
-										.addContainerGap()
+		GroupLayout gl_panel_Resumen_Pedido = new GroupLayout(panel_Resumen_Pedido);
+		gl_panel_Resumen_Pedido.setHorizontalGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_Resumen_Pedido.createSequentialGroup().addGap(8)
+						.addGroup(gl_panel_Resumen_Pedido.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 727,
+										Short.MAX_VALUE)
+						.addComponent(btnQuitar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+						.addGap(8))
+				.addGroup(Alignment.TRAILING,
+						gl_panel_Resumen_Pedido.createSequentialGroup()	.addContainerGap()
 										.addComponent(lblProductosQueComponen,
 												GroupLayout.DEFAULT_SIZE, 723,
 												Short.MAX_VALUE)
@@ -1190,7 +1090,10 @@ public class Interfaz_Principal {
 		JMenuItem mntmRestaurarBackup = new JMenuItem("Restaurar Backup");
 		mntmRestaurarBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Backup.restore();
+				File archivo = importarDatos();
+				if(!archivo.equals(null)){
+					Backup.restore(archivo);
+				}
 				ACTUALIZAR_TODO();
 			}
 		});
@@ -2122,16 +2025,16 @@ public class Interfaz_Principal {
 		return "";
 	}
 	
-	@SuppressWarnings("unused")
-	public void importarDatos() {
+	public File importarDatos() {
+		File ArchivoDeExportacion = null;
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(".sql","sql");
 		chooser.setFileFilter(filter);
 		int resultado = chooser.showOpenDialog(null);
 		if (resultado == JFileChooser.APPROVE_OPTION) {
-			File ArchivoDeExportacion = chooser.getSelectedFile();
-			String Import = ArchivoDeExportacion.getAbsolutePath();
+			ArchivoDeExportacion = chooser.getSelectedFile();
 		}
+		return ArchivoDeExportacion;
 	}
 
 }// ---> FIN CLASE

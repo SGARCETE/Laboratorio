@@ -37,17 +37,13 @@ public class Backup {
 		}
 	}
 
-	public static void restore() {
+	public static void restore(File archivo) {
 		try {
-			// Ejecucion del cliente mysql
 			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
-			// Lectura de la salida de error y se muestra por pantalla.
 			InputStream es = p.getErrorStream();
 			muestraSalidaDeError(es);
-			// Lectura del fichero de backup y redireccion a la entrada estandar
-			// de mysql.
 			OutputStream os = p.getOutputStream();
-			FileInputStream fis = new FileInputStream("../WildSoft/BackUp.sql");
+			FileInputStream fis = new FileInputStream(archivo);
 			byte buffer[] = new byte[1024];
 			int leido = fis.read(buffer);
 			while (leido > 0) {
@@ -62,24 +58,22 @@ public class Backup {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Se saca por pantalla la salida de errores del comando, por si acaso.
-	 * 
-	 * @param es
-	 *            El InputStream de donde leer los errores del comando mysql.
+	 * @param input Es el InputStream de donde leer los errores del comando mysql.
 	 */
-	private static void muestraSalidaDeError(final InputStream es) {
+	private static void muestraSalidaDeError(final InputStream input) {
 		Thread hiloError = new Thread() {
 			public void run() {
 				try {
 					byte[] buffer = new byte[1024];
-					int leido = es.read(buffer);
+					int leido = input.read(buffer);
 					while (leido > 0) {
 						System.out.println(new String(buffer, 0, leido));
-						leido = es.read(buffer);
+						leido = input.read(buffer);
 					}
-					es.close();
+					input.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
