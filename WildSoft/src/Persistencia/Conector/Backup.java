@@ -40,17 +40,14 @@ public class Backup {
 	public static void restore() {
 		try {
 			// Ejecucion del cliente mysql
-			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql -u root -proot wildsoft");
-
+			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
 			// Lectura de la salida de error y se muestra por pantalla.
 			InputStream es = p.getErrorStream();
 			muestraSalidaDeError(es);
-
 			// Lectura del fichero de backup y redireccion a la entrada estandar
 			// de mysql.
 			OutputStream os = p.getOutputStream();
 			FileInputStream fis = new FileInputStream("../WildSoft/BackUp.sql");
-
 			byte buffer[] = new byte[1024];
 			int leido = fis.read(buffer);
 			while (leido > 0) {
@@ -60,8 +57,7 @@ public class Backup {
 			}
 			os.close();
 			fis.close();
-			JOptionPane.showMessageDialog(null, "Se ha actualizado la base de datos",
-					"Verificar", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se ha actualizado la base de datos","Verificar", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

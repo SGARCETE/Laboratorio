@@ -1169,15 +1169,6 @@ public class Interfaz_Principal {
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-		// >>>>>>>>>>>>>>>>>>>>> FIN DEL PANEL ITINERARIO DE ENTREGA
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		// Menu
-		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
 		frmWildsoft.setJMenuBar(menuBar);
@@ -1199,8 +1190,8 @@ public class Interfaz_Principal {
 		JMenuItem mntmRestaurarBackup = new JMenuItem("Restaurar Backup");
 		mntmRestaurarBackup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ACTUALIZAR_TODO();
 				Backup.restore();
+				ACTUALIZAR_TODO();
 			}
 		});
 		mnArchivo.add(mntmRestaurarBackup);
@@ -2139,7 +2130,6 @@ public class Interfaz_Principal {
 		int resultado = chooser.showOpenDialog(null);
 		if (resultado == JFileChooser.APPROVE_OPTION) {
 			File ArchivoDeExportacion = chooser.getSelectedFile();
-			// D:\Users\Lukas\Desktop\ViajesServex_1-9-2014_23.12.914.dat
 			String Import = ArchivoDeExportacion.getAbsolutePath();
 		}
 	}
