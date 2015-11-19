@@ -105,14 +105,14 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		btnBorrar.setBounds(115, 339, 100, 34);
 		contentPanel.add(btnBorrar);
 		
-		JButton btnEditar = new JButton("Consultar");
+		JButton btnEditar = new JButton("Ver/Modificar");
 		btnEditar.setIcon(new ImageIcon(Interfaz_Solicitud_Compra.class.getResource("/Recursos/IMG/search-icon24.png")));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Mostrar_solicitud();
 			}
 		});
-		btnEditar.setBounds(220, 339, 110, 34);
+		btnEditar.setBounds(220, 339, 136, 34);
 		contentPanel.add(btnEditar);
 		
 		JButton btnGenerarSolicitud = new JButton("Generar Solicitud");
@@ -122,7 +122,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Generar_Solicitud();
 			}
 		});
-		btnGenerarSolicitud.setBounds(340, 339, 160, 34);
+		btnGenerarSolicitud.setBounds(365, 339, 160, 34);
 		contentPanel.add(btnGenerarSolicitud);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar Solicitud");
@@ -163,6 +163,8 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private void inicializar() {
 		sv_solicitudCompra = principal_neg_int.getSvSolicitudCompra();
 		llenarTabla();
+		
+
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -193,14 +195,17 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			frame.setVisible(true);
 			llenarTabla();
 		}
+		
+			
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Eliminar_solicitud() {
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Esta seguro que desea eliminar?","Eliminar solicitud",JOptionPane.OK_CANCEL_OPTION);
 		if(RESPUESTA == JOptionPane.OK_OPTION){	
-			String estado = (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0);
-			if(tabla_solicitudes_actuales.getRowCount()>0 && estado!= "Pagada"){
+			String estado =  (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 4);
+			System.out.println(estado);
+			if(tabla_solicitudes_actuales.getRowCount()>0 && !estado.equals("Pagada")){
 				Integer id = (Integer) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0);
 				sv_solicitudCompra.ELIMINAD_SOLICITUD_COMPRA(sv_solicitudCompra.OBTENER_SOLICITUD(id));
 				llenarTabla();
