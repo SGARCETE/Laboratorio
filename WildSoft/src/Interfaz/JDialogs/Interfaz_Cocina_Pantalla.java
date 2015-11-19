@@ -6,7 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -29,6 +32,7 @@ import MetAux.MetAux;
 import Negocio.Modelo.Pedido;
 import Negocio.Modelo.Producto;
 import Negocio.Servicios.Principal_Negocio_Interfaz;
+import sun.security.jca.GetInstance;
 
 public class Interfaz_Cocina_Pantalla extends JFrame {
 	private static final long serialVersionUID = 4440791632042457639L;
@@ -421,7 +425,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 						Integer index = Lista_todos_productos.indexOf(pr);
 						Integer nueva_cant = Lista_todos_productos.get(index).getCantidad() + pr.getCantidad();
 						Lista_todos_productos.get(index).setCantidad(nueva_cant);
-						
 					}
 					else{
 						Lista_todos_productos.add(pr);
