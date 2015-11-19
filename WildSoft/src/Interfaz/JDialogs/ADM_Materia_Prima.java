@@ -1,7 +1,6 @@
 package Interfaz.JDialogs;
 
 import javax.swing.JDialog;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -22,15 +21,10 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import com.toedter.calendar.JDateChooser;
-
 import MetAux.MetAux;
-
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -55,7 +49,6 @@ public class ADM_Materia_Prima extends JDialog{
 	private JButton btnCancelar;
 	private JButton btnAgregar ;
 	private JLabel label;
-	private SimpleDateFormat formato_ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
 	private HashMap<Integer, String> categorias;
 	private JPanel panel_4;
 	
@@ -258,8 +251,8 @@ public class ADM_Materia_Prima extends JDialog{
 			if(comboBoxCategoria.getSelectedIndex()!=-1){
 				
 					label.setVisible(false);
-					SvMateria.AgregarMAteriaPrima(new Materia_Prima(id,textNombre.getText()));
-					inicializarTabla();
+					SvMateria.AgregarMAteriaPrima(new Materia_Prima(textNombre.getText(), id));
+					inicializarTabla(); 
 					llenar_tabla();
 					JOptionPane.showMessageDialog(null, "Materia Prima agregada");	
 					
@@ -285,12 +278,7 @@ public class ADM_Materia_Prima extends JDialog{
 				"N\u00B0", "Nombre", "Categor\u00EDa"
 			}
 		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
+			
 		});
 	}
 
@@ -298,11 +286,10 @@ public class ADM_Materia_Prima extends JDialog{
 	private void llenar_tabla(){
 		
 		for(Materia_Prima materia: SvMateria.getCategoria()){
-			Object[] fila= new Object[4];
+			Object[] fila= new Object[3];
 			fila[0]= materia.getId();
 			fila[1]= materia.getNombre();
-			fila[2]= materia.getFecha_vencimiento();
-			fila[3]= SvMateria.dameNombreCategoria(materia.getId());
+			fila[2]= SvMateria.dameNombreCategoria(materia.getId());
 			
 			((DefaultTableModel) this.tableMateriasPrimas.getModel()).addRow(fila);
 			
@@ -329,7 +316,6 @@ public class ADM_Materia_Prima extends JDialog{
 		datoTabla = obtenerSeleccion();
 		int RESPUESTA = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar esta Materia Prima?\nEstos cambios no se pueden deshacer!","CONFIRMAR",JOptionPane.OK_CANCEL_OPTION);
 		if(RESPUESTA == JOptionPane.OK_OPTION ){
-			 
 			SvMateria.ELIMINAR__Materia_Prima(new Materia_Prima((Integer)datoTabla[1], (String)datoTabla[2]));
 			inicializarTabla();
 			llenar_tabla();

@@ -36,7 +36,11 @@ public class Materia_Prima {
 		this.nombre=nombre_;
 		this.categoria=categoria_;
 	}
-	
+	public Materia_Prima(String nombre_,Integer categoria_ ) {
+		
+		this.nombre=nombre_;
+		this.categoria=categoria_;
+	}
 	
 	public int getCantidad() {
 		return cantidad;

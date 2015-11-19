@@ -186,7 +186,7 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	}
 
 	public boolean modificarMateria(Materia_Prima m) {
-		String SentenciaSQL = "UPDATE Materia_prima SET MP_nombre = '" + m.getNombre() + "', MP_fecha_vencimiento = '" + formato_yyyyMMdd.format(m.getFecha_vencimiento())	 +"' ,MP_categoria= " +m.getCategoria()+" WHERE MP_id=" + m.getId();
+		String SentenciaSQL = "UPDATE Materia_prima SET MP_nombre = '" + m.getNombre() +"' ,MP_categoria= " +m.getCategoria()+" WHERE MP_id=" + m.getId();
 		return conex.Insertar(SentenciaSQL);
 	}
 	
