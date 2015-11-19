@@ -24,7 +24,7 @@ public class Backup {
 			Runtime runtime = Runtime.getRuntime();
 			File backupFile = new File(directorio,"BackUp.sql");
 			FileWriter fw = new FileWriter(backupFile);
-			Process child = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
+			Process child = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
 			InputStreamReader irs = new InputStreamReader(child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
 			String line;
@@ -47,7 +47,7 @@ public class Backup {
 	public static void Restore(File archivo) {
 		try {
 			JOptionPane.showMessageDialog(null, "Espere un momento, se esta llevando a cabo la restauracion","Restaurando", JOptionPane.INFORMATION_MESSAGE);
-			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot wildsoft");
+			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql -u root -proot wildsoft");
 			InputStream es = p.getErrorStream();
 			muestraSalidaDeError(es);
 			OutputStream os = p.getOutputStream();
