@@ -3,11 +3,13 @@ package Persistencia.Conector;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -87,6 +89,54 @@ public class Backup {
 			}
 		};
 		hiloError.start();
+	}
+	
+	public String Get_usuario(String ruta){
+		File f = new File(ruta);
+		Scanner s;
+		String usuario= "";
+		try {
+			s = new Scanner(f);
+			int i=0;
+			
+			while (s.hasNextLine()) {
+				String linea = s.nextLine();
+				Scanner sl = new Scanner(linea);
+				sl.useDelimiter("\\s*,\\s*");
+				if (i ==0){
+					usuario=  sl.next().toString().replace("Usuario: ", "");
+				}
+				i++;
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
+	
+	public String Get_contraseña(String ruta){
+		File f = new File(ruta);
+		Scanner s;
+		String usuario= "";
+		try {
+			s = new Scanner(f);
+			int i=0;
+			
+			while (s.hasNextLine()) {
+				String linea = s.nextLine();
+				Scanner sl = new Scanner(linea);
+				sl.useDelimiter("\\s*,\\s*");
+				if (i ==1){
+					usuario=  sl.next().toString().replace("Contraseña: ", "");
+				}
+				i++;
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return usuario;
 	}
 
 }
