@@ -48,15 +48,9 @@ public class ADM_Materia_Prima extends JDialog{
 	private JTable tableMateriasPrimas;
 	private JComboBox<String> comboBoxCategoria;
 	private JScrollPane scrollPane;
-	private JDateChooser dateChooser;
-	private JDateChooser dateChooserNuevo;
 	private Object[] datoTabla;
 	private JButton  btnEliminar;
 	private JButton btnModificar;
-	private JTextField textVencimiento;
-	private JLabel lblVencimiento; 
-	private JLabel  lblVencimientoAnterior;
-	private JLabel lblVencimientoNuevo;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnAgregar ;
@@ -148,10 +142,6 @@ public class ADM_Materia_Prima extends JDialog{
 		lblCategoria.setBounds(10, 85, 63, 14);
 		panel_1.add(lblCategoria);
 		
-		lblVencimiento = new JLabel("Vencimiento");
-		lblVencimiento.setBounds(10, 138, 80, 26);
-		panel_1.add(lblVencimiento);
-		
 		textNombre = new JTextField();
 		textNombre.setBounds(111, 32, 160, 26);
 		panel_1.add(textNombre);
@@ -170,28 +160,6 @@ public class ADM_Materia_Prima extends JDialog{
 		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.setBounds(88, 213, 128, 39);
 		panel_1.add(btnAgregar);
-		
-		dateChooser = new JDateChooser();
-		dateChooser.setBounds(132, 138, 150, 26);
-		panel_1.add(dateChooser);
-		
-		lblVencimientoAnterior = new JLabel("Vencimiento anterior");
-		lblVencimientoAnterior.setBounds(10, 138, 127, 26);
-		panel_1.add(lblVencimientoAnterior);
-		
-		textVencimiento = new JTextField();
-		textVencimiento.setEditable(false);
-		textVencimiento.setBounds(170, 138, 86, 26);
-		panel_1.add(textVencimiento);
-		textVencimiento.setColumns(10);
-		
-		lblVencimientoNuevo = new JLabel("Vencimiento nuevo");
-		lblVencimientoNuevo.setBounds(10, 175, 128, 26);
-		panel_1.add(lblVencimientoNuevo);
-		
-		 dateChooserNuevo = new JDateChooser();
-		dateChooserNuevo.setBounds(132, 175, 150, 26);
-		panel_1.add(dateChooserNuevo);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBackground(Color.WHITE);
@@ -250,10 +218,6 @@ public class ADM_Materia_Prima extends JDialog{
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Inicializar() {
 		MetAux.Limitar_caracteres(textNombre, 20);
-		lblVencimientoNuevo.setVisible(false);
-		lblVencimientoAnterior.setVisible(false);
-		textVencimiento.setVisible(false);
-		dateChooserNuevo.setVisible(false);
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
 		label.setVisible(false);
@@ -279,7 +243,7 @@ public class ADM_Materia_Prima extends JDialog{
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void agregarMateriaPrima(){
-		Date fecha= dateChooser.getDate();
+		
 		
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
 		Integer id = -1;
@@ -292,15 +256,15 @@ public class ADM_Materia_Prima extends JDialog{
 	
 		if(!textNombre.getText().equals("")){
 			if(comboBoxCategoria.getSelectedIndex()!=-1){
-				if(dateChooser.getDate()!=null){
+				
 					label.setVisible(false);
-					SvMateria.AgregarMAteriaPrima(new Materia_Prima(textNombre.getText(),fecha,id));
+					SvMateria.AgregarMAteriaPrima(new Materia_Prima(id,textNombre.getText()));
 					inicializarTabla();
 					llenar_tabla();
 					JOptionPane.showMessageDialog(null, "Materia Prima agregada");	
 					
 					textNombre.setText("");
-					dateChooser.setDate(null);
+					
 					
 				}else {
 					label.setText("Debes completar el 'Vencimiento' para continuar");
@@ -309,10 +273,7 @@ public class ADM_Materia_Prima extends JDialog{
 			}else {
 				label.setText("Debes completar el combo 'Categoria' para continuar");
 				label.setVisible(true);}
-		}else {
-			label.setText("Debes completar el campo 'Nombre' para continuar");
-			label.setVisible(true);}
-	}
+		}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	@SuppressWarnings("serial")
@@ -321,14 +282,12 @@ public class ADM_Materia_Prima extends JDialog{
 			new Object[][] {
 			},
 			new String[] {
-				"N\u00B0", "Nombre", "Vencimiento", "Categor\u00EDa"
+				"N\u00B0", "Nombre", "Categor\u00EDa"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, Date.class, String.class
+				Integer.class, String.class, String.class
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -359,10 +318,9 @@ public class ADM_Materia_Prima extends JDialog{
 		int indice = tableMateriasPrimas.getSelectedRow();
 		Integer id =  (Integer) tableMateriasPrimas.getModel().getValueAt(indice, 0);
 		String nombre = (String) tableMateriasPrimas.getModel().getValueAt(indice, 1);
-		Date fecha =  (Date) tableMateriasPrimas.getModel().getValueAt(indice, 2);
-		String categoria= (String) tableMateriasPrimas.getModel().getValueAt(indice, 3);
+		String categoria= (String) tableMateriasPrimas.getModel().getValueAt(indice, 2);
 		
-		Object[] dato = { String.valueOf(indice), id, nombre,fecha , categoria};
+		Object[] dato = { String.valueOf(indice), id, nombre, categoria};
 		return dato;
 	}
 
@@ -383,18 +341,11 @@ public class ADM_Materia_Prima extends JDialog{
 		
 		datoTabla = obtenerSeleccion();
 		
-		lblVencimientoAnterior.setVisible(true);
-		lblVencimientoNuevo.setVisible(true);
-		textVencimiento.setVisible(true);
-		dateChooserNuevo.setVisible(true);
 		btnAceptar.setVisible(true);
 		btnCancelar.setVisible(true);
-		lblVencimiento.setVisible(false);
-		dateChooser.setVisible(false);
 		btnAgregar.setVisible(false);
 		textNombre.setText((String)datoTabla[2]);
-		comboBoxCategoria.setSelectedItem(datoTabla[4]);		
-		textVencimiento.setText(formato_ddMMyyyy.format((Date) datoTabla[3])); 
+		comboBoxCategoria.setSelectedItem(datoTabla[3]);		
 		btnModificar.setVisible(false);
 		btnEliminar.setVisible(false);
 		
@@ -409,19 +360,13 @@ public class ADM_Materia_Prima extends JDialog{
 		btnAgregar.setVisible(true);
 		btnModificar.setVisible(true);
 		btnEliminar.setVisible(true);
-		lblVencimiento.setVisible(true);
-		lblVencimientoAnterior.setVisible(false);
-		lblVencimientoNuevo.setVisible(false);
-		dateChooserNuevo.setVisible(false);
-		dateChooser.setVisible(true);
-		textVencimiento.setVisible(false);
 		
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void aceptarModificarMateria(){
 		
-		Date fecha= dateChooserNuevo.getDate();
+		
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
 		Integer id = -1;
 		for (Entry<Integer, String> entry : categorias.entrySet()) {
@@ -433,40 +378,30 @@ public class ADM_Materia_Prima extends JDialog{
 	
 		if(!textNombre.getText().equals("")){
 			if(comboBoxCategoria.getSelectedIndex()!=-1){
-				if(dateChooserNuevo.getDate()!=null){
-					guardarCambios(textNombre.getText(), fecha, id);
-					SvMateria.modificarMateria(new Materia_Prima((Integer)datoTabla[1],textNombre.getText(), fecha, id)); 
+				
+					guardarCambios(textNombre.getText(),id );
+					SvMateria.modificarMateria(new Materia_Prima((Integer)datoTabla[1],textNombre.getText(), id)); 
 				
 					inicializarTabla();
 					llenar_tabla();
 					JOptionPane.showMessageDialog(null, "Materia Prima Modificada");	
-				}
-				if(dateChooserNuevo.getDate()==null){
-					JOptionPane.showMessageDialog(null, "Selecccione el nuevo Vencimiento");
-					
-				}
+				
+				
 				
 			}
 		}
 		textNombre.setText("");
-		lblVencimiento.setVisible(true);
 		btnAgregar.setVisible(true);
 		btnModificar.setVisible(true);
 		btnEliminar.setVisible(true);
-		dateChooser.setVisible(true);
-		
-		lblVencimientoAnterior.setVisible(false);
-		lblVencimientoNuevo.setVisible(false);
-		dateChooserNuevo.setVisible(false);
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
-		textVencimiento.setVisible(false);
 		
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void guardarCambios(String nombre, Date fecha, Integer categoria) {
-		SvMateria.modificarMateria(new Materia_Prima((Integer)datoTabla[1],nombre, fecha, categoria));
+	private void guardarCambios(String nombre, Integer categoria) {
+		SvMateria.modificarMateria(new Materia_Prima((Integer)datoTabla[1],nombre, categoria));
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

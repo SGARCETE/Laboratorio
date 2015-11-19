@@ -31,10 +31,9 @@ public class Materia_Prima {
 		this.fecha_vencimiento= fecha;
 		this.categoria_string=categoria_;
 	}
-	public Materia_Prima(Integer id_,String nombre_,Date fecha,Integer categoria_ ) {
+	public Materia_Prima(Integer id_,String nombre_,Integer categoria_ ) {
 		this.id=id_;
 		this.nombre=nombre_;
-		this.fecha_vencimiento= fecha;
 		this.categoria=categoria_;
 	}
 	
