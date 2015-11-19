@@ -50,6 +50,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private JButton btnAgregar;
 	private JComboBox<String> comboTipo;
 	private JPanel panel_4;
+	private JPanel panel_3 ;
 
 	public Interfaz_ABM_Producto(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("ABM Producto");
@@ -212,9 +213,9 @@ public class Interfaz_ABM_Producto extends JDialog {
 		
 		scrollPane.setViewportView(table);
 		
-		JPanel panel_3 = new JPanel();
+		panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBorder(new TitledBorder(null, "Descripci\u00F3n", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Aviso", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBounds(10, 272, 997, 64);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
@@ -241,6 +242,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 			comboTipo.addItem(SvProducto.getLista_Productos().get(i));
 		}
 		MetAux.SoloNumerosDecimales(textPrecio);
+		panel_3.setVisible(false);
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -262,13 +264,17 @@ public class Interfaz_ABM_Producto extends JDialog {
 					JOptionPane.showMessageDialog(null, "Producto agregado con éxito");	
 				}else {
 					lblAviso.setText("Debes completar el campo 'Tipo producto' para continuar");
-					lblAviso.setVisible(true);}
+					lblAviso.setVisible(true);
+					panel_3.setVisible(true);
+				}
 			}else {
 				lblAviso.setText("Debes completar el campo 'Precio' para continuar");
-				lblAviso.setVisible(true);}
+				lblAviso.setVisible(true);
+				panel_3.setVisible(true);}
 		}else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
+			panel_3.setVisible(true);
 		}
 	}
 

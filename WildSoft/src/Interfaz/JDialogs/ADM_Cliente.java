@@ -45,6 +45,9 @@ public class ADM_Cliente extends JDialog {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JButton btnAgregar;
+	private JPanel panel_nuevoCliente;
+	private JPanel panel_Lista;
+	private JPanel panel_aviso;
 
 	public ADM_Cliente(Principal_Negocio_Interfaz instancia_negocio) {
 		setTitle("ABM Cliente");
@@ -70,33 +73,33 @@ public class ADM_Cliente extends JDialog {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Nuevo Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 11, 299, 255);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
+		panel_nuevoCliente = new JPanel();
+		panel_nuevoCliente.setBackground(Color.WHITE);
+		panel_nuevoCliente.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Nuevo Cliente", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_nuevoCliente.setBounds(10, 11, 299, 255);
+		panel.add(panel_nuevoCliente);
+		panel_nuevoCliente.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(10, 35, 63, 14);
-		panel_1.add(lblNombre);
+		panel_nuevoCliente.add(lblNombre);
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
 		lblDireccin.setBounds(10, 76, 63, 14);
-		panel_1.add(lblDireccin);
+		panel_nuevoCliente.add(lblDireccin);
 		
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setBounds(10, 112, 63, 14);
-		panel_1.add(lblTelefono);
+		panel_nuevoCliente.add(lblTelefono);
 		
 		textNombre = new JTextField();
 		textNombre.setBounds(79, 28, 210, 28);
-		panel_1.add(textNombre);
+		panel_nuevoCliente.add(textNombre);
 		textNombre.setColumns(10);
 		
 		JLabel lblDetalle = new JLabel("Detalle");
 		lblDetalle.setBounds(10, 151, 63, 14);
-		panel_1.add(lblDetalle);
+		panel_nuevoCliente.add(lblDetalle);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBackground(Color.WHITE);
@@ -106,22 +109,22 @@ public class ADM_Cliente extends JDialog {
 			}
 		});
 		btnAgregar.setBounds(108, 193, 89, 49);
-		panel_1.add(btnAgregar);
+		panel_nuevoCliente.add(btnAgregar);
 		
 		textDireccion = new JTextField();
 		textDireccion.setColumns(10);
 		textDireccion.setBounds(79, 69, 210, 28);
-		panel_1.add(textDireccion);
+		panel_nuevoCliente.add(textDireccion);
 		
 		textTelefono = new JTextField();
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(79, 105, 210, 28);
-		panel_1.add(textTelefono);
+		panel_nuevoCliente.add(textTelefono);
 		
 		textDetalle = new JTextField();
 		textDetalle.setColumns(10);
 		textDetalle.setBounds(79, 144, 210, 28);
-		panel_1.add(textDetalle);
+		panel_nuevoCliente.add(textDetalle);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBackground(Color.WHITE);
@@ -131,7 +134,7 @@ public class ADM_Cliente extends JDialog {
 			}
 		});
 		btnAceptar.setBounds(29, 193, 96, 49);
-		panel_1.add(btnAceptar);
+		panel_nuevoCliente.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBackground(Color.WHITE);
@@ -141,18 +144,19 @@ public class ADM_Cliente extends JDialog {
 			}
 		});
 		btnCancelar.setBounds(171, 193, 96, 49);
-		panel_1.add(btnCancelar);
+		panel_nuevoCliente.add(btnCancelar);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.WHITE);
-		panel_2.setBorder(new TitledBorder(null, "Lista de Clientes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel_2.setBounds(312, 11, 695, 255);
-		panel.add(panel_2);
-		panel_2.setLayout(null);
+		panel_Lista = new JPanel();
+		panel_Lista.setBackground(Color.WHITE);
+		panel_Lista.setBorder(new TitledBorder(null, "Lista de Clientes", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		panel_Lista.setBounds(312, 11, 695, 255);
+		panel.add(panel_Lista);
+		panel_Lista.setLayout(null);
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 21, 643, 223);
-		panel_2.add(scrollPane);
+		panel_Lista.add(scrollPane);
 		
 		
 		scrollPane.setViewportView(table);
@@ -196,16 +200,16 @@ public class ADM_Cliente extends JDialog {
 		panel.add(btnSalir);
 		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.WHITE);
-		panel_3.setBorder(new TitledBorder(null, "Descripci\u00F3n", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel_3.setBounds(20, 272, 987, 64);
-		panel.add(panel_3);
-		panel_3.setLayout(null);
+		panel_aviso = new JPanel();
+		panel_aviso.setBackground(Color.WHITE);
+		panel_aviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Aviso", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_aviso.setBounds(20, 272, 987, 64);
+		panel.add(panel_aviso);
+		panel_aviso.setLayout(null);
 		
 		lblAviso = new JLabel("");
 		lblAviso.setBounds(283, 23, 492, 30);
-		panel_3.add(lblAviso);
+		panel_aviso.add(lblAviso);
 		lblAviso.setForeground(Color.RED);
 		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
@@ -220,6 +224,8 @@ public class ADM_Cliente extends JDialog {
 		MetAux.Limitar_caracteres(textNombre,20);
 		MetAux.Limitar_caracteres(textTelefono,20);
 		MetAux.Limitar_caracteres(textDetalle,20);
+		
+		panel_aviso.setVisible(false);
 		
 	}
 
@@ -241,11 +247,14 @@ public class ADM_Cliente extends JDialog {
 			}
 			else {
 				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
+				panel_aviso.setVisible(true);
 				lblAviso.setVisible(true);
 			}
+			
 		}else {
 			lblAviso.setText("Debes completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
+			panel_aviso.setVisible(true);
 		}
 	}
 

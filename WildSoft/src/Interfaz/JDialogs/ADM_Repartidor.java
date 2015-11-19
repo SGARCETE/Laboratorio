@@ -47,6 +47,7 @@ public class ADM_Repartidor extends JDialog {
 	private JButton btnAceptar;
 	private JPanel panel_1;
 	private JPanel panel_2;
+	private JPanel panel ;
 
 
 	/**
@@ -71,10 +72,10 @@ public class ADM_Repartidor extends JDialog {
 		// SE CREA COMPLETA LA TABAL CON LOS DATOS
 		llenarTabla();
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(7, 198, 552, 53);
 		panel.setBackground(Color.WHITE);
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Descripcion", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Aviso", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
@@ -208,7 +209,7 @@ public class ADM_Repartidor extends JDialog {
 	private void iniciarParametros() {
 		MetAux.Limitar_caracteres(textNombre, 20);
 		MetAux.Limitar_caracteres(textVehiculo, 20);
-		
+		panel.setVisible(false);
 	}
 
 	protected void Aceptar_modificar_Repartidor() {
@@ -259,10 +260,12 @@ public class ADM_Repartidor extends JDialog {
 			} else {
 				lblAviso.setText("Debe completar el campo 'Vehiculo' para continuar");
 				lblAviso.setVisible(true);
+				panel.setVisible(true);
 			}
 		} else {
 			lblAviso.setText("Debe completar el campo 'Nombre' para continuar");
 			lblAviso.setVisible(true);
+			panel.setVisible(true);
 		}
 	}
 
