@@ -64,7 +64,6 @@ import Interfaz.JDialogs.ADM_Categorias;
 import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
-import Interfaz.JDialogs.Interfaz_ABM_Combos;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_ABM_Producto;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
@@ -1008,8 +1007,8 @@ public class Interfaz_Principal {
 		mntmReporteVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Interfaz_Venta frame = new Interfaz_Venta(Principal_neg_int);
-				frame.setVisible(true);
 				frame.setModal(true);
+				frame.setVisible(true);
 			}
 		});
 		mnReporteContabilidad.add(mntmReporteVentas);

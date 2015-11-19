@@ -101,6 +101,7 @@ public class Backup {
 			
 			while (s.hasNextLine()) {
 				String linea = s.nextLine();
+				@SuppressWarnings("resource")
 				Scanner sl = new Scanner(linea);
 				sl.useDelimiter("\\s*,\\s*");
 				if (i ==0){
@@ -125,6 +126,7 @@ public class Backup {
 			
 			while (s.hasNextLine()) {
 				String linea = s.nextLine();
+				@SuppressWarnings("resource")
 				Scanner sl = new Scanner(linea);
 				sl.useDelimiter("\\s*,\\s*");
 				if (i ==1){
