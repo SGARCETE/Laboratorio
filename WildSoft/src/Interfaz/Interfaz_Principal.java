@@ -64,6 +64,7 @@ import Interfaz.JDialogs.ADM_Categorias;
 import Interfaz.JDialogs.ADM_Cliente;
 import Interfaz.JDialogs.ADM_Materia_Prima;
 import Interfaz.JDialogs.ADM_Repartidor;
+import Interfaz.JDialogs.Interfaz_ABM_Combos;
 import Interfaz.JDialogs.Interfaz_ABM_Pedido;
 import Interfaz.JDialogs.Interfaz_ABM_Producto;
 import Interfaz.JDialogs.Interfaz_Cocina_Pantalla;
@@ -506,6 +507,15 @@ public class Interfaz_Principal {
 								.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)
 										.addComponent(panelDelibery, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))));
+		
+		JButton btnAgregarCLiente = new JButton("Agregar cliente");
+		btnAgregarCLiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Agregar_nuevo_cliente();
+			}
+		});
+		btnAgregarCLiente.setBounds(451, 14, 129, 23);
+		panelDelibery.add(btnAgregarCLiente);
 
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -1608,6 +1618,14 @@ public class Interfaz_Principal {
 			tabla_Itinerario_con_pedidos.setModel(modelo);
 		}
 	}
+	
+	
+	private void Agregar_nuevo_cliente() {
+		ADM_Cliente frame = new ADM_Cliente(Principal_neg_int);
+		frame.setModal(true);
+		frame.setVisible(true);
+		
+	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Agregar_al_itinerario() {
@@ -1711,5 +1729,4 @@ public class Interfaz_Principal {
 		}
 		return ArchivoDeExportacion;
 	}
-
 }// ---> FIN CLASE

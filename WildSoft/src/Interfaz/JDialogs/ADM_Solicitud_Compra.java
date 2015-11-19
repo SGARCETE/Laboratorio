@@ -296,6 +296,17 @@ public class ADM_Solicitud_Compra extends JDialog {
 	private void inicializar(){
 		Cargar_ComboBox_Todos_los_proveedores();
 		esEdicion = false;
+		Solicitud_compra sc= obtenerSolicitud();
+		if (sc.getEstado()== "Pagada"){
+			comboProveedor.isEnabled();
+			comboMateriaPrima.isEnabled();
+			comboCategorias.isEnabled();
+			spinnerCantidad.isEnabled();
+			btnAgregar.isEnabled();
+			btnQuitar.isEnabled();
+			okButton.isEnabled();
+			
+		}
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
