@@ -3,20 +3,17 @@ package Persistencia.DAOjdbcImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
-import Negocio.Modelo.Materia_Prima;
 
+import javax.swing.JOptionPane;
+
+import Negocio.Modelo.Materia_Prima;
 import Persistencia.Conector.ConectorMySQL;
 import Persistencia.DAO.MateriaPrimaDAO;
 
 public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
-	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
-
-	
 	public boolean AGREGAR_Materia_Prima(Materia_Prima m) {
 	    String SentenciaSQL = "INSERT INTO Materia_Prima (MP_nombre, MP_categoria) VALUES ("+
 			"'"+	m.getNombre()			+"',"
