@@ -12,7 +12,7 @@ public class Ejecutar_WILDSOFT {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-//					try {
+//					try { TODO
 //						JOptionPane.showMessageDialog(null, "Espere un momento, se esta iniciando el sistema","Iniciando", JOptionPane.INFORMATION_MESSAGE);
 //						Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -proot test");
 //						OutputStream os = p.getOutputStream();
@@ -29,7 +29,7 @@ public class Ejecutar_WILDSOFT {
 //						JOptionPane.showMessageDialog(null, "Bienvenido","", JOptionPane.INFORMATION_MESSAGE);
 //					} catch (IOException e) {
 //						e.printStackTrace();
-//					}
+//					} TODO
 				new Principal_Negocio_Interfaz();
 			}
 		});
