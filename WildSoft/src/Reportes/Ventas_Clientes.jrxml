@@ -28,7 +28,7 @@ on
 PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4  and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}))*100) as porcentaje,CL.CL_nombre from Pedido PD join CLiente CL join Producto PR join  Producto_pedidos PP ON
 PD.PD_id= PP.PP_pedidoid and PP.PP_productoid = PR.PR_id and PD.PD_cliente= CL.CL_id
 and PD_estado = 4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}
-group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 5)
+group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)
 union all
 (select (total - sum(precio)) , total, (100 - sum(porcentaje)) , "Otros"  from (select sum(PP_precio* PP_producto_cantidad) as precio ,(select sum(PP_precio* PP_producto_cantidad) as total from Producto_pedidos PP join Pedido PD
 on
@@ -37,8 +37,7 @@ on
 PD.PD_id= PP.PP_pedidoid and PD.PD_estado=4  and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}))*100) as porcentaje,CL.CL_nombre from Pedido PD join CLiente CL join Producto PR join  Producto_pedidos PP ON
 PD.PD_id= PP.PP_pedidoid and PP.PP_productoid = PR.PR_id and PD.PD_cliente= CL.CL_id
 and PD_estado = 4 and PD.PD_fecha_pedido between $P{PD_fecha_pedido} and $P{PD_fecha_pedido2}
-group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 5)tabla);
-]]>
+group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabla);]]>
 	</queryString>
 	<field name="sum(PP_precio* PP_producto_cantidad)" class="java.lang.Double"/>
 	<field name="total1" class="java.lang.Double"/>

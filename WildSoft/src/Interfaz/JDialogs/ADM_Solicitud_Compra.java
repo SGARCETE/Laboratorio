@@ -368,7 +368,8 @@ public class ADM_Solicitud_Compra extends JDialog {
 			mp.setCantidad(Integer.parseInt((String) tablaMateriasPrimas.getValueAt(i, 3))); 
 			listaMateriaPrima.add(mp);
 			
-			sc.setPrecio(Double.parseDouble(textTotal.getText()));
+			if (!textTotal.getText().isEmpty()){
+				sc.setPrecio(Double.parseDouble(textTotal.getText()));}
 		}
 		sc.setLista_materia_prima(listaMateriaPrima);
 		return sc;
