@@ -26,7 +26,7 @@ public class ReporteVentas {
 	private Map<String, Object> parametros;
 	
 	public ReporteVentas(Integer ID_categoria, Date F1, Date F2) {
-		String JXML = "src\\Reportes\\Ventas_productos.jrxml";
+		String JXML = "iReports\\Ventas_productos.jrxml";
 		
 		parametros = new HashMap<String, Object>();
 		parametros.put("IDCategoria", ID_categoria);

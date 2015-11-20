@@ -22,7 +22,7 @@ public class ReportePedidos {
 
 	public void Generar_Pedido (Integer fecha)
 	{
-		String JXML = "src\\Reportes\\pEDIDOS.jrxml";
+		String JXML = "iReports\\pEDIDOS.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;

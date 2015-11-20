@@ -124,7 +124,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		panel.add(lblDireccion);
 		
 		textCliente.setBackground(new Color(240, 255, 240));
-		textCliente.setBounds(22, 42, 291, 25);
+		textCliente.setBounds(22, 42, 222, 25);
 		panel.add(textCliente);
 		textCliente.setColumns(10);
 		
@@ -411,6 +411,20 @@ public class Interfaz_ABM_Pedido extends JDialog {
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
 					.addGap(7))
 		);
+		
+		JButton btnQuitar_1 = new JButton("Quitar");
+		btnQuitar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CLIENTE_ACTUAL = null;
+				textCliente.setText("");
+				textDetalle.setText("");
+				textTelefono.setText("");
+				textDomicilio.setText("");
+			}
+		});
+		btnQuitar_1.setIcon(new ImageIcon(Interfaz_ABM_Pedido.class.getResource("/Recursos/IMG/subtract-1-icon16.png")));
+		btnQuitar_1.setBounds(244, 42, 83, 25);
+		panel.add(btnQuitar_1);
 		contentPanel.setLayout(gl_contentPanel);
 
 		JPanel buttonPane = new JPanel();
@@ -422,7 +436,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		btnGuardarModificacionPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Guardar_pedido();
-				
 			}
 		});
 		btnGuardarModificacionPedido.setBackground(Color.WHITE);
@@ -633,6 +646,8 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			}
 		}
 		
+		PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+		
 		// SI EL PEDIDO NO TIENE PRODUCTOS, NO SE PUEDE GUARDAR
 		if(PEDIDO_ACTUAL.getLista_Productos().size()>0){
 			SvPedidos.modificar_pedido(PEDIDO_ACTUAL);
@@ -728,6 +743,4 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		AutoCompleter_Cliente.setMode(0);
 		AutoCompleter_Cliente.addItems(Principal_neg_int.getSvClientes().getLISTA_CLIENTES());
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }//---> FIN CLASE

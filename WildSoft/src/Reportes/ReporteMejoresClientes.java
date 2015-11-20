@@ -21,7 +21,7 @@ public class ReporteMejoresClientes {
 
 	
 	public void GenerarReporteMejoresClientes(Date F1, Date F2) {
-		String JXML = "src\\Reportes\\Ventas_Clientes.jrxml";
+		String JXML = "iReports\\Ventas_Clientes.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;

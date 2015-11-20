@@ -25,7 +25,7 @@ public class ReporteSolicitud {
 	
 	
 	public void Generar_Solicitud(Integer NUMERO_SOLICITUD){
-		String JXML = "src\\Reportes\\Solicitud.jrxml";
+		String JXML = "iReports\\Solicitud.jrxml";
 		
 		parametros = new HashMap<String, Object>();
 		parametros.put("ID_SOLICITUD", NUMERO_SOLICITUD);

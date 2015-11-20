@@ -24,7 +24,7 @@ public class ReporteContabilidad {
 	
 	
 	public void Generar_Contabilidad(Date Fecha_1, Date Fecha_2){
-		String JXML = "src\\Reportes\\Mini_contabilidad.jrxml";
+		String JXML = "iReports\\Mini_contabilidad.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;

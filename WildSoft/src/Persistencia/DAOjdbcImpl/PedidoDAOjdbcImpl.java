@@ -379,8 +379,9 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	public boolean MODIFICAR_PEDIDO(Pedido p) {
 		
 		int estado = obtenerEstado(p.getESTADO());
-		
-		int cliente = p.getCliente().getID_Cliente();
+		Integer cliente = 1;
+		if(p.getCliente()!=null)
+			cliente = p.getCliente().getID_Cliente();
 		boolean delivery = p.getEs_Delivery();
 		String Fecha = formato_yyyyMMdd.format(p.getFecha_Hora_Pedido());
 		String SentenciaSQL = "UPDATE Pedido SET "

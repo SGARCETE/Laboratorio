@@ -384,17 +384,6 @@ public class Interfaz_Principal {
 		chckbxDelivery = new JCheckBox("Con delivery");
 		chckbxDelivery.setOpaque(false);
 		chckbxDelivery.setBackground(SystemColor.menu);
-		chckbxDelivery.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Servicio_Delivery();
-				if(!chckbxDelivery.isSelected()){
-					textCliente.setText("");
-					textDomicilio.setText("");
-					textTelefono.setText("");
-					textDetalle.setText("");
-				}
-			}
-		});
 		chckbxDelivery.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chckbxDelivery.setBounds(16, 14, 110, 25);
 		panelDelibery.add(chckbxDelivery);
@@ -407,8 +396,8 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblDomicilio);
 
 		textDomicilio = new JTextField();
+		textDomicilio.setEditable(false);
 		textDomicilio.setBackground(new Color(240, 248, 255));
-		textDomicilio.setEnabled(false);
 		textDomicilio.setColumns(10);
 		textDomicilio.setBounds(381, 46, 199, 30);
 		panelDelibery.add(textDomicilio);
@@ -421,8 +410,8 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblTelefono);
 
 		textTelefono = new JTextField();
+		textTelefono.setEditable(false);
 		textTelefono.setBackground(new Color(240, 248, 255));
-		textTelefono.setEnabled(false);
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(90, 82, 199, 30);
 		panelDelibery.add(textTelefono);
@@ -435,8 +424,8 @@ public class Interfaz_Principal {
 		panelDelibery.add(lblDetalle);
 
 		textDetalle = new JTextField();
+		textDetalle.setEditable(false);
 		textDetalle.setBackground(new Color(240, 248, 255));
-		textDetalle.setEnabled(false);
 		textDetalle.setColumns(10);
 		textDetalle.setBounds(381, 82, 199, 30);
 		panelDelibery.add(textDetalle);
@@ -446,7 +435,6 @@ public class Interfaz_Principal {
 		lblCliente.setBounds(16, 46, 70, 25);
 		panelDelibery.add(lblCliente);
 		textCliente.setBackground(new Color(240, 248, 255));
-		textCliente.setEnabled(false);
 		textCliente.setColumns(10);
 		textCliente.setBounds(90, 46, 199, 30);
 		panelDelibery.add(textCliente);
@@ -507,14 +495,30 @@ public class Interfaz_Principal {
 										Short.MAX_VALUE)
 										.addComponent(panelDelibery, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))));
 		
-		JButton btnAgregarCLiente = new JButton("Agregar cliente");
+		JButton btnAgregarCLiente = new JButton("Agregar cliente nuevo");
+		btnAgregarCLiente.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/Check-3-icon16.png")));
 		btnAgregarCLiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Agregar_nuevo_cliente();
 			}
 		});
-		btnAgregarCLiente.setBounds(451, 14, 129, 23);
+		btnAgregarCLiente.setBounds(381, 15, 199, 25);
 		panelDelibery.add(btnAgregarCLiente);
+		
+		JButton btnNewButton_1 = new JButton("Limpiar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CLIENTE_ACTUAL = null;
+				textCliente.setText("");
+				textDetalle.setText("");
+				textTelefono.setText("");
+				textDomicilio.setText("");
+				
+			}
+		});
+		btnNewButton_1.setToolTipText("Quita el cliente del pedido");
+		btnNewButton_1.setBounds(199, 13, 90, 28);
+		panelDelibery.add(btnNewButton_1);
 
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
@@ -1194,19 +1198,6 @@ public class Interfaz_Principal {
 		Tabla_Pedido_Completo = new JTable_Pedido_Completo(new Model_Pedido_Completo());
 		scrollPane_Pedido_Completo.setViewportView(Tabla_Pedido_Completo);
 		chckbxDelivery.setSelected(false);
-		Servicio_Delivery();
-	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-	/**
-	 * Actida/Desactiva las opciones del delibery. Se basa en el checkbox de "Delivery"
-	 */
-	private void Servicio_Delivery() {
-		textCliente.setEnabled(chckbxDelivery.isSelected());
-		textDomicilio.setEnabled(chckbxDelivery.isSelected());
-		textTelefono.setEnabled(chckbxDelivery.isSelected());
-		textDetalle.setEnabled(chckbxDelivery.isSelected());
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1264,8 +1255,9 @@ public class Interfaz_Principal {
 	private boolean Guardar_pedido() {
 		if (!PEDIDO_ACTUAL.getLista_Productos().isEmpty()) {
 			PEDIDO_ACTUAL.setFecha_Hora_Pedido(Calendar.getInstance().getTime());
-			if (chckbxDelivery.isSelected()) {
-				if (CLIENTE_ACTUAL != null && !CLIENTE_ACTUAL.getNombre().isEmpty() && !CLIENTE_ACTUAL.getDomicilio().isEmpty()) {
+			
+			if(chckbxDelivery.isSelected()){
+				if (CLIENTE_ACTUAL!= null && !CLIENTE_ACTUAL.getNombre().isEmpty() && !CLIENTE_ACTUAL.getDomicilio().isEmpty()) {
 					PEDIDO_ACTUAL.setEs_Delivery(chckbxDelivery.isSelected());
 					PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
 				} else {
@@ -1273,6 +1265,9 @@ public class Interfaz_Principal {
 					return false;
 				}
 			}
+			if (CLIENTE_ACTUAL!= null && !CLIENTE_ACTUAL.getNombre().isEmpty() && !CLIENTE_ACTUAL.getDomicilio().isEmpty())
+				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
+			
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
 			ACTUALIZAR_TODO();
 			Ticket_Comanda_nuevo_pedido();
@@ -1510,10 +1505,15 @@ public class Interfaz_Principal {
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Cargar_datos_Cliente(Cliente c) {
-		CLIENTE_ACTUAL = c;
-		textDomicilio.setText(c.getDomicilio());
-		textTelefono.setText(c.getTelefono_Fijo());
-		textDetalle.setText(c.getDetalle());
+		textDomicilio.setText("");
+		textTelefono.setText("");
+		textDetalle.setText("");
+		if(c!=null){
+			CLIENTE_ACTUAL = c;
+			textDomicilio.setText(c.getDomicilio());
+			textTelefono.setText(c.getTelefono_Fijo());
+			textDetalle.setText(c.getDetalle());
+		}
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

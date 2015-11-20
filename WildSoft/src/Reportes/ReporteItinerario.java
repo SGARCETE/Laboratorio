@@ -20,7 +20,7 @@ public class ReporteItinerario {
 	
 	public void Generar_Itinerario (Integer NUMERO_ITINERARIO)
 	{
-		String JXML = "src\\Reportes\\ItinerarioEntrega.jrxml";
+		String JXML = "iReports\\ItinerarioEntrega.jrxml";
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;
