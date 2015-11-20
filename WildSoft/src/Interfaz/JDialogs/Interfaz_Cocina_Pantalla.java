@@ -412,20 +412,22 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		// Llena una lista con TODOS LOS PRODUCTOS DEL DIA
 		for (int i = 0; i < Lista_Pedidos.size(); i++) {
 			Pedido p = Lista_Pedidos.get(i);
-			for (int j = 0; j < p.getLista_Productos().size(); j++) {
-				Producto pr = p.getLista_Productos().get(j);
-				if(pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA
-					
-					boolean esta = Lista_todos_productos.contains(pr);
-					if(esta){
-						Integer index = Lista_todos_productos.indexOf(pr);
-						Integer nueva_cant = Lista_todos_productos.get(index).getCantidad() + pr.getCantidad();
-						Lista_todos_productos.get(index).setCantidad(nueva_cant);
+			if(p.getESTADO().equals("Pendiente")){
+				for (int j = 0; j < p.getLista_Productos().size(); j++) {
+					Producto pr = p.getLista_Productos().get(j);
+					if(pr.getPR_tipo_producto()!=3 ){// SI NO ES UNA BEBIDA
+						
+						boolean esta = Lista_todos_productos.contains(pr);
+						if(esta){
+							Integer index = Lista_todos_productos.indexOf(pr);
+							Integer nueva_cant = Lista_todos_productos.get(index).getCantidad() + pr.getCantidad();
+							Lista_todos_productos.get(index).setCantidad(nueva_cant);
+						}
+						else{
+							Lista_todos_productos.add(pr);
+						}
+	
 					}
-					else{
-						Lista_todos_productos.add(pr);
-					}
-
 				}
 			}
 		}
