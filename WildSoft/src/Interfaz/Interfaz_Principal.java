@@ -1517,7 +1517,7 @@ public class Interfaz_Principal {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void AutocompletarCliente() {
+	public void AutocompletarCliente() {
 		AutoCompleter_Cliente.removeAllItems();
 		AutoCompleter_Cliente.setCaseSensitive(false);
 		AutoCompleter_Cliente.setMode(0);

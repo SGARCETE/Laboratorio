@@ -9,11 +9,18 @@ import Persistencia.DAOjdbcImpl.ClienteDAOjdbcImpl;
 public class Servicio_Clientes {
 	
 	private ClienteDAO clienteDAO = new ClienteDAOjdbcImpl();
+	private Principal_Negocio_Interfaz Principal;
 	
+	public Servicio_Clientes(Principal_Negocio_Interfaz principal){
+		Principal = principal;
+	}
+		
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean guardar_nuevo_cliente (Cliente c){
 		if(c!=null){
-			return clienteDAO.guardar_cliente(c);
+			boolean salida = clienteDAO.guardar_cliente(c);
+			Principal.Actualizar_autocomplete_clientes();
+			return salida;
 		}
 		return false;
 	}
@@ -21,7 +28,9 @@ public class Servicio_Clientes {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean Modificar_Cliente(Cliente c)	{
 		if(c!=null){
-			return clienteDAO.modificar_cliente(c);
+			boolean salida =  clienteDAO.modificar_cliente(c);
+			Principal.Actualizar_autocomplete_clientes();
+			return salida;
 		}
 		return false;
 	}
@@ -29,7 +38,9 @@ public class Servicio_Clientes {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public boolean Eliminar_cliente(Cliente c){
 		if(c!=null){
-			return clienteDAO.Eliminar_Cliente(c);
+			boolean salida =  clienteDAO.Eliminar_Cliente(c);
+			Principal.Actualizar_autocomplete_clientes();
+			return salida;
 		}
 		return false;
 	}

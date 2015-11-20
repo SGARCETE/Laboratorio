@@ -17,7 +17,7 @@ public class Principal_Negocio_Interfaz {
 	private Servicio_Pedidos 			SvPedidos = new Servicio_Pedidos();
 	private Servicio_Productos 			SvProductos = new Servicio_Productos();
 	private Servicio_Combos 			SvCombos = new Servicio_Combos();
-	private Servicio_Clientes  			SvClientes = new Servicio_Clientes();
+	private Servicio_Clientes  			SvClientes = new Servicio_Clientes(this);
 	private Servicio_Repartidores 		SvRepartidores = new Servicio_Repartidores();
 	private Servicio_Proveedores 		SvProveedores = new Servicio_Proveedores();
 	private Servicio_Materia_Prima  	SvMateria_Prima = new Servicio_Materia_Prima();
@@ -94,6 +94,11 @@ public class Principal_Negocio_Interfaz {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
 	public Servicio_Categoria getSvCategoria() {
 		return svCategoria;
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public void Actualizar_autocomplete_clientes(){
+		window.AutocompletarCliente();
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
