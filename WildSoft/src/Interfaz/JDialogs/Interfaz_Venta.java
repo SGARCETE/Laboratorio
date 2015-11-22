@@ -155,8 +155,8 @@ public class Interfaz_Venta extends JDialog{
 			public void propertyChange(PropertyChangeEvent arg0) {
 				if(dateChooserSemana.getCalendar()!=null){
 					Calendar C = dateChooserSemana.getCalendar();
-					C.add(Calendar.DAY_OF_MONTH, 6);
-					label_fin_semana.setText(formato_ddMMyyyy.format(C.getTime()));
+					Calendar C2= getLunes(C);
+					label_fin_semana.setText(formato_ddMMyyyy.format(C2.getTime()));
 				}
 			}
 		});
@@ -346,9 +346,13 @@ public class Interfaz_Venta extends JDialog{
 				
 		if(rdbtnPorSemana.isSelected()){
 			Calendar C = dateChooserSemana.getCalendar();
-			C.add(Calendar.DAY_OF_MONTH, 6);	// AL DIA SELECCIONADO SE LE SUMAN 6 DIAS (7 con el que se seleccionó)
-			F1 = dateChooserSemana.getCalendar();
-			F2 = C;
+			Calendar C2= getLunes(C).getInstance();
+			Calendar C3= getLunes(C).getInstance();
+			C3.add(Calendar.DAY_OF_MONTH, 6);	// AL DIA SELECCIONADO SE LE SUMAN 6 DIAS (7 con el que se seleccionó)
+			F1 = C2;
+			System.out.println(formato_ddMMyyyy.format(C2.getTime()));
+			System.out.println(formato_ddMMyyyy.format(C3.getTime()));
+			F2 = C3;
 		}
 		
 		if(rdbtnPorMes.isSelected()){
@@ -416,6 +420,34 @@ public class Interfaz_Venta extends JDialog{
 			dateChooserDesde.setEnabled(true);	
 			dateChooserHasta.setEnabled(true);
 		}
+		
+	}
+	
+	private Calendar getLunes(Calendar C) {
+		switch (Calendar.DAY_OF_WEEK){
+		case 1:
+			C.add(Calendar.DAY_OF_MONTH, 0);
+			return C;
+		case 2:
+			C.add(Calendar.DAY_OF_MONTH, -1);
+			return C;
+		case 3:
+			C.add(Calendar.DAY_OF_MONTH, -2);
+			return C;
+		case 4:
+			C.add(Calendar.DAY_OF_MONTH, -3);
+			return C;
+		case 5:
+			C.add(Calendar.DAY_OF_MONTH, -4);
+			return C;
+		case 6:
+			C.add(Calendar.DAY_OF_MONTH, -5);
+			return C;
+		case 7:
+			C.add(Calendar.DAY_OF_MONTH, -6);
+			return C;
+		}
+		return C;
 		
 	}
 	

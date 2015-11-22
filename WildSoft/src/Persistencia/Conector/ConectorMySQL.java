@@ -31,7 +31,7 @@ public class ConectorMySQL {
 			conexion = DriverManager.getConnection(Driver);
 		} catch (Exception SQLE) {
 			try{ 
-				   //Si falla la cnexión, abre el txt con los datos para inicializar la base de datos.
+				   //Si falla la conexión, abre el txt con los datos para inicializar la base de datos.
 				   File fichero = new File("Datos.txt");
 				   String file = new String(fichero.getAbsolutePath());
 				   Runtime.getRuntime().exec("cmd /c start "+file);
