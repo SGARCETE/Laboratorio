@@ -19,19 +19,15 @@ public class Backup {
 	
 	private static ConectorMySQL conex = new ConectorMySQL();
 	
-	
-
 	/**
 	 * Genera un archivo .sql con la base de datos del sistema
 	 * @param directorio Es el directorio donde se guardara el .sql generado
 	 */
 	public static void backup(String directorio) {
 		try {
-			System.out.println(get_directorio());
 			Runtime runtime = Runtime.getRuntime();
-			File backupFile = new File(directorio,"BackUp.sql" );
+			File backupFile = new File(directorio,"Backup-WildSoft-" + getFechaActual() + ".sql");
 			FileWriter fw = new FileWriter(backupFile);
-			//Process child = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
 			Process child = runtime.exec( get_directorio() + "\\bin\\mysqldump --opt --password=" + conex.Get_contraseña()+" --user="+conex.Get_usuario()+" --databases wildsoft");
 			InputStreamReader irs = new InputStreamReader(child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
@@ -101,7 +97,7 @@ public class Backup {
 	}
 	
 	public static String getFechaActual() {
-	    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");//dd/MM/yyyy
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
 	    Date now = new Date();
 	    String strDate = sdfDate.format(now);
 	    return strDate;
