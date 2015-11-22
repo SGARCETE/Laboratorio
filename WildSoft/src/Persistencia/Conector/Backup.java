@@ -9,11 +9,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import Negocio.Modelo.Materia_Prima;
+
 public class Backup {
+	
+	private static ConectorMySQL conex = new ConectorMySQL();
+	
+	
 
 	/**
 	 * Genera un archivo .sql con la base de datos del sistema
@@ -21,10 +31,12 @@ public class Backup {
 	 */
 	public static void backup(String directorio) {
 		try {
+			System.out.println(get_directorio());
 			Runtime runtime = Runtime.getRuntime();
-			File backupFile = new File(directorio,"BackUp.sql");
+			File backupFile = new File(directorio,"BackUp.sql" );
 			FileWriter fw = new FileWriter(backupFile);
-			Process child = runtime.exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
+			//Process child = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
+			Process child = runtime.exec( get_directorio() + "\\bin\\mysqldump --opt --password=" + conex.Get_contraseña()+" --user="+conex.Get_usuario()+" --databases wildsoft");
 			InputStreamReader irs = new InputStreamReader(child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
 			String line;
@@ -47,7 +59,8 @@ public class Backup {
 	public static void Restore(File archivo) {
 		try {
 			JOptionPane.showMessageDialog(null, "Espere un momento, se esta llevando a cabo la restauracion","Restaurando", JOptionPane.INFORMATION_MESSAGE);
-			Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql -u root -proot wildsoft");
+			//Process p = Runtime.getRuntime().exec("C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql -u root -proot wildsoft");
+			Process p = Runtime.getRuntime().exec(get_directorio() + "\\bin\\mysql -u "+conex.Get_usuario()+" -p"+conex.Get_contraseña()+" wildsoft");
 			InputStream es = p.getErrorStream();
 			muestraSalidaDeError(es);
 			OutputStream os = p.getOutputStream();
@@ -91,54 +104,32 @@ public class Backup {
 		hiloError.start();
 	}
 	
-	public String Get_usuario(String ruta){
-		File f = new File(ruta);
-		Scanner s;
-		String usuario= "";
-		try {
-			s = new Scanner(f);
-			int i=0;
-			
-			while (s.hasNextLine()) {
-				String linea = s.nextLine();
-				@SuppressWarnings("resource")
-				Scanner sl = new Scanner(linea);
-				sl.useDelimiter("\\s*,\\s*");
-				if (i ==0){
-					usuario=  sl.next().toString().replace("Usuario: ", "");
-				}
-				i++;
-			}
-			s.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return usuario;
-	}
-	
-	public String Get_contraseña(String ruta){
-		File f = new File(ruta);
-		Scanner s;
-		String usuario= "";
-		try {
-			s = new Scanner(f);
-			int i=0;
-			
-			while (s.hasNextLine()) {
-				String linea = s.nextLine();
-				@SuppressWarnings("resource")
-				Scanner sl = new Scanner(linea);
-				sl.useDelimiter("\\s*,\\s*");
-				if (i ==1){
-					usuario=  sl.next().toString().replace("Contraseña: ", "");
-				}
-				i++;
-			}
-			s.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return usuario;
+	public static String getFechaActual() {
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");//dd/MM/yyyy
+	    Date now = new Date();
+	    String strDate = sdfDate.format(now);
+	    return strDate;
 	}
 
+	public static String get_directorio(){
+		ConectorMySQL conex = new ConectorMySQL();
+		try{
+			conex.connectToMySQL();
+			Statement st = conex.conexion.createStatement();
+			ResultSet rs = st.executeQuery("select @@datadir");
+			rs.first();
+			String directorio = rs.getString(1);
+			int posicion = directorio.indexOf("data");
+			directorio= directorio.substring(0, posicion-1);
+			directorio= directorio.replace("ProgramData", "Program Files");
+			directorio= directorio.replace('\\', '\\');
+			conex.cerrarConexion();
+			return directorio;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "Fallo conexión";
+	}
+		
+	
 }

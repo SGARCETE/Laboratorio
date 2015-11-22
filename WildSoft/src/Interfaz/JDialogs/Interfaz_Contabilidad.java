@@ -40,45 +40,46 @@ public class Interfaz_Contabilidad extends JDialog{
 
 	private void initialize() {
 
-		setBounds(100, 100, 767, 311);
+		setBounds(100, 100, 685, 311);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.setIcon(new ImageIcon(Interfaz_Contabilidad.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
 		btnSalir.setBackground(Color.WHITE);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(673, 219, 68, 42);
+		btnSalir.setBounds(555, 219, 105, 42);
 		getContentPane().add(btnSalir);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new TitledBorder(null, "Selecciona Contabilidad", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 22, 650, 224);
+		panel.setBounds(10, 22, 650, 181);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		Label labelPorMes = new Label("Por Fechas :");
-		labelPorMes.setBounds(269, 126, 86, 22);
+		labelPorMes.setBounds(269, 82, 86, 22);
 		panel.add(labelPorMes);
 		
 		dateChooser_2 = new JDateChooser();
-		dateChooser_2.setBounds(322, 154, 130, 27);
+		dateChooser_2.setBounds(322, 110, 130, 32);
 		panel.add(dateChooser_2);
 		
 		dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(182, 154, 130, 27);
+		dateChooser_1.setBounds(182, 110, 130, 32);
 		panel.add(dateChooser_1);
 		
 		Label labelHasta = new Label("Hasta");
-		labelHasta.setBounds(358, 182, 62, 22);
+		labelHasta.setBounds(358, 138, 62, 22);
 		panel.add(labelHasta);
 		
 		Label labelDesde = new Label("Desde");
-		labelDesde.setBounds(213, 182, 78, 27);
+		labelDesde.setBounds(213, 138, 78, 27);
 		panel.add(labelDesde);
 		
 		// Establece la fecha de hoy por defecto
@@ -87,26 +88,28 @@ public class Interfaz_Contabilidad extends JDialog{
 		dateChooser_2.setCalendar(C);
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(317, 71, 135, 32);
+		dateChooser.setCalendar(new GregorianCalendar());
+		dateChooser.setBounds(317, 33, 135, 32);
 		panel.add(dateChooser);
 		
 		Label lblDelDia = new Label("Del Dia");
-		lblDelDia.setBounds(250, 81, 62, 22);
+		lblDelDia.setBounds(250, 43, 62, 22);
 		panel.add(lblDelDia);
 		
 		final JButton btnReporteDia = new JButton("Reporte Dia");
-		btnReporteDia.setBounds(462, 71, 178, 42);
+		btnReporteDia.setBounds(462, 33, 178, 32);
 		panel.add(btnReporteDia);
 		btnReporteDia.setIcon(new ImageIcon(Interfaz_Contabilidad.class.getResource("/Recursos/IMG/Product-sale-report-icon24.png")));
 		
 		final JButton btnGenerarContabilidad = new JButton("Generar Contabilidad");
-		btnGenerarContabilidad.setBounds(462, 139, 178, 42);
+		btnGenerarContabilidad.setBounds(462, 110, 178, 32);
 		panel.add(btnGenerarContabilidad);
 		btnGenerarContabilidad.setBackground(Color.WHITE);
 		btnGenerarContabilidad.setHorizontalAlignment(SwingConstants.LEADING);
 		btnGenerarContabilidad.setIcon(new ImageIcon(Interfaz_Contabilidad.class.getResource("/Recursos/IMG/Product-sale-report-icon24.png")));
 		
 		rdbtnReporteDia = new JRadioButton("Reporte Dia");
+		rdbtnReporteDia.setOpaque(false);
 		rdbtnReporteDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dateChooser.setEnabled(true);
@@ -116,10 +119,11 @@ public class Interfaz_Contabilidad extends JDialog{
 				btnGenerarContabilidad.setEnabled(false);
 			}
 		});
-		rdbtnReporteDia.setBounds(19, 71, 109, 23);
+		rdbtnReporteDia.setBounds(21, 33, 109, 32);
 		panel.add(rdbtnReporteDia);
 	
 		rdbtnReporteFechas = new JRadioButton("Reporte Fechas");
+		rdbtnReporteFechas.setOpaque(false);
 		rdbtnReporteFechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -130,7 +134,7 @@ public class Interfaz_Contabilidad extends JDialog{
 				btnReporteDia.setEnabled(false);
 			}
 		});
-		rdbtnReporteFechas.setBounds(19, 149, 142, 23);
+		rdbtnReporteFechas.setBounds(21, 110, 142, 32);
 		panel.add(rdbtnReporteFechas);
 		btnGenerarContabilidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

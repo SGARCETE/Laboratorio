@@ -1011,7 +1011,6 @@ public class Interfaz_Principal {
 		mntmReporteVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Interfaz_Venta frame = new Interfaz_Venta(Principal_neg_int);
-				frame.setModal(true);
 				frame.setVisible(true);
 			}
 		});

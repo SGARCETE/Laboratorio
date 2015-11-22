@@ -38,7 +38,7 @@
 	<title>
 		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="6f68f637-a32d-4d3c-9213-503d14483415" x="0" y="0" width="555" height="70"/>
+				<reportElement x="0" y="0" width="555" height="70" uuid="6f68f637-a32d-4d3c-9213-503d14483415"/>
 				<textElement textAlignment="Justified">
 					<font size="24" isBold="true"/>
 				</textElement>
@@ -52,10 +52,10 @@
 	<columnHeader>
 		<band height="308" splitType="Stretch">
 			<line>
-				<reportElement uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9" x="269" y="0" width="1" height="306"/>
+				<reportElement x="269" y="0" width="1" height="306" uuid="2548344b-ba9f-40ac-8ead-47cd77fd31f9"/>
 			</line>
 			<subreport>
-				<reportElement uuid="c80f84a2-0cfd-4d7a-b2d7-44293eed5935" x="0" y="0" width="259" height="306"/>
+				<reportElement x="0" y="0" width="259" height="306" uuid="c80f84a2-0cfd-4d7a-b2d7-44293eed5935"/>
 				<subreportParameter name="PD_fecha_pedido2">
 					<subreportParameterExpression><![CDATA[$P{PD_fecha_pedido2}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -66,7 +66,7 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"pEDIDOS.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="0742fa76-81ec-4b71-884e-3a25b12cca25" x="282" y="0" width="271" height="306"/>
+				<reportElement x="282" y="0" width="271" height="306" uuid="0742fa76-81ec-4b71-884e-3a25b12cca25"/>
 				<subreportParameter name="SD_fecha_2">
 					<subreportParameterExpression><![CDATA[$P{SD_fecha_2}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -87,21 +87,21 @@
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="7d34f521-f546-4f6a-9bab-4225d000ad10" style="Column header" x="433" y="0" width="80" height="20"/>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="7d34f521-f546-4f6a-9bab-4225d000ad10"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="6016c100-0454-4fe0-ab3e-177561918470" style="Column header" x="513" y="0" width="40" height="20"/>
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="6016c100-0454-4fe0-ab3e-177561918470"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement uuid="188373c7-4e2b-412c-8271-d2aa003bd180" style="Column header" x="0" y="0" width="197" height="20"/>
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="188373c7-4e2b-412c-8271-d2aa003bd180"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>

@@ -1,10 +1,13 @@
 package Persistencia.Conector;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -13,8 +16,8 @@ public class ConectorMySQL {
 
 	private String DATABASE_NAME = "WILDSOFT"; // Poner el nombre de la base de
 												// datos
-	private String USUARIO = "root"; // Usuario que administra la DB
-	private String PASSWORD = "root"; // Password del usuario
+	private String USUARIO = Get_usuario(); // Usuario que administra la DB
+	private String PASSWORD = Get_contraseña(); // Password del usuario
 	private String Driver = "jdbc:mysql://localhost/" + DATABASE_NAME
 			+ "?user=" + USUARIO + "&password=" + PASSWORD;
 
@@ -110,6 +113,63 @@ public class ConectorMySQL {
 			return id;
 		}
 	}
+	
+	
+	// Devuelve el usuario que toma del txt de datos
+	public String Get_usuario(){
+		File fichero = new File("Datos.txt");
+		File f = new File(fichero.getAbsolutePath());
+		Scanner s;
+		String usuario= "";
+		try {
+			s = new Scanner(f);
+			int i=0;
+			
+			while (s.hasNextLine()) {
+				String linea = s.nextLine();
+				@SuppressWarnings("resource")
+				Scanner sl = new Scanner(linea);
+				sl.useDelimiter("\\s*,\\s*");
+				if (i ==0){
+					usuario=  sl.next().toString().replace("Usuario: ", "");
+				}
+				i++;
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
+	
+	// Devuelve la contraseña que toma del txt de datos.
+	public String Get_contraseña(){
+		File fichero = new File("Datos.txt");
+		File f = new File(fichero.getAbsolutePath());
+		Scanner s;
+		String usuario= "";
+		try {
+			s = new Scanner(f);
+			int i=0;
+			
+			while (s.hasNextLine()) {
+				String linea = s.nextLine();
+				@SuppressWarnings("resource")
+				Scanner sl = new Scanner(linea);
+				sl.useDelimiter("\\s*,\\s*");
+				if (i ==1){
+					usuario=  sl.next().toString().replace("Contraseña: ", "");
+				}
+				i++;
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
+	
+	
 
 }// --> FIN
 
