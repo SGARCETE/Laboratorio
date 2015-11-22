@@ -1,2 +1,8 @@
 Usuario: root
 Contraseña: root
+IP: 186.122.139.227
+Puerto: 3006
+
+Instrucciones:
+
+Complete los datos correspondientes para realizar la conexión en la base de datos. En caso de no recordarlos, revise el manual de instalación y siga los pasos. 

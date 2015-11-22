@@ -1,7 +1,10 @@
 package Persistencia.Conector;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,6 +30,14 @@ public class ConectorMySQL {
 			Class.forName("com.mysql.jdbc.Driver");
 			conexion = DriverManager.getConnection(Driver);
 		} catch (Exception SQLE) {
+			try{ 
+				   //Si falla la cnexión, abre el txt con los datos para inicializar la base de datos.
+				   File fichero = new File("Datos.txt");
+				   String file = new String(fichero.getAbsolutePath());
+				   Runtime.getRuntime().exec("cmd /c start "+file);
+				   }catch(IOException e){
+				      e.printStackTrace();
+				   } 
 			JOptionPane.showMessageDialog(null,
 					"No se establecio una conexion a la base de datos!\n");
 			SQLE.printStackTrace();
@@ -34,6 +45,11 @@ public class ConectorMySQL {
 		}
 		return true;
 	}
+	
+	
+	
+		
+	
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	// CERRAR CONEXION
@@ -168,6 +184,7 @@ public class ConectorMySQL {
 		}
 		return usuario;
 	}
+	
 	
 	
 
