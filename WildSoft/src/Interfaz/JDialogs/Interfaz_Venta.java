@@ -59,7 +59,6 @@ public class Interfaz_Venta extends JDialog{
 	private JRadioButton rdbtnPorMes;
 	private JRadioButton rdbtnEntreFechas;
 	private JDateChooser dateChooserSemana;
-	private JLabel label_fin_semana;
 	private JPanel panel_9;
 	
 	public Interfaz_Venta(Principal_Negocio_Interfaz instancia_negocio) {
@@ -156,23 +155,13 @@ public class Interfaz_Venta extends JDialog{
 				if(dateChooserSemana.getCalendar()!=null){
 					Calendar C = dateChooserSemana.getCalendar();
 					Calendar C2= getLunes(C);
-					label_fin_semana.setText(formato_ddMMyyyy.format(C2.getTime()));
-				}
+									}
 			}
 		});
 		dateChooserSemana.setToolTipText("");
 		dateChooserSemana.setEnabled(false);
 		dateChooserSemana.setBounds(133, 10, 130, 27);
 		panel_3.add(dateChooserSemana);
-		
-		label_fin_semana = new JLabel("26/11/2015");
-		label_fin_semana.setEnabled(false);
-		label_fin_semana.setBackground(Color.WHITE);
-		label_fin_semana.setFont(new Font("SansSerif", Font.BOLD, 14));
-		label_fin_semana.setOpaque(true);
-		label_fin_semana.setHorizontalAlignment(SwingConstants.CENTER);
-		label_fin_semana.setBounds(300, 10, 127, 27);
-		panel_3.add(label_fin_semana);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(16, 150, 440, 53);
@@ -347,7 +336,7 @@ public class Interfaz_Venta extends JDialog{
 		if(rdbtnPorSemana.isSelected()){
 			Calendar C = dateChooserSemana.getCalendar();
 			Calendar C2= getLunes(C).getInstance();
-			Calendar C3= getLunes(C).getInstance();
+			Calendar C3= getLunes(C).getInstance(); // Toma el lunes más cercano al dia seleccionado.
 			C3.add(Calendar.DAY_OF_MONTH, 6);	// AL DIA SELECCIONADO SE LE SUMAN 6 DIAS (7 con el que se seleccionó)
 			F1 = C2;
 			System.out.println(formato_ddMMyyyy.format(C2.getTime()));
@@ -401,15 +390,14 @@ public class Interfaz_Venta extends JDialog{
 		dateChooserMes.setEnabled(false);
 		dateChooserDesde.setEnabled(false);	
 		dateChooserHasta.setEnabled(false);
-		label_fin_semana.setEnabled(false);
-		
+				
 		if(rdbtnPorDia.isSelected()){
 			dateChooserDia.setEnabled(true);
 		}
 				
 		if(rdbtnPorSemana.isSelected()){
 			dateChooserSemana.setEnabled(true);
-			label_fin_semana.setEnabled(true);
+			
 		}
 		
 		if(rdbtnPorMes.isSelected()){
