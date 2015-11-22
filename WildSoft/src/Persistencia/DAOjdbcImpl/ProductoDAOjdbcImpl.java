@@ -163,31 +163,10 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 	}
 
 	@Override
-	public Integer getIdProducto(String nombreProducto) {
-		Integer id = 0;
-		try {
-			conex.connectToMySQL();
-			PreparedStatement statement = conex.conexion.prepareStatement("select PR_id from producto where PR_nombre=?");
-            statement.setString(1, nombreProducto);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-            	id = rs.getInt("PR_id");
-            }
-            conex.cerrarConexion();
-        } catch (SQLException e) {
-        	JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
-        }
-		return id;
-	}
-
-	@Override
 	public HashMap<Integer, String> obtenerProductoshas() {
-		
 		HashMap<Integer, String> mapa = new HashMap<Integer, String>();
 		try {
-
 			conex.connectToMySQL();
-
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("select * from tipo_producto where TP_vigente is null");
 			ResultSet Fila = st.getResultSet();
@@ -200,11 +179,28 @@ public class ProductoDAOjdbcImpl implements ProductoDAO {
 		}
 		return mapa;
 	}
-	
-	
 
-		
-		
-
+	@Override
+	public Producto getProducto(String nombreProducto) {
+		Producto p = null;
+		try {
+			p = new Producto();
+			conex.connectToMySQL();
+			PreparedStatement statement = conex.conexion.prepareStatement("select * from producto where PR_nombre=?");
+            statement.setString(1, nombreProducto);
+            ResultSet Fila = statement.executeQuery();
+            while (Fila.next()) {
+            	p.setPR_id(Fila.getInt("PR_id"));
+				p.setPR_nombre(Fila.getString("PR_nombre"));
+				p.setPR_precio(Fila.getDouble("PR_precio"));
+				p.setPR_Observacion(Fila.getString("PR_observacion"));
+				p.setPR_tipo_producto(Fila.getInt("PR_tipo_producto"));
+            }
+            conex.cerrarConexion();
+        } catch (SQLException e) {
+        	JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+        }
+		return p;
+	}
 }// --> FIN
 

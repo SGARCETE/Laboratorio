@@ -8,19 +8,11 @@ import Persistencia.DAO.ProductoDAO;
 import Persistencia.DAOjdbcImpl.ProductoDAOjdbcImpl;
 
 public class Servicio_Productos {
-	private ProductoDAO productoDAO = new ProductoDAOjdbcImpl();
-	private ArrayList<Producto> Lista_Variedades = new ArrayList<Producto>();
+	private ProductoDAO productoDAO;
 	private ArrayList<String> Lista_Productos = new ArrayList<String>();
 	
-	public Servicio_Productos() {		
-		String[] Variedades = new String[] {"Napolitana", "Napolitana especial", "Muzzarella", "Jamon y palmito", "Queso y peperoni", "Hawaiana", "Jamon y Panceta", "Cuatro quesos", "Salmon Ahumado", "Cuatro estaciones", "Pizza Funghi", "Vegetariana"};
-		for (int i = 0; i < Variedades.length; i++) {
-			Producto p = new Producto();
-			p.setPR_nombre(Variedades[i]);
-			p.setPR_precio(50.0);
-			p.setPR_tipo_producto(1);
-			Lista_Variedades.add(p);
-		}
+	public Servicio_Productos() {
+		productoDAO = new ProductoDAOjdbcImpl();
 	}
 	
 	public ArrayList<Producto> GET_PRODUCTOS() {
@@ -62,8 +54,8 @@ public class Servicio_Productos {
 		return productoDAO.obtenerCategorias();
 	}
 
-	public Integer getIdProducto(String nombreProducto) {
-		return productoDAO.getIdProducto(nombreProducto);
+	public Producto getProducto(String nombreProducto) {
+		return productoDAO.getProducto(nombreProducto);
 	}
 	
 	

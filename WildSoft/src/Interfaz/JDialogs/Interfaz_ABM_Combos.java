@@ -46,12 +46,12 @@ public class Interfaz_ABM_Combos extends JDialog {
 	
 	private JTable tablaProductosCombo;
 	
-	private JTextField textTotal;
+	private JTextField textCombo;
 	private JTextField textNombre;
 	
 	private JSpinner spinnerCantidad;
 	
-	private JLabel lblTotal;
+	private JLabel lblCombo;
 	private JLabel lblAviso;
 	
 	private JButton btnQuitar;
@@ -62,6 +62,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private boolean esModificacion = false;
 
 	private JLabel lblID;
+	private JTextField textTotal;
 
 	public Interfaz_ABM_Combos(Principal_Negocio_Interfaz principal_neg_int) {
 		setTitle("Administracion de Combos");
@@ -104,11 +105,11 @@ public class Interfaz_ABM_Combos extends JDialog {
 		spinnerCantidad = new JSpinner();
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		spinnerCantidad.setBackground(new Color(240, 255, 255));
-		spinnerCantidad.setBounds(435, 86, 57, 28);
+		spinnerCantidad.setBounds(419, 65, 46, 28);
 		contentPanel.add(spinnerCantidad);
 
 		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setBounds(435, 47, 67, 28);
+		lblCantidad.setBounds(419, 8, 73, 28);
 		contentPanel.add(lblCantidad);
 
 		JScrollPane PanelCombos = new JScrollPane();
@@ -145,30 +146,32 @@ public class Interfaz_ABM_Combos extends JDialog {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				agregarProducto();
+				calcularPrecio();
 			}
 		});
-		btnAgregar.setBounds(502, 84, 135, 32);
+		btnAgregar.setBounds(512, 6, 135, 32);
 		contentPanel.add(btnAgregar);
 
-		lblTotal = new JLabel("TOTAL");
-		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTotal.setFont(new Font("SansSerif", Font.BOLD, 16));
-		lblTotal.setBounds(502, 359, 73, 25);
-		contentPanel.add(lblTotal);
+		lblCombo = new JLabel("Combo:");
+		lblCombo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCombo.setFont(new Font("SansSerif", Font.BOLD, 16));
+		lblCombo.setBounds(502, 359, 73, 28);
+		contentPanel.add(lblCombo);
 
-		textTotal = new JTextField();
-		textTotal.setBounds(585, 359, 86, 28);
-		contentPanel.add(textTotal);
-		textTotal.setColumns(10);
+		textCombo = new JTextField();
+		textCombo.setBounds(585, 359, 86, 28);
+		contentPanel.add(textCombo);
+		textCombo.setColumns(10);
 
 		btnQuitar = new JButton("Quitar");
 		btnQuitar.setIcon(new ImageIcon(Interfaz_ABM_Combos.class.getResource("/Recursos/IMG/subtract-1-icon24.png")));
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				quitarProducto();
+				calcularPrecio();
 			}
 		});
-		btnQuitar.setBounds(10, 351, 135, 32);
+		btnQuitar.setBounds(512, 63, 135, 32);
 		contentPanel.add(btnQuitar);
 
 		JLabel lblNombre = new JLabel("Nombre");
@@ -182,7 +185,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		
 		lblAviso = new JLabel("");
 		lblAviso.setForeground(Color.RED);
-		lblAviso.setBounds(155, 351, 340, 32);
+		lblAviso.setBounds(10, 359, 310, 28);
 		contentPanel.add(lblAviso);
 		
 		lblID = new JLabel("");
@@ -190,6 +193,18 @@ public class Interfaz_ABM_Combos extends JDialog {
 		lblID.setEnabled(false);
 		lblID.setBounds(607, 54, 46, 14);
 		contentPanel.add(lblID);
+		
+		JLabel lblTotal = new JLabel("Total:");
+		lblTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTotal.setFont(new Font("SansSerif", Font.BOLD, 16));
+		lblTotal.setBounds(330, 359, 66, 28);
+		contentPanel.add(lblTotal);
+		
+		textTotal = new JTextField();
+		textTotal.setEditable(false);
+		textTotal.setColumns(10);
+		textTotal.setBounds(406, 359, 86, 28);
+		contentPanel.add(textTotal);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -225,36 +240,37 @@ public class Interfaz_ABM_Combos extends JDialog {
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Metodos  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	private void calcularPrecio() {
+		Double total = 0.0;
+		for (HashMap.Entry<String, Integer> mapaProductos : MapaProductos.entrySet()) {
+		    String key = mapaProductos.getKey();
+		    Integer value = mapaProductos.getValue();
+		    total = total + (svProductos.getProducto(key).getPR_precio()*value);
+		}
+		textTotal.setText(total.toString());
+	}
+	
 	private void agregarProducto() {
-		
 		String productoSeleccionado = comboProductos.getSelectedItem().toString();
-		
 		if (!MapaProductos.containsKey(comboProductos.getSelectedItem().toString())) {
-			
 			String[] arreglo = {
 					String.valueOf(tablaProductosCombo.getRowCount() + 1),
 					comboCategorias.getSelectedItem().toString(),
 					productoSeleccionado,
 					String.valueOf(spinnerCantidad.getValue()) };
-			
 			DefaultTableModel modelo = (DefaultTableModel) tablaProductosCombo.getModel();
 			modelo.addRow(arreglo);
 			tablaProductosCombo.setModel(modelo);
-			
-			MapaProductos.put(productoSeleccionado, (Integer) spinnerCantidad.getValue());
+			MapaProductos.put(productoSeleccionado,(Integer) spinnerCantidad.getValue());
 			spinnerCantidad.setValue(1);
-			
 		} else {
-			for(int i = 0; i < tablaProductosCombo.getRowCount(); i++){
-				
-				if(tablaProductosCombo.getValueAt(i, 2).equals(productoSeleccionado)){
-					
+			for (int i = 0; i < tablaProductosCombo.getRowCount(); i++) {
+				if (tablaProductosCombo.getValueAt(i, 2).equals(productoSeleccionado)) {
 					int cantidadSpinner = (int) spinnerCantidad.getValue();
 					int cantidadTabla = Integer.parseInt((String) tablaProductosCombo.getValueAt(i, 3));
 					int cantidadNueva = cantidadTabla + cantidadSpinner;
-					tablaProductosCombo.setValueAt(String.valueOf(cantidadNueva),i, 3);
+					tablaProductosCombo.setValueAt(String.valueOf(cantidadNueva), i, 3);
 					spinnerCantidad.setValue(1);
-					
 					MapaProductos.put(productoSeleccionado, cantidadNueva);
 				}
 			}
@@ -264,7 +280,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	private void inicializar() {
 		MetAux.Limitar_caracteres(textNombre, 20);
 		llenar_categorias();
-		MetAux.SoloNumerosDecimales(textTotal);
+		MetAux.SoloNumerosDecimales(textCombo);
 	}
 	
 	public void setCombo(Combo combo) {
@@ -286,7 +302,8 @@ public class Interfaz_ABM_Combos extends JDialog {
 		lblID.setText(String.valueOf(combo.getId()));
 		textNombre.setText(combo.getNombre());
 		esModificacion = true;
-		textTotal.setText(String.valueOf(PRECIO));
+		textCombo.setText(String.valueOf(PRECIO));
+		calcularPrecio();
 	}
 	
 	private void llenar_categorias() {
@@ -335,7 +352,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 		}else if (!(tablaProductosCombo.getRowCount() > 0)) {
 			lblAviso.setText("Debe agregar al menos un producto al combo");
 			return false;
-		}else if (textTotal.getText().isEmpty()){
+		}else if (textCombo.getText().isEmpty()){
 			lblAviso.setText("Debe elegir un precio para el combo");
 			return false;
 		}
@@ -363,13 +380,13 @@ public class Interfaz_ABM_Combos extends JDialog {
 		if(!lblID.getText().isEmpty()){
 			combo.setId(Integer.parseInt(lblID.getText()));
 		}
-		combo.setPrecio(Double.parseDouble(textTotal.getText()));
+		combo.setPrecio(Double.parseDouble(textCombo.getText()));
 		combo.setNombre(textNombre.getText());
 		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 		for (int i = 0; i < tablaProductosCombo.getRowCount(); i++) {
 			Producto pr = new Producto();
 			
-			pr.setPR_id(svProductos.getIdProducto((String) tablaProductosCombo.getValueAt(i, 2)));
+			pr.setPR_id(svProductos.getProducto((String) tablaProductosCombo.getValueAt(i, 2)).getPR_id());
 			pr.setPR_TIPO_PRODUCTO_STRING((String) tablaProductosCombo.getValueAt(i,1));
 			pr.setPR_nombre((String) tablaProductosCombo.getValueAt(i, 2));
 			pr.setCantidad(Integer.parseInt((String) tablaProductosCombo.getValueAt(i, 3)));
