@@ -36,7 +36,7 @@ import Negocio.Servicios.Servicio_Materia_Prima;
 import Negocio.Servicios.Servicio_Proveedores;
 import Negocio.Servicios.Servicio_Solicitud_compra;
 
-public class ADM_Solicitud_Compra extends JDialog {
+public class Consultar_Solicitud_Compra extends JDialog {
 	
 	private static final long serialVersionUID = 5649321082689428061L;
 	private final JPanel contentPanel = new JPanel();
@@ -62,7 +62,7 @@ public class ADM_Solicitud_Compra extends JDialog {
 	private JLabel lblID;
 
 	@SuppressWarnings("serial")
-	public ADM_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
+	public Consultar_Solicitud_Compra(Principal_Negocio_Interfaz principal_neg_int) {
 		setTitle("Solicitud de compra");
 		setResizable(false);
 		Principal_neg_int = principal_neg_int;
@@ -383,7 +383,12 @@ public class ADM_Solicitud_Compra extends JDialog {
 	public void setSolicictud(Solicitud_compra sc) {
 		comboProveedor.setSelectedItem(sc.getProveedor().getNombre());
 		comboProveedor.setEnabled(false); 
-		
+		comboCategorias.setEnabled(false);
+		comboMateriaPrima.setEnabled(false);
+		btnQuitar.setEnabled(false);
+		textTotal.setEnabled(false);
+		spinnerCantidad.setEnabled(false);
+		btnAgregar.setEnabled(false);
 		
 		for (int i = 0; i < sc.getLista_materia_prima().size(); i++) {
 			String[] arreglo = { String.valueOf(tablaMateriasPrimas.getRowCount()+1),

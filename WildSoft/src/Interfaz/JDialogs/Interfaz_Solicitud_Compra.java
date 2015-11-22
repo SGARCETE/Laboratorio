@@ -34,6 +34,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	private Servicio_Solicitud_compra sv_solicitudCompra;
 	private Principal_Negocio_Interfaz principal_neg_int;
 	private NumberFormat formatoImporte = NumberFormat.getCurrencyInstance();
+	private JButton btnConsultar ;
 	
 	@SuppressWarnings("serial")
 	public Interfaz_Solicitud_Compra(final Principal_Negocio_Interfaz prin_neg_int) {
@@ -105,11 +106,11 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		btnBorrar.setBounds(115, 339, 100, 34);
 		contentPanel.add(btnBorrar);
 		
-		JButton btnEditar = new JButton("Ver/Modificar");
-		btnEditar.setIcon(new ImageIcon(Interfaz_Solicitud_Compra.class.getResource("/Recursos/IMG/search-icon24.png")));
+		JButton btnEditar = new JButton("Modificar");
+		btnEditar.setIcon(new ImageIcon(Interfaz_Solicitud_Compra.class.getResource("/Recursos/IMG/edit-icon16.png")));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Mostrar_solicitud();
+				Editar_solicitud();
 			}
 		});
 		btnEditar.setBounds(220, 339, 136, 34);
@@ -122,7 +123,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 				Generar_Solicitud();
 			}
 		});
-		btnGenerarSolicitud.setBounds(365, 339, 160, 34);
+		btnGenerarSolicitud.setBounds(508, 339, 160, 34);
 		contentPanel.add(btnGenerarSolicitud);
 		
 		JButton btnEnviarSolicitud = new JButton("Enviar Solicitud");
@@ -140,6 +141,16 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 		lblSolicitudesGeneradas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSolicitudesGeneradas.setBounds(10, 11, 933, 37);
 		contentPanel.add(lblSolicitudesGeneradas);
+		
+		btnConsultar = new JButton("Consultar");
+		btnConsultar.setIcon(new ImageIcon(Interfaz_Solicitud_Compra.class.getResource("/Recursos/IMG/search-icon24.png")));
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Mostrar_solicitud();
+			}
+		});
+		btnConsultar.setBounds(362, 339, 136, 34);
+		contentPanel.add(btnConsultar);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(new Color(60, 179, 113));
@@ -169,7 +180,8 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Enviar_solicitud_a_proveedor() {
-		if(tabla_solicitudes_actuales.getSelectedRow() > -1 ){
+		String estado= (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 4);
+		if(tabla_solicitudes_actuales.getSelectedRow() > -1 && estado.equals("Pendiente")){
 			Integer ID_SOLICITUD = ((Integer)tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0));
 			boolean EXITO_AL_ENVIAR = sv_solicitudCompra.Enviar_solicitud_a_proveedor(ID_SOLICITUD);
 			if(EXITO_AL_ENVIAR){
@@ -186,8 +198,11 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 	
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void Mostrar_solicitud() {
-		if(tabla_solicitudes_actuales.getRowCount()>0){
+	private void Editar_solicitud() {
+		
+		String estado= (String) tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 4);
+		if(tabla_solicitudes_actuales.getRowCount()>0  && !estado.equals("Pagada") ) {
+			
 			Solicitud_compra sc = sv_solicitudCompra.OBTENER_SOLICITUD((Integer)tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0));
 			ADM_Solicitud_Compra frame = new ADM_Solicitud_Compra(principal_neg_int);
 			frame.setSolicictud(sc);
@@ -195,8 +210,16 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			frame.setVisible(true);
 			llenarTabla();
 		}
-		
-			
+	}
+	private void Mostrar_solicitud() {
+		if(tabla_solicitudes_actuales.getRowCount()>0) {
+			Solicitud_compra sc = sv_solicitudCompra.OBTENER_SOLICITUD((Integer)tabla_solicitudes_actuales.getValueAt(tabla_solicitudes_actuales.getSelectedRow(), 0));
+			Consultar_Solicitud_Compra frame = new Consultar_Solicitud_Compra(principal_neg_int);
+			frame.setSolicictud(sc);
+			frame.setModal(true);
+			frame.setVisible(true);
+			llenarTabla();
+		}
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -249,5 +272,4 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			
 		}
 	}
-
 }//--> FIN

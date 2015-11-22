@@ -921,7 +921,7 @@ public class Interfaz_Principal {
 		JMenu mnRepartidor = new JMenu("Repartidores");
 		menuBar.add(mnRepartidor);
 
-		JMenuItem mntmADMRepartidores = new JMenuItem("Administracion de Repartidores");
+		JMenuItem mntmADMRepartidores = new JMenuItem("Administrar Repartidores");
 		mntmADMRepartidores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Abrir_Interfaz_ABM_Repartidor();
@@ -935,7 +935,7 @@ public class Interfaz_Principal {
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
 
-		JMenuItem mntmAdmClientes = new JMenuItem("Administracion de Clientes");
+		JMenuItem mntmAdmClientes = new JMenuItem("Administrar Clientes");
 		mnClientes.add(mntmAdmClientes);
 		mntmAdmClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -971,7 +971,7 @@ public class Interfaz_Principal {
 		JMenu mnMateriasPrimas = new JMenu("Materias primas");
 		mnProveedores.add(mnMateriasPrimas);
 
-		JMenuItem mnCompraMP = new JMenuItem("Compra de materias primas");
+		JMenuItem mnCompraMP = new JMenuItem("Administrar Solicitud de Compra");
 		mnCompraMP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				abrirInterfazBoton("sc");
@@ -979,7 +979,7 @@ public class Interfaz_Principal {
 		});
 		mnMateriasPrimas.add(mnCompraMP);
 
-		JMenuItem mntmADMMateriaPrima = new JMenuItem("ADM Materia Prima");
+		JMenuItem mntmADMMateriaPrima = new JMenuItem("Administrar Materia Prima");
 		mntmADMMateriaPrima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Abrir_Interfaz_Materia();
@@ -987,7 +987,7 @@ public class Interfaz_Principal {
 		});
 		mnMateriasPrimas.add(mntmADMMateriaPrima);
 
-		JMenuItem mnABMProveedores = new JMenuItem("Adm. Proveedores");
+		JMenuItem mnABMProveedores = new JMenuItem("Administrar Proveedores");
 		mnABMProveedores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				abrirInterfazBoton("pr");
@@ -1020,7 +1020,7 @@ public class Interfaz_Principal {
 		JMenu mnCategoria = new JMenu("Categor\u00EDa");
 		menuBar.add(mnCategoria);
 
-		JMenuItem mntmADMCategoria = new JMenuItem("Administracion de Categoria");
+		JMenuItem mntmADMCategoria = new JMenuItem("Administrar Categoria");
 		mntmADMCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AbrirInterfazCategoria();
