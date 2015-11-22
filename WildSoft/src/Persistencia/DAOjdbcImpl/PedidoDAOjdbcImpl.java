@@ -25,48 +25,38 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
     
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		
+		// Calcula la ID DIARIA
 		int idDiaria = 1;
-		
 		Pedido pedidoAnterior = OBTENER_PEDIDO(ObtenerUltimoPedido());
-		
-//		Date fecha = new Date();
-//		if( pedidoAnterior.getFecha_Hora_Pedido().getYear() == (fecha.getYear()) && 
-//			pedidoAnterior.getFecha_Hora_Pedido().getMonth() == (fecha.getMonth()) && 
-//			pedidoAnterior.getFecha_Hora_Pedido().getDay() == (fecha.getDay())){
-//			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
-//		}
-		
-		// TEST
 		Calendar Fecha_HOY = new GregorianCalendar();
-		
 		Calendar Pedido_Anterior = Calendar.getInstance();
 		Pedido_Anterior.setTime(pedidoAnterior.getFecha_Hora_Pedido());
-
 		if(MetAux.isSameDay(Pedido_Anterior,Fecha_HOY)){
-			System.out.println("Es true");
 			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
 		}
-		// FIN TEST
 
+		// Se fija si tiene un cliente asociado, de lo contrario se ingresa el cliente 1
 		String CLIENTE = "NULL";
-		if(p.getCliente()!=null && p.getCliente().getID_Cliente()!=0)
-			CLIENTE = p.getCliente().getID_Cliente().toString();
-		else
-			CLIENTE="1";
-		String PEDIDO = "NULL";
+		CLIENTE = (p.getCliente()!=null && p.getCliente().getID_Cliente()!=0) ? p.getCliente().getID_Cliente().toString() : "1";
+
+		// Entrega por defecto en NULL
+		String ENTREGA = "NULL";
+		
 		String SentenciaSQL_PEDIDO = "INSERT INTO PEDIDO(PD_fecha_pedido, PD_estado, PD_cliente, PD_entrega, PD_Delivery, PD_numero) VALUES ("+
 				"'"+	formato_yyyyMMdd.format(p.getFecha_Hora_Pedido())	+"',"+
-				""+		1													+","+
+				""+		1													+","+	/*Estado por defecto 1 = 'Pendiente'*/
 				""+		CLIENTE												+","+
-				""+		PEDIDO												+","+									
+				""+		ENTREGA												+","+									
 				""+ 	p.getEs_Delivery()									+","+
 				""+ 	idDiaria											+");";
+		
 		boolean Exito_al_Ingresar_pedido = conex.Insertar(SentenciaSQL_PEDIDO);
 		
+		// Si se pudo crear el pedido, entonces se asocian sus productos
 		if(Exito_al_Ingresar_pedido){
 			Integer PEDIDO_ID = ObtenerUltimoPedido();
-			for (int i = 0; i < p.getLista_Productos().size(); i++) {
-				
+			
+			for (int i = 0; i < p.getLista_Productos().size(); i++) {	
 				Integer PRODUCTO_ID = p.getLista_Productos().get(i).getPR_id();
 				Double PRECIO_ACTUAL = p.getLista_Productos().get(i).getPR_precio();
 				String OBSERVACION =  p.getLista_Productos().get(i).getPR_Observacion();
@@ -75,35 +65,18 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 						""+	 PEDIDO_ID									+","+	// INTEGER
 						""+	 PRODUCTO_ID								+","+	// INTEGER
 						""+	 p.getLista_Productos().get(i).getCantidad()+","+	// INTEGER
-						"'"+ OBSERVACION								+" ',"+	// STRING
+						"'"+ OBSERVACION								+"',"+	// STRING
 						""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
 				boolean Asociar_producto = conex.Insertar(SentenciaSQL_producto_pedidos);
-//				System.out.println(SentenciaSQL_producto_pedidos);
-				if(!Asociar_producto)
+				
+				if(!Asociar_producto){
+					System.out.println("Se creo el pedido, pero no se pudo asociar los productos de ese pedido :(");
 					return false;
+				}
 			}
 			return true;
 		}
 		return false;
-		/**
-		 PP_pedidoid` int(11) DEFAULT NULL,
-		 PP_productoid` int(11) DEFAULT NULL,
-		 PP_producto_cantidad` int(11) DEFAULT NULL,
-		 PP_Observacion` varchar(300) DEFAULT NULL,
-		 PP_precio` double DEFAULT NULL,
-		 
-		 KEY `PP_pedidoid` (`PP_pedidoid`),
-		 KEY `PP_productoid` (`PP_productoid`),
-		 CONSTRAINT `producto_pedidos_ibfk_1` FOREIGN KEY (`PP_pedidoid`) REFERENCES `pedido` (`PD_id`),
-		 CONSTRAINT `producto_pedidos_ibfk_2` FOREIGN KEY (`PP_productoid`) REFERENCES `pedido` (`PD_id`)
-		 */
-	/**
-	 `PD_id` int(11) NOT NULL AUTO_INCREMENT,
-	 `PD_fecha_pedido` date DEFAULT NULL,
-	 `PD_estado` int(11) DEFAULT NULL,
-	 `PD_cliente` int(11) DEFAULT NULL,
-	 `PD_entrega` int(11) DEFAULT NULL,
-	*/
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -242,8 +215,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		return Arreglo;
 	}
 	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		public ArrayList<Producto> getLista_Productos_Cocina(Pedido P) {
+		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		private ArrayList<Producto> getLista_Productos_Cocina(Integer ID_Pedido) {
 			ArrayList<Producto> Arreglo = new ArrayList<Producto>();
 			try {
 				conex.connectToMySQL();// Conectar base
@@ -251,8 +224,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				
 				String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_Observacion, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
 				"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
-				"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
-				        P.getNumero_Pedido();
+				"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + ID_Pedido;
 
 //				System.out.println("getLista_Productos:\n"+Query);
 				st.executeQuery(Query);
@@ -318,7 +290,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 		}
 	
 		
-		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		public ArrayList<Pedido> getLISTA_PEDIDOS_COCINA(Calendar Fecha_mostrar) {
 			if(Fecha_mostrar==null)
@@ -351,7 +322,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 						delivery = true;
 					}
 					P.setEs_Delivery(delivery);
-					P.setLista_Productos(getLista_Productos_Cocina(P));
+					P.setLista_Productos(getLista_Productos_Cocina(P.getNumero_Pedido()));
 					Arreglo.add(P);
 
 				}
@@ -519,4 +490,138 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// SOLO PARA TICKET
+	public Pedido OBTENER_PEDIDO_COMBOS_DESP(Integer Numero_Pedido) {
+		Pedido P = null;
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			String SentenciaSQL = "SELECT "+
+					"*,SUM(PP.PP_precio) as Precio "+ 
+//					"*,(PP.PP_precio*PP.PP_producto_cantidad) as Precio "+ 
+					"FROM "+
+					"Pedido P "+ 
+					"JOIN "+
+					"producto_pedidos PP "+ 
+					"JOIN "+
+					"Cliente C "+ 
+					"on "+ 
+					"P.PD_id=PP.PP_pedidoid "+ 
+					"AND "+
+					"P.PD_cliente=C.CL_id "+ 
+					"AND "+
+					"P.PD_ID = "+ Numero_Pedido;
+			
+			Integer ID_Cliente = null;
+			
+			//System.out.println("OBTENER_PEDIDO COMBOS DESP\n"+SentenciaSQL);
+			st.executeQuery(SentenciaSQL);
+			ResultSet Fila = st.getResultSet();
+			while(Fila.next()){
+				P = new Pedido();
+				P.setID_DIARIO(Fila.getInt("PD_numero"));
+				P.setNumero_Pedido(Fila.getInt("PD_id"));
+				P.setFecha_Hora_Pedido(Fila.getDate("PD_fecha_pedido"));
+				P.setTotal(Fila.getDouble("Precio"));
+				P.setLista_Productos(getLista_Productos_DESP(P.getNumero_Pedido()));
+				Boolean delivery = false;
+				if(Fila.getInt("PD_Delivery")==1){
+					delivery = true;
+				}
+				P.setEs_Delivery(delivery);
+				
+				ID_Cliente = Fila.getInt("PD_CLIENTE");
+				P.setCliente(new Cliente (Fila.getString("CL_nombre")));
+				P.getCliente().setDomicilio(Fila.getString("CL_direccion"));
+				P.getCliente().setTelefono_Fijo(Fila.getString("CL_telefono"));
+
+			}
+			conex.cerrarConexion();
+						
+			// Obtiene datos del cliente si este no es NULL
+			if(ID_Cliente!=null)
+				P.setCliente(getCliente(ID_Cliente));
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return P;
+	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	// SOLO PARA TICKET
+	private ArrayList<Producto> getLista_Productos_DESP(Integer ID_Pedido) {
+		ArrayList<Producto> Arreglo = new ArrayList<Producto>();
+		try {
+			conex.connectToMySQL();// Conectar base
+			Statement st = conex.conexion.createStatement();
+			
+			String Query = "select PR.PR_id, P.PD_id, PR.Pr_nombre, PP.PP_producto_cantidad, PP.PP_Observacion, PP.PP_precio, T.TP_id, T.TP_nombre from "+ 
+			"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
+			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + ID_Pedido;
+
+			st.executeQuery(Query);
+			ResultSet Fila = st.getResultSet();
+			while (Fila.next()) {
+				if (Fila.getInt("TP_id")!= 4){	// 4 = TIPO 'COMBO'
+					Producto Prod = new Producto();
+					Prod.setPR_id(Fila.getInt("PR_id"));
+					Prod.setPR_nombre(Fila.getString("PR_nombre"));
+					Prod.setPR_precio(Fila.getDouble("PP_precio"));
+					Prod.setPR_Observacion(Fila.getString("PP_Observacion"));
+					Prod.setPR_TIPO_PRODUCTO_STRING(Fila.getString("TP_nombre"));
+					Prod.setCantidad(Fila.getInt("PP_producto_cantidad"));
+					Prod.setPR_tipo_producto(Fila.getInt("TP_id"));
+					
+					boolean esta = Arreglo.contains(Prod);
+					if(esta){
+						Integer index = Arreglo.indexOf(Prod);
+						Integer nueva_cant = Arreglo.get(index).getCantidad() + Prod.getCantidad();
+						if(!Prod.getPR_Observacion().isEmpty()){
+							String Nueva_observacion = Prod.getPR_Observacion() +" "+ Arreglo.get(index).getPR_Observacion();
+							Arreglo.get(index).setPR_Observacion(Nueva_observacion);
+						}
+						Arreglo.get(index).setCantidad(nueva_cant);
+						
+					}
+					else
+						Arreglo.add(Prod);
+				}else{	// SI ES UN COMBO:
+					String NombreCombo = Fila.getString("PR_nombre");
+
+					// Agrego el combo con su nombre precio y cantidad
+					Producto COMBO = new Producto();
+					COMBO.setPR_id(0);
+					COMBO.setPR_nombre(NombreCombo);
+					COMBO.setPR_Observacion(Fila.getString("PP_Observacion"));
+					COMBO.setPR_precio(Fila.getDouble("PP_precio"));
+					COMBO.setCantidad(Fila.getInt("PP_producto_cantidad"));
+					COMBO.setPR_TIPO_PRODUCTO_STRING("COMBO");
+					COMBO.setPR_tipo_producto(Fila.getInt("TP_id"));
+					Arreglo.add(COMBO);
+					
+					ArrayList<Producto> combo_producto =  svCombo.getLista_Productos(NombreCombo);
+					
+					// Se agrega solo los productos de los combos, pero estos NO incluyen precio
+					for (int i =0;i<combo_producto.size(); i++){ 
+						// si existe el ID del productoCombo, entonces sumale prcombo.getCantidad a el ID del arreglo
+						Producto PR_Combo = combo_producto.get(i);
+						PR_Combo.setCantidad(PR_Combo.getCantidad()*Fila.getInt("PP_producto_cantidad"));
+						PR_Combo.setPR_precio(0.0);
+						PR_Combo.setPR_tipo_producto(Fila.getInt("TP_id"));
+						PR_Combo.setPR_nombre("-"+PR_Combo.getPR_nombre());
+						PR_Combo.setPR_TIPO_PRODUCTO_STRING("  "+PR_Combo.getPR_TIPO_PRODUCTO_STRING());
+						Arreglo.add(PR_Combo);
+
+					}
+				}	
+
+			}
+			conex.cerrarConexion();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+		}
+		return Arreglo;
+	}
 }//---> FIN

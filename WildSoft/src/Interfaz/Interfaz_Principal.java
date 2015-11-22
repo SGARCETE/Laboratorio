@@ -90,7 +90,7 @@ import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
 import Persistencia.Conector.Backup;
 import Reportes.ReporteItinerario;
-import Reportes.ReporteTicket;
+import Reportes.ReporteTicket_comboDespl;
 
 public class Interfaz_Principal {
 
@@ -1532,9 +1532,11 @@ public class Interfaz_Principal {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Generar_Comanda() {
 		if (Tabla_Lista_pedidos != null && Tabla_Lista_pedidos.getSelectedRow() != -1) {
-			ReporteTicket RT = new ReporteTicket();
 			Integer NUMERO_PEDIDO = (Integer) Tabla_Lista_pedidos.getValueAt(Tabla_Lista_pedidos.getSelectedRow(), 0);
-			RT.Generar_Ticket_y_comanda(NUMERO_PEDIDO);
+			Pedido Pedido_mostrar = sv_pedidos.OBTENER_PEDIDO_COMBOS_DESP(NUMERO_PEDIDO); 
+			ReporteTicket_comboDespl RTCD = new ReporteTicket_comboDespl(Pedido_mostrar);
+			RTCD.MOSTRAR_REPORTE();
+			
 		}
 	}
 

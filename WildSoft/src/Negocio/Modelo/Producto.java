@@ -96,7 +96,7 @@ public class Producto {
 
 	@Override
 	public boolean equals(Object P) {
-		if(((Producto) P).getPR_id()==this.getPR_id())
+		if(((Producto) P).getPR_id()==this.getPR_id() && ((Producto) P).getPR_tipo_producto()==this.getPR_tipo_producto())
 			return true;
 		return false;
 	}
