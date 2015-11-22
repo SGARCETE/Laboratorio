@@ -3,7 +3,6 @@ package Persistencia.Conector;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,11 +12,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
-
-import Negocio.Modelo.Materia_Prima;
 
 public class Backup {
 	
@@ -119,8 +115,7 @@ public class Backup {
 			ResultSet rs = st.executeQuery("select @@datadir");
 			rs.first();
 			String directorio = rs.getString(1);
-			int posicion = directorio.indexOf("data");
-			directorio= directorio.substring(0, posicion-1);
+			directorio= directorio.substring(0, directorio.length()-5);
 			directorio= directorio.replace("ProgramData", "Program Files");
 			directorio= directorio.replace('\\', '\\');
 			conex.cerrarConexion();
