@@ -1619,12 +1619,10 @@ public class Interfaz_Principal {
 		}
 	}
 	
-	
 	private void Agregar_nuevo_cliente() {
 		ADM_Cliente frame = new ADM_Cliente(Principal_neg_int);
 		frame.setModal(true);
 		frame.setVisible(true);
-		
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
