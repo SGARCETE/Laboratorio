@@ -31,8 +31,7 @@ public class ConectorMySQL {
 			try{ 
 				   //Si falla la conexión, abre el txt con los datos para inicializar la base de datos.
 				   File fichero = new File("Datos.txt");
-				   String file = new String(fichero.getAbsolutePath());
-				   Runtime.getRuntime().exec("cmd /c start "+file);
+				   Runtime.getRuntime().exec("cmd /c start "+fichero.getName());
 				   }catch(IOException e){
 				      e.printStackTrace();
 				   } 
