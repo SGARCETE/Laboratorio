@@ -102,7 +102,27 @@ public class Backup {
 	    return strDate;
 	}
 
-	public static String get_directorio(){
+//	public static String get_directorio(){
+//		try{
+//			conex.connectToMySQL();
+//			Statement st = conex.conexion.createStatement();
+//			ResultSet rs = st.executeQuery("select @@datadir");
+//			rs.first();
+//			String directorio = rs.getString(1);
+//			directorio= directorio.substring(0, directorio.length()-5);
+//			directorio= directorio.replace("ProgramData", "Program Files");
+//			directorio= directorio.replace('\\', '\\');
+//			conex.cerrarConexion();
+//			return directorio;
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		return "Fallo conexión";
+//	}
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	public static File get_directorio(){
+	
 		try{
 			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement();
@@ -113,11 +133,12 @@ public class Backup {
 			directorio= directorio.replace("ProgramData", "Program Files");
 			directorio= directorio.replace('\\', '\\');
 			conex.cerrarConexion();
-			return directorio;
+			File direc = new File(directorio);
+			return direc;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "Fallo conexión";
+		return null;
 	}
 		
 }
