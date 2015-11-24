@@ -32,6 +32,4 @@ public class Servicio_Repartidores {
 		return repartidorDAO.getRepartidor(nombreRepartidor);
 	}
 
-
-
 }

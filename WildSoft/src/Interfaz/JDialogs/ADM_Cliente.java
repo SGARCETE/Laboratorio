@@ -263,8 +263,7 @@ public class ADM_Cliente extends JDialog {
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
-				"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
+			new String[] {"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
 			}
 		));
 		table.getColumnModel().getColumn(0).setMaxWidth(0);

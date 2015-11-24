@@ -55,14 +55,4 @@ public class ReporteMejoresClientes {
 	}
 	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
-	
-	/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-	
-	public static void main(String[] args) {
-	/*	Calendar C = new GregorianCalendar();
-		Date F1 = C.getTime();
-		Date F2 = C.getTime();
-		ReporteMejoresClientes rv= new ReporteMejoresClientes(F1,F2); */
-	//	rv.MOSTRAR_REPORTE();
-	}    
 }//----> FIN CLASE

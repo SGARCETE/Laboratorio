@@ -158,43 +158,37 @@ public class Interfaz_Contabilidad extends JDialog{
 	dateChooser_2.setEnabled(false);
 	btnReporteDia.setEnabled(false);
 	btnGenerarContabilidad.setEnabled(false);
-	
-	
 	}
 	
-	
-	
 	private void GenerarMiniContabilidad() {
-		if(dateChooser_1.getCalendar()!=null && dateChooser_2.getCalendar()!=null){
+		if (dateChooser_1.getCalendar() != null && dateChooser_2.getCalendar() != null) {
 			Date Fecha1 = dateChooser_1.getCalendar().getTime();
 			Date Fecha2 = dateChooser_2.getCalendar().getTime();
 
 			ReporteContabilidad rc = new ReporteContabilidad();
 			rc.Generar_Contabilidad(Fecha1, Fecha2);
 		}
-		
+
 	}
+
 	private void GenerarMiniContabilidadDia() {
-		if(dateChooser.getCalendar()!=null){
+		if (dateChooser.getCalendar() != null) {
 			Date MismaFecha1 = dateChooser.getCalendar().getTime();
-			
+
 			ReporteContabilidad rc = new ReporteContabilidad();
 			rc.Generar_Contabilidad(MismaFecha1, MismaFecha1);
 		}
-	
-		
+
 	}
-	public void verificarRadio(){
-		if(rdbtnReporteDia.isSelected())
-		{
+
+	public void verificarRadio() {
+		if (rdbtnReporteDia.isSelected()) {
 			dateChooser.setEnabled(true);
 			rdbtnReporteDia.setEnabled(true);
+		} else if (rdbtnReporteFechas.isSelected()) {
+
 		}
-		else if(rdbtnReporteFechas.isSelected())
-		{
-			
-		}
-		
+
 	}
 	
 }

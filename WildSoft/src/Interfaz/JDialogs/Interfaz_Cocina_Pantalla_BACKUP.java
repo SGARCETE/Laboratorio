@@ -284,8 +284,7 @@ public class Interfaz_Cocina_Pantalla_BACKUP extends JFrame {
 				.addGroup(gl_contentPanel.createSequentialGroup()
 						.addComponent(panel_13, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(panel_11, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
-		);
+						.addComponent(panel_11, GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)));
 		GroupLayout gl_panel_13 = new GroupLayout(panel_13);
 		gl_panel_13
 				.setHorizontalGroup(
@@ -321,13 +320,13 @@ public class Interfaz_Cocina_Pantalla_BACKUP extends JFrame {
 										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addGap(6)));
 		panel_13.setLayout(gl_panel_13);
-		
+
 		scrollPane_Detalles = new JScrollPane();
-		
+
 		lblDetalle_Pedido = new JLabel("Pedido 12 - Detalles");
 		lblDetalle_Pedido.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDetalle_Pedido.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
+
 		JLabel lblResumenUltimos = new JLabel("Resumen productos pendientes");
 		lblResumenUltimos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblResumenUltimos.setFont(new Font("Tahoma", Font.PLAIN, 16));

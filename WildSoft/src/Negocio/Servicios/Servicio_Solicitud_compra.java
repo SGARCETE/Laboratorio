@@ -14,9 +14,7 @@ import mail_sender.Email_Manager;
 public class Servicio_Solicitud_compra {
 	private Solicitud_compraDAO scDAO = new Solicitud_compraDAOjdbc();
 	
-	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	/**			ARREGLAR ESTO QUE ESTA PIDIENDO UAN LISTA PARA OBTENER SOLO UNA SOLICITUD  -TODO	***/
 	public Solicitud_compra OBTENER_SOLICITUD(int ID_SOLICITUD){
 		Solicitud_compra sc = scDAO.getSOLICITUD_COMPRA(ID_SOLICITUD);
 		sc.setLista_materia_prima(scDAO.getLISTA_Materia_Prima(sc));
@@ -74,16 +72,13 @@ public class Servicio_Solicitud_compra {
 		ReporteSolicitud RS = new ReporteSolicitud();
 		RS.Generar_Solicitud(iD_SOLICITUD);
 		RS.EXPORT_TO_PDF("d:", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
-		//RS.EXPORT_TO_PDF(System.getProperty("user.home") + "\\Desktop", "SOLICITUD_ENVIAR"+iD_SOLICITUD);
 		File PDF_SOLICITUD = new File("d:\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
-//		File PDF_SOLICITUD = new File(System.getProperty("user.home") + "\\Desktop\\SOLICITUD_ENVIAR"+iD_SOLICITUD+".pdf");
 		Solicitud.setSolicitudPDF(PDF_SOLICITUD);
 		if(Solicitud!=null){
 			Exito =  EM.ENVIAR_SOLICITUD_DE_COMPRA(Solicitud);
 			if(Exito)
 				scDAO.Registrar_envio_solicitud(iD_SOLICITUD);
 		}
-//		PDF_SOLICITUD.delete();
 		return Exito;
 	}
 	
@@ -93,13 +88,6 @@ public class Servicio_Solicitud_compra {
 		RS.Generar_Solicitud(NUMERO_SOLICITUD);
 		RS.MOSTRAR_REPORTE();
 	}
-	
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//	public void solicitud_compra_PDF(Integer NUMERO_SOLICITUD) {
-//		ReporteSolicitud RS = new ReporteSolicitud();
-//		RS.Generar_Solicitud(NUMERO_SOLICITUD);
-//		RS.EXPORT_TO_PDF(RUTA, NOMBRE_ARCHIVO);
-//	}
 	
 	// REVISAR SI REALMENTE ES NECESARIO
 	public Proveedor getProveedor(Integer ID_Proveedor){

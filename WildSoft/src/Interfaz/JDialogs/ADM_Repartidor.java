@@ -135,9 +135,7 @@ public class ADM_Repartidor extends JDialog {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(6, 20, 287, 154);
 		panel_2.add(scrollPane);
-		
-
-						
+				
 		scrollPane.setViewportView(table);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

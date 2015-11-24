@@ -177,15 +177,10 @@ public class ADM_Categorias extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void AgregarCategoriaMateria() {
 		if (!textNombre.equals("")) {
-			SvCategorias.guardarCategoriaMateria(new Categoria(textNombre
-					.getText()));
-
+			SvCategorias.guardarCategoriaMateria(new Categoria(textNombre.getText()));
 			LlenarTablaMaterias();
-
 			JOptionPane.showMessageDialog(null, "Categoria Materia agregada");
-
 			textNombre.setText("");
-
 		}
 	}
 	
@@ -193,64 +188,44 @@ public class ADM_Categorias extends JDialog {
 	public void AgregarCategoriaProducto() {
 		if (!textNombre.equals("")) {
 			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre.getText()));
-
 			LlenarTablaProducto();
-
 			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");
-
 			textNombre.setText("");
-
 		}
-
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void LlenarTablaProducto() {
-
 		setModelTabla(tableCategoriaProducto);
-		
 		categoriasProductos = SvProducto.getCategorias();
-
 		for (Entry<Integer, String> entry : categoriasProductos.entrySet()) {
-
 			String value = entry.getValue();
 			String[] fila = new String[1];
 			fila[0] = value;
-
-			((DefaultTableModel) this.tableCategoriaProducto.getModel())
-					.addRow(fila);
+			((DefaultTableModel) this.tableCategoriaProducto.getModel()).addRow(fila);
 		}
-
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void LlenarTablaMaterias() {
-
 		setModelTabla(tableCategoriaMateria);
-		
 		categoriasMaterias = SvMaterias.getCategorias();
-
 		for (Entry<Integer, String> entry : categoriasMaterias.entrySet()) {
-
 			String value = entry.getValue();
 			String[] fila = new String[1];
 			fila[0] = value;
-			((DefaultTableModel) this.tableCategoriaMateria.getModel())
-					.addRow(fila);
+			((DefaultTableModel) this.tableCategoriaMateria.getModel()).addRow(fila);
 		}
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Eliminar_Categoria_Materia() {
 		datoTabla = obtenerSeleccionMateria();
-		int RESPUESTA = JOptionPane
-				.showConfirmDialog(
-						null,
-						"¿Seguro que desea eliminar esta Categoria Materia?\nEstos cambios no se pueden deshacer!",
-						"CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
+		int RESPUESTA = JOptionPane.showConfirmDialog(null,
+				"¿Seguro que desea eliminar esta Categoria Materia?\nEstos cambios no se pueden deshacer!", "CONFIRMAR",
+				JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
-			SvCategorias
-					.eliminarCategoriaMateria((new Categoria(datoTabla[1])));
+			SvCategorias.eliminarCategoriaMateria((new Categoria(datoTabla[1])));
 			LlenarTablaMaterias();
 		}
 	}
@@ -258,46 +233,34 @@ public class ADM_Categorias extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccionMateria() {
 		int indice = tableCategoriaMateria.getSelectedRow();
-
-		String nombre = (String) tableCategoriaMateria.getModel().getValueAt(
-				indice, 0);
-
+		String nombre = (String) tableCategoriaMateria.getModel().getValueAt(indice, 0);
 		String[] dato = { String.valueOf(indice), nombre };
 		return dato;
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private String[] obtenerSeleccionProducto() {
-
 		int indice = tableCategoriaProducto.getSelectedRow();
-
-		String nombre = (String) tableCategoriaProducto.getModel().getValueAt(
-				indice, 0);
-
+		String nombre = (String) tableCategoriaProducto.getModel().getValueAt(indice, 0);
 		String[] dato = { String.valueOf(indice), nombre };
 		return dato;
-
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Eliminar_Categoria_Producto() {
 		datoTabla = obtenerSeleccionProducto();
-		int RESPUESTA = JOptionPane
-				.showConfirmDialog(
-						null,
-						"¿Seguro que desea eliminar esta Categoria Producto ?\nEstos cambios no se pueden deshacer!",
-						"CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
+		int RESPUESTA = JOptionPane.showConfirmDialog(null,
+				"¿Seguro que desea eliminar esta Categoria Producto ?\nEstos cambios no se pueden deshacer!",
+				"CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
-			SvCategorias
-					.eliminarCategoriaProducto((new Categoria(datoTabla[1])));
+			SvCategorias.eliminarCategoriaProducto((new Categoria(datoTabla[1])));
 			LlenarTablaProducto();
 		}
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void setModelTabla(JTable jtable) {
-		jtable.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Nombre" }));
+		jtable.setModel(new DefaultTableModel(new Object[][] {},new String[] { "Nombre" }));
 	}
 
 }//---> FIN CLASE

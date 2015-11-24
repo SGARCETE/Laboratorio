@@ -88,7 +88,7 @@ import Negocio.Servicios.Servicio_Pedidos;
 import Negocio.Servicios.Servicio_Productos;
 import Negocio.Servicios.Servicio_Repartidores;
 import Negocio.Servicios.Servicio_entrega;
-import Persistencia.Conector.Backup;
+import Persistencia.Conector.Manejador_Base_Datos;
 import Reportes.ReporteItinerario;
 import Reportes.ReporteTicket_comboDespl;
 
@@ -889,7 +889,7 @@ public class Interfaz_Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				String directorio = Consultar_directorio();
 				if(!directorio.equals("")){
-					Backup.backup(directorio);
+					Manejador_Base_Datos.backup(directorio);
 				}
 			}
 		});
@@ -900,7 +900,7 @@ public class Interfaz_Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				File archivo = importarDatos();
 				if(!archivo.equals(null)){
-					Backup.Restore(archivo);
+					Manejador_Base_Datos.Restore(archivo);
 				}
 				ACTUALIZAR_TODO();
 			}
@@ -1090,13 +1090,6 @@ public class Interfaz_Principal {
 		/** MANEJA LAS PANTALLAS **/
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gs = ge.getScreenDevices();
-
-		/** INICIO TEST DETECCION DE PANTALLAS **/
-		// javax.swing.JOptionPane.showConfirmDialog((java.awt.Component)
-		// null, "Encontrados : " + gs.length, "screen detectados?",
-		// javax.swing.JOptionPane.DEFAULT_OPTION);
-		/** FIN TEST **/
-
 		Integer Pantalla_Numero = 0;
 		for (int j = 0; j < gs.length; j++) {
 			Pantalla_Numero = j;
@@ -1350,11 +1343,9 @@ public class Interfaz_Principal {
 	private void abrirInterfazBoton(String nombre) {
 		if (nombre.equals("sc")) {
 			Interfaz_Solicitud_Compra frame = new Interfaz_Solicitud_Compra(Principal_neg_int);
-			// frame.setModal(true);
 			frame.setVisible(true);
 		} else if (nombre.equals("pr")) {
 			Interfaz_Proveedores frame = new Interfaz_Proveedores(Principal_neg_int);
-			// frame.setModal(true);
 			frame.setVisible(true);
 		}
 	}

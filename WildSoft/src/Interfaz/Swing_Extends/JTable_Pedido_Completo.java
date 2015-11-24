@@ -12,7 +12,7 @@ import javax.swing.table.TableRowSorter;
 
 public class JTable_Pedido_Completo extends JTable{
 	private static final long serialVersionUID = -6274818637214625651L;
-	private String FuenteTablas = "Arial Unicode MS"; //"Verdana";
+	private String FuenteTablas = "Arial Unicode MS";
 	private int FuenteSize = 15;
 	
 	

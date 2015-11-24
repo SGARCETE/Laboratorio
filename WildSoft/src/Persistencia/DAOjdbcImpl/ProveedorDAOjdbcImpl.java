@@ -74,7 +74,6 @@ public class ProveedorDAOjdbcImpl implements ProveedorDAO {
 				p.setNombre(Fila.getString("PV_nombre"));
 				p.setDireccion(Fila.getString("PV_direccion"));
 				p.setTelefono(Fila.getString("PV_telefono"));
-				//p.setCategoria(Fila.getInt("PV_categoria")); TODO
 				Arreglo.add(p);
 			}
 

@@ -68,22 +68,6 @@ public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 		}
 		return Arreglo;
 	}
-/*	public ArrayList<Materia_Prima> getCategoria() {
-		ArrayList<Materia_Prima> Arreglo = new ArrayList<Materia_Prima>();
-		try {
-			conex.connectToMySQL();// Conectar base
-			Statement st = conex.conexion.createStatement();
-			st.executeQuery("SELECT * FROM Categoria_MP");
-			ResultSet Fila = st.getResultSet();
-			while (Fila.next()) {
-				Arreglo.add(Fila.getString("CA_nombre"));
-			}
-			conex.cerrarConexion();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
-		}
-		return Arreglo;
-	}  */
 	
 	public ArrayList<Materia_Prima> getCategoria() {
 		ArrayList<Materia_Prima> Arreglo = new ArrayList<Materia_Prima>();

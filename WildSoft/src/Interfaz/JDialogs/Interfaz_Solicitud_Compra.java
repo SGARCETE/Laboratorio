@@ -186,12 +186,7 @@ public class Interfaz_Solicitud_Compra extends JDialog {
 			boolean EXITO_AL_ENVIAR = sv_solicitudCompra.Enviar_solicitud_a_proveedor(ID_SOLICITUD);
 			if(EXITO_AL_ENVIAR){
 				llenarTabla();
-//				Solicitud_compra SC = sv_solicitudCompra.OBTENER_SOLICITUD(ID_SOLICITUD);
-//				JOptionPane.showMessageDialog(this, "Correo enviado correctamente al proveedor\n"
-//						+ SC.getProveedor().getNombre()+", mail:"+ SC.getProveedor().getMail() , "Solicitud enviada", JOptionPane.INFORMATION_MESSAGE);
 			}
-//			else
-//				JOptionPane.showMessageDialog(this, "El envio de la solicitud de compra al proveedor fallo!", "Solicitud NO enviada", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

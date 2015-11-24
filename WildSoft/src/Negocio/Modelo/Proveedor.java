@@ -80,7 +80,4 @@ public class Proveedor {
 	public void setVigente(boolean vigente) {
 		Vigente = vigente;
 	}
-	
-	
-	
 }

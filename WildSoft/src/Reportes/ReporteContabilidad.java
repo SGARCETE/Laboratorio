@@ -55,16 +55,5 @@ public class ReporteContabilidad {
 			JasperViewer view = new JasperViewer(jasperPrint,false); 
 			view.setTitle("Mini Contabilidad");
 			view.setVisible(true);
-	}
-	
-//	public static void main(String[] args) {
-//		Calendar F1 = new GregorianCalendar();
-//		Calendar F2 = new GregorianCalendar();
-//		
-//		F1.add(Calendar.DAY_OF_MONTH, 1);
-//		
-//		ReporteContabilidad rc = new ReporteContabilidad();
-//		rc.Generar_Contabilidad(F1.getTime(),F2.getTime());
-//		
-//	}   
+	}   
 }

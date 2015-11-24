@@ -223,21 +223,9 @@ public class ADM_Materia_Prima extends JDialog{
 		    
 		}
 	}
-/*	private void ComboCategoria(){
-		comboBoxCategoria.addItem("Seleccione la categoría");
-
-		listaCategorias= SvMateria.getCategoria_MP();
-		
-		for (int i = 0; i < listaCategorias.size(); i++) {
-				comboBoxCategoria.addItem(listaCategorias.get(i));
-		}
-		
-	} */
-
+	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void agregarMateriaPrima(){
-		
-		
+	private void agregarMateriaPrima(){		
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
 		Integer id = -1;
 		for (Entry<Integer, String> entry : categorias.entrySet()) {
@@ -246,7 +234,6 @@ public class ADM_Materia_Prima extends JDialog{
 				id = entry.getKey();;
 			}			    
 		}
-	
 		if(!textNombre.getText().equals("")){
 			if(comboBoxCategoria.getSelectedIndex()!=-1){
 				
@@ -269,17 +256,11 @@ public class ADM_Materia_Prima extends JDialog{
 		}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	@SuppressWarnings("serial")
 	public void inicializarTabla(){
 		tableMateriasPrimas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"N\u00B0", "Nombre", "Categor\u00EDa"
-			}
-		) {
-			
-		});
+			new Object[][] {},
+			new String[] {"N\u00B0", "Nombre", "Categor\u00EDa"}
+		));
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

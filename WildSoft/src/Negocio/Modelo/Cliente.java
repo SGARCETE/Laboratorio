@@ -60,7 +60,4 @@ public class Cliente {
 		Detalle = detalle;
 	}
 
-
-
-	
 } // FIN CLASE

@@ -55,29 +55,6 @@ public class JTable_Listado_Pedidos extends JTable{
 		this.setRowHeight(25);
 		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-	}	
-	
-		
-//	public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
-//		Component c = super.prepareRenderer(renderer, row, column);
-//		if (!isRowSelected(row)){
-//			c.setBackground(getBackground());
-//			/**	esta parte se puede modificar para poder cambiar los colores de la tabla dependiendo del dato que halla en la tabla**/
-//			int modelRow = convertRowIndexToModel(row);
-//			
-//			String ESTADO = (String)getModel().getValueAt(modelRow, 5);
-//			switch (ESTADO) {
-//				case "Pendiente":	c.setBackground(new Color(255,255,255));	break;
-//				case "Preparado":	c.setBackground(new Color(255,255,255));	break;
-//				case "Enviado":		c.setBackground(new Color(255,255,255));	break;
-//				case "Cobrado":		c.setBackground(new Color(153,255,153));	break;
-//				case "Cancelado":	c.setBackground(new Color(255,153,153));	break;
-//				default:														break;
-//			}
-//
-//		}
-//		return c;
-//	}
-
+	}
 	
 }	//----> Fin

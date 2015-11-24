@@ -10,9 +10,7 @@ public class Cocina {
 	
 	
 	public ArrayList<Pedido> getLista_Pedidos() {
-		
 		return lista_Pedidos;
-		
 	}
 	public void setLista_Pedidos(ArrayList<Pedido> lista_Pedidos) {
 		this.lista_Pedidos = lista_Pedidos;
@@ -29,9 +27,4 @@ public class Cocina {
 	public void setDetalle_pedido(String detalle_pedido) {
 		this.detalle_pedido = detalle_pedido;
 	}
-	
-	
-	
-	
-	
 }

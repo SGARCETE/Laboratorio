@@ -339,78 +339,74 @@ public class Interfaz_ABM_Pedido extends JDialog {
 		lblConDelivery.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConDelivery.setFont(new Font("SansSerif", Font.PLAIN, 24));
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(1)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+		gl_contentPanel.setHorizontalGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup().addGap(1)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+										.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 124,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(12)
+										.addComponent(label_NroPedido, GroupLayout.PREFERRED_SIZE, 149,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(47)
+										.addComponent(lblFecha, GroupLayout.PREFERRED_SIZE, 124,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(12).addComponent(label_Fecha, GroupLayout.PREFERRED_SIZE, 167,
+												GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+										.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 124,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(12)
+										.addComponent(label_ESTADO, GroupLayout.PREFERRED_SIZE, 149,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(47)
+										.addComponent(lblTotal_1, GroupLayout.PREFERRED_SIZE, 124,
+												GroupLayout.PREFERRED_SIZE)
+								.addGap(12)
+								.addComponent(textTotal_Pedido, GroupLayout.PREFERRED_SIZE, 167,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addComponent(lblConDelivery, GroupLayout.PREFERRED_SIZE, 124,
+										GroupLayout.PREFERRED_SIZE).addGap(10).addComponent(tglbtnDelivery,
+												GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(label_NroPedido, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-							.addGap(47)
-							.addComponent(lblFecha, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(label_Fecha, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+								.addComponent(panelPedido, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+								.addGap(11).addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 613,
+										Short.MAX_VALUE))
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(label_ESTADO, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-							.addGap(47)
-							.addComponent(lblTotal_1, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(textTotal_Pedido, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(lblConDelivery, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(tglbtnDelivery, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(panelPedido, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
-							.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(panelModificacionPR, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
-							.addGap(8)
-							.addComponent(panel, GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)))
-					.addGap(5))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(5)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(panelModificacionPR, GroupLayout.PREFERRED_SIZE, 331,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(8).addComponent(panel, GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)))
+						.addGap(5)));
+		gl_contentPanel.setVerticalGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPanel
+				.createSequentialGroup().addGap(5)
+				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNumeroPedido, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(label_NroPedido, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(lblFecha, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(label_Fecha, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)))
-					.addGap(11)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup().addGap(1).addComponent(label_NroPedido,
+								GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup().addGap(1).addComponent(lblFecha,
+								GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup().addGap(1).addComponent(label_Fecha,
+								GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)))
+				.addGap(11)
+				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNumero, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(label_ESTADO, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup().addGap(1).addComponent(label_ESTADO,
+								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblTotal_1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(textTotal_Pedido, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPanel.createSequentialGroup().addGap(1).addComponent(textTotal_Pedido,
+								GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 						.addComponent(lblConDelivery, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 						.addComponent(tglbtnDelivery, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGap(11)
+				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(panelPedido, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
 						.addComponent(scrollPane_Pedido_Completo, GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
-					.addGap(11)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGap(11)
+				.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(panelModificacionPR, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
-					.addGap(7))
-		);
+				.addGap(7)));
 		
 		JButton btnQuitar_1 = new JButton("Quitar");
 		btnQuitar_1.addActionListener(new ActionListener() {
@@ -483,7 +479,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_De_Tipo_Producto() {
 		if (!comboBoxProducto.getSelectedItem().toString().isEmpty()) {
-			// Cargar_Variedades_del_producto(comboBoxProducto.getSelectedItem().toString());
 			Lista_Variedades = svProductos.getVariedad_del_Producto(comboBoxProducto.getSelectedItem().toString());
 			comboBoxVariedad.removeAllItems();
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
@@ -495,7 +490,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Seleccion_De_Variedad() {
 		if (comboBoxVariedad.getSelectedItem() != null && !comboBoxVariedad.getSelectedItem().toString().isEmpty()) {
-			// Cargar_precio_del_producto(comboBoxVariedad.getSelectedItem().toString());
 			for (int i = 0; i < Lista_Variedades.size(); i++) {
 				if (Lista_Variedades.get(i).getPR_nombre().equals(comboBoxVariedad.getSelectedItem().toString()))
 					PRODUCTO_ACTUAL = Lista_Variedades.get(i); // SETEO EL PRODUCTO SELECCIONADO
@@ -523,8 +517,7 @@ public class Interfaz_ABM_Pedido extends JDialog {
 			
 			// LO QUITA DE LA LISTA VISUAL
 			if (Tabla_Pedido_Completo.getSelectedRow() != -1) { // -1 es cuando no se selecciono nada en la tabla, si es distinto, entonces es xq selecciono algo y se puede quitar
-				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow(); 	// indice	 la tabla, (No funciona si se ordenan los datos
-																					// desde la tabla, ojo)
+				int indice_Seleccionado = Tabla_Pedido_Completo.getSelectedRow();
 				DefaultTableModel modelo = (DefaultTableModel) Tabla_Pedido_Completo.getModel();
 				modelo.removeRow(indice_Seleccionado);
 				Calcula_totales();
@@ -544,8 +537,6 @@ public class Interfaz_ABM_Pedido extends JDialog {
 				PRODUCTO_ACTUAL.setCantidad(Cantidad);
 				
 				String Variedad = comboBoxVariedad.getSelectedItem().toString();
-	
-				
 				
 					if (!Tipo_producto.isEmpty() && !Variedad.isEmpty() && Cantidad > 0) {
 						

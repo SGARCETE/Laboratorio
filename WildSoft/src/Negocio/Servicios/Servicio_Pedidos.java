@@ -70,12 +70,6 @@ public class Servicio_Pedidos {
 		return pedidoDAO.ObtenerUltimoPedido();
 	}
 	
-	// OBTENER PEDIDOS TOMANDO LOS PRODUCTOS DE LOS COMBOS
-	
-//	public ArrayList<Producto> getLista_Productos_Cocina(Pedido P){
-//		return pedidoDAO.getLista_Productos_Cocina(P);
-//	}
-	
 	public ArrayList<Pedido> getLISTA_PEDIDOS_COCINA(Calendar Fecha_mostrar){
 		return pedidoDAO.getLISTA_PEDIDOS_COCINA(Fecha_mostrar);
 	}

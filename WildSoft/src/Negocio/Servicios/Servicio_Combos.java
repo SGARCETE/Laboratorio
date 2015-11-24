@@ -58,7 +58,6 @@ public class Servicio_Combos {
 	
 	public boolean ELIMINAR_Combo_de_pedido(String nombre){
 		return comboDAO.ELIMINAR_Combo_de_pedido(nombre);
-		
 	}
 
 }

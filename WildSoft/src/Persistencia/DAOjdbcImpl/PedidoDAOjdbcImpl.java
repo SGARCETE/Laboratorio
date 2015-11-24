@@ -107,7 +107,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre, C.CL_direccion, C.CL_telefono,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 						+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
 						 +" and P.PD_estado= 2  group by P.PD_id";
-//				System.out.println("getLISTA_PEDIDOS "+Query);
 				st.executeQuery(Query);
 				
 				
@@ -150,7 +149,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre, C.CL_direccion, C.CL_telefono,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 					+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
 					 +"  group by P.PD_id";
-//			System.out.println("getLISTA_PEDIDOS "+Query);
 			st.executeQuery(Query);
 			
 			
@@ -193,7 +191,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + 
 			        P.getNumero_Pedido();
 
-//			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
@@ -226,7 +223,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				"Producto PR join Producto_pedidos PP join Pedido P join tipo_producto T "+ 
 				"on T.TP_id= PR.PR_tipo_producto and PR.Pr_id=PP.PP_productoid and P.PD_id=PP.PP_pedidoid and P.PD_id=" + ID_Pedido;
 
-//				System.out.println("getLista_Productos:\n"+Query);
 				st.executeQuery(Query);
 				ResultSet Fila = st.getResultSet();
 				while (Fila.next()) {
@@ -246,7 +242,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 							Integer nueva_cant = Arreglo.get(index).getCantidad() + Prod.getCantidad();
 							if(!Prod.getPR_Observacion().isEmpty()){
 								String Nueva_observacion = Prod.getPR_Observacion() +" "+ Arreglo.get(index).getPR_Observacion();
-//								System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
 								Arreglo.get(index).setPR_Observacion(Nueva_observacion);
 							}
 							Arreglo.get(index).setCantidad(nueva_cant);
@@ -268,7 +263,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 								Integer nueva_cant = Arreglo.get(index).getCantidad() + PR_Combo.getCantidad();
 								if(!PR_Combo.getPR_Observacion().isEmpty()){
 									String Nueva_observacion = Arreglo.get(index).getPR_Observacion() +" "+ PR_Combo.getPR_Observacion();
-//									System.out.println("getLista_Productos_Cocina "+Nueva_observacion);
 									Arreglo.get(index).setPR_Observacion(Nueva_observacion);
 								}
 								Arreglo.get(index).setCantidad(nueva_cant);
@@ -302,7 +296,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				String Query = "select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre, C.CL_direccion, C.CL_telefono,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
 						+" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido='"+ FECHA_FILTRO +"' and P.PD_estado= EST.Pest_id"
 						 +"  group by P.PD_id";
-//				System.out.println("getLISTA_PEDIDOS "+Query);
 				st.executeQuery(Query);
 				
 				
@@ -374,7 +367,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			" from  Pedido P join producto_pedidos PP join Pe_estado EST  on P.PD_id= PP.PP_pedidoid and P.PD_estado= EST.Pest_id AND " +
 			"P.PD_ID = "+ Numero_Pedido;
 			Integer ID_Cliente = null;
-//			System.out.println("OBTENER_PEDIDO\n"+SentenciaSQL);
 			st.executeQuery(SentenciaSQL);
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){
@@ -482,7 +474,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 					"'"+ OBSERVACION								+" ',"+	// STRING
 					""+  PRECIO_ACTUAL								+ ")";	// DOUBLE
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
-//			System.out.println(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
 		
@@ -499,7 +490,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			Statement st = conex.conexion.createStatement();
 			String SentenciaSQL = "SELECT "+
 					"*,SUM(PP.PP_precio) as Precio "+ 
-//					"*,(PP.PP_precio*PP.PP_producto_cantidad) as Precio "+ 
 					"FROM "+
 					"Pedido P "+ 
 					"JOIN "+
@@ -514,8 +504,6 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 					"P.PD_ID = "+ Numero_Pedido;
 			
 			Integer ID_Cliente = null;
-			
-			//System.out.println("OBTENER_PEDIDO COMBOS DESP\n"+SentenciaSQL);
 			st.executeQuery(SentenciaSQL);
 			ResultSet Fila = st.getResultSet();
 			while(Fila.next()){

@@ -103,7 +103,6 @@ public class Interfaz_Proveedores extends JDialog {
 				if (tableProveedores.getSelectedRow() != -1) {
 					eliminarProveedor();
 				}
-
 			}
 		});
 		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class .getResource("/Recursos/IMG/delete-1-icon24.png")));
@@ -167,21 +166,16 @@ public class Interfaz_Proveedores extends JDialog {
 		panelAltaModificacion.add(textDireccion);
 
 		textTelefono = new JTextField();
-		textTelefono.addKeyListener(new KeyAdapter(){
-		   public void keyTyped(KeyEvent e){
-		      char caracter = e.getKeyChar();
-		      if(((caracter < '0') || (caracter > '9'))
-		    		  && (caracter != KeyEvent.VK_BACK_SPACE)
-		    		  && (caracter != '(')
-		    		  && (caracter != ')')
-		    		  && (caracter != '+')
-		    		  && (caracter != KeyEvent.VK_MINUS)
-		    		  && (caracter != KeyEvent.VK_SPACE)
-		    		  && (caracter != KeyEvent.VK_LEFT)
-		    		  && (caracter != KeyEvent.VK_RIGHT)) {
-		         e.consume();
-		      }
-		   }
+		textTelefono.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char caracter = e.getKeyChar();
+				if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE) && (caracter != '(')
+						&& (caracter != ')') && (caracter != '+') && (caracter != KeyEvent.VK_MINUS)
+						&& (caracter != KeyEvent.VK_SPACE) && (caracter != KeyEvent.VK_LEFT)
+						&& (caracter != KeyEvent.VK_RIGHT)) {
+					e.consume();
+				}
+			}
 		});
 		textTelefono.setColumns(10);
 		textTelefono.setBounds(79, 108, 210, 28);
@@ -457,7 +451,6 @@ public class Interfaz_Proveedores extends JDialog {
 		return dato;
 	}
 
-	//TODO
 	private void eliminarProveedor() {
 		int RESPUESTA = JOptionPane.showConfirmDialog( null, "¿Seguro que desea eliminar este Proveedor?\nEstos cambios no se pueden deshacer!", "CONFIRMAR", JOptionPane.OK_CANCEL_OPTION);
 		if (RESPUESTA == JOptionPane.OK_OPTION) {
@@ -467,7 +460,6 @@ public class Interfaz_Proveedores extends JDialog {
 		}
 	}
 
-	//TODO
 	private void modificarProveedor() {
 		camposHabilitados(true);
 		datoTabla = obtenerSeleccion();

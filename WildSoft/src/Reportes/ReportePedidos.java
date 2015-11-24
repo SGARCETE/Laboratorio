@@ -51,10 +51,4 @@ public class ReportePedidos {
 				view.setTitle("Contabiliad Pedidos");
 				view.setVisible(true);
 	}
-	
-/*	public static void main(String[] args) {
-		Integer iditi= 3;
-		ReporteItinerario ri= new ReporteItinerario();
-		ri.Generar_Itinerario(iditi);
-	}   */ 
 }

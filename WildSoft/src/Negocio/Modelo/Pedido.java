@@ -6,10 +6,10 @@ import java.util.Date;
 //Como hacemos con el enum?
 public class Pedido {
 	//Agregar Observacion
-	private Integer Numero_Pedido; 		// ID o NUMERO DE PEDIDO GENERAL
-	private Integer ID_DIARIO;			// NUMERO DE PEDIDO DIARIO, solo para la vista del cliente
-	private Date 	Fecha_Hora_Pedido;		// Fecha y hora en la que se ingresa el pedido al sistema
-	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();				// Lista de productos en el pedido
+	private Integer Numero_Pedido; 													// ID o NUMERO DE PEDIDO GENERAL
+	private Integer ID_DIARIO;														// NUMERO DE PEDIDO DIARIO, solo para la vista del cliente
+	private Date 	Fecha_Hora_Pedido;												// Fecha y hora en la que se ingresa el pedido al sistema
+	private ArrayList<Producto>	Lista_Productos = new ArrayList<Producto>();		// Lista de productos en el pedido
 	private String ESTADO = "Pendiente";
 	
 	// En caso que sea delivery:
@@ -74,12 +74,6 @@ public class Pedido {
 	public void agregar_un_producto(Producto PRODUCTO) {
 		if(PRODUCTO!=null)
 			Lista_Productos.add(PRODUCTO);
-	}
-	
-	public void quitar_un_producto(Producto PRODUCTO) {
-//		if(PRODUCTO!=null)
-//			Lista_Productos.remove();
-		System.out.println("Producto.quitar_un_producto NO ESTA IMPLEMENTADO" );
 	}
 	
 	public Double getTotal() {

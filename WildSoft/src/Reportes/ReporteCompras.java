@@ -50,10 +50,4 @@ public class ReporteCompras {
 				view.setTitle("Contabilidad Compras");
 				view.setVisible(true);
 	}
-	
-/*	public static void main(String[] args) {
-		Integer iditi= 3;
-		ReporteItinerario ri= new ReporteItinerario();
-		ri.Generar_Itinerario(iditi);
-	}   */ 
 }

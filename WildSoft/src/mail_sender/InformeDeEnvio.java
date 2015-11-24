@@ -103,18 +103,15 @@ public class InformeDeEnvio extends JDialog {
 	}
 	
 	public void SetPreparando(){
-//		prepIMG.setIcon(new ImageIcon("recursos\\delete-1-icon32.png"));
 		lblPreparandoDatos.setText("Preparando datos...");
 	}
 	public void SetConectando(){
 		prepIMG.setIcon(new ImageIcon("recursos\\check-icon32.png"));
 		lblConectando.setText("Conectando...");
-//		conIMG.setIcon(new ImageIcon("recursos\\delete-1-icon32.png"));
 	}
 	public void SetEnviando(){
 		conIMG.setIcon(new ImageIcon("recursos\\check-icon32.png"));
-		lblEnviando.setText("Enviando...");	
-//		envIMG.setIcon(new ImageIcon("recursos\\delete-1-icon32.png"));
+		lblEnviando.setText("Enviando...");
 	}
 	public void SetEnviado(boolean Enviado){
 		if(Enviado){

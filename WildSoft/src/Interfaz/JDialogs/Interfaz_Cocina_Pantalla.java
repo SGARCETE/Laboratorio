@@ -59,15 +59,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		setBounds(100, 100, 1024, 768);
 		getContentPane().setLayout(new BorderLayout());
 		
-		
-
-//		getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-//		/*PARA SACARLE LOS BORDES:*/
-//		this.setUndecorated(true);
-//		/*PARA QUE SE ABRA LO MAS GRANDE POSIBLE */
-//		this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds()); 
-		
-		
 		contentPanel.setBackground(Color.BLACK);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -113,9 +104,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(scrollPane_prioridad1, GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE))
 		);
-		
-
-
 		
 		panel_prioridad1.setLayout(gl_panel_prioridad1);
 		

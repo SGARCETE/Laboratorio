@@ -30,10 +30,6 @@ public class EntregaDAOjdbcImplement implements EntregaDAO {
 			String Query = "select * from Repartidor";
 			System.out.println("getLISTA_REPARTIDORES " + Query);
 			st.executeQuery(Query);
-
-			// st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-			// +" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
-			// +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Repartidor r = new Repartidor();
@@ -62,10 +58,6 @@ public class EntregaDAOjdbcImplement implements EntregaDAO {
 			String Query = "select * from pedido PD join Cliente CL where PD.PD_estado=2 and PD.PD_cliente= CL.CL_id and PD.PD_Delivery= 1";
 			System.out.println("getLISTA_PEDIDOS " + Query);
 			st.executeQuery(Query);
-
-			// st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-			// +" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
-			// +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido p = new Pedido();
@@ -96,10 +88,6 @@ public class EntregaDAOjdbcImplement implements EntregaDAO {
 					+ ent.getId();
 			System.out.println("getENTREGA_PEDIDOS " + Query);
 			st.executeQuery(Query);
-
-			// st.executeQuery("select P.PD_Delivery, P.PD_id, P.PD_numero,  P.PD_fecha_pedido, EST.PEST_nombre, C.CL_nombre,SUM(PP.PP_precio * PP.PP_producto_cantidad) as Precio "
-			// +" from  Pedido P join producto_pedidos PP join Pe_estado EST join Cliente C  on C.cl_id= P.PD_cliente and  P.PD_id= PP.PP_pedidoid and P.PD_fecha_pedido= CURDATE() and P.PD_estado= EST.Pest_id"
-			// +"  group by P.PD_id");
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
 				Pedido p = new Pedido();
@@ -131,7 +119,6 @@ public class EntregaDAOjdbcImplement implements EntregaDAO {
 					"" + PEDIDO_ID + ")"; // INTEGER
 
 			resultado = conex.Insertar(SentenciaSQL_producto_pedidos);
-			// System.out.println(SentenciaSQL_producto_pedidos);
 		}
 		return resultado;
 

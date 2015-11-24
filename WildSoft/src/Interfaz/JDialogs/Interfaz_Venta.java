@@ -409,7 +409,7 @@ public class Interfaz_Venta extends JDialog{
 	}
 	
 	private Calendar getLunes(Calendar C) {
-		switch (C.get(Calendar.DAY_OF_WEEK)){
+		switch (C.get(Calendar.DAY_OF_WEEK)) {
 		case 1:
 			C.add(Calendar.DAY_OF_MONTH, 0);
 			return C;
@@ -433,7 +433,6 @@ public class Interfaz_Venta extends JDialog{
 			return C;
 		}
 		return C;
-		
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

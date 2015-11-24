@@ -192,7 +192,6 @@ public class EnvioMail {
             t.sendMessage(message, message.getAllRecipients());
             t.close();
             Informe.SetEnviado(true);
-//            System.out.println("ENVIADO.");
 
         }
         catch (Exception e){
@@ -219,7 +218,6 @@ public class EnvioMail {
 		String clave = "wildsoft1234";
 		String Correo_del_que_envia = "server.wildsoft@gmail.com";
 		ArrayList<String> ListaDeReceptores = new ArrayList<String>();
-		//ArrayList<String> AdjuntosVarios = new  ArrayList<String>();
 		String Ruta_adjunto = "D:\\Users\\Lukas\\Desktop\\14746.jpg";
 		String Nombre_Adjunto = "Adjunto.jpg";
 		
@@ -227,12 +225,6 @@ public class EnvioMail {
 		ListaDeReceptores.add("federico.evf@gmail.com");
 		ListaDeReceptores.add("santi101093@hotmail.com.ar");
 		ListaDeReceptores.add("nicolas_cabral21@hotmail.com");
-		
-		//AdjuntosVarios.add("D:\\Users\\Lukas\\Desktop\\14746.jpg");
-
-		//"D:\\imagenes PNG\\1_gohan.png"
-		//"D:\\Documents\\Downloads\\wordfe.docx"
-		
 		EnvioMail e = new EnvioMail(Correo_del_que_envia, clave ,Ruta_adjunto, Nombre_Adjunto ,ListaDeReceptores ,"ESTO ES UNA PRUEBA, NO TE ASUSTES", "HOLA PROBANDO PROBANDO HOLA 1 2 3 4 HOLA PROBANDOOO PROBANDOOOOOO bue");
 		System.out.println("enviando...");
 		if (e.sendMail(false)){

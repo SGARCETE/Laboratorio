@@ -24,9 +24,8 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			
 			String Query = "select * from Combo_productos COPRO join Combo CO join Producto PR " +
 			"on COPRO.COPRO_combo_id = CO.CO_id and COPRO.COPRO_producto_id = PR.PR_id and CO.CO_id= " + 
-			     C.getId()   ;
+			     C.getId();
 
-//			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
@@ -56,9 +55,8 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			
 			String Query = "select * from Combo_productos COPRO join Combo CO join Producto PR join Tipo_producto TP " +
 			"on COPRO.COPRO_combo_id = CO.CO_id and TP.TP_id=PR.PR_tipo_producto and COPRO.COPRO_producto_id = PR.PR_id and CO.CO_nombre= '" + 
-			     C + "'"   ;
+			     C + "'";
 
-//			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
@@ -87,8 +85,6 @@ public class ComboDAOjdbcImpl implements ComboDAO{
 			Statement st = conex.conexion.createStatement();
 			
 			String Query = "select CO_id,CO_nombre, CO_precio from Combo WHERE CO_vigente is null";
-
-//			System.out.println("getLista_Productos:\n"+Query);
 			st.executeQuery(Query);
 			ResultSet Fila = st.getResultSet();
 			while (Fila.next()) {
