@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -242,7 +243,7 @@ public class Interfaz_ABM_Combos extends JDialog {
 	
 	private void calcularPrecio() {
 		Double total = 0.0;
-		for (HashMap.Entry<String, Integer> mapaProductos : MapaProductos.entrySet()) {
+		for (Entry<String, Integer> mapaProductos : MapaProductos.entrySet()) {
 		    String key = mapaProductos.getKey();
 		    Integer value = mapaProductos.getValue();
 		    total = total + (svProductos.getProducto(key).getPR_precio()*value);

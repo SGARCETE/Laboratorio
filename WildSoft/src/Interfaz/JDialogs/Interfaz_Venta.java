@@ -138,6 +138,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_3.setLayout(null);
 		
 		rdbtnPorSemana = new JRadioButton("semana");
+		rdbtnPorSemana.setOpaque(false);
 		rdbtnPorSemana.setToolTipText("Su fecha m\u00E1s los 7 dias que le siguen");
 		rdbtnPorSemana.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,14 +151,6 @@ public class Interfaz_Venta extends JDialog{
 		grupoPeriodo.add(rdbtnPorSemana);
 		
 		dateChooserSemana = new JDateChooser();
-		dateChooserSemana.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent arg0) {
-				if(dateChooserSemana.getCalendar()!=null){
-					Calendar C = dateChooserSemana.getCalendar();
-					Calendar C2= getLunes(C);
-									}
-			}
-		});
 		dateChooserSemana.setToolTipText("");
 		dateChooserSemana.setEnabled(false);
 		dateChooserSemana.setBounds(133, 10, 130, 27);
@@ -176,6 +169,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_1.add(dateChooserMes);
 		
 		rdbtnPorMes = new JRadioButton("mes");
+		rdbtnPorMes.setOpaque(false);
 		rdbtnPorMes.setToolTipText("del a\u00F1o actual");
 		rdbtnPorMes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -224,6 +218,7 @@ public class Interfaz_Venta extends JDialog{
 
 		
 		rdbtnEntreFechas = new JRadioButton("entre fechas");
+		rdbtnEntreFechas.setOpaque(false);
 		rdbtnEntreFechas.setToolTipText("Fechas personalizadas");
 		rdbtnEntreFechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -243,6 +238,7 @@ public class Interfaz_Venta extends JDialog{
 		panel_8.setBackground(Color.WHITE);
 		
 		rdbtnPorDia = new JRadioButton("d\u00EDa");
+		rdbtnPorDia.setOpaque(false);
 		rdbtnPorDia.setToolTipText("Solo de dia en particular");
 		rdbtnPorDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -334,9 +330,9 @@ public class Interfaz_Venta extends JDialog{
 		}
 				
 		if(rdbtnPorSemana.isSelected()){
-			Calendar C = dateChooserSemana.getCalendar();
-			Calendar C2= getLunes(C).getInstance();
-			Calendar C3= getLunes(C).getInstance(); // Toma el lunes más cercano al dia seleccionado.
+			
+			Calendar C2 = getLunes(dateChooserSemana.getCalendar());
+			Calendar C3 = getLunes(dateChooserSemana.getCalendar()); // Toma el lunes más cercano al dia seleccionado.
 			C3.add(Calendar.DAY_OF_MONTH, 6);	// AL DIA SELECCIONADO SE LE SUMAN 6 DIAS (7 con el que se seleccionó)
 			F1 = C2;
 			System.out.println(formato_ddMMyyyy.format(C2.getTime()));
@@ -377,10 +373,11 @@ public class Interfaz_Venta extends JDialog{
 				ReporteVentas rv= new ReporteVentas(id,F1.getTime(),F2.getTime());
 				rv.MOSTRAR_REPORTE();
 			}
-			JOptionPane.showMessageDialog(null, "Debe seleccionar una Categoria", "Falta categoria", JOptionPane.WARNING_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(null, "Debe seleccionar una Categoria", "Falta categoria", JOptionPane.WARNING_MESSAGE);
 		}
 		else
-			JOptionPane.showMessageDialog(null, "Fecha incorrecta\nAsegurese de que las fechas esten correctas y no falte ninguna", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Fecha incorrecta\nAsegurese de que las fechas esten correctas y no falte ninguna", "Fecha no valida", JOptionPane.WARNING_MESSAGE);
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -412,7 +409,7 @@ public class Interfaz_Venta extends JDialog{
 	}
 	
 	private Calendar getLunes(Calendar C) {
-		switch (Calendar.DAY_OF_WEEK){
+		switch (C.get(Calendar.DAY_OF_WEEK)){
 		case 1:
 			C.add(Calendar.DAY_OF_MONTH, 0);
 			return C;

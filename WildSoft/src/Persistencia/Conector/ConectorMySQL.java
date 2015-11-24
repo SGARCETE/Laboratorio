@@ -1,9 +1,7 @@
 package Persistencia.Conector;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,7 +37,7 @@ public class ConectorMySQL {
 				      e.printStackTrace();
 				   } 
 			JOptionPane.showMessageDialog(null,
-					"No se establecio una conexion a la base de datos!\n");
+					"No se establecio una conexion a la base de datos!\nPor favor verifique que el usuario y contraseña sean correctos.");
 			SQLE.printStackTrace();
 			return false;
 		}

@@ -25,7 +25,7 @@ public class ReporteMejoresClientes {
 		JasperPrint jasperPrint = null;
 		InputStream inputStream = null;
 		Map<String, Object> parametros;
-		
+		System.out.println(F1.getTime() + "    "+ F2.getTime());
 		parametros = new HashMap<String, Object>();
 		parametros.put("PD_fecha_pedido", F1);
 		parametros.put("PD_fecha_pedido2", F2);

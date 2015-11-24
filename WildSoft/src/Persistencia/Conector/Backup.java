@@ -28,6 +28,7 @@ public class Backup {
 			Runtime runtime = Runtime.getRuntime();
 			File backupFile = new File(directorio,"Backup-WildSoft-" + getFechaActual() + ".sql");
 			FileWriter fw = new FileWriter(backupFile);
+//			Process child = runtime.exec(MYSQL.getAbsolutePath() +"\\bin\\mysqldump --opt --password=root --user=root --databases wildsoft");
 			Process child = runtime.exec( get_directorio() + "\\bin\\mysqldump --opt --password=" + conex.Get_contraseña()+" --user="+conex.Get_usuario()+" --databases wildsoft");
 			InputStreamReader irs = new InputStreamReader(child.getInputStream());
 			BufferedReader br = new BufferedReader(irs);
@@ -44,10 +45,8 @@ public class Backup {
 		}
 	}
 
-	/**
-	 * Restaura la base de datos a partir de un archivo .sql
-	 * @param archivo Es el archivo .sql que contiene el backup
-	 */
+	/** Restaura la base de datos a partir de un archivo .sql
+	 * @param archivo Es el archivo .sql que contiene el backup*/
 	public static void Restore(File archivo) {
 		try {
 			JOptionPane.showMessageDialog(null, "Espere un momento, se esta llevando a cabo la restauracion","Restaurando", JOptionPane.INFORMATION_MESSAGE);
@@ -95,16 +94,15 @@ public class Backup {
 		};
 		hiloError.start();
 	}
-	
+		
 	public static String getFechaActual() {
-	    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy");
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy_HH.mm");
 	    Date now = new Date();
 	    String strDate = sdfDate.format(now);
 	    return strDate;
 	}
 
 	public static String get_directorio(){
-		ConectorMySQL conex = new ConectorMySQL();
 		try{
 			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement();
@@ -122,5 +120,4 @@ public class Backup {
 		return "Fallo conexión";
 	}
 		
-	
 }
