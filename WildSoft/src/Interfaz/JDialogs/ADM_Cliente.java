@@ -259,17 +259,23 @@ public class ADM_Cliente extends JDialog {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 	private void iniciarlizarTablaCliente()	{
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"
-			}
-		));
+			new String[] {"N°","Nombre", "Direcci\u00F3n", "Telefono", "Detalle"}
+			){
+			boolean[] columnEditables = new boolean[] {
+					true, false, false, false, false
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setPreferredWidth(0);
-		
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

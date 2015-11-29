@@ -397,9 +397,7 @@ public class Interfaz_Proveedores extends JDialog {
 		tableProveedores.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
-				"N\u00B0", "Nombre", "Direcci\u00F3n", "Telefono", "Mail"
-			}
+			new String[] {"N\u00B0", "Nombre", "Direcci\u00F3n", "Telefono", "Mail"}
 		) {
 			boolean[] columnEditables = new boolean[] {
 				true, false, false, false, false

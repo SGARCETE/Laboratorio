@@ -14,12 +14,11 @@ import Persistencia.DAO.MateriaPrimaDAO;
 
 public class MateriaPrimaDAOjdbcImpl implements MateriaPrimaDAO{
 	private ConectorMySQL conex = new ConectorMySQL();
+	
 	public boolean AGREGAR_Materia_Prima(Materia_Prima m) {
 	    String SentenciaSQL = "INSERT INTO Materia_Prima (MP_nombre, MP_categoria) VALUES ("+
 			"'"+	m.getNombre()			+"',"
 			   +    m.getCategoria()		+")";
-	    
-	   
 		return conex.Insertar(SentenciaSQL);
 	}
 
