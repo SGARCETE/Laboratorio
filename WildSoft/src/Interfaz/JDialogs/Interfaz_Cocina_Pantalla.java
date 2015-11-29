@@ -438,7 +438,6 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 		ArrayList<Producto> LISTA_PRODUCTOS_ORDENADA = MetAux.mergeSort(p.getLista_Productos());
 		String TIPO_PR = "";
 		String TIPO_PR_ACTUAL = ""; 
-		
 		for (int i = 0; i < LISTA_PRODUCTOS_ORDENADA.size(); i++) {
 			Producto pr = LISTA_PRODUCTOS_ORDENADA.get(i);
 			TIPO_PR_ACTUAL = pr.getPR_TIPO_PRODUCTO_STRING();			
@@ -449,7 +448,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			}
 			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA  (ID Producto bebida = 3)
 				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
-				if(!pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
+				if(pr.getPR_Observacion()!=null && !pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
 					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
 			}
 			

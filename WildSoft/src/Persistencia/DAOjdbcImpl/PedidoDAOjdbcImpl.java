@@ -22,17 +22,19 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	private SimpleDateFormat formato_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
     ComboDAOjdbcImpl svCombo= new ComboDAOjdbcImpl();
     
-    
 	public boolean AGREGAR_PEDIDO(Pedido p) {
 		
 		// Calcula la ID DIARIA
 		int idDiaria = 1;
-		Pedido pedidoAnterior = OBTENER_PEDIDO(ObtenerUltimoPedido());
-		Calendar Fecha_HOY = new GregorianCalendar();
-		Calendar Pedido_Anterior = Calendar.getInstance();
-		Pedido_Anterior.setTime(pedidoAnterior.getFecha_Hora_Pedido());
-		if(MetAux.isSameDay(Pedido_Anterior,Fecha_HOY)){
-			idDiaria = pedidoAnterior.getID_DIARIO() + 1;
+		Integer ID_ULT = ObtenerUltimoPedido();
+		Pedido pedidoAnterior = OBTENER_PEDIDO(ID_ULT);
+		if(ID_ULT!=0){
+			Calendar Fecha_HOY = new GregorianCalendar();
+			Calendar Pedido_Anterior = Calendar.getInstance();
+			Pedido_Anterior.setTime(pedidoAnterior.getFecha_Hora_Pedido());
+			if(MetAux.isSameDay(Pedido_Anterior,Fecha_HOY)){
+				idDiaria = pedidoAnterior.getID_DIARIO() + 1;
+			}
 		}
 
 		// Se fija si tiene un cliente asociado, de lo contrario se ingresa el cliente 1
@@ -81,18 +83,20 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public Integer ObtenerUltimoPedido() {
+		Integer ID = 0;
 		try {
 			conex.connectToMySQL();
 			Statement st = conex.conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = st.executeQuery("SELECT PD_id FROM PEDIDO WHERE PD_id = (select max(PD_id) from PEDIDO)");				
-			rs.first();
-			int ID = rs.getInt("PD_id");
+			while(rs.next()){
+				ID = rs.getInt("PD_id");
+				
+			}
 			conex.cerrarConexion();
-			return ID;
 		} catch (SQLException SQLE) {
 			JOptionPane.showMessageDialog(null,"No se puede dar la fila solicitada! \n ERROR : " + SQLE.getMessage());
 		}
-		return 0;
+		return ID;
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

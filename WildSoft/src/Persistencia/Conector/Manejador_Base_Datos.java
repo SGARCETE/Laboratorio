@@ -55,7 +55,7 @@ public class Manejador_Base_Datos {
 			byte buffer[] = new byte[1024];
 			int leido = fis.read(buffer);
 			while (leido > 0) {
-				System.out.println(leido);
+//				System.out.println(leido);
 				os.write(buffer, 0, leido);
 				leido = fis.read(buffer);
 			}
@@ -79,7 +79,7 @@ public class Manejador_Base_Datos {
 					byte[] buffer = new byte[1024];
 					int leido = input.read(buffer);
 					while (leido > 0) {
-						System.out.println(new String(buffer, 0, leido));
+//						System.out.println(new String(buffer, 0, leido));
 						leido = input.read(buffer);
 					}
 					input.close();
