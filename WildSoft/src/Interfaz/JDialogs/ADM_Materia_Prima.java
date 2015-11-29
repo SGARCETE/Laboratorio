@@ -128,11 +128,11 @@ public class ADM_Materia_Prima extends JDialog{
 		panel_1.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(10, 44, 63, 14);
+		lblNombre.setBounds(21, 38, 63, 14);
 		panel_1.add(lblNombre);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(10, 85, 63, 14);
+		lblCategoria.setBounds(21, 85, 63, 14);
 		panel_1.add(lblCategoria);
 		
 		textNombre = new JTextField();
@@ -225,35 +225,33 @@ public class ADM_Materia_Prima extends JDialog{
 	}
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void agregarMateriaPrima(){		
+	private void agregarMateriaPrima() {
 		// Recorro el mapa buscando la id del elemento seleccionado del combo
-		Integer id = -1;
+		Integer idProveedorSeleccionado = -1;
 		for (Entry<Integer, String> entry : categorias.entrySet()) {
 			String value = entry.getValue();
-			if(comboBoxCategoria.getSelectedItem().equals(value)){
-				id = entry.getKey();;
-			}			    
+			if (comboBoxCategoria.getSelectedItem().equals(value)) {
+				idProveedorSeleccionado = entry.getKey();
+			}
 		}
-		if(!textNombre.getText().equals("")){
-			if(comboBoxCategoria.getSelectedIndex()!=-1){
-				
-					label.setVisible(false);
-					SvMateria.AgregarMAteriaPrima(new Materia_Prima(textNombre.getText(), id));
-					inicializarTabla(); 
-					llenar_tabla();
-					JOptionPane.showMessageDialog(null, "Materia Prima agregada");	
-					
-					textNombre.setText("");
-					
-					
-				}else {
-					label.setText("Debes completar el 'Vencimiento' para continuar");
-					label.setVisible(true);}
-				
-			}else {
-				label.setText("Debes completar el combo 'Categoria' para continuar");
-				label.setVisible(true);}
+		if (!textNombre.getText().equals("")) {
+			if (idProveedorSeleccionado != -1) {
+				label.setVisible(false);
+				Materia_Prima mp = new Materia_Prima(textNombre.getText(), idProveedorSeleccionado);
+				SvMateria.AgregarMAteriaPrima(mp);
+				inicializarTabla();
+				llenar_tabla();
+				JOptionPane.showMessageDialog(null, "Materia Prima agregada");
+				textNombre.setText("");
+			} else {
+				label.setText("Debes elegir un proveedor para continuar");
+				label.setVisible(true);
+			}
+		} else {
+			label.setText("Debes escribir un nombre para continuar");
+			label.setVisible(true);
 		}
+	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public void inicializarTabla(){
