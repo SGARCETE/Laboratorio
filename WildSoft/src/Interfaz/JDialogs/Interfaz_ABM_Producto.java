@@ -152,6 +152,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		textNombre.setColumns(10);
 		
 		JLabel lblDetalle = new JLabel("Observaci\u00F3n");
+		lblDetalle.setVisible(false);
 		lblDetalle.setBounds(10, 151, 76, 14);
 		panel_1.add(lblDetalle);
 		
@@ -162,7 +163,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 				agregar_producto();
 			}
 		});
-		btnAgregar.setBounds(108, 193, 89, 49);
+		btnAgregar.setBounds(108, 193, 89, 37);
 		panel_1.add(btnAgregar);
 		
 		textPrecio = new JTextField();
@@ -171,6 +172,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		panel_1.add(textPrecio);
 		
 		textObservación = new JTextField();
+		textObservación.setVisible(false);
 		textObservación.setColumns(10);
 		textObservación.setBounds(85, 144, 204, 28);
 		panel_1.add(textObservación);
@@ -182,7 +184,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 				Aceptar_modificar_Producto();
 			}
 		});
-		btnAceptar.setBounds(29, 193, 96, 49);
+		btnAceptar.setBounds(29, 193, 96, 37);
 		panel_1.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -192,7 +194,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 				Cancelar_modificar_Cliente();
 			}
 		});
-		btnCancelar.setBounds(171, 193, 96, 49);
+		btnCancelar.setBounds(171, 193, 96, 37);
 		panel_1.add(btnCancelar);
 		
 		comboTipo = new  JComboBox<String>();
@@ -249,7 +251,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private void agregar_producto(){
 		
 		if(!textNombre.getText().equals("")){
-			if(!textPrecio.getText().equals("")){
+			if(comprobarPrecio()){
 				if(comboTipo.getSelectedIndex()>0){
 					Integer Tipo_producto_ID = SvProducto.getTipo_Producto_INTEGER(comboTipo.getSelectedItem().toString()).get(0);
 					SvProducto.guardar_nuevo_producto(new Producto(null, textNombre.getText(), Tipo_producto_ID, textObservación.getText(), Double.parseDouble(textPrecio.getText()), 0));
@@ -276,6 +278,19 @@ public class Interfaz_ABM_Producto extends JDialog {
 			lblAviso.setVisible(true);
 			panel_3.setVisible(true);
 		}
+	}
+
+	private boolean comprobarPrecio() {
+		if(textPrecio.getText().isEmpty()){
+			return false;
+		}
+		if(textPrecio.getText().equals("")){
+			return false;
+		}
+		if ((Double.parseDouble(textPrecio.getText()) > 0)){
+			return true;
+		}
+		return true;
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
