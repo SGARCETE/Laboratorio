@@ -1,5 +1,7 @@
 package Interfaz.Swing_Extends;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.JTable;
@@ -7,6 +9,7 @@ import javax.swing.RowSorter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -55,6 +58,20 @@ public class JTable_Listado_Pedidos extends JTable{
 		this.setRowHeight(25);
 		
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+	}
+	
+	public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
+		Component c = super.prepareRenderer(renderer, row, column);
+		if (!isRowSelected(row)){
+			c.setBackground(getBackground());
+//			int modelRow = convertRowIndexToModel(row);
+			if(row%2==0) c.setBackground(new Color(240, 255, 255));
+			
+//			String Cancelado = (String)getModel().getValueAt(modelRow, 5);
+//			if (Cancelado.equals("Cancelado")) c.setBackground(new Color(255,153,153));
+			
+		}
+		return c;
 	}
 	
 }	//----> Fin

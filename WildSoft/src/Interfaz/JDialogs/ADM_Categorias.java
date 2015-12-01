@@ -82,7 +82,7 @@ public class ADM_Categorias extends JDialog {
 		scrollPaneProducto.setBounds(19, 46, 164, 259);
 		panel.add(scrollPaneProducto);
 
-		JLabel lblIngreseNombre = new JLabel("Ingrese Nombre");
+		JLabel lblIngreseNombre = new JLabel("Ingrese nombre");
 		lblIngreseNombre.setFont(new Font("SansSerif", Font.PLAIN, 11));
 		lblIngreseNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseNombre.setBounds(195, 46, 158, 28);
@@ -143,6 +143,18 @@ public class ADM_Categorias extends JDialog {
 		btnEliminarCategoriaProducto.setBounds(19, 345, 164, 28);
 		panel.add(btnEliminarCategoriaProducto);
 		
+		JLabel lblListaDeProductos = new JLabel("Lista de Productos");
+		lblListaDeProductos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblListaDeProductos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListaDeProductos.setBounds(19, 11, 164, 24);
+		panel.add(lblListaDeProductos);
+		
+		JLabel lblListaDeMaterias = new JLabel("Lista de Materias primas");
+		lblListaDeMaterias.setHorizontalAlignment(SwingConstants.CENTER);
+		lblListaDeMaterias.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblListaDeMaterias.setBounds(365, 11, 164, 24);
+		panel.add(lblListaDeMaterias);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(60, 179, 113));
 		getContentPane().add(panel_1, BorderLayout.SOUTH);
@@ -186,7 +198,7 @@ public class ADM_Categorias extends JDialog {
 		if (!textNombre.equals("")) {
 			SvCategorias.guardarCategoriaMateria(new Categoria(textNombre.getText()));
 			LlenarTablaMaterias();
-			JOptionPane.showMessageDialog(null, "Categoria Materia agregada");
+//			JOptionPane.showMessageDialog(null, "Categoria Materia agregada");
 			textNombre.setText("");
 		}
 	}
@@ -196,7 +208,7 @@ public class ADM_Categorias extends JDialog {
 		if (!textNombre.equals("")) {
 			SvCategorias.guardaCategoriaProducto(new Categoria(textNombre.getText()));
 			LlenarTablaProducto();
-			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");
+//			JOptionPane.showMessageDialog(null, "Categoria Producto agregada");
 			textNombre.setText("");
 		}
 	}
@@ -282,5 +294,4 @@ public class ADM_Categorias extends JDialog {
 			}
 		});
 	}
-
 }//---> FIN CLASE

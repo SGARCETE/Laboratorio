@@ -128,15 +128,17 @@ public class ADM_Materia_Prima extends JDialog{
 		panel_1.setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(21, 38, 63, 14);
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombre.setBounds(21, 47, 80, 28);
 		panel_1.add(lblNombre);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(21, 85, 63, 14);
+		lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCategoria.setBounds(21, 104, 80, 28);
 		panel_1.add(lblCategoria);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(111, 32, 160, 26);
+		textNombre.setBounds(111, 47, 160, 28);
 		panel_1.add(textNombre);
 		textNombre.setColumns(10);
 		
@@ -146,32 +148,41 @@ public class ADM_Materia_Prima extends JDialog{
 				
 			}
 		});
-		comboBoxCategoria.setBounds(111, 79, 160, 26);
+		comboBoxCategoria.setBounds(111, 104, 160, 28);
 		panel_1.add(comboBoxCategoria);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setIcon(new ImageIcon(ADM_Materia_Prima.class.getResource("/Recursos/IMG/add-1-icon24.png")));
+		btnAgregar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAgregar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAgregar.setBackground(Color.WHITE);
-		btnAgregar.setBounds(88, 213, 128, 39);
+		btnAgregar.setBounds(103, 179, 89, 49);
 		panel_1.add(btnAgregar);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setIcon(new ImageIcon(ADM_Materia_Prima.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
+		btnAceptar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAceptar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAceptar.setBackground(Color.WHITE);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				aceptarModificarMateria();
 			}
 		});
-		btnAceptar.setBounds(36, 212, 86, 40);
+		btnAceptar.setBounds(38, 179, 89, 49);
 		panel_1.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setIcon(new ImageIcon(ADM_Materia_Prima.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCancelar.setBackground(Color.WHITE);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cancelar_modificar_Materia();
 			}
 		});
-		btnCancelar.setBounds(170, 213, 86, 40);
+		btnCancelar.setBounds(170, 179, 89, 49);
 		panel_1.add(btnCancelar);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -241,7 +252,7 @@ public class ADM_Materia_Prima extends JDialog{
 				SvMateria.AgregarMAteriaPrima(mp);
 				inicializarTabla();
 				llenar_tabla();
-				JOptionPane.showMessageDialog(null, "Materia Prima agregada");
+//				JOptionPane.showMessageDialog(null, "Materia Prima agregada");
 				textNombre.setText("");
 			} else {
 				label.setText("Debes elegir una categoria para continuar");
@@ -349,7 +360,7 @@ public class ADM_Materia_Prima extends JDialog{
 				
 					inicializarTabla();
 					llenar_tabla();
-					JOptionPane.showMessageDialog(null, "Materia Prima Modificada");	
+//					JOptionPane.showMessageDialog(null, "Materia Prima Modificada");	
 				
 				
 				

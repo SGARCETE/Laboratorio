@@ -2,6 +2,7 @@ package Interfaz.JDialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import MetAux.MetAux;
+import javax.swing.SwingConstants;
 
 public class ADM_Cliente extends JDialog {
 
@@ -60,7 +62,7 @@ public class ADM_Cliente extends JDialog {
 		llenar_tabla();
 		
 		setResizable(false);
-		setBounds(100, 100, 1023, 453);
+		setBounds(100, 100, 1023, 436);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -102,6 +104,9 @@ public class ADM_Cliente extends JDialog {
 		panel_nuevoCliente.add(lblDetalle);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAgregar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnAgregar.setIcon(new ImageIcon(ADM_Cliente.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,23 +132,29 @@ public class ADM_Cliente extends JDialog {
 		panel_nuevoCliente.add(textDetalle);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAceptar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnAceptar.setIcon(new ImageIcon(ADM_Cliente.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
 		btnAceptar.setBackground(Color.WHITE);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Aceptar_modificar_Cliente();
 			}
 		});
-		btnAceptar.setBounds(29, 193, 96, 49);
+		btnAceptar.setBounds(36, 193, 89, 49);
 		panel_nuevoCliente.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCancelar.setIcon(new ImageIcon(ADM_Cliente.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
 		btnCancelar.setBackground(Color.WHITE);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cancelar_modificar_Cliente();
 			}
 		});
-		btnCancelar.setBounds(171, 193, 96, 49);
+		btnCancelar.setBounds(171, 193, 89, 49);
 		panel_nuevoCliente.add(btnCancelar);
 		
 		panel_Lista = new JPanel();
@@ -155,13 +166,34 @@ public class ADM_Cliente extends JDialog {
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 21, 643, 223);
+		scrollPane.setBounds(10, 21, 675, 223);
 		panel_Lista.add(scrollPane);
 		
 		
 		scrollPane.setViewportView(table);
 		
-		btnEliminar = new JButton("Eliminar");
+		panel_aviso = new JPanel();
+		panel_aviso.setBackground(Color.WHITE);
+		panel_aviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Aviso", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_aviso.setBounds(10, 272, 997, 64);
+		panel.add(panel_aviso);
+		panel_aviso.setLayout(null);
+		
+		lblAviso = new JLabel("");
+		lblAviso.setBounds(283, 23, 492, 30);
+		panel_aviso.add(lblAviso);
+		lblAviso.setForeground(Color.RED);
+		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(60, 179, 113));
+		getContentPane().add(panel_1, BorderLayout.SOUTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		
+		btnEliminar = new JButton("  Eliminar  ");
+		panel_1.add(btnEliminar);
+		btnEliminar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEliminar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnEliminar.setBackground(Color.WHITE);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,12 +202,13 @@ public class ADM_Cliente extends JDialog {
 				}
 			}
 		});
-		btnEliminar.setBounds(668, 347, 111, 66);
-		panel.add(btnEliminar);
 		btnEliminar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
 		
 		
 		btnModificar = new JButton("Modificar");
+		panel_1.add(btnModificar);
+		btnModificar.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnModificar.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnModificar.setBackground(Color.WHITE);
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,33 +218,19 @@ public class ADM_Cliente extends JDialog {
 				
 			}
 		});
-		btnModificar.setBounds(789, 347, 111, 66);
-		panel.add(btnModificar);
 		btnModificar.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/edit-icon24.png")));
 		
-		JButton btnSalir = new JButton("Salir");
+		JButton btnSalir = new JButton("    Salir    ");
+		panel_1.add(btnSalir);
+		btnSalir.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnSalir.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnSalir.setBackground(Color.WHITE);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(910, 347, 97, 66);
-		panel.add(btnSalir);
 		btnSalir.setIcon(new ImageIcon(ADM_Repartidor.class.getResource("/Recursos/IMG/User-Interface-Login-icon24.png")));
-		
-		panel_aviso = new JPanel();
-		panel_aviso.setBackground(Color.WHITE);
-		panel_aviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Aviso", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_aviso.setBounds(20, 272, 987, 64);
-		panel.add(panel_aviso);
-		panel_aviso.setLayout(null);
-		
-		lblAviso = new JLabel("");
-		lblAviso.setBounds(283, 23, 492, 30);
-		panel_aviso.add(lblAviso);
-		lblAviso.setForeground(Color.RED);
-		lblAviso.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
 		btnAceptar.setVisible(false);
 		btnCancelar.setVisible(false);
@@ -243,7 +262,7 @@ public class ADM_Cliente extends JDialog {
 				
 				iniciarlizarTablaCliente();
 				llenar_tabla();
-				JOptionPane.showMessageDialog(null, "Cliente agregado con éxito");	
+//				JOptionPane.showMessageDialog(null, "Cliente agregado con éxito");	
 			}
 			else {
 				lblAviso.setText("Debes completar el campo 'Dirección' para continuar");
@@ -397,7 +416,5 @@ public class ADM_Cliente extends JDialog {
 			lblAviso.setVisible(true);
 		}
 	}
-
-	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }//---> FIN CLASE
 

@@ -151,13 +151,16 @@ public class Interfaz_ABM_Producto extends JDialog {
 		textNombre.setColumns(10);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setIcon(new ImageIcon(Interfaz_ABM_Producto.class.getResource("/Recursos/IMG/add-1-icon24.png")));
+		btnAgregar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAgregar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregar_producto();
 			}
 		});
-		btnAgregar.setBounds(108, 193, 89, 37);
+		btnAgregar.setBounds(100, 180, 89, 49);
 		panel_1.add(btnAgregar);
 		
 		textPrecio = new JTextField();
@@ -166,23 +169,29 @@ public class Interfaz_ABM_Producto extends JDialog {
 		panel_1.add(textPrecio);
 		
 		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setIcon(new ImageIcon(Interfaz_ABM_Producto.class.getResource("/Recursos/IMG/sign-check-icon24.png")));
+		btnAceptar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnAceptar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAceptar.setBackground(Color.WHITE);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Aceptar_modificar_Producto();
 			}
 		});
-		btnAceptar.setBounds(29, 193, 96, 37);
+		btnAceptar.setBounds(27, 180, 89, 49);
 		panel_1.add(btnAceptar);
 		
 		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setIcon(new ImageIcon(Interfaz_ABM_Producto.class.getResource("/Recursos/IMG/delete-1-icon24.png")));
+		btnCancelar.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCancelar.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnCancelar.setBackground(Color.WHITE);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cancelar_modificar_Cliente();
 			}
 		});
-		btnCancelar.setBounds(171, 193, 96, 37);
+		btnCancelar.setBounds(169, 180, 89, 49);
 		panel_1.add(btnCancelar);
 		
 		comboTipo = new  JComboBox<String>();

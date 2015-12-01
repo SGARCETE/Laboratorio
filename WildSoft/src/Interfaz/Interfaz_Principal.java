@@ -219,7 +219,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(10, 12, 109, 25);
+		lblProducto.setBounds(10, 12, 109, 28);
 		panelAltaPedido.add(lblProducto);
 		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -230,7 +230,7 @@ public class Interfaz_Principal {
 				Seleccion_De_Tipo_Producto();
 			}
 		});
-		comboBoxProducto.setBounds(117, 12, 201, 25);
+		comboBoxProducto.setBounds(117, 12, 201, 28);
 		panelAltaPedido.add(comboBoxProducto);
 
 		comboBoxVariedad = new JComboBox<String>();
@@ -240,76 +240,80 @@ public class Interfaz_Principal {
 				Seleccion_De_Variedad();
 			}
 		});
-		comboBoxVariedad.setBounds(117, 49, 201, 25);
+		comboBoxVariedad.setBounds(117, 49, 201, 28);
 		panelAltaPedido.add(comboBoxVariedad);
 		
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblVariedad = new JLabel("Variedad");
-		lblVariedad.setBounds(10, 49, 109, 25);
+		lblVariedad.setBounds(10, 49, 109, 28);
 		panelAltaPedido.add(lblVariedad);
 		lblVariedad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setBounds(10, 85, 109, 25);
+		lblCantidad.setBounds(10, 85, 109, 28);
 		panelAltaPedido.add(lblCantidad);
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		spinnerCantidad = new JSpinner();
+		spinnerCantidad.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		spinnerCantidad.setBackground(new Color(240, 255, 255));
 		spinnerCantidad.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				Calcula_totales();
 			}
 		});
-		spinnerCantidad.setBounds(117, 85, 59, 25);
+		spinnerCantidad.setBounds(117, 85, 59, 28);
 		panelAltaPedido.add(spinnerCantidad);
 		spinnerCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-		JLabel lblValor = new JLabel("Valor c/u     $");
-		lblValor.setBounds(10, 122, 109, 25);
+		JLabel lblValor = new JLabel("Valor c/u");
+		lblValor.setBounds(10, 122, 109, 28);
 		panelAltaPedido.add(lblValor);
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		textValor = new JTextField();
+		textValor.setFont(new Font("SansSerif", Font.PLAIN, 18));
 		textValor.setBackground(new Color(240, 255, 255));
 		textValor.setHorizontalAlignment(SwingConstants.RIGHT);
 		textValor.setText("$0,00");
-		textValor.setBounds(117, 122, 199, 25);
+		textValor.setBounds(117, 122, 199, 28);
 		panelAltaPedido.add(textValor);
 		textValor.setEditable(false);
 		textValor.setColumns(10);
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-		JLabel lblValorTotal = new JLabel("Valor total   $");
-		lblValorTotal.setBounds(10, 159, 109, 25);
+		JLabel lblValorTotal = new JLabel("Valor total");
+		lblValorTotal.setBounds(10, 159, 109, 28);
 		panelAltaPedido.add(lblValorTotal);
 		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JLabel lblObservacion = new JLabel("Observaciones");
-		lblObservacion.setBounds(10, 195, 109, 25);
+		lblObservacion.setBounds(10, 195, 109, 28);
 		panelAltaPedido.add(lblObservacion);
 		lblObservacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		textObservaciones = new JTextField();
+		textObservaciones.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textObservaciones.setBackground(new Color(240, 255, 255));
-		textObservaciones.setBounds(117, 195, 199, 25);
+		textObservaciones.setBounds(117, 195, 199, 28);
 		panelAltaPedido.add(textObservaciones);
 		textObservaciones.setColumns(10);
 
 		textValorTotal = new JTextField();
+		textValorTotal.setFont(new Font("SansSerif", Font.PLAIN, 18));
 		textValorTotal.setBackground(new Color(240, 255, 255));
 		textValorTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		textValorTotal.setText("$0,00");
 		textValorTotal.setToolTipText("");
-		textValorTotal.setBounds(117, 159, 199, 25);
+		textValorTotal.setBounds(117, 159, 199, 28);
 		panelAltaPedido.add(textValorTotal);
 		textValorTotal.setEditable(false);
 		textValorTotal.setColumns(10);
@@ -317,7 +321,7 @@ public class Interfaz_Principal {
 		// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(117, 225, 100, 30);
+		btnAgregar.setBounds(117, 230, 100, 30);
 		panelAltaPedido.add(btnAgregar);
 		btnAgregar.setIcon(new ImageIcon(Interfaz_Principal.class.getResource("/Recursos/IMG/add-1-icon24.png")));
 
@@ -750,16 +754,18 @@ public class Interfaz_Principal {
 				return columnTypes[columnIndex];
 			}
 		});
+		// Ocultar columna
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMaxWidth(0);
+		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMinWidth(0);
 		tabla_Itinerario_Pedidos.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
 		tabla_Itinerario_Pedidos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
-		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMinWidth(0);
-		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMaxWidth(0);
+		tabla_Itinerario_Pedidos.setRowHeight(25);
 		scrollPane.setViewportView(tabla_Itinerario_Pedidos);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 
 		tabla_Itinerario_con_pedidos = new JTable();
+		tabla_Itinerario_con_pedidos.setRowHeight(25);
 		tabla_Itinerario_con_pedidos.setModel(obtener_Model_itinerario());
 		scrollPane_1.setViewportView(tabla_Itinerario_con_pedidos);
 

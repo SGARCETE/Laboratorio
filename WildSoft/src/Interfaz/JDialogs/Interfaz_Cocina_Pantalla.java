@@ -448,7 +448,7 @@ public class Interfaz_Cocina_Pantalla extends JFrame {
 			}
 			if(pr.getPR_tipo_producto()!=3 ){									// SI NO ES UNA BEBIDA  (ID Producto bebida = 3)
 				model.addRow(new Object[]{pr.getCantidad() +"    "+pr.getPR_nombre()});
-				if(pr.getPR_Observacion()!=null && !pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" "))
+				if(pr.getPR_Observacion()!=null && !pr.getPR_Observacion().isEmpty() && !pr.getPR_Observacion().equals(" ") && !pr.getPR_Observacion().equals("  ")&& !pr.getPR_Observacion().equals("null"))
 					model.addRow(new Object[]{" >"+pr.getPR_Observacion()});
 			}
 			
