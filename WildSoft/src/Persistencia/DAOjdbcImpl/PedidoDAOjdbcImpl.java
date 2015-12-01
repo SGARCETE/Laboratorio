@@ -267,7 +267,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 								Integer index = Arreglo.indexOf(PR_Combo);
 
 								Integer nueva_cant = Arreglo.get(index).getCantidad() + PR_Combo.getCantidad();
-								if(!PR_Combo.getPR_Observacion().isEmpty()){
+								if(PR_Combo.getPR_Observacion()!=null && !PR_Combo.getPR_Observacion().isEmpty() && !PR_Combo.getPR_Observacion().equals(" ")){
 									String Nueva_observacion = Arreglo.get(index).getPR_Observacion() +" "+ PR_Combo.getPR_Observacion();
 									Arreglo.get(index).setPR_Observacion(Nueva_observacion);
 								}
