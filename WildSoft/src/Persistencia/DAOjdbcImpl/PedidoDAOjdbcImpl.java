@@ -136,7 +136,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				}
 				conex.cerrarConexion();
 			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+				System.out.println("getLISTA_PEDIDOS_PREPARADOS: Error al cargar la tabla \n ERROR : " + e.getMessage());
+//				JOptionPane.showMessageDialog(null,"getLISTA_PEDIDOS_PREPARADOS: Error al cargar la tabla \n ERROR : " + e.getMessage());
 			}
 			return Arreglo;
 		}
@@ -178,7 +179,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			System.out.println("getLISTA_PEDIDOS: Error al cargar la tabla \n ERROR : " + e.getMessage());
+			//			JOptionPane.showMessageDialog(null,"getLISTA_PEDIDOS: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
 	}
@@ -211,7 +213,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"getLista_Productos: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
 	}
@@ -282,7 +284,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				}
 				conex.cerrarConexion();
 			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+				JOptionPane.showMessageDialog(null,"getLista_Productos_Cocina: Error al cargar la tabla \n ERROR : " + e.getMessage());
 			}
 			return Arreglo;
 		}
@@ -325,7 +327,8 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				}
 				conex.cerrarConexion();
 			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+				System.out.println("getLISTA_PEDIDOS_COCINA: Error al cargar la tabla \n ERROR : " + e.getMessage());
+//				JOptionPane.showMessageDialog(null,"getLISTA_PEDIDOS_COCINA: Error al cargar la tabla \n ERROR : " + e.getMessage());
 			}
 			return Arreglo;
 		}
@@ -402,7 +405,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setCliente(getCliente(ID_Cliente));
 			
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"OBTENER_PEDIDO: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return P;
 	}
@@ -415,15 +418,17 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			Statement st = conex.conexion.createStatement();
 			st.executeQuery("SELECT * FROM Cliente WHERE CL_id = "+ID_Cliente);
 			ResultSet Fila = st.getResultSet();
-			Fila.first();
-			cliente.setID_Cliente(Fila.getInt("CL_id"));
-			cliente.setNombre(Fila.getString("CL_nombre"));
-			cliente.setDomicilio(Fila.getString("CL_direccion"));
-			cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
-			cliente.setDetalle(Fila.getString("CL_Detalle"));
+//			Fila.first();
+			while(Fila.next()){
+				cliente.setID_Cliente(Fila.getInt("CL_id"));
+				cliente.setNombre(Fila.getString("CL_nombre"));
+				cliente.setDomicilio(Fila.getString("CL_direccion"));
+				cliente.setTelefono_Fijo(Fila.getString("CL_telefono"));
+				cliente.setDetalle(Fila.getString("CL_Detalle"));
+			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"getCliente: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return cliente;
 	}
@@ -536,7 +541,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 				P.setCliente(getCliente(ID_Cliente));
 			
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"OBTENER_PEDIDO_COMBOS_DESP: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return P;
 	}
@@ -612,7 +617,7 @@ public class PedidoDAOjdbcImpl implements PedidoDAO{
 			}
 			conex.cerrarConexion();
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Error al cargar la tabla \n ERROR : " + e.getMessage());
+			JOptionPane.showMessageDialog(null,"getLista_Productos_DESP: Error al cargar la tabla \n ERROR : " + e.getMessage());
 		}
 		return Arreglo;
 	}

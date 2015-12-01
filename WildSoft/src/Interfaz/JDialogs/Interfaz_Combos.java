@@ -64,6 +64,10 @@ public class Interfaz_Combos extends JDialog {
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+			@Override
+			public boolean isCellEditable(int row, int col){
+				return false;
+			}
 		});
 		tablaCombos.getColumnModel().getColumn(0).setPreferredWidth(0);
 		tablaCombos.getColumnModel().getColumn(0).setMinWidth(0);
@@ -74,7 +78,6 @@ public class Interfaz_Combos extends JDialog {
 		tablaCombos.getColumnModel().getColumn(2).setMinWidth(200);
 		tablaCombos.getColumnModel().getColumn(2).setMaxWidth(200);
 		tablaCombos.setRowHeight(18); 
-		
 		scrollPane.setViewportView(tablaCombos);
 
 		JButton btnAgregar = new JButton("Agregar");

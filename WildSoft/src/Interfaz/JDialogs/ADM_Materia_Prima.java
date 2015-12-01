@@ -235,7 +235,7 @@ public class ADM_Materia_Prima extends JDialog{
 			}
 		}
 		if (!textNombre.getText().equals("")) {
-			if (idProveedorSeleccionado != -1) {
+			if (comboBoxCategoria.getSelectedIndex()>0 ) { //idProveedorSeleccionado != -1
 				label.setVisible(false);
 				Materia_Prima mp = new Materia_Prima(textNombre.getText(), idProveedorSeleccionado);
 				SvMateria.AgregarMAteriaPrima(mp);
@@ -244,7 +244,7 @@ public class ADM_Materia_Prima extends JDialog{
 				JOptionPane.showMessageDialog(null, "Materia Prima agregada");
 				textNombre.setText("");
 			} else {
-				label.setText("Debes elegir un proveedor para continuar");
+				label.setText("Debes elegir una categoria para continuar");
 				label.setVisible(true);
 			}
 		} else {

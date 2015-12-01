@@ -15,12 +15,10 @@ import javax.swing.JOptionPane;
 public class ConectorMySQL {
 	public Connection conexion;
 
-	private String DATABASE_NAME = "WILDSOFT"; // Poner el nombre de la base de
-												// datos
+	private String DATABASE_NAME = "WILDSOFT"; // Poner el nombre de la base de datos
 	private String USUARIO = Get_usuario(); // Usuario que administra la DB
 	private String PASSWORD = Get_contraseña(); // Password del usuario
-	private String Driver = "jdbc:mysql://localhost/" + DATABASE_NAME
-			+ "?user=" + USUARIO + "&password=" + PASSWORD;
+	private String Driver = "jdbc:mysql://localhost/" + DATABASE_NAME+ "?user=" + USUARIO + "&password=" + PASSWORD;
 
 	/** Conecta a la base de datos **/
 	public boolean connectToMySQL() {
@@ -44,7 +42,26 @@ public class ConectorMySQL {
 	}
 	
 	
-	
+	public boolean connectToMySQL_TEST() {
+		Driver = "jdbc:mysql://localhost/test?user=" + USUARIO + "&password=" + PASSWORD;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conexion = DriverManager.getConnection(Driver);
+		} catch (Exception SQLE) {
+			try{ 
+				   //Si falla la conexión, abre el txt con los datos para inicializar la base de datos.
+				   File fichero = new File("Datos.txt");
+				   Runtime.getRuntime().exec("cmd /c start "+fichero.getName());
+				   }catch(IOException e){
+				      e.printStackTrace();
+				   } 
+			JOptionPane.showMessageDialog(null,
+					"No se establecio una conexion a la base de datos!\nPor favor verifique que el usuario y contraseña sean correctos.");
+			SQLE.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 		
 	
 

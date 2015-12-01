@@ -167,6 +167,13 @@ public class ADM_Categorias extends JDialog {
 	public void inicializar() {
 		tableCategoriaProducto = new JTable();
 		tableCategoriaMateria = new JTable();
+		tableCategoriaMateria.setModel(new DefaultTableModel(
+			new Object[][] {
+				{},
+			},
+			new String[] {
+			}
+		));
 		LlenarTablaProducto();
 		LlenarTablaMaterias();
 		scrollPane_Materia.setViewportView(tableCategoriaMateria);
@@ -260,7 +267,20 @@ public class ADM_Categorias extends JDialog {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void setModelTabla(JTable jtable) {
-		jtable.setModel(new DefaultTableModel(new Object[][] {},new String[] { "Nombre" }));
+		jtable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nombre"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 	}
 
 }//---> FIN CLASE

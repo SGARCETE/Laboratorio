@@ -222,7 +222,7 @@ public class ADM_Cliente extends JDialog {
 	private void iniciar_parametros() {
 		MetAux.Limitar_caracteres(textDireccion,20);
 		MetAux.Limitar_caracteres(textNombre,20);
-		MetAux.Limitar_caracteres(textTelefono,20);
+		MetAux.SoloNumEnteros(textTelefono, 20);
 		MetAux.Limitar_caracteres(textDetalle,20);
 		
 		panel_aviso.setVisible(false);

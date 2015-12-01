@@ -750,6 +750,8 @@ public class Interfaz_Principal {
 				return columnTypes[columnIndex];
 			}
 		});
+		tabla_Itinerario_Pedidos.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+		tabla_Itinerario_Pedidos.getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
 		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMinWidth(0);
 		tabla_Itinerario_Pedidos.getColumnModel().getColumn(0).setMaxWidth(0);

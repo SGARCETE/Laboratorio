@@ -40,7 +40,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private JTextField textNombre;
 	private JTable table;
 	private JTextField textPrecio;
-	private JTextField textObservación;
 	private JLabel lblAviso;
 	private String[] datoTabla;
 	private JButton btnEliminar;
@@ -151,11 +150,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 		panel_1.add(textNombre);
 		textNombre.setColumns(10);
 		
-		JLabel lblDetalle = new JLabel("Observaci\u00F3n");
-		lblDetalle.setVisible(false);
-		lblDetalle.setBounds(10, 151, 76, 14);
-		panel_1.add(lblDetalle);
-		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBackground(Color.WHITE);
 		btnAgregar.addActionListener(new ActionListener() {
@@ -170,12 +164,6 @@ public class Interfaz_ABM_Producto extends JDialog {
 		textPrecio.setColumns(10);
 		textPrecio.setBounds(85, 69, 204, 28);
 		panel_1.add(textPrecio);
-		
-		textObservación = new JTextField();
-		textObservación.setVisible(false);
-		textObservación.setColumns(10);
-		textObservación.setBounds(85, 144, 204, 28);
-		panel_1.add(textObservación);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBackground(Color.WHITE);
@@ -254,11 +242,11 @@ public class Interfaz_ABM_Producto extends JDialog {
 			if(comprobarPrecio()){
 				if(comboTipo.getSelectedIndex()>0){
 					Integer Tipo_producto_ID = SvProducto.getTipo_Producto_INTEGER(comboTipo.getSelectedItem().toString()).get(0);
-					SvProducto.guardar_nuevo_producto(new Producto(null, textNombre.getText(), Tipo_producto_ID, textObservación.getText(), Double.parseDouble(textPrecio.getText()), 0));
+					SvProducto.guardar_nuevo_producto(new Producto(null, textNombre.getText(), Tipo_producto_ID, Double.parseDouble(textPrecio.getText()), 0));
 					
 					textNombre.setText("");
 					textPrecio.setText("");
-					textObservación.setText("");
+//					textObservación.setText("");
 					lblAviso.setVisible(false);
 					
 					iniciarlizarTablaProducto();
@@ -287,8 +275,8 @@ public class Interfaz_ABM_Producto extends JDialog {
 		if(textPrecio.getText().equals("")){
 			return false;
 		}
-		if ((Double.parseDouble(textPrecio.getText()) > 0)){
-			return true;
+		if ((Double.parseDouble(textPrecio.getText()) <= 0.0)){
+			return false;
 		}
 		return true;
 	}
@@ -348,9 +336,9 @@ public class Interfaz_ABM_Producto extends JDialog {
 		String nombre = (String) table.getModel().getValueAt(indice, 1);
 		String direccion = (String) table.getModel().getValueAt(indice, 2);
 		String telefono = (String) table.getModel().getValueAt(indice, 3);
-		String detalle = (String) table.getModel().getValueAt(indice, 4);
+//		String detalle = (String) table.getModel().getValueAt(indice, 4);
 		
-		String[] dato = { String.valueOf(indice), id, nombre, direccion,telefono,detalle };
+		String[] dato = { String.valueOf(indice), id, nombre, direccion,telefono };
 		return dato;
 	}
 
@@ -361,7 +349,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 		textNombre.setText(datoTabla[2]);
 		textPrecio.setText(datoTabla[3]);
 		comboTipo.setSelectedItem(datoTabla[3]);
-		textObservación.setText(datoTabla[5]);
+//		textObservación.setText(datoTabla[5]);
 		
 		btnModificar.setVisible(false);
 		btnEliminar.setVisible(false);
@@ -375,7 +363,7 @@ public class Interfaz_ABM_Producto extends JDialog {
 	private void Cancelar_modificar_Cliente() {
 		textNombre.setText("");
 		textPrecio.setText("");
-		textObservación.setText("");
+
 		
 		btnAceptar.setVisible(false);
 		btnAgregar.setVisible(true);
@@ -387,40 +375,32 @@ public class Interfaz_ABM_Producto extends JDialog {
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-	private void guardarCambios(String nombre, String precio, String tipo, String observacion) {
+	private void guardarCambios(String nombre, String precio, String tipo) {
 		Integer Tipo_producto = SvProducto.getTipo_Producto_INTEGER(tipo).get(0);
-		SvProducto.Modificar_Producto(new Producto(Integer.parseInt(datoTabla[1]), null, nombre, Tipo_producto, observacion, Double.parseDouble(precio), 0));
+		SvProducto.Modificar_Producto(new Producto(Integer.parseInt(datoTabla[1]), null, nombre, Tipo_producto, Double.parseDouble(precio), 0));
 		System.out.println("se modificó el producto");
 	}
 
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	private void Aceptar_modificar_Producto() {
 		if (!textNombre.getText().equals("")) {
-			if (!textPrecio.getText().equals("")) {
-				if(!comboTipo.getSelectedItem().toString().equals(""))
-				{
-					if(!textObservación.getText().equals(""))
-					{
-						guardarCambios(textNombre.getText(), textPrecio.getText(), comboTipo.getSelectedItem().toString(), textObservación.getText());
-						textNombre.setText("");
-						textPrecio.setText("");
-						comboTipo.getSelectedItem().toString();
-						textObservación.setText("");
-						
-						iniciarlizarTablaProducto();
-						llenar_tabla();
-						lblAviso.setVisible(false);
-						btnAceptar.setVisible(false);
-						btnAgregar.setVisible(true);
-						btnCancelar.setVisible(false);
-						btnModificar.setVisible(true);
-						btnEliminar.setVisible(true);
-					}
-					else{
-						lblAviso.setText("Debes completar el campo 'Detalle' para continuar");
-						lblAviso.setVisible(true);
-					}
-						
+			if (comprobarPrecio()) {
+				if(!comboTipo.getSelectedItem().toString().equals("")){
+
+					guardarCambios(textNombre.getText(), textPrecio.getText(), comboTipo.getSelectedItem().toString());
+					textNombre.setText("");
+					textPrecio.setText("");
+					comboTipo.getSelectedItem().toString();
+					
+					iniciarlizarTablaProducto();
+					llenar_tabla();
+					lblAviso.setVisible(false);
+					btnAceptar.setVisible(false);
+					btnAgregar.setVisible(true);
+					btnCancelar.setVisible(false);
+					btnModificar.setVisible(true);
+					btnEliminar.setVisible(true);
+
 				}else{
 					lblAviso.setText("Debes completar el campo 'Telefono' para continuar");
 					lblAviso.setVisible(true);

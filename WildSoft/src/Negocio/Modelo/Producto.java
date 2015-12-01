@@ -13,6 +13,23 @@ public class Producto {
 	
 	public Producto(){}
 	
+	public Producto(String Tipo_Producto, String Nombre, Integer Tipo_producto_ID, Double Precio, Integer Cantidad){
+		PR_TIPO_PRODUCTO_STRING = Tipo_Producto;
+		PR_tipo_producto = Tipo_producto_ID;
+		PR_precio = Precio;
+		PR_nombre = Nombre;
+		cantidad = Cantidad;
+	}
+	
+	public Producto(Integer id, String Tipo_Producto, String Nombre, Integer Tipo_producto_ID, Double Precio, Integer Cantidad){
+		PR_TIPO_PRODUCTO_STRING = Tipo_Producto;
+		PR_tipo_producto = Tipo_producto_ID;
+		PR_precio = Precio;
+		PR_nombre = Nombre;
+		cantidad = Cantidad;
+		PR_id= id;
+	}
+	
 	public Producto(String Tipo_Producto, String Nombre, Integer Tipo_producto_ID, String Observacion, Double Precio, Integer Cantidad){
 		PR_TIPO_PRODUCTO_STRING = Tipo_Producto;
 		PR_tipo_producto = Tipo_producto_ID;
@@ -38,6 +55,7 @@ public class Producto {
 		
 	}
 	
+
 	public int getCantidad() {
 		return cantidad;
 	}

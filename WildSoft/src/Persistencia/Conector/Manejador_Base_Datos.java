@@ -102,7 +102,7 @@ public class Manejador_Base_Datos {
 	public static File get_directorio(){
 	
 		try{
-			conex.connectToMySQL();
+			conex.connectToMySQL_TEST();
 			Statement st = conex.conexion.createStatement();
 			ResultSet rs = st.executeQuery("select @@datadir");
 			rs.first();
