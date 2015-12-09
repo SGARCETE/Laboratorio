@@ -68,8 +68,8 @@ PR.PR_nombre;]]>
 				</staticText>
 			</frame>
 			<image>
-				<reportElement x="331" y="0" width="224" height="94" uuid="77f6c258-3e1d-4730-be31-4060815b2e29"/>
-				<imageExpression><![CDATA["D:\\Workspace_SVN\\trunk\\WildSoft\\iReports\\Banner_png.png"]]></imageExpression>
+				<reportElement x="331" y="0" width="224" height="94" isPrintInFirstWholeBand="true" uuid="77f6c258-3e1d-4730-be31-4060815b2e29"/>
+				<imageExpression><![CDATA["Reports\\Banner_png.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
