@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9debb406-1c0b-4a0e-8a45-879843a8ed88">
 	<property name="ireport.zoom" value="2.1435888100000033"/>
-	<property name="ireport.x" value="189"/>
-	<property name="ireport.y" value="39"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="22"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -168,7 +168,7 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SD_id}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement style="Detail" x="244" y="11" width="88" height="24" uuid="4b397062-9fda-4c3f-8f62-a56e8ffd2a97"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true"/>
