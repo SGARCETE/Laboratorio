@@ -171,7 +171,7 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 			<textField>
 				<reportElement style="Detail" x="244" y="11" width="88" height="24" uuid="4b397062-9fda-4c3f-8f62-a56e8ffd2a97"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arialsssss" size="14" isBold="true"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SD_fecha}]]></textFieldExpression>
 			</textField>
