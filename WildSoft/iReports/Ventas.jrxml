@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ventas" language="groovy" pageWidth="595" pageHeight="1008" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26c99d00-7a45-4e03-9a0d-868a894a8b36">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="54"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -36,7 +36,7 @@ group by CL.CL_id;]]>
 			<staticText>
 				<reportElement style="SubTitle" x="336" y="65" width="217" height="29" uuid="3a80e27c-c00f-492c-973c-112743d4ca15"/>
 				<textElement textAlignment="Right">
-					<font size="22" isBold="false"/>
+					<font fontName="SansSerif" size="22" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Pizzería Wildsoft]]></text>
 			</staticText>
@@ -45,7 +45,7 @@ group by CL.CL_id;]]>
 				<staticText>
 					<reportElement style="Title" x="231" y="0" width="346" height="65" uuid="6be54167-8f45-4000-80d6-2b5dd62ec513"/>
 					<textElement textAlignment="Right">
-						<font size="54" isBold="false"/>
+						<font fontName="SansSerif" size="50" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Ventas]]></text>
 				</staticText>
@@ -58,20 +58,20 @@ group by CL.CL_id;]]>
 	<columnHeader>
 		<band height="27" splitType="Stretch">
 			<frame>
-				<reportElement x="227" y="0" width="328" height="20" uuid="cf6fdb2e-5041-4db4-8901-d67e3ab2a382"/>
+				<reportElement x="227" y="0" width="328" height="27" uuid="cf6fdb2e-5041-4db4-8901-d67e3ab2a382"/>
 				<staticText>
-					<reportElement style="Column header" positionType="Float" x="0" y="0" width="164" height="20" forecolor="#000000" uuid="8a02f116-0e60-4ecb-8667-f4221d981590"/>
+					<reportElement style="Column header" positionType="Float" x="0" y="0" width="164" height="27" forecolor="#000000" uuid="8a02f116-0e60-4ecb-8667-f4221d981590"/>
 					<textElement>
-						<font fontName="Arial" isBold="false" pdfFontName="Helvetica"/>
+						<font fontName="SansSerif" size="20" isBold="true" pdfFontName="Helvetica"/>
 					</textElement>
-					<text><![CDATA[sum(PP_precio)]]></text>
+					<text><![CDATA[Precio]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" positionType="Float" x="164" y="0" width="164" height="20" forecolor="#000000" uuid="4b63ed1c-7f3d-42b4-aa77-46ae9f402d60"/>
+					<reportElement style="Column header" positionType="Float" x="164" y="0" width="164" height="27" forecolor="#000000" uuid="4b63ed1c-7f3d-42b4-aa77-46ae9f402d60"/>
 					<textElement>
-						<font fontName="Arial" isBold="false" pdfFontName="Helvetica"/>
+						<font fontName="SansSerif" size="20" isBold="true" pdfFontName="Helvetica"/>
 					</textElement>
-					<text><![CDATA[CL_nombre]]></text>
+					<text><![CDATA[Cliente]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -83,19 +83,19 @@ group by CL.CL_id;]]>
 			</line>
 			<frame>
 				<reportElement x="227" y="0" width="328" height="20" uuid="7027fc7c-997e-4d14-9069-e236f1ee5e1e"/>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<textField isStretchWithOverflow="true" pattern="$ #,##0.00" isBlankWhenNull="true">
 					<reportElement style="Detail" positionType="Float" x="0" y="0" width="164" height="18" uuid="a98dd84d-205b-4210-b6f2-b705f46b73ee"/>
-					<textElement>
-						<font fontName="Arial" size="14" isBold="false" pdfFontName="Helvetica"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="14" isBold="false" pdfFontName="Helvetica"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sum(PP_precio)}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement style="Detail" positionType="Float" x="164" y="0" width="164" height="18" uuid="5d9cec6e-85cb-4b29-9d1c-bdb2d60fb07e"/>
-					<textElement>
-						<font fontName="Arial" size="14" isBold="false" pdfFontName="Helvetica"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="14" isBold="false" pdfFontName="Helvetica"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{CL_nombre}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CL_nombre}.equals("") ? "Sin registrar" : $F{CL_nombre}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

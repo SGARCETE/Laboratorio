@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9debb406-1c0b-4a0e-8a45-879843a8ed88">
-	<property name="ireport.zoom" value="1.6105100000000008"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.1435888100000033"/>
+	<property name="ireport.x" value="189"/>
+	<property name="ireport.y" value="39"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -42,17 +42,38 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 	<group name="SD_id">
 		<groupExpression><![CDATA[$F{SD_id}]]></groupExpression>
 		<groupHeader>
-			<band height="18">
+			<band height="25">
 				<staticText>
-					<reportElement style="Column header" x="0" y="0" width="79" height="15" uuid="66d64441-335f-426f-8087-500a7cb09d2a"/>
+					<reportElement style="Column header" x="0" y="0" width="94" height="25" forecolor="#000000" uuid="66d64441-335f-426f-8087-500a7cb09d2a"/>
+					<box>
+						<topPen lineWidth="1.0" lineColor="#009933"/>
+						<bottomPen lineWidth="1.0" lineColor="#009933"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
 					<text><![CDATA[Categoría]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="94" y="0" width="79" height="15" uuid="20b46e90-ec00-4574-b561-1db19f24b601"/>
+					<reportElement style="Column header" x="94" y="0" width="150" height="25" forecolor="#000000" uuid="20b46e90-ec00-4574-b561-1db19f24b601"/>
+					<box>
+						<topPen lineWidth="1.0" lineColor="#009933"/>
+						<bottomPen lineWidth="1.0" lineColor="#009933"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
 					<text><![CDATA[Materia prima]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="263" y="0" width="79" height="15" uuid="05c383de-597b-4830-96d5-ae16acf1a550"/>
+					<reportElement style="Column header" x="244" y="0" width="311" height="25" forecolor="#000000" uuid="05c383de-597b-4830-96d5-ae16acf1a550"/>
+					<box>
+						<topPen lineWidth="1.0" lineColor="#009933"/>
+						<bottomPen lineWidth="1.0" lineColor="#009933"/>
+					</box>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
 					<text><![CDATA[Cantidad]]></text>
 				</staticText>
 			</band>
@@ -61,9 +82,9 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 			<band height="16">
 				<staticText>
 					<reportElement style="Column header" x="415" y="0" width="59" height="15" uuid="d2698938-eafc-42a0-8289-82188dab8de3"/>
-					<text><![CDATA[Precio:   $]]></text>
+					<text><![CDATA[Precio:]]></text>
 				</staticText>
-				<textField isBlankWhenNull="true">
+				<textField pattern="$ #,##0.00" isBlankWhenNull="true">
 					<reportElement style="Detail" x="474" y="0" width="79" height="15" uuid="ec1e5a6b-c499-4464-99eb-91c60997ffb7"/>
 					<textFieldExpression><![CDATA[$F{SD_precio}]]></textFieldExpression>
 				</textField>
@@ -74,30 +95,37 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="70" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="412df0dc-afe6-44dd-a5da-09363f6ad034"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Solicitud de compra]]></text>
+				<reportElement style="Title" mode="Opaque" x="0" y="0" width="555" height="33" forecolor="#FFFFFF" backcolor="#009933" uuid="412df0dc-afe6-44dd-a5da-09363f6ad034"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Solicitud de compra                   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="8cd8e693-77a6-4ca0-b002-0dfa397ebe37"/>
+				<reportElement style="SubTitle" x="84" y="33" width="298" height="35" uuid="8cd8e693-77a6-4ca0-b002-0dfa397ebe37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Pizzeria Wildsoft]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="296" y="13" width="241" height="19" uuid="5950b4ab-33b6-4e7c-a4d4-cbb56c063310"/>
-				<textElement>
+				<reportElement style="Column header" x="292" y="68" width="263" height="19" uuid="5950b4ab-33b6-4e7c-a4d4-cbb56c063310"/>
+				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<text><![CDATA[Rosa Castillo 2383- Hurlingham]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="296" y="32" width="241" height="36" uuid="a63806c7-cbb7-47ec-ae6b-5f2914063384"/>
-				<textElement>
+				<reportElement style="Column header" x="292" y="87" width="263" height="19" uuid="a63806c7-cbb7-47ec-ae6b-5f2914063384"/>
+				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<text><![CDATA[Tel 1: 4459-0748 / Tel 2: 5437 - 9694]]></text>
 			</staticText>
+			<image>
+				<reportElement x="382" y="0" width="173" height="68" uuid="dcee7407-7b99-4e0d-b4b9-85fb4cf3974d"/>
+				<imageExpression><![CDATA["iReports\\Banner_png.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -105,65 +133,59 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 	</pageHeader>
 	<columnHeader>
 		<band height="73" splitType="Stretch">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="60" width="555" height="1" uuid="593cdd39-983d-4a98-91eb-2b12e4cdc1f4"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
 			<staticText>
-				<reportElement style="Column header" x="197" y="10" width="47" height="19" uuid="43317c17-a78b-4479-b675-1f28250729b3"/>
-				<textElement>
+				<reportElement style="Column header" x="197" y="11" width="47" height="24" uuid="43317c17-a78b-4479-b675-1f28250729b3"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="0" y="34" width="106" height="26" uuid="3cc439bd-b7e6-42c7-a549-e298b641b19d"/>
-				<textElement>
+				<reportElement style="Column header" x="0" y="35" width="106" height="25" uuid="3cc439bd-b7e6-42c7-a549-e298b641b19d"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Proveedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="351" y="35" width="69" height="18" uuid="54406e5a-1eb8-48de-9589-e09ce0b571d1"/>
-				<textElement>
+				<reportElement style="Column header" x="351" y="35" width="82" height="25" uuid="54406e5a-1eb8-48de-9589-e09ce0b571d1"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Telefono]]></text>
+				<text><![CDATA[Teléfono]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="0" y="11" width="94" height="19" uuid="f6bbea72-8a67-4c31-8895-e16249485e47"/>
-				<textElement>
+				<reportElement style="Column header" x="0" y="11" width="94" height="25" uuid="f6bbea72-8a67-4c31-8895-e16249485e47"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<text><![CDATA[Solicitud N° ]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="SubTitle" x="94" y="11" width="43" height="18" forecolor="#000000" uuid="6c102e34-bcf7-4247-9d27-8885d9b85e27"/>
-				<textElement>
+				<reportElement style="SubTitle" x="94" y="11" width="43" height="24" forecolor="#000000" uuid="6c102e34-bcf7-4247-9d27-8885d9b85e27"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SD_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="244" y="10" width="63" height="19" uuid="4b397062-9fda-4c3f-8f62-a56e8ffd2a97"/>
-				<textElement>
-					<font size="14"/>
+				<reportElement style="Detail" x="244" y="11" width="88" height="24" uuid="4b397062-9fda-4c3f-8f62-a56e8ffd2a97"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arialsssss" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SD_fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="106" y="35" width="226" height="26" uuid="e2effd27-b2b7-4a65-925a-79024441fff6"/>
-				<textElement>
-					<font fontName="SansSerif" size="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PV_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="433" y="35" width="79" height="22" uuid="6cd6242e-9301-411d-8984-a8d964ed4072"/>
-				<textElement>
-					<font size="14"/>
+				<reportElement style="Detail" x="433" y="35" width="79" height="25" uuid="6cd6242e-9301-411d-8984-a8d964ed4072"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PV_telefono}]]></textFieldExpression>
 			</textField>
@@ -172,21 +194,21 @@ on  SC.SD_id=COMP.CM_compra and MP.MP_id=COMP.CM_materia_prima and P.PV_id=SC.SD
 	<detail>
 		<band height="22" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="1c386d0a-289c-44f9-8c66-de6e1c06d72c"/>
+				<reportElement positionType="FixRelativeToBottom" x="-2" y="21" width="555" height="1" uuid="1c386d0a-289c-44f9-8c66-de6e1c06d72c"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="Detail" x="0" y="0" width="79" height="15" uuid="b4ec8a53-d8a7-439f-8c40-af254ae01f54"/>
+				<reportElement style="Detail" x="0" y="7" width="94" height="15" uuid="b4ec8a53-d8a7-439f-8c40-af254ae01f54"/>
 				<textFieldExpression><![CDATA[$F{CA_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="94" y="1" width="169" height="15" uuid="41b7f100-cd28-45c1-95da-7a6180329a03"/>
+				<reportElement style="Detail" x="94" y="7" width="150" height="15" uuid="41b7f100-cd28-45c1-95da-7a6180329a03"/>
 				<textFieldExpression><![CDATA[$F{MP_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="263" y="0" width="79" height="15" uuid="5ee530e6-0f15-43db-b121-9bc01fd111f9"/>
+				<reportElement style="Detail" x="244" y="7" width="98" height="15" uuid="5ee530e6-0f15-43db-b121-9bc01fd111f9"/>
 				<textFieldExpression><![CDATA[$F{CM_cantidad_mp}]]></textFieldExpression>
 			</textField>
 		</band>
