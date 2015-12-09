@@ -1269,6 +1269,7 @@ public class Interfaz_Principal {
 				PEDIDO_ACTUAL.setCliente(CLIENTE_ACTUAL);
 			
 			sv_pedidos.guardar_nuevo_pedido(PEDIDO_ACTUAL);
+			dateChooser_Fecha_mostrar.setCalendar(new GregorianCalendar());
 			ACTUALIZAR_TODO();
 			Ticket_Comanda_nuevo_pedido();
 			Limpiar_Todo();
