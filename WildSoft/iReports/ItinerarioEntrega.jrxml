@@ -100,7 +100,7 @@ EP.EP_pedido_id = Pd.PD_id and ENT_ID=$P{ENT_ID};]]>
 			</staticText>
 			<image>
 				<reportElement x="397" y="0" width="158" height="68" uuid="f1aa6dcc-b5ba-4638-ae61-bfe569dc1c3c"/>
-				<imageExpression><![CDATA["Reports\\Banner_png.png"]]></imageExpression>
+				<imageExpression><![CDATA["iReports\\Banner_png.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

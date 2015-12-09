@@ -69,7 +69,7 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 			</frame>
 			<image>
 				<reportElement x="331" y="0" width="222" height="94" uuid="a19a53ea-f02b-4876-bfc8-502c8bf31258"/>
-				<imageExpression><![CDATA["Reports\\Banner_png.png"]]></imageExpression>
+				<imageExpression><![CDATA["iReports\\Banner_png.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
