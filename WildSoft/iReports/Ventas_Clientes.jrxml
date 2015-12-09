@@ -79,9 +79,13 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 	<columnHeader>
 		<band height="27" splitType="Stretch">
 			<frame>
-				<reportElement x="73" y="0" width="480" height="27" uuid="cf6fdb2e-5041-4db4-8901-d67e3ab2a382"/>
+				<reportElement x="0" y="0" width="553" height="27" uuid="cf6fdb2e-5041-4db4-8901-d67e3ab2a382"/>
 				<staticText>
 					<reportElement style="Column header" positionType="Float" x="280" y="0" width="198" height="27" forecolor="#000000" uuid="4b63ed1c-7f3d-42b4-aa77-46ae9f402d60"/>
+					<box>
+						<topPen lineWidth="1.0" lineColor="#009900"/>
+						<bottomPen lineWidth="1.0" lineColor="#009900"/>
+					</box>
 					<textElement textAlignment="Center">
 						<font fontName="SansSerif" size="16" isBold="true" pdfFontName="Helvetica"/>
 					</textElement>
@@ -89,7 +93,11 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 				</staticText>
 			</frame>
 			<staticText>
-				<reportElement x="73" y="0" width="114" height="27" uuid="6f42ce00-1a9f-4f85-a8e0-82483888a2c3"/>
+				<reportElement x="0" y="0" width="187" height="27" uuid="6f42ce00-1a9f-4f85-a8e0-82483888a2c3"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#009900"/>
+					<bottomPen lineWidth="1.0" lineColor="#009900"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
@@ -97,6 +105,10 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" positionType="Float" x="187" y="0" width="166" height="27" forecolor="#000000" uuid="8a02f116-0e60-4ecb-8667-f4221d981590"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#009900"/>
+					<bottomPen lineWidth="1.0" lineColor="#009900"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="16" isBold="true" pdfFontName="Helvetica"/>
 				</textElement>
@@ -110,7 +122,7 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 				<reportElement positionType="FixRelativeToBottom" x="4" y="23" width="547" height="1" uuid="f90fdcf1-510e-4936-9304-0f2fe937130f"/>
 			</line>
 			<frame>
-				<reportElement x="73" y="0" width="480" height="20" uuid="7027fc7c-997e-4d14-9069-e236f1ee5e1e"/>
+				<reportElement x="0" y="0" width="553" height="20" uuid="7027fc7c-997e-4d14-9069-e236f1ee5e1e"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement style="Detail" positionType="Float" x="280" y="0" width="198" height="20" uuid="5d9cec6e-85cb-4b29-9d1c-bdb2d60fb07e"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -120,7 +132,7 @@ group by CL.CL_id order by sum(PP_precio*PP_producto_cantidad) desc limit 6)tabl
 				</textField>
 			</frame>
 			<textField pattern="$ #,##0.00">
-				<reportElement x="73" y="0" width="114" height="20" uuid="80f0504b-7180-4b5c-b81e-46e8a100023f"/>
+				<reportElement x="0" y="0" width="187" height="20" uuid="80f0504b-7180-4b5c-b81e-46e8a100023f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
